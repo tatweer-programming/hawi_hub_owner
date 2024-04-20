@@ -22,40 +22,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "addRate": MessageLookupByLibrary.simpleMessage("اضافة تقييم"),
-        "allPlayers": MessageLookupByLibrary.simpleMessage("جميع اللاعبين"),
-        "appName": MessageLookupByLibrary.simpleMessage("هاوي هب"),
-        "availableTimes":
-            MessageLookupByLibrary.simpleMessage("الأوقات المتاحة"),
-        "bookNow": MessageLookupByLibrary.simpleMessage("حجز الان"),
+        "addBooking": MessageLookupByLibrary.simpleMessage("اضافة حجز"),
         "booking": MessageLookupByLibrary.simpleMessage("الحجز"),
-        "createGame": MessageLookupByLibrary.simpleMessage("انشاء حجز جماعي"),
-        "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
-        "games": MessageLookupByLibrary.simpleMessage("الحجوزات الجماعية"),
-        "host": MessageLookupByLibrary.simpleMessage("المضيف"),
+        "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
+        "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
-        "join": MessageLookupByLibrary.simpleMessage("انضمام"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
         "minimumBooking":
-            MessageLookupByLibrary.simpleMessage("الحد الادنى للحجز"),
-        "nearByGames": MessageLookupByLibrary.simpleMessage("الحجوزات القريبة"),
-        "nearByVenues": MessageLookupByLibrary.simpleMessage("الملاعب القريبة"),
-        "noGames": MessageLookupByLibrary.simpleMessage("لم يحجز من قبل"),
-        "noRatings": MessageLookupByLibrary.simpleMessage("لا يوجد تقييمات"),
+            MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
+        "more": MessageLookupByLibrary.simpleMessage("المزيد"),
+        "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
         "notifications": MessageLookupByLibrary.simpleMessage("التنبيهات"),
-        "only": MessageLookupByLibrary.simpleMessage("فقط"),
-        "owner": MessageLookupByLibrary.simpleMessage("المالك"),
-        "perHour": MessageLookupByLibrary.simpleMessage("لكل ساعة"),
-        "players": MessageLookupByLibrary.simpleMessage("اللاعبين"),
+        "places": MessageLookupByLibrary.simpleMessage("الأماكن"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
-        "ratingsCount": MessageLookupByLibrary.simpleMessage("عدد التقييمات"),
-        "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
-        "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
-        "slots": MessageLookupByLibrary.simpleMessage("أماكن"),
+        "requests": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
-        "totalGames": MessageLookupByLibrary.simpleMessage("إجمالي الحجوزات "),
-        "upcoming": MessageLookupByLibrary.simpleMessage("الحجوزات القادمة"),
-        "viewAll": MessageLookupByLibrary.simpleMessage("اظهار الكل"),
-        "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل")
+        "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
+        "yourPlaces": MessageLookupByLibrary.simpleMessage("أماكنك")
       };
 }

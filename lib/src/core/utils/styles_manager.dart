@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:sizer/sizer.dart';
 
-import 'color_manager.dart';
 import 'font_manager.dart';
 
 class TextStyleManager {

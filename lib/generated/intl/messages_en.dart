@@ -22,40 +22,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "addRate": MessageLookupByLibrary.simpleMessage("Add Rating"),
-        "allPlayers": MessageLookupByLibrary.simpleMessage("All Players"),
-        "appName": MessageLookupByLibrary.simpleMessage("Hawi Hub"),
-        "availableTimes":
-            MessageLookupByLibrary.simpleMessage("Available Times"),
-        "bookNow": MessageLookupByLibrary.simpleMessage("Book Now"),
+        "addBooking": MessageLookupByLibrary.simpleMessage("Add booking"),
         "booking": MessageLookupByLibrary.simpleMessage("Booking"),
-        "createGame": MessageLookupByLibrary.simpleMessage("Create Game"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
-        "games": MessageLookupByLibrary.simpleMessage("Games"),
-        "host": MessageLookupByLibrary.simpleMessage("Host"),
-        "hours": MessageLookupByLibrary.simpleMessage("Hours"),
-        "join": MessageLookupByLibrary.simpleMessage("Join"),
+        "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "hours": MessageLookupByLibrary.simpleMessage("hours"),
         "location": MessageLookupByLibrary.simpleMessage("Location"),
         "minimumBooking":
-            MessageLookupByLibrary.simpleMessage("Minimum Booking"),
-        "nearByGames": MessageLookupByLibrary.simpleMessage("Near by Games"),
-        "nearByVenues": MessageLookupByLibrary.simpleMessage("Near by Venues"),
-        "noGames": MessageLookupByLibrary.simpleMessage("No games"),
-        "noRatings": MessageLookupByLibrary.simpleMessage("No ratings"),
+            MessageLookupByLibrary.simpleMessage("Minimum booking"),
+        "more": MessageLookupByLibrary.simpleMessage("More"),
+        "noDetails": MessageLookupByLibrary.simpleMessage("No details"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
-        "only": MessageLookupByLibrary.simpleMessage("Only"),
-        "owner": MessageLookupByLibrary.simpleMessage("Owner"),
-        "perHour": MessageLookupByLibrary.simpleMessage("Per Hour"),
-        "players": MessageLookupByLibrary.simpleMessage("Players"),
+        "places": MessageLookupByLibrary.simpleMessage("Places"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
-        "ratingsCount": MessageLookupByLibrary.simpleMessage("Ratings"),
-        "sar": MessageLookupByLibrary.simpleMessage("SAR"),
-        "showInMap": MessageLookupByLibrary.simpleMessage("Show in map"),
-        "slots": MessageLookupByLibrary.simpleMessage("Slots"),
+        "requests": MessageLookupByLibrary.simpleMessage("Requests"),
         "sport": MessageLookupByLibrary.simpleMessage("Sport"),
-        "totalGames": MessageLookupByLibrary.simpleMessage("Total Games"),
-        "upcoming": MessageLookupByLibrary.simpleMessage("UPCOMING"),
-        "viewAll": MessageLookupByLibrary.simpleMessage("View All"),
-        "viewDetails": MessageLookupByLibrary.simpleMessage("View Details")
+        "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
+        "yourPlaces": MessageLookupByLibrary.simpleMessage("Your places")
       };
 }

@@ -1,24 +1,18 @@
-
-import '../../modules/auth/data/models/owner.dart';
 import 'localization_manager.dart';
 
 class ConstantsManager {
-  static Owner? appUser;
+  // static Player? appUser;
 
   static bool? registrationSkipped;
   static int? userId;
   static String? userToken;
+  static String? userType;
+  static bool? isNotificationsOn;
+  static const String baseUrlNotification = "https://fcm.googleapis.com/fcm/send";
   static const String successUrl =
       "https://firebasestorage.googleapis.com/v0/b/masheed-d942d.appspot.com/o/payment%2Fsuccess%20(2).HTML?alt=media&token=2d979a52-9247-4abd-a264-fba2d5f0ae2e";
   static const String errorUrl =
       "https://firebasestorage.googleapis.com/v0/b/masheed-d942d.appspot.com/o/payment%2Ffailed.HTML?alt=media&token=01fddc6e-e292-4080-bddb-0e3fa4f54993";
-
-// static const String baseUrlNotification =
-//     "https://fcm.googleapis.com/fcm/send";
-  static String? userType;
-  static bool? isNotificationsOn;
-  static const String baseUrlNotification =
-      "https://fcm.googleapis.com/fcm/send";
   static const String firebaseMessagingAPI =
       "AAAAg2F4b1U:APA91bEp1nenkuZMlwu3PmiNRJTWOiG4zncmBF_23UiLcdtm42HZ1lDaoR-sRP21PFquem76ZHVKj5wGXI76Mx6WvqgUS2xxFAjuvM0hBMMd8cNvDcLEH6XKc65wBk_3C4IRr5znOi1M";
 

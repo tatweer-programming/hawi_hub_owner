@@ -50,61 +50,31 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Hawi Hub`
-  String get appName {
+  /// `Notifications`
+  String get notifications {
     return Intl.message(
-      'Hawi Hub',
-      name: 'appName',
+      'Notifications',
+      name: 'notifications',
       desc: '',
       args: [],
     );
   }
 
-  /// `Show in map`
-  String get showInMap {
+  /// `Your places`
+  String get yourPlaces {
     return Intl.message(
-      'Show in map',
-      name: 'showInMap',
+      'Your places',
+      name: 'yourPlaces',
       desc: '',
       args: [],
     );
   }
 
-  /// `Total Games`
-  String get totalGames {
+  /// `View all`
+  String get viewAll {
     return Intl.message(
-      'Total Games',
-      name: 'totalGames',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Ratings`
-  String get ratingsCount {
-    return Intl.message(
-      'Ratings',
-      name: 'ratingsCount',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `View Details`
-  String get viewDetails {
-    return Intl.message(
-      'View Details',
-      name: 'viewDetails',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Available Times`
-  String get availableTimes {
-    return Intl.message(
-      'Available Times',
-      name: 'availableTimes',
+      'View all',
+      name: 'viewAll',
       desc: '',
       args: [],
     );
@@ -120,111 +90,31 @@ class S {
     );
   }
 
-  /// `No ratings`
-  String get noRatings {
+  /// `Add booking`
+  String get addBooking {
     return Intl.message(
-      'No ratings',
-      name: 'noRatings',
+      'Add booking',
+      name: 'addBooking',
       desc: '',
       args: [],
     );
   }
 
-  /// `No games`
-  String get noGames {
+  /// `hours`
+  String get hours {
     return Intl.message(
-      'No games',
-      name: 'noGames',
+      'hours',
+      name: 'hours',
       desc: '',
       args: [],
     );
   }
 
-  /// `Add Rating`
-  String get addRate {
+  /// `Minimum booking`
+  String get minimumBooking {
     return Intl.message(
-      'Add Rating',
-      name: 'addRate',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `UPCOMING`
-  String get upcoming {
-    return Intl.message(
-      'UPCOMING',
-      name: 'upcoming',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Sport`
-  String get sport {
-    return Intl.message(
-      'Sport',
-      name: 'sport',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Details`
-  String get details {
-    return Intl.message(
-      'Details',
-      name: 'details',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Games`
-  String get games {
-    return Intl.message(
-      'Games',
-      name: 'games',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Booking`
-  String get booking {
-    return Intl.message(
-      'Booking',
-      name: 'booking',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Owner`
-  String get owner {
-    return Intl.message(
-      'Owner',
-      name: 'owner',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Book Now`
-  String get bookNow {
-    return Intl.message(
-      'Book Now',
-      name: 'bookNow',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Create Game`
-  String get createGame {
-    return Intl.message(
-      'Create Game',
-      name: 'createGame',
+      'Minimum booking',
+      name: 'minimumBooking',
       desc: '',
       args: [],
     );
@@ -240,141 +130,81 @@ class S {
     );
   }
 
-  /// `Minimum Booking`
-  String get minimumBooking {
+  /// `Booking`
+  String get booking {
     return Intl.message(
-      'Minimum Booking',
-      name: 'minimumBooking',
+      'Booking',
+      name: 'booking',
       desc: '',
       args: [],
     );
   }
 
-  /// `Hours`
-  String get hours {
+  /// `Details`
+  String get details {
     return Intl.message(
-      'Hours',
-      name: 'hours',
+      'Details',
+      name: 'details',
       desc: '',
       args: [],
     );
   }
 
-  /// `Per Hour`
-  String get perHour {
+  /// `No details`
+  String get noDetails {
     return Intl.message(
-      'Per Hour',
-      name: 'perHour',
+      'No details',
+      name: 'noDetails',
       desc: '',
       args: [],
     );
   }
 
-  /// `SAR`
-  String get sar {
+  /// `Sport`
+  String get sport {
     return Intl.message(
-      'SAR',
-      name: 'sar',
+      'Sport',
+      name: 'sport',
       desc: '',
       args: [],
     );
   }
 
-  /// `Near by Venues`
-  String get nearByVenues {
+  /// `Places`
+  String get places {
     return Intl.message(
-      'Near by Venues',
-      name: 'nearByVenues',
+      'Places',
+      name: 'places',
       desc: '',
       args: [],
     );
   }
 
-  /// `Near by Games`
-  String get nearByGames {
+  /// `Requests`
+  String get requests {
     return Intl.message(
-      'Near by Games',
-      name: 'nearByGames',
+      'Requests',
+      name: 'requests',
       desc: '',
       args: [],
     );
   }
 
-  /// `View All`
-  String get viewAll {
+  /// `More`
+  String get more {
     return Intl.message(
-      'View All',
-      name: 'viewAll',
+      'More',
+      name: 'more',
       desc: '',
       args: [],
     );
   }
 
-  /// `Notifications`
-  String get notifications {
+  /// `Home`
+  String get home {
     return Intl.message(
-      'Notifications',
-      name: 'notifications',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Slots`
-  String get slots {
-    return Intl.message(
-      'Slots',
-      name: 'slots',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Only`
-  String get only {
-    return Intl.message(
-      'Only',
-      name: 'only',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Players`
-  String get players {
-    return Intl.message(
-      'Players',
-      name: 'players',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Join`
-  String get join {
-    return Intl.message(
-      'Join',
-      name: 'join',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Host`
-  String get host {
-    return Intl.message(
-      'Host',
-      name: 'host',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `All Players`
-  String get allPlayers {
-    return Intl.message(
-      'All Players',
-      name: 'allPlayers',
+      'Home',
+      name: 'home',
       desc: '',
       args: [],
     );

@@ -22,4 +22,3 @@ void errorToast({
     toastLength: Toast.LENGTH_SHORT,
   );
 }
-
