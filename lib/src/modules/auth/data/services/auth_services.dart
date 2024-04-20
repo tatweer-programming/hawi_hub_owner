@@ -1,27 +1,28 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
-import 'package:hawi_hub_owner/src/core/local/shared_prefrences.dart';
-import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
-import 'package:hawi_hub_owner/src/core/utils/random_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
-import 'package:hawi_hub_owner/src/modules/auth/data/models/sport.dart';
+
 import '../../../../core/apis/dio_helper.dart';
+import '../../../../core/apis/end_points.dart';
+import '../../../../core/local/shared_prefrences.dart';
+import '../../../../core/utils/constance_manager.dart';
+import '../models/auth_owner.dart';
+import '../models/sport.dart';
 
 class AuthService {
   Future<String> registerPlayer({
-    required String email,
-    required String userName,
-    required String password,
+    required AuthOwner authOwner,
   }) async {
     try {
       Response response = await DioHelper.postData(
         data: {
-          'mail': email,
-          'user_name': userName,
-          'pass': password,
+          'mail': authOwner.email,
+          'user_name': authOwner.userName,
+          'pass': authOwner.password,
+          'image': authOwner.profilePictureUrl
         },
         path: EndPoints.register,
       );
@@ -59,7 +60,31 @@ class AuthService {
     }
   }
 
-  Future<String> loginWithGoogle() async {
+  Future<Either<String, AuthOwner?>> signupWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: <String>[
+          'email',
+        ],
+      );
+      await googleSignIn.signOut();
+      var googleUser = await googleSignIn.signIn();
+      if (googleUser != null) {
+        AuthOwner authPlayer = AuthOwner(
+          email: googleUser.email,
+          userName: googleUser.displayName!,
+          profilePictureUrl: googleUser.photoUrl,
+          password: '',
+        );
+        return Right(authPlayer);
+      }
+      return const Right(null);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, bool>> loginWithGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
         scopes: <String>[
@@ -68,28 +93,15 @@ class AuthService {
       );
       var googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
-        print(googleUser.displayName);
-        // await DioHelper.postData(
-        //   data: {
-        //     'mail': googleUser.email,
-        //     'user_name': googleUser.displayName,
-        //     "image": googleUser.photoUrl,
-        //     'pass': RandomManager.generateRandomString(),
-        //   },
-        //   path: EndPoints.register,
-        // ).then((value) async {
-        //   ConstantsManager.userToken = googleUser.id;
-        //   await CacheHelper.saveData(key: 'token', value: googleUser.id);
-        // });
-        return "Login Successfully";
+        return const Right(true);
       }
-      return "Login Failed";
+      return const Right(false);
     } catch (e) {
-      return "Invalid email or password";
+      return Left(e.toString());
     }
   }
 
-  Future<String> loginWithFacebook() async {
+  Future<Either<String, AuthOwner?>> signupWithFacebook() async {
     try {
       final LoginResult result = await FacebookAuth.instance.login();
       Map<String, dynamic>? userData;
@@ -97,23 +109,29 @@ class AuthService {
         userData = await FacebookAuth.instance.getUserData();
       }
       if (result.status == LoginStatus.success && userData != null) {
-        await DioHelper.postData(
-          data: {
-            'mail': userData["email"],
-            'user_name': userData["name"],
-            "image": userData["picture"]["data"]["url"],
-            'pass': RandomManager.generateRandomString(),
-          },
-          path: EndPoints.register,
-        ).then((value) async {
-          ConstantsManager.userToken = userData!["id"];
-          await CacheHelper.saveData(key: 'token', value: userData["id"]);
-        });
-        return "Login Successfully";
+        AuthOwner authPlayer = AuthOwner(
+          email: userData['email'],
+          userName: userData['name'],
+          profilePictureUrl: userData['picture']['data']['url']!,
+          password: '',
+        );
+        return Right(authPlayer);
       }
-      return "Login Failed";
+      return const Right(null);
     } catch (e) {
-      return "Invalid email or password";
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, bool>> loginWithFacebook() async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success) {
+        return const Right(true);
+      }
+      return const Right(false);
+    } catch (e) {
+      return Left(e.toString());
     }
   }
 

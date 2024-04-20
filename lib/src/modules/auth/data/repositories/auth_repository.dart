@@ -1,30 +1,35 @@
 import 'package:dartz/dartz.dart';
+import '../models/auth_owner.dart';
 import '../models/owner.dart';
 import '../models/sport.dart';
 import '../services/auth_services.dart';
 
 class AuthRepository {
   final AuthService _service = AuthService();
-
   Future<String> loginPlayer(String email, String password) async {
     return await _service.loginPlayer(email, password);
   }
 
-  Future<String> loginWithGoogle() async {
+  Future<Either<String, bool>> loginWithGoogle() async {
     return await _service.loginWithGoogle();
   }
 
-  Future<String> loginWithFacebook() async {
+  Future<Either<String, bool>>loginWithFacebook() async {
     return await _service.loginWithFacebook();
   }
 
+  Future<Either<String, AuthOwner?>> signupWithGoogle() async {
+    return await _service.signupWithGoogle();
+  }
+
+  Future<Either<String, AuthOwner?>>  signupWithFacebook() async {
+    return await _service.signupWithFacebook();
+  }
+
   Future<String> registerPlayer({
-    required String email,
-    required String userName,
-    required String password,
+    required AuthOwner authOwner,
   }) async {
-    return _service.registerPlayer(
-        email: email, userName: userName, password: password);
+    return _service.registerPlayer(authOwner: authOwner,);
   }
 
   Future<String> verifyCode(String email) async {

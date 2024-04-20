@@ -3,6 +3,7 @@ import 'package:hawi_hub_owner/src/core/utils/navigation_manager.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/color_manager.dart';
+import '../../../../core/utils/styles_manager.dart';
 
 Widget defaultButton({
   required VoidCallback onPressed,
@@ -169,3 +170,67 @@ Widget backIcon(BuildContext context) {
     ),
   );
 }
+
+Widget orImageBuilder() => Stack(
+  alignment: AlignmentDirectional.bottomCenter,
+  children: [
+    Column(
+      children: [
+        Stack(
+          children: [
+            Column(
+              children: [
+                SizedBox(
+                  height: 2.h,
+                ),
+                Container(
+                  width: 60.w,
+                  height: 10.h,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(10.sp),
+                        topStart: Radius.circular(10.sp),
+                      ),
+                      border: const Border(
+                        left: BorderSide(
+                          color: ColorManager.black,
+                        ),
+                        right: BorderSide(
+                          color: ColorManager.black,
+                        ),
+                        top: BorderSide(
+                          color: ColorManager.black,
+                        ),
+                      )),
+                ),
+              ],
+            ),
+            Positioned(
+              left: 25.w,
+              top: 0.h,
+              child: Container(
+                padding: EdgeInsetsDirectional.symmetric(
+                  vertical: 1.h,
+                  horizontal: 2.w,
+                ),
+                color: Colors.white,
+                child: Text(
+                  "OR",
+                  style: TextStyleManager.getRegularStyle(),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 0.2.h,
+        ),
+      ],
+    ),
+    Container(
+      width: 58.w,
+      height: 5.h,
+      color: ColorManager.white,
+    ),
+  ],
+);

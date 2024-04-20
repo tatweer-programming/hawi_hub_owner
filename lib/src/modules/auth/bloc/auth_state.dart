@@ -15,17 +15,35 @@ class RegisterErrorState extends AuthState {
 
   RegisterErrorState(this.error);
 }
-// Login google
-//
-// class LoginWithGoogleLoadingState extends AuthState {}
-//
-// class LoginWithGoogleSuccessState extends AuthState {}
-//
-// class LoginWithGoogleErrorState extends AuthState {
-//   final String error;
-//
-//   LoginWithGoogleErrorState(this.error);
-// }
+// Signup google
+
+class SignupWithGoogleLoadingState extends AuthState {}
+
+class SignupWithGoogleSuccessState extends AuthState {
+  final AuthOwner authOwner;
+
+  SignupWithGoogleSuccessState(this.authOwner);
+}
+
+class SignupWithGoogleErrorState extends AuthState {
+  final String error;
+
+  SignupWithGoogleErrorState(this.error);
+} // Signup facebook
+
+class SignupWithFacebookLoadingState extends AuthState {}
+
+class SignupWithFacebookSuccessState extends AuthState {
+  final AuthOwner authOwner;
+
+  SignupWithFacebookSuccessState(this.authOwner);
+}
+
+class SignupWithFacebookErrorState extends AuthState {
+  final String error;
+
+  SignupWithFacebookErrorState(this.error);
+}
 
 // verifyCode
 
