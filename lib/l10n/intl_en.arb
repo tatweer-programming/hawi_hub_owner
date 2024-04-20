@@ -1,0 +1,18 @@
+{
+  "notifications": "Notifications",
+  "yourPlaces": "Your places",
+  "viewAll": "View all",
+  "location": "Location",
+  "addBooking": "Add booking",
+  "hours": "hours",
+  "minimumBooking": "Minimum booking",
+  "price": "Price",
+  "booking": "Booking",
+  "details": "Details",
+  "noDetails": "No details",
+  "sport": "Sport",
+  "places" : "Places",
+  "requests" : "Requests",
+  "more" : "More",
+  "home" : "Home"
+}

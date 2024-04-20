@@ -1,0 +1,18 @@
+{
+  "notifications" : "التنبيهات",
+  "yourPlaces" : "أماكنك",
+  "viewAll" : "عرض الكل",
+  "location" : "الموقع",
+  "addBooking" : "اضافة حجز",
+    "hours" : "ساعات",
+"minimumBooking" : "حجز الحد الادنى",
+  "price" : "السعر",
+  "booking" : "الحجز",
+  "details" : "التفاصيل",
+  "noDetails" : "لا يوجد تفاصيل",
+  "sport" : "الرياضة",
+  "places" : "الأماكن",
+  "requests" : "الطلبات",
+ "more" : "المزيد",
+  "home" : "الرئيسية"
+}
