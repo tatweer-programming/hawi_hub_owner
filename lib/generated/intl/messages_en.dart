@@ -22,8 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "addBooking": MessageLookupByLibrary.simpleMessage("Add booking"),
         "booking": MessageLookupByLibrary.simpleMessage("Booking"),
+        "decline": MessageLookupByLibrary.simpleMessage("Decline"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
@@ -32,12 +34,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Minimum booking"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
         "noDetails": MessageLookupByLibrary.simpleMessage("No details"),
+        "noPlaces": MessageLookupByLibrary.simpleMessage("No places found"),
+        "noRequests": MessageLookupByLibrary.simpleMessage("No requests found"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "places": MessageLookupByLibrary.simpleMessage("Places"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "requests": MessageLookupByLibrary.simpleMessage("Requests"),
         "sport": MessageLookupByLibrary.simpleMessage("Sport"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
+        "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
         "yourPlaces": MessageLookupByLibrary.simpleMessage("Your places")
       };
 }

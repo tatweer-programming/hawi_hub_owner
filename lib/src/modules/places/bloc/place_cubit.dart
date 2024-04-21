@@ -17,7 +17,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   PlaceRemoteDataSource dataSource = PlaceRemoteDataSource();
   List<Place> places = [];
   List<BookingRequest> bookingRequests = [];
-  Future getPlaces() async {
+  void getPlaces() async {
     emit(GetPlacesLoading());
     var result = await dataSource.getPlaces();
     result.fold((l) {
@@ -93,12 +93,12 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future declineBookingRequest(int requestId) async {
-    emit(AcceptBookingRequestLoading());
+    emit(DeclineBookingRequestLoading());
     var result = await dataSource.declineBookingRequest(requestId);
     result.fold((l) {
-      emit(AcceptBookingRequestError(l));
+      emit(DeclineBookingRequestError(l));
     }, (r) {
-      emit(AcceptBookingRequestSuccess());
+      emit(DeclineBookingRequestSuccess());
     });
   }
 }

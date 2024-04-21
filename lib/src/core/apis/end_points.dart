@@ -8,4 +8,14 @@ class EndPoints {
   static const String getBanners = '/banner';
   static const String getSports = '/category';
   static const String getProfile = '/user';
+
+  ///
+  static const String getPlaces = '/places';
+  static const String createPlace = '/createplace';
+  static const String updatePlace = '/updateplace';
+  static const String deletePlace = '/deleteplace';
+  static const String uploadImages = '/uploadimage';
+  static const String getBookingRequest = '/bookingrequests';
+  static const String acceptBookingRequest = '/acceptbookingrequest';
+  static const String declineBookingRequest = '/declinebookingrequest';
 }

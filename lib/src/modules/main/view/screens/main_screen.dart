@@ -10,9 +10,15 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainCubit mainCubit = MainCubit.get();
+    MainCubit mainCubit = MainCubit.get()
+      ..getBanner()
+      ..getSports();
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add_home_outlined),
+        onPressed: () {},
+      ),
       bottomNavigationBar: const CustomBottomNavigationBar(),
       body: BlocBuilder<MainCubit, MainState>(
         bloc: mainCubit,

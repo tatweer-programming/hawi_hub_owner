@@ -12,6 +12,9 @@ import 'package:hawi_hub_owner/src/modules/main/view/widgets/connectivity.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/banner_shimmer.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/place_shimmers.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/request_shimmers.dart';
 import 'package:sizer/sizer.dart';
 
 class HomePage extends StatelessWidget {
@@ -20,7 +23,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainCubit mainCubit = MainCubit.get()..getBanner();
-    PlaceCubit placeCubit = PlaceCubit.get();
+    PlaceCubit placeCubit = PlaceCubit.get()
+      ..getPlaces()
+      ..getBookingRequests();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -110,15 +115,12 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 2.h,
-                ),
-                SizedBox(
-                  height: 2.h,
+                  height: 6.h,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Expanded(child: TitleText(S.of(context).yourPlaces, isBold: true)),
+                    Expanded(child: TitleText(S.of(context).requests, isBold: true)),
                     TextButton(
                         onPressed: () {
                           mainCubit.changePage(2);
@@ -135,23 +137,102 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 2.h,
                 ),
-                // SizedBox(
-                //   height: 27.h,
-                //   child: BlocBuilder<PlaceCubit, PlaceState>(
-                //       bloc: placeCubit,
-                //       builder: (context, state) {
-                //         return placeCubit.places.isEmpty
-                //             ? const HorizontalPlacesShimmer()
-                //             : ListView.separated(
-                //                 scrollDirection: Axis.horizontal,
-                //                 itemBuilder: (context, index) =>
-                //                     PlaceItem(place: placeBloc.allPlaces[index]),
-                //                 separatorBuilder: (context, index) => SizedBox(
-                //                       width: 4.w,
-                //                     ),
-                //                 itemCount: 3);
-                //       }),
-                // ),
+                SizedBox(
+                  height: 21.h,
+                  child: BlocBuilder<PlaceCubit, PlaceState>(
+                      bloc: placeCubit,
+                      builder: (context, state) {
+                        return state is GetPlacesLoading
+                            ? const HorizontalRequestsShimmer()
+                            : placeCubit.places.isEmpty
+                                ? Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 10.h,
+                                          child: const Icon(
+                                            Icons.search_off_outlined,
+                                            color: ColorManager.black,
+                                          ),
+                                        ),
+                                        SizedBox(height: 2.h),
+                                        TitleText(S.of(context).noRequests),
+                                      ],
+                                    ),
+                                  )
+                                : ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) =>
+                                        PlaceItem(place: placeCubit.places[index]),
+                                    separatorBuilder: (context, index) => SizedBox(
+                                          width: 4.w,
+                                        ),
+                                    itemCount: placeCubit.places.length < 3
+                                        ? placeCubit.places.length
+                                        : 3);
+                      }),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(child: TitleText(S.of(context).yourPlaces, isBold: true)),
+                    TextButton(
+                        onPressed: () {
+                          mainCubit.changePage(1);
+                        },
+                        child: Row(
+                          children: [
+                            Text(S.of(context).viewAll,
+                                style: TextStyleManager.getGoldenRegularStyle()),
+                            const Icon(Icons.arrow_forward, color: ColorManager.golden)
+                          ],
+                        ))
+                  ],
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                SizedBox(
+                  height: 27.h,
+                  child: BlocBuilder<PlaceCubit, PlaceState>(
+                      bloc: placeCubit,
+                      builder: (context, state) {
+                        return state is GetPlacesLoading
+                            ? const HorizontalPlacesShimmer()
+                            : placeCubit.places.isEmpty
+                                ? Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 10.h,
+                                          child: const Icon(
+                                            Icons.search_off_outlined,
+                                            color: ColorManager.black,
+                                          ),
+                                        ),
+                                        SizedBox(height: 2.h),
+                                        TitleText(S.of(context).noPlaces),
+                                      ],
+                                    ),
+                                  )
+                                : ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) =>
+                                        PlaceItem(place: placeCubit.places[index]),
+                                    separatorBuilder: (context, index) => SizedBox(
+                                          width: 4.w,
+                                        ),
+                                    itemCount: placeCubit.places.length < 3
+                                        ? placeCubit.places.length
+                                        : 3);
+                      }),
+                ),
               ])),
         ),
       ],
@@ -160,6 +241,9 @@ class HomePage extends StatelessWidget {
 
   void retryConnecting() async {
     MainCubit.get().getBanner();
+    MainCubit.get().getSports();
+    PlaceCubit.get().getPlaces();
+    PlaceCubit.get().getBookingRequests();
   }
 }
 

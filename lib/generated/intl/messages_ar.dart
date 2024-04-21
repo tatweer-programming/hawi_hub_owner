@@ -22,8 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accept": MessageLookupByLibrary.simpleMessage("قبول"),
         "addBooking": MessageLookupByLibrary.simpleMessage("اضافة حجز"),
         "booking": MessageLookupByLibrary.simpleMessage("الحجز"),
+        "decline": MessageLookupByLibrary.simpleMessage("رفض"),
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
@@ -32,12 +34,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
         "more": MessageLookupByLibrary.simpleMessage("المزيد"),
         "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
+        "noPlaces": MessageLookupByLibrary.simpleMessage("لا يوجد أماكن"),
+        "noRequests": MessageLookupByLibrary.simpleMessage("لا يوجد طلبات"),
         "notifications": MessageLookupByLibrary.simpleMessage("التنبيهات"),
         "places": MessageLookupByLibrary.simpleMessage("الأماكن"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "requests": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
+        "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "yourPlaces": MessageLookupByLibrary.simpleMessage("أماكنك")
       };
 }
