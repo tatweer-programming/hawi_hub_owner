@@ -42,6 +42,8 @@ dependencies:
   carousel_slider:
   sizer:
   dio:
+  get_it: ^7.2.0
+  image_picker:
   fluttertoast :
   shared_preferences:
   intl:
@@ -50,6 +52,15 @@ dependencies:
   connectivity_plus:
   flutter_rating_bar:
   shimmer: ^3.0.0
+
+  # CHATS PACKAGES
+  voice_message_package: ^2.1.4
+  audioplayers: any
+  record: ^5.0.5
+
+  # AUTH PACKAGES
+  flutter_facebook_auth: ^6.2.0
+  google_sign_in: ^6.2.1
 
   flutter_localizations:
     sdk: flutter

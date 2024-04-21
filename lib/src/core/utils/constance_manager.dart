@@ -1,7 +1,8 @@
+import '../../modules/auth/data/models/owner.dart';
 import 'localization_manager.dart';
 
 class ConstantsManager {
-  // static Player? appUser;
+  static Owner? appUser;
 
   static bool? registrationSkipped;
   static int? userId;

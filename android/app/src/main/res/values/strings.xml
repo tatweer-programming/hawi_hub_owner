@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="app_name">Default Name</string>
+    <string name="app_name">Hawi hub</string>
+    <string name="facebook_app_id">1769051356923663</string>
+    <string name="fb_login_protocol_scheme">fb1769051356923663</string>
+    <string name="facebook_client_token">f81c79e12592f0ac6d25040367cff0d0</string>
 </resources>
