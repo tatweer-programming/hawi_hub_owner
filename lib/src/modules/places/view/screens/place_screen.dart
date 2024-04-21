@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../main/view/widgets/components.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
+import '../../data/models/place.dart';
 
 class PlaceScreen extends StatelessWidget {
   final int placeId;
@@ -19,6 +20,8 @@ class PlaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlaceCubit cubit = PlaceCubit.get();
+    Place place = cubit.places.firstWhere((element) => element.id == placeId);
+    print(place);
     return Scaffold(
         body: Column(
       children: [
@@ -59,7 +62,7 @@ class PlaceScreen extends StatelessWidget {
                                     pauseAutoPlayOnManualNavigate: true,
                                     height: 30.h,
                                   ),
-                                  items: cubit.currentPlace!.images.map((i) {
+                                  items: place.images.map((i) {
                                     return Builder(
                                       builder: (BuildContext context) {
                                         return Container(
@@ -105,12 +108,12 @@ class PlaceScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TitleText(cubit.currentPlace!.name),
+                      TitleText(place.name),
                       SizedBox(
                         height: 1.h,
                       ),
                       Text(
-                        cubit.currentPlace!.address,
+                        place.address,
                         style: TextStyleManager.getRegularStyle(),
                       ),
                       SizedBox(
@@ -124,7 +127,7 @@ class PlaceScreen extends StatelessWidget {
                         height: 1.h,
                       ),
                       Text(
-                        cubit.currentPlace!.address,
+                        place.address,
                         style: TextStyleManager.getCaptionStyle(),
                       ),
                       SizedBox(
@@ -139,12 +142,12 @@ class PlaceScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
-                                child: (cubit.currentPlace!.rating != null)
+                                child: (place.rating != null)
                                     ? Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            cubit.currentPlace!.rating.toString(),
+                                            place.rating.toString(),
                                             style: TextStyleManager.getBlackCaptionTextStyle(),
                                           ),
                                           Expanded(
@@ -157,7 +160,7 @@ class PlaceScreen extends StatelessWidget {
                                                   direction: Axis.horizontal,
                                                   allowHalfRating: true,
                                                   wrapAlignment: WrapAlignment.center,
-                                                  initialRating: cubit.currentPlace!.rating!,
+                                                  initialRating: place.rating!,
                                                   itemCount: 5,
                                                   glowColor: ColorManager.golden,
                                                   ignoreGestures: true,
@@ -179,7 +182,7 @@ class PlaceScreen extends StatelessWidget {
                             Expanded(
                                 child: Row(
                               children: [
-                                Text(cubit.currentPlace!.totalGames.toString()),
+                                Text(place.totalGames.toString()),
                                 SizedBox(
                                   width: 2.w,
                                 ),
@@ -214,7 +217,7 @@ class PlaceScreen extends StatelessWidget {
                       SizedBox(
                         height: 1.h,
                       ),
-                      // _buildSportWidget(cubit.currentPlace!.spo, context),
+                      // _buildSportWidget(place.spo, context),
                       SizedBox(
                         height: 3.h,
                       ),
@@ -222,8 +225,8 @@ class PlaceScreen extends StatelessWidget {
                       SizedBox(
                         height: 1.h,
                       ),
-                      (cubit.currentPlace!.description != null)
-                          ? _buildCaptionWidget(cubit.currentPlace!.description!)
+                      (place.description != null)
+                          ? _buildCaptionWidget(place.description!)
                           : _buildCaptionWidget(S.of(context).noDetails),
                       Divider(
                         height: 4.h,
@@ -261,7 +264,7 @@ class PlaceScreen extends StatelessWidget {
                           // Expanded(
                           //   child: OutLineContainer(
                           //     // child: Text(
-                          //     //   "${cubit.currentPlace!.price}  ${S.of(context).sar} ${S.of(context).perHour}",
+                          //     //   "${place.price}  ${S.of(context).sar} ${S.of(context).perHour}",
                           //     // ),
                           //   ),
                           // ),
@@ -271,7 +274,7 @@ class PlaceScreen extends StatelessWidget {
                           Expanded(
                             child: OutLineContainer(
                               child: Text(
-                                "${cubit.currentPlace!.minimumHours}  ${S.of(context).hours}",
+                                "${place.minimumHours}  ${S.of(context).hours}",
                               ),
                             ),
                           )

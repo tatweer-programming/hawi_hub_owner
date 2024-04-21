@@ -9,6 +9,13 @@ final class MainInitial extends MainState {
   List<Object> get props => [];
 }
 
+class MainError extends MainState {
+  final Exception exception;
+  const MainError(this.exception);
+  @override
+  List<Object> get props => [];
+}
+
 class ChangePage extends MainState {
   final int index;
 
@@ -32,7 +39,9 @@ class GetBannersSuccess extends MainState {
   List<Object> get props => [];
 }
 
-class GetBannersError extends MainState {
+class GetBannersError extends MainError {
+  const GetBannersError(super.exception);
+
   @override
   List<Object> get props => [];
 }
@@ -51,7 +60,9 @@ class GetSportsSuccess extends MainState {
   List<Object> get props => [];
 }
 
-class GetSportsError extends MainState {
+class GetSportsError extends MainError {
+  const GetSportsError(super.exception);
+
   @override
   List<Object> get props => [];
 }

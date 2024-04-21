@@ -12,20 +12,33 @@ class PlaceCubit extends Cubit<PlaceState> {
   PlaceCubit() : super(PlaceInitial());
 
   static PlaceCubit? cubit;
-  static PlaceCubit get() => cubit ?? PlaceCubit();
+  static PlaceCubit get() {
+    cubit ??= PlaceCubit();
+    return cubit!;
+  }
+
   Place? currentPlace;
   PlaceRemoteDataSource dataSource = PlaceRemoteDataSource();
   List<Place> places = [];
   List<BookingRequest> bookingRequests = [];
-  Future getPlaces() async {
-    emit(GetPlacesLoading());
-    var result = await dataSource.getPlaces();
-    result.fold((l) {
-      emit(GetPlacesError(l));
-    }, (r) {
-      places = r;
-      emit(GetPlacesSuccess(r));
-    });
+  bool isPlacesLoading = true;
+  bool isBookingRequestsLoading = true;
+
+  void getPlaces() async {
+    if (places.isEmpty) {
+      emit(GetPlacesLoading());
+      var result = await dataSource.getPlaces();
+      result.fold((l) {
+        isPlacesLoading = false;
+        emit(GetPlacesError(l));
+      }, (r) {
+        print("getPlaces");
+        places = r;
+        print(places.length);
+        isPlacesLoading = false;
+        emit(GetPlacesSuccess(r));
+      });
+    }
   }
 
   Future createPlace(PlaceCreationForm placeCreationForm) async {
@@ -72,14 +85,18 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future getBookingRequests() async {
-    emit(GetBookingRequestsLoading());
-    var result = await dataSource.getBookingRequests();
-    result.fold((l) {
-      emit(GetBookingRequestsError(l));
-    }, (r) {
-      bookingRequests = r;
-      emit(GetBookingRequestsSuccess(r));
-    });
+    if (bookingRequests.isEmpty) {
+      emit(GetBookingRequestsLoading());
+      var result = await dataSource.getBookingRequests();
+      result.fold((l) {
+        isBookingRequestsLoading = false;
+        emit(GetBookingRequestsError(l));
+      }, (r) {
+        bookingRequests = r;
+        isBookingRequestsLoading = false;
+        emit(GetBookingRequestsSuccess(r));
+      });
+    }
   }
 
   Future acceptBookingRequest(int requestId) async {
@@ -93,12 +110,12 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future declineBookingRequest(int requestId) async {
-    emit(AcceptBookingRequestLoading());
+    emit(DeclineBookingRequestLoading());
     var result = await dataSource.declineBookingRequest(requestId);
     result.fold((l) {
-      emit(AcceptBookingRequestError(l));
+      emit(DeclineBookingRequestError(l));
     }, (r) {
-      emit(AcceptBookingRequestSuccess());
+      emit(DeclineBookingRequestSuccess());
     });
   }
 }

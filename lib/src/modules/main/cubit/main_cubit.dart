@@ -36,7 +36,7 @@ class MainCubit extends Cubit<MainState> {
     var result = await mainServices.getBanners();
     result.fold((l) {
       // ExceptionManager(l).translatedMessage();
-      emit(GetBannersError());
+      emit(GetBannersError(l));
     }, (r) {
       bannerList = r;
       emit(GetBannersSuccess(r));
@@ -47,7 +47,7 @@ class MainCubit extends Cubit<MainState> {
     emit(GetSportsLoading());
     var result = await mainServices.getSports();
     result.fold((l) {
-      emit(GetSportsError());
+      emit(GetSportsError(l));
     }, (r) {
       sportsList = r;
       emit(GetSportsSuccess(r));

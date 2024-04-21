@@ -14,5 +14,10 @@
   "places" : "Places",
   "requests" : "Requests",
   "more" : "More",
-  "home" : "Home"
+  "home" : "Home",
+  "viewDetails" : "View details",
+  "accept" : "Accept",
+  "decline" : "Decline",
+  "noPlaces" : "No places found",
+  "noRequests" : "No requests found"
 }

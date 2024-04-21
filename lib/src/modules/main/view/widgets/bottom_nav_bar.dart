@@ -38,13 +38,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
                     label: S.of(context).home,
                   ),
                   NavBarItem(
-                    iconData: Icons.group_add_outlined,
-                    label: S.of(context).requests,
+                    icon: "assets/images/icons/book.webp",
+                    label: S.of(context).places,
                     index: 1,
                   ),
                   NavBarItem(
-                    icon: "assets/images/icons/book.webp",
-                    label: S.of(context).places,
+                    iconData: Icons.group_add_outlined,
+                    label: S.of(context).requests,
                     index: 2,
                   ),
                   NavBarItem(

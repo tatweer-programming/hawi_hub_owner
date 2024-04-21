@@ -11,4 +11,5 @@ class Routes {
   static const String game = '/game';
   static const String allPlayers = '/allPlayers';
   static const String createGame = '/createGame';
+  static const String bookingRequestDetails = '/bookingRequestDetails';
 }

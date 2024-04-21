@@ -21,6 +21,7 @@ class AppRouter {
         );
       case Routes.place:
         Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        print(arguments['id']);
         return MaterialPageRoute(builder: (_) => PlaceScreen(placeId: arguments['id']));
       // case Routes.login:
       //   return MaterialPageRoute(builder: (_) => const LoginScreen());
