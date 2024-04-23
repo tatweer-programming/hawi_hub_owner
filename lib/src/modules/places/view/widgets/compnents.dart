@@ -120,6 +120,7 @@ class PlaceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        PlaceCubit.get().currentPlace = place;
         context.push(Routes.place, arguments: {"id": place.id});
       },
       child: Container(
