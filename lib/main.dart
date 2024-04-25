@@ -12,6 +12,8 @@ import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/theme_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/place_location_screen.dart';
 import 'package:sizer/sizer.dart';
 import "package:timeago/timeago.dart" as timeago;
 
@@ -19,6 +21,7 @@ Future<void> main() async {
   timeago.setLocaleMessages("ar", timeago.ArMessages());
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
+
   DioHelper.init();
   ConstantsManager.userId = await CacheHelper.getData(key: 'id');
   ConstantsManager.userToken = await CacheHelper.getData(key: 'token');

@@ -11,7 +11,7 @@ class EndPoints {
 
   ///
   static const String getPlaces = '/places';
-  static const String createPlace = '/createplace';
+  static const String createPlace = '/Owner/Stadium/Add';
   static const String updatePlace = '/updateplace';
   static const String deletePlace = '/deleteplace';
   static const String uploadImages = '/uploadimage';

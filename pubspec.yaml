@@ -64,7 +64,11 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^6.1.0
+  location_picker_flutter_map:
+  cupertino_stepper:
+  file_picker: ^8.0.2
+  open_file:
+  open_file_plus: ^3.4.1+1
 
 dev_dependencies:
   flutter_test:

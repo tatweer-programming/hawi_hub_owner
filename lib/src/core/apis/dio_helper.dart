@@ -99,4 +99,12 @@ class DioHelper {
       rethrow; // Rethrow the error to be handled elsewhere
     }
   }
+
+  static Future<Response> postFormData(String path, FormData formData) async {
+    dio.options.headers = {
+      'Content-Type': 'multipart/form-data',
+      "Connection": "keep-alive",
+    };
+    return await dio.post(path, data: formData);
+  }
 }

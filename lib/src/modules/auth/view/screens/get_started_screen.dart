@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
+import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
-import 'package:hawi_hub_owner/src/core/utils/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
 import 'package:sizer/sizer.dart';
@@ -52,7 +53,7 @@ class GetStartedScreen extends StatelessWidget {
             ),
             defaultButton(
               onPressed: () {
-                context.push(const LoginScreen());
+                context.push(Routes.login);
               },
               fontSize: 17.sp,
               text: "READY , SET , GO",

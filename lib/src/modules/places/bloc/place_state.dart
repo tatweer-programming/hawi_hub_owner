@@ -1,9 +1,12 @@
 part of 'place_cubit.dart';
 
 @immutable
-sealed class PlaceState {}
+sealed class PlaceState extends Equatable {}
 
-final class PlaceInitial extends PlaceState {}
+final class PlaceInitial extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
 abstract class PlaceError extends PlaceState {
   final Exception exception;
@@ -12,70 +15,153 @@ abstract class PlaceError extends PlaceState {
 
 class CreatePlaceError extends PlaceError {
   CreatePlaceError(super.exception);
+  @override
+  List<Object?> get props => [];
 }
 
 class UploadImagesError extends PlaceError {
   UploadImagesError(super.exception);
+  @override
+  List<Object?> get props => [];
 }
 
 class UpdatePlaceError extends PlaceError {
   UpdatePlaceError(super.exception);
+  @override
+  List<Object?> get props => [];
 }
 
 class DeletePlaceError extends PlaceError {
   DeletePlaceError(super.exception);
+  @override
+  List<Object?> get props => [];
 }
 
 class GetPlacesError extends PlaceError {
   GetPlacesError(super.exception);
+
+  @override
+  List<Object?> get props => [];
 }
 
 class GetBookingRequestsError extends PlaceError {
   GetBookingRequestsError(super.exception);
+  @override
+  List<Object?> get props => [];
 }
 
 class AcceptBookingRequestError extends PlaceError {
   AcceptBookingRequestError(super.exception);
+
+  @override
+  List<Object?> get props => [];
 }
 
 class DeclineBookingRequestError extends PlaceError {
   DeclineBookingRequestError(super.exception);
+  @override
+  List<Object?> get props => [];
 }
 
-class GetPlacesLoading extends PlaceState {}
+class GetPlacesLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
 class GetPlacesSuccess extends PlaceState {
   final List<Place> places;
   GetPlacesSuccess(this.places);
+  @override
+  List<Object?> get props => [];
 }
 
-class CreatePlaceLoading extends PlaceState {}
+class CreatePlaceLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class CreatePlaceSuccess extends PlaceState {}
+class CreatePlaceSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class UploadImagesLoading extends PlaceState {}
+class UploadImagesLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class UploadImagesSuccess extends PlaceState {}
+class UploadImagesSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class UpdatePlaceLoading extends PlaceState {}
+class UpdatePlaceLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class UpdatePlaceSuccess extends PlaceState {}
+class UpdatePlaceSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class DeletePlaceLoading extends PlaceState {}
+class DeletePlaceLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class DeletePlaceSuccess extends PlaceState {}
+class DeletePlaceSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class GetBookingRequestsLoading extends PlaceState {}
+class GetBookingRequestsLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
 class GetBookingRequestsSuccess extends PlaceState {
   final List<BookingRequest> bookingRequests;
   GetBookingRequestsSuccess(this.bookingRequests);
+  @override
+  List<Object?> get props => [bookingRequests];
 }
 
-class AcceptBookingRequestLoading extends PlaceState {}
+class AcceptBookingRequestLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class AcceptBookingRequestSuccess extends PlaceState {}
+class AcceptBookingRequestSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class DeclineBookingRequestLoading extends PlaceState {}
+class DeclineBookingRequestLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
 
-class DeclineBookingRequestSuccess extends PlaceState {}
+class DeclineBookingRequestSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class AddImagesSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class RemoveImagesSuccess extends PlaceState {
+  final String path;
+  RemoveImagesSuccess(this.path);
+  @override
+  List<Object?> get props => [path];
+}
+
+class SelectOwnershipFileSuccess extends PlaceState {
+  String path;
+  SelectOwnershipFileSuccess(this.path);
+  @override
+  List<Object?> get props => [];
+}

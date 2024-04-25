@@ -213,3 +213,34 @@ class PlaceItem extends StatelessWidget {
     );
   }
 }
+
+Widget dropdownBuilder(
+    {required String text,
+    IconData? icon,
+    required Function(String? value) onChanged,
+    required List<String> items}) {
+  return DropdownMenu<String>(
+    label: Text(text),
+    enableFilter: false,
+    requestFocusOnTap: false,
+    expandedInsets: EdgeInsets.zero,
+    enableSearch: false,
+    leadingIcon: Icon(
+      icon ?? Icons.search,
+      color: ColorManager.transparent,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: ColorManager.secondary,
+      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(22)),
+      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(22)),
+      contentPadding: EdgeInsets.symmetric(horizontal: 1.w),
+    ),
+    onSelected: onChanged,
+    menuHeight: 50.h,
+    dropdownMenuEntries: items.map<DropdownMenuEntry<String>>(
+      (String value) {
+        return DropdownMenuEntry<String>(value: value, label: value);
+      },
+    ).toList(),
+  );
+}

@@ -64,7 +64,7 @@ class Place extends Equatable {
       workingHours: List<Day>.from(
         json['working_hours'].map((x) => Day.fromJson(x)),
       ),
-      location: PlaceLocation.fromJson(json['location']),
+      location: PlaceLocation.fromString(json['location']),
       sportId: json['sport_id'],
     );
   }
@@ -77,8 +77,28 @@ class Place extends Equatable {
     return days;
   }
 
+  Place createCopy() {
+    return Place(
+      id: id,
+      name: name,
+      description: description,
+      address: address,
+      images: images,
+      ownerId: ownerId,
+      minimumHours: minimumHours,
+      price: price,
+      totalGames: totalGames,
+      totalRatings: totalRatings,
+      rating: rating,
+      feedbacks: feedbacks,
+      ownerName: ownerName,
+      ownerImageUrl: ownerImageUrl,
+      location: location,
+      sportId: sportId,
+      workingHours: workingHours,
+    );
+  }
+
   @override
-  List<Object?> get props => [
-        id,
-      ];
+  List<Object?> get props => [];
 }

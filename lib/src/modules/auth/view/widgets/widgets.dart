@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hawi_hub_owner/src/core/utils/navigation_manager.dart';
+import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/color_manager.dart';

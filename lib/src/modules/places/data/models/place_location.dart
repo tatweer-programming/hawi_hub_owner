@@ -7,16 +7,13 @@ class PlaceLocation {
     required this.longitude,
   });
 
-  factory PlaceLocation.fromJson(Map<String, dynamic> json) {
+  factory PlaceLocation.fromString(String string) {
     return PlaceLocation(
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      latitude: double.parse(string.split(",")[0]),
+      longitude: double.parse(string.split(",")[1]),
     );
   }
-  Map<String, dynamic> toJson() {
-    return {
-      'latitude': latitude,
-      'longitude': longitude,
-    };
+  String toJson() {
+    return "{'latitude': $latitude, 'longitude': $longitude}";
   }
 }

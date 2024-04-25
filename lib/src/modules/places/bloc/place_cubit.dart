@@ -1,11 +1,16 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
+import 'package:image_picker/image_picker.dart';
 part 'place_state.dart';
 
 class PlaceCubit extends Cubit<PlaceState> {
@@ -24,6 +29,49 @@ class PlaceCubit extends Cubit<PlaceState> {
   bool isPlacesLoading = true;
   bool isBookingRequestsLoading = true;
 
+  /// adding place
+  PlaceLocation? placeLocation;
+  List<Day> workingHours = [
+    Day(
+      dayId: 0,
+      endTime: 20,
+      startTime: 8,
+    ),
+    Day(
+      dayId: 1,
+      endTime: 20,
+      startTime: 8,
+    ),
+    Day(
+      dayId: 2,
+      endTime: 20,
+      startTime: 8,
+    ),
+    Day(
+      dayId: 3,
+      endTime: 20,
+      startTime: 8,
+    ),
+    Day(
+      dayId: 4,
+      endTime: 20,
+      startTime: 8,
+    ),
+    Day(
+      dayId: 5,
+      endTime: 20,
+      startTime: 8,
+    ),
+    Day(
+      dayId: 6,
+      endTime: 20,
+      startTime: 8,
+    ),
+  ];
+  int? selectedCityId;
+  String? selectedSport;
+  List<File> imageFiles = [];
+  File? selectedOwnershipFile;
   void getPlaces() async {
     if (places.isEmpty) {
       emit(GetPlacesLoading());
@@ -117,5 +165,32 @@ class PlaceCubit extends Cubit<PlaceState> {
     }, (r) {
       emit(DeclineBookingRequestSuccess());
     });
+  }
+
+  Future addImages() async {
+    ImagePicker imagePicker = ImagePicker();
+    List<XFile>? images = await imagePicker.pickMultiImage();
+    imageFiles.addAll(images.map((e) => File(e.path)).toList());
+    emit(AddImagesSuccess());
+  }
+
+  void removeImage(String image) {
+    imageFiles.removeWhere((element) => element.path == image);
+    emit(RemoveImagesSuccess(image));
+  }
+
+  Future selectOwnershipFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowMultiple: false,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result != null) {
+      selectedOwnershipFile = File(result.files.single.path!);
+      emit(SelectOwnershipFileSuccess(selectedOwnershipFile!.path));
+    } else {
+      // User canceled the picker
+    }
   }
 }

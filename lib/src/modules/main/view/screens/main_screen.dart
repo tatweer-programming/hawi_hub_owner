@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/bottom_nav_bar.dart';
 
+import '../../../../core/routing/routes.dart';
 import '../../../places/data/models/place.dart';
 
 class MainScreen extends StatelessWidget {
@@ -17,7 +19,9 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_home_outlined),
-        onPressed: () {},
+        onPressed: () {
+          context.push(Routes.createPlace);
+        },
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(),
       body: BlocBuilder<MainCubit, MainState>(

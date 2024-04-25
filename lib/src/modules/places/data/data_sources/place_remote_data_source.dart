@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
@@ -31,15 +32,18 @@ class PlaceRemoteDataSource {
 
   Future<Either<Exception, Unit>> createPlace(PlaceCreationForm placeCreationForm) async {
     try {
-      var response = await DioHelper.postData(
-          path: EndPoints.createPlace,
-          data: placeCreationForm.toJson(),
-          query: {"token": ConstantsManager.userToken});
+      FormData formData = placeCreationForm.toFormData();
+      var response = await DioHelper.postFormData(
+        EndPoints.createPlace,
+        formData,
+      );
       if (response.statusCode == 200) {
+        print("added");
         return const Right(unit);
       }
       return Left(Exception(response.data['message']));
     } on Exception catch (e) {
+      print(e);
       return Left(e);
     }
   }
@@ -89,10 +93,10 @@ class PlaceRemoteDataSource {
   Future<Either<Exception, List<BookingRequest>>> getBookingRequests() async {
     try {
       List<BookingRequest> bookingRequests = [];
-      var response = await DioHelper.getData(path: EndPoints.getBookingRequest);
-      if (response.statusCode == 200) {
-        bookingRequests = (response.data as List).map((e) => BookingRequest.fromJson(e)).toList();
-      }
+      // var response = await DioHelper.getData(path: EndPoints.getBookingRequest);
+      // if (response.statusCode == 200) {
+      //   bookingRequests = (response.data as List).map((e) => BookingRequest.fromJson(e)).toList();
+      // }
       return Right(bookingRequests);
     } on Exception catch (e) {
       return Left(e);

@@ -12,4 +12,9 @@ class Routes {
   static const String allPlayers = '/allPlayers';
   static const String createGame = '/createGame';
   static const String bookingRequestDetails = '/bookingRequestDetails';
+  static const String editPlace = '/editPlace';
+  static const String createPlace = '/createPlace';
+  static const String placeLocation = '/placeLocation';
+  static const String pickLocation = '/pickLocation';
+  static const String addWorkingHours = '/addWorkingHours';
 }

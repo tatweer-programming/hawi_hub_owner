@@ -24,25 +24,57 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accept": MessageLookupByLibrary.simpleMessage("قبول"),
         "addBooking": MessageLookupByLibrary.simpleMessage("اضافة حجز"),
+        "addImages": MessageLookupByLibrary.simpleMessage("اضافة صور"),
+        "addPlace": MessageLookupByLibrary.simpleMessage("إضافة مكان"),
+        "addWorkingHours":
+            MessageLookupByLibrary.simpleMessage("اضافة ساعات العمل"),
+        "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "booking": MessageLookupByLibrary.simpleMessage("الحجز"),
+        "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
+        "city": MessageLookupByLibrary.simpleMessage("المدينة"),
+        "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
+        "day": MessageLookupByLibrary.simpleMessage("اليوم"),
         "decline": MessageLookupByLibrary.simpleMessage("رفض"),
+        "delete": MessageLookupByLibrary.simpleMessage("حذف"),
+        "deletePlace": MessageLookupByLibrary.simpleMessage("حذف المكان"),
+        "deletePlaceConfirmation":
+            MessageLookupByLibrary.simpleMessage("هل تريد حذف أمكانك"),
+        "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
+        "editPlace": MessageLookupByLibrary.simpleMessage("تعديل المكان"),
+        "from": MessageLookupByLibrary.simpleMessage("من"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
+        "minimumHours":
+            MessageLookupByLibrary.simpleMessage("الحد الادنى لساعات الحجز"),
         "more": MessageLookupByLibrary.simpleMessage("المزيد"),
         "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
         "noPlaces": MessageLookupByLibrary.simpleMessage("لا يوجد أماكن"),
+        "noRatings": MessageLookupByLibrary.simpleMessage("لا يوجد تقييمات"),
         "noRequests": MessageLookupByLibrary.simpleMessage("لا يوجد طلبات"),
         "notifications": MessageLookupByLibrary.simpleMessage("التنبيهات"),
+        "ownershipFile":
+            MessageLookupByLibrary.simpleMessage("ملف إثبات الملكية"),
+        "perHour": MessageLookupByLibrary.simpleMessage(" لكل ساعة"),
+        "placeAdded":
+            MessageLookupByLibrary.simpleMessage("تمت إرسال طلب الاضافة"),
+        "placeName": MessageLookupByLibrary.simpleMessage("اسم المكان"),
         "places": MessageLookupByLibrary.simpleMessage("الأماكن"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "requests": MessageLookupByLibrary.simpleMessage("الطلبات"),
+        "requiredField":
+            MessageLookupByLibrary.simpleMessage(" هذا الحقل مطلوب"),
+        "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
+        "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
         "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
+        "to": MessageLookupByLibrary.simpleMessage("إلى"),
+        "totalGames": MessageLookupByLibrary.simpleMessage("إجمالي الحجوزات"),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
+        "workingHours": MessageLookupByLibrary.simpleMessage("ساعات العمل"),
         "yourPlaces": MessageLookupByLibrary.simpleMessage("أماكنك")
       };
 }

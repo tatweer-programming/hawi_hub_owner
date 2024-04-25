@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/add_working_hours_screen.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/create_place_screen.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/edit_place_screen.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/place_location_screen.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/share_loaction_screen.dart';
 
 import '../../modules/main/view/screens/main_screen.dart';
 import '../../modules/main/view/screens/notifications_screen.dart';
@@ -32,6 +37,22 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
       // case Routes.profile:
       //   return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      case Routes.createPlace:
+        return MaterialPageRoute(builder: (_) => CreatePlaceScreen());
+      case Routes.pickLocation:
+        return MaterialPageRoute(builder: (_) => const PickLocationScreen());
+      case Routes.editPlace:
+        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        print(arguments['id']);
+        return MaterialPageRoute(builder: (_) => EditPlaceScreen(placeId: arguments['id']));
+      case Routes.placeLocation:
+        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (_) => PlaceLocationScreen(
+                  location: arguments['location'],
+                ));
+      case Routes.addWorkingHours:
+        return MaterialPageRoute(builder: (_) => const AddWorkingHours());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

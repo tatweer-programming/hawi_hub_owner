@@ -259,6 +259,266 @@ class S {
       args: [],
     );
   }
+
+  /// `SAR`
+  String get sar {
+    return Intl.message(
+      'SAR',
+      name: 'sar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `per hour`
+  String get perHour {
+    return Intl.message(
+      'per hour',
+      name: 'perHour',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total games`
+  String get totalGames {
+    return Intl.message(
+      'Total games',
+      name: 'totalGames',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No ratings found`
+  String get noRatings {
+    return Intl.message(
+      'No ratings found',
+      name: 'noRatings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show in map`
+  String get showInMap {
+    return Intl.message(
+      'Show in map',
+      name: 'showInMap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm delete`
+  String get confirmDelete {
+    return Intl.message(
+      'Confirm delete',
+      name: 'confirmDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this place?`
+  String get deletePlaceConfirmation {
+    return Intl.message(
+      'Are you sure you want to delete this place?',
+      name: 'deletePlaceConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit place`
+  String get editPlace {
+    return Intl.message(
+      'Edit place',
+      name: 'editPlace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete place`
+  String get deletePlace {
+    return Intl.message(
+      'Delete place',
+      name: 'deletePlace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add place`
+  String get addPlace {
+    return Intl.message(
+      'Add place',
+      name: 'addPlace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Required field`
+  String get requiredField {
+    return Intl.message(
+      'Required field',
+      name: 'requiredField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Place name`
+  String get placeName {
+    return Intl.message(
+      'Place name',
+      name: 'placeName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get address {
+    return Intl.message(
+      'Address',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum hours for booking`
+  String get minimumHours {
+    return Intl.message(
+      'Minimum hours for booking',
+      name: 'minimumHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request added successfully`
+  String get placeAdded {
+    return Intl.message(
+      'Request added successfully',
+      name: 'placeAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Working hours`
+  String get workingHours {
+    return Intl.message(
+      'Working hours',
+      name: 'workingHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add working hours`
+  String get addWorkingHours {
+    return Intl.message(
+      'Add working hours',
+      name: 'addWorkingHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get city {
+    return Intl.message(
+      'City',
+      name: 'city',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add images`
+  String get addImages {
+    return Intl.message(
+      'Add images',
+      name: 'addImages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ownership file`
+  String get ownershipFile {
+    return Intl.message(
+      'Ownership file',
+      name: 'ownershipFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Day`
+  String get day {
+    return Intl.message(
+      'Day',
+      name: 'day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From`
+  String get from {
+    return Intl.message(
+      'From',
+      name: 'from',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To`
+  String get to {
+    return Intl.message(
+      'To',
+      name: 'to',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
