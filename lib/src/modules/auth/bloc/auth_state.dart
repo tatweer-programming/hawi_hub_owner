@@ -8,7 +8,11 @@ class AuthInitial extends AuthState {}
 // register player
 class RegisterLoadingState extends AuthState {}
 
-class RegisterSuccessState extends AuthState {}
+class RegisterSuccessState extends AuthState {
+  final String value;
+
+  RegisterSuccessState({required this.value});
+}
 
 class RegisterErrorState extends AuthState {
   final String error;
@@ -86,12 +90,29 @@ class GetMyProfileErrorState extends AuthState {
 // login player
 class LoginLoadingState extends AuthState {}
 
-class LoginSuccessState extends AuthState {}
+class LoginSuccessState extends AuthState {
+  final String value;
+
+  LoginSuccessState(this.value);
+}
 
 class LoginErrorState extends AuthState {
   final String error;
 
   LoginErrorState(this.error);
+}
+// Change pass
+
+class ChangePasswordErrorState extends AuthState {
+  final String error;
+
+  ChangePasswordErrorState(this.error);
+}
+
+class ChangePasswordSuccessState extends AuthState {
+  final String value;
+
+  ChangePasswordSuccessState(this.value);
 }
 
 // logout player
@@ -119,6 +140,8 @@ class AcceptConfirmTermsState extends AuthState {
 
   AcceptConfirmTermsState(this.accept);
 }
+
+class UpdateProfileLoadingState extends AuthState {}
 
 class ChangePasswordVisibilityState extends AuthState {
   final bool visible;

@@ -39,7 +39,7 @@ class SlidePageRoute extends PageRouteBuilder {
 
   SlidePageRoute({required this.child})
       : super(
-          transitionDuration: const Duration(seconds: 1),
+          transitionDuration: const Duration(milliseconds: 500),
           pageBuilder: (context, animation, secondaryAnimation) => child,
         );
 

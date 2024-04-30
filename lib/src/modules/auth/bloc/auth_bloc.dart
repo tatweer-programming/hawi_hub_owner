@@ -36,9 +36,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _repository
             .registerPlayer(authOwner: event.authOwner)
             .then((value) {
-          print("value $value");
-          if (value == "Registration Successful") {
-            emit(RegisterSuccessState());
+          if (value == "Account Created Successfully") {
+            emit(RegisterSuccessState(value: value));
           } else {
             emit(RegisterErrorState(value));
           }
@@ -46,11 +45,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else if (event is LoginPlayerEvent) {
         emit(LoginLoadingState());
         await _repository
-            .loginPlayer(event.email, event.password)
+            .loginPlayer(
+                email: event.email,
+                password: event.password,
+                loginWithFBOrGG: false)
             .then((value) {
-          print(value);
-          if (value == "Login Successfully") {
-            emit(LoginSuccessState());
+          if (value == "Account LogedIn Successfully") {
+            emit(LoginSuccessState(value));
           } else {
             emit(LoginErrorState(value));
           }
@@ -72,7 +73,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(LoginErrorState(l));
         }, (r) {
           if (r) {
-            emit(LoginSuccessState());
+            emit(LoginSuccessState("Account LogedIn Successfully"));
           } else {
             emit(LoginErrorState("Something went wrong"));
           }
@@ -84,7 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(LoginErrorState(l));
         }, (r) {
           if (r) {
-            emit(LoginSuccessState());
+            emit(LoginSuccessState("Account LogedIn Successfully"));
           } else {
             emit(LoginErrorState("Something went wrong"));
           }
@@ -117,6 +118,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(LogoutLoadingState());
         _clearUserData();
         emit(LogoutSuccessState());
+      } else if (event is ChangePasswordEvent) {
+        var result = await _repository.changePassword(
+          oldPassword: event.oldPassword,
+          newPassword: event.newPassword,
+        );
+        if (result == "Password Changed Successfully") {
+          emit(ChangePasswordSuccessState(result));
+        } else {
+          emit(ChangePasswordErrorState("Something went wrong"));
+        }
       } else if (event is ResetPasswordEvent) {
         emit(ResetPasswordLoadingState());
         await _repository
@@ -136,14 +147,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         File? imagePicked = await _captureAndSaveGalleryImage();
         image = imagePicked;
         emit(AddProfilePictureSuccessState(profilePictureFile: imagePicked!));
-      } else if (event is GetSportsEvent) {
-        emit(GetSportsLoadingState());
-        var res = await _repository.getSports();
-        res.fold((l) {
-          emit(GetSportsErrorState(l));
-        }, (r) {
-          emit(GetSportsSuccessState(r));
-        });
+        add(UpdateProfilePictureEvent(imagePicked));
+      } else if (event is UpdateProfilePictureEvent) {
+        await _repository
+            .changeProfileImage(event.profileImage);
       } else if (event is GetProfileEvent) {
         emit(GetMyProfileLoadingState());
         var res = await _repository.getProfile(event.id);
@@ -204,10 +211,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 }
 
 Future _clearUserData() async {
-  ConstantsManager.userToken = null;
   ConstantsManager.userId = null;
   await CacheHelper.removeData(key: "id");
-  await CacheHelper.removeData(key: "token");
 }
 
 Future<File?> _captureAndSaveGalleryImage() async {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
@@ -9,7 +11,8 @@ class DioHelper {
     dio = Dio(BaseOptions(
       baseUrl: ApiManager.baseUrl,
       connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 3),
+      receiveTimeout: const Duration(seconds: 5),
+      validateStatus: (_) => true,
     ));
   }
 
@@ -40,6 +43,7 @@ class DioHelper {
       dio.options.headers = {
         'Content-Type': 'application/json',
         "Connection": "keep-alive",
+        'Authorization': 'Basic ' + base64.encode(utf8.encode('11173646:60-dayfreetrial')),
       };
       return await dio.post(
         path,
@@ -57,13 +61,14 @@ class DioHelper {
   static Future<Response> putData({
     required String path,
     Map<String, dynamic>? query,
-    required Map<String, dynamic>? data,
+    required dynamic? data,
     String? token,
   }) async {
     try {
       dio.options.headers = {
         'Content-Type': 'application/json',
         'Authorization': token ?? '',
+        'Authorization': 'Basic ' + base64.encode(utf8.encode('11173646:60-dayfreetrial')),
       };
       return await dio.put(
         path,

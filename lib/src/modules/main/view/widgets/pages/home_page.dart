@@ -2,12 +2,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
-import 'package:hawi_hub_owner/src/core/common%20widgets/common_widgets.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
+import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/connectivity.dart';
@@ -31,7 +32,8 @@ class HomePage extends StatelessWidget {
     return BlocConsumer<PlaceCubit, PlaceState>(
       listener: (context, state) {
         if (state is PlaceError) {
-          errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+          errorToast(
+              msg: ExceptionManager(state.exception).translatedMessage());
         }
       },
       builder: (context, state) {
@@ -54,7 +56,17 @@ class HomePage extends StatelessWidget {
                 InkWell(
                   radius: 360,
                   onTap: () {
-                    context.push(Routes.profile);
+                    context.push(
+                      Routes.profile,
+                      arguments: Owner(
+                          id: 2,
+                          userName: "userName",
+                          email: "email",
+                          profilePictureUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6T-mPdQetCXqpdgWRnFFjx0gAZUWVgXD8Mf6kuvvjSw&s",
+                          myWallet: 60,
+                          feedbacks: [],
+                          rate: 5),
+                    );
                   },
                   child: const CircleAvatar(
                     backgroundImage: NetworkImage(
@@ -87,7 +99,9 @@ class HomePage extends StatelessWidget {
                       child: BlocConsumer<MainCubit, MainState>(
                         listener: (context, state) {
                           if (state is MainError) {
-                            errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+                            errorToast(
+                                msg: ExceptionManager(state.exception)
+                                    .translatedMessage());
                           }
                         },
                         builder: (context, state) {
@@ -114,10 +128,14 @@ class HomePage extends StatelessWidget {
                                           builder: (BuildContext context) {
                                             return Container(
                                               width: 88.w,
-                                              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5.0),
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(20),
-                                                  color: ColorManager.shimmerBaseColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: ColorManager
+                                                      .shimmerBaseColor,
                                                   image: DecorationImage(
                                                     fit: BoxFit.cover,
                                                     image: NetworkImage(i),
@@ -138,7 +156,9 @@ class HomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Expanded(child: TitleText(S.of(context).requests, isBold: true)),
+                        Expanded(
+                            child: TitleText(S.of(context).requests,
+                                isBold: true)),
                         TextButton(
                             onPressed: () {
                               mainCubit.changePage(2);
@@ -146,8 +166,10 @@ class HomePage extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(S.of(context).viewAll,
-                                    style: TextStyleManager.getGoldenRegularStyle()),
-                                const Icon(Icons.arrow_forward, color: ColorManager.golden)
+                                    style: TextStyleManager
+                                        .getGoldenRegularStyle()),
+                                const Icon(Icons.arrow_forward,
+                                    color: ColorManager.golden)
                               ],
                             ))
                       ],
@@ -167,8 +189,10 @@ class HomePage extends StatelessWidget {
                                     ? Center(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             SizedBox(
                                               height: 10.h,
@@ -185,8 +209,11 @@ class HomePage extends StatelessWidget {
                                     : ListView.separated(
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index) =>
-                                            PlaceItem(place: placeCubit.places[index]),
-                                        separatorBuilder: (context, index) => SizedBox(
+                                            PlaceItem(
+                                                place:
+                                                    placeCubit.places[index]),
+                                        separatorBuilder: (context, index) =>
+                                            SizedBox(
                                               width: 4.w,
                                             ),
                                         itemCount: placeCubit.places.length < 3
@@ -197,7 +224,9 @@ class HomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Expanded(child: TitleText(S.of(context).yourPlaces, isBold: true)),
+                        Expanded(
+                            child: TitleText(S.of(context).yourPlaces,
+                                isBold: true)),
                         TextButton(
                             onPressed: () {
                               mainCubit.changePage(1);
@@ -205,8 +234,10 @@ class HomePage extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(S.of(context).viewAll,
-                                    style: TextStyleManager.getGoldenRegularStyle()),
-                                const Icon(Icons.arrow_forward, color: ColorManager.golden)
+                                    style: TextStyleManager
+                                        .getGoldenRegularStyle()),
+                                const Icon(Icons.arrow_forward,
+                                    color: ColorManager.golden)
                               ],
                             ))
                       ],
@@ -219,14 +250,17 @@ class HomePage extends StatelessWidget {
                       child: BlocBuilder<PlaceCubit, PlaceState>(
                           bloc: placeCubit,
                           builder: (context, state) {
-                            return state is GetPlacesLoading || placeCubit.isPlacesLoading
+                            return state is GetPlacesLoading ||
+                                    placeCubit.isPlacesLoading
                                 ? const HorizontalPlacesShimmer()
                                 : placeCubit.places.isEmpty
                                     ? Center(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             SizedBox(
                                               height: 10.h,
@@ -243,8 +277,11 @@ class HomePage extends StatelessWidget {
                                     : ListView.separated(
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index) =>
-                                            PlaceItem(place: placeCubit.places[index]),
-                                        separatorBuilder: (context, index) => SizedBox(
+                                            PlaceItem(
+                                                place:
+                                                    placeCubit.places[index]),
+                                        separatorBuilder: (context, index) =>
+                                            SizedBox(
                                               width: 4.w,
                                             ),
                                         itemCount: placeCubit.places.length < 3

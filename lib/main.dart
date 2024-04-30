@@ -10,6 +10,7 @@ import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/theme_manager.dart';
+import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
@@ -24,7 +25,6 @@ Future<void> main() async {
 
   DioHelper.init();
   ConstantsManager.userId = await CacheHelper.getData(key: 'id');
-  ConstantsManager.userToken = await CacheHelper.getData(key: 'token');
   await LocalizationManager.init();
   runApp(const MyApp());
 }
@@ -41,9 +41,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<MainCubit>(create: (context) => MainCubit.get()),
-          // BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc(AuthInitial())),
+          BlocProvider<AuthBloc>(
+            create: (BuildContext context) => AuthBloc(
+              AuthInitial(),
+            ),
+          ),
           //   BlocProvider<GamesBloc>(create: (BuildContext context) => GamesBloc.get()),
-          BlocProvider<PlaceCubit>(create: (BuildContext context) => PlaceCubit.get()),
+          BlocProvider<PlaceCubit>(
+              create: (BuildContext context) => PlaceCubit.get()),
         ],
         child: Sizer(builder: (context, orientation, deviceType) {
           AppRouter appRouter = AppRouter();

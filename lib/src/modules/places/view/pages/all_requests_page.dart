@@ -24,40 +24,44 @@ class AllRequestsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppBar(
-            height: 33.h,
-            opacity: .15,
-            backgroundImage: "assets/images/app_bar_backgrounds/1.webp",
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    context.push(Routes.notifications);
+          Align(
+            alignment: AlignmentDirectional.topCenter,
+            heightFactor: 0.85,
+            child: CustomAppBar(
+              height: 33.h,
+              opacity: .15,
+              backgroundImage: "assets/images/app_bar_backgrounds/1.webp",
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      context.push(Routes.notifications);
+                    },
+                    icon: const ImageIcon(
+                      AssetImage("assets/images/icons/notification.webp"),
+                      color: ColorManager.golden,
+                    )),
+                InkWell(
+                  radius: 360,
+                  onTap: () {
+                    context.push(Routes.profile);
                   },
-                  icon: const ImageIcon(
-                    AssetImage("assets/images/icons/notification.webp"),
-                    color: ColorManager.golden,
-                  )),
-              InkWell(
-                radius: 360,
-                onTap: () {
-                  context.push(Routes.profile);
-                },
-                child: const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://img.freepik.com/free-vector/isolated-young-handsome-man-set-different-poses-white-background-illustration_632498-649.jpg?t=st=1711503056~exp=1711506656~hmac=9aea7449b3ae3f763053d68d15a49e3c70fa1e73e98311d518de5f01c2c3d41c&w=740"),
-                  backgroundColor: ColorManager.golden,
+                  child: const CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://img.freepik.com/free-vector/isolated-young-handsome-man-set-different-poses-white-background-illustration_632498-649.jpg?t=st=1711503056~exp=1711506656~hmac=9aea7449b3ae3f763053d68d15a49e3c70fa1e73e98311d518de5f01c2c3d41c&w=740"),
+                    backgroundColor: ColorManager.golden,
+                  ),
                 ),
-              ),
-            ],
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 5.w,
-              ),
-              child: SizedBox(
-                height: 7.h,
-                child: Text(
-                  S.of(context).requests,
-                  style: TextStyleManager.getAppBarTextStyle(),
+              ],
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 5.w,
+                ),
+                child: SizedBox(
+                  height: 7.h,
+                  child: Text(
+                    S.of(context).requests,
+                    style: TextStyleManager.getAppBarTextStyle(),
+                  ),
                 ),
               ),
             ),
