@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_sign_in/widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/rates_screen.dart';
@@ -22,6 +27,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthBloc bloc = AuthBloc.get(context);
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return Scaffold(
@@ -31,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Stack(
                   children: [
-                    _appBar(context, owner),
+                    _appBar(context: context, owner: owner),
                   ],
                 ),
               ),
@@ -52,92 +58,11 @@ class ProfileScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Text(
-                      owner.rate!.remainder(1).toString(),
-                      style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.bold),
-                    ),
-                    RatingBar.builder(
-                      initialRating: owner.rate!,
-                      minRating: 1,
-                      itemSize: 25.sp,
-                      direction: Axis.horizontal,
-                      ignoreGestures: true,
-                      allowHalfRating: true,
-                      itemPadding: EdgeInsets.zero,
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: ColorManager.golden,
-                      ),
-                      onRatingUpdate: (rating) {},
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    owner.feedbacks.isEmpty
-                        ? Container()
-                        : Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "People Rate",
-                                    style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const Spacer(),
-                                  _seeAll(() {
-                                    context.pushWithTransition(RatesScreen(
-                                      owner: owner,
-                                    ));
-                                  })
-                                ],
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              state is GetMyProfileLoadingState
-                                  ? ShimmerWidget(
-                                      height: 13.h,
-                                      width: double.infinity,
-                                      placeholder: ShimmerPlaceHolder(
-                                        borderRadius: 15.sp,
-                                      ),
-                                    )
-                                  : ListView.separated(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) =>
-                                          _peopleRateBuilder(
-                                              owner.feedbacks[index]),
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(
-                                            height: 2.h,
-                                          ),
-                                      itemCount:
-                                          owner.feedbacks.take(2).length),
-                            ],
-                          ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        "My Wallet",
-                        style: TextStyle(
-                            fontSize: 15.sp, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    _walletWidget(() {}, owner.myWallet.toString()),
+                    _emailConfirmed(
+                        bloc: bloc,
+                        owner: owner,
+                        context: context,
+                        state: state),
                   ],
                 ),
               )
@@ -177,10 +102,10 @@ Widget _walletWidget(VoidCallback onTap, String wallet) {
   );
 }
 
-Widget _appBar(
-  BuildContext context,
-  Owner owner,
-) {
+Widget _appBar({
+  required BuildContext context,
+  required Owner owner,
+}) {
   return Stack(
     alignment: AlignmentDirectional.bottomCenter,
     children: [
@@ -209,13 +134,14 @@ Widget _appBar(
                 ),
               ),
               const Spacer(),
-              InkWell(
-                  onTap: () {
-                    context.pushWithTransition(EditProfileScreen(
-                      owner: owner,
-                    ));
-                  },
-                  child: _editIcon()),
+              if (owner.emailConfirmed == 2)
+                InkWell(
+                    onTap: () {
+                      context.pushWithTransition(EditProfileScreen(
+                        owner: owner,
+                      ));
+                    },
+                    child: _editIcon()),
             ],
           ),
         ),
@@ -239,75 +165,6 @@ Widget _editIcon() {
       width: 4.w,
     ),
   );
-}
-
-Widget _pentagonalWidget(int number, String text) {
-  return Stack(
-    alignment: AlignmentDirectional.center,
-    children: [
-      ClipPath(
-        clipper: TriangleClipper(),
-        child: Container(
-          width: 30.w,
-          height: 15.h,
-          color: ColorManager.black,
-        ),
-      ),
-      ClipPath(
-        clipper: TriangleClipper(),
-        child: Container(
-          width: 29.w,
-          height: 14.5.h,
-          color: ColorManager.white,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 1.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  number.toString(),
-                  maxLines: 1,
-                  style: TextStyle(
-                    color: ColorManager.primary,
-                    fontSize: 25.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Text(
-                  text,
-                  style: TextStyle(
-                    color: ColorManager.grey3,
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-class TriangleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0, 0);
-    path.lineTo(0, size.height * .7);
-    path.lineTo(size.width / 2, size.height);
-    path.lineTo(size.width, size.height * .7);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(TriangleClipper oldClipper) => false;
 }
 
 Widget _seeAll(VoidCallback onTap) {
@@ -411,4 +268,215 @@ Widget _peopleRateBuilder(FeedBack feedBack) {
       ),
     ],
   );
+}
+
+Widget _emailConfirmed({
+  required Owner owner,
+  required BuildContext context,
+  required AuthState state,
+  required AuthBloc bloc,
+}) {
+  if (owner.emailConfirmed == 0) {
+    return _notVerified(bloc);
+  } else if (owner.emailConfirmed == 1) {
+    return _pending();
+  }
+  return _verified(
+    owner: owner,
+    context: context,
+    state: state,
+  );
+}
+
+Widget _notVerified(AuthBloc bloc) {
+  File? imagePicked;
+  return BlocBuilder<AuthBloc, AuthState>(
+    builder: (context, state) {
+      if (state is AddImageSuccessState) {
+        if (state.imagePicked != null) {
+          imagePicked = state.imagePicked;
+        }
+      }
+      if (state is DeleteImageState) {
+        imagePicked = null;
+      }
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          Text(
+            "You must verify your account first",
+            style: TextStyleManager.getSecondarySubTitleStyle(),
+          ),
+          SizedBox(
+            height: 2.h,
+          ),
+          Text(
+            "Upload your national ID",
+            style: TextStyleManager.getSubTitleStyle(),
+          ),
+          SizedBox(
+            height: 3.h,
+          ),
+          if (imagePicked != null)
+            Column(
+              children: [
+                Stack(
+                  children: [
+                    Image.file(
+                      imagePicked!,
+                      height: 25.h,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        bloc.add(DeleteImageEvent());
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(5.sp),
+                        child: CircleAvatar(
+                            radius: 12.sp,
+                            backgroundColor: ColorManager.white,
+                            child: const Icon(
+                              Icons.close,
+                              color: ColorManager.primary,
+                            )),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 3.h,
+                ),
+                defaultButton(onPressed: () {
+                  if(imagePicked != null){
+                    bloc.add(UploadNationalIdEvent(imagePicked!));
+                  }
+                }, text: "Upload", fontSize: 17.sp)
+              ],
+            ),
+          if (imagePicked == null)
+            InkWell(
+              onTap: () {
+                bloc.add(AddImageEvent());
+              },
+              child: Container(
+                  padding: EdgeInsetsDirectional.all(25.sp),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    border: Border.all(color: ColorManager.black),
+                    borderRadius: BorderRadius.circular(10.sp),
+                  ),
+                  child: const Icon(Icons.file_copy_outlined)),
+            ),
+        ],
+      );
+    },
+  );
+}
+
+Widget _pending() {
+  return Column(
+    children: [
+      SizedBox(
+        height: 10.h,
+      ),
+      Text(
+        "The ID card is being verified now",
+        style: TextStyleManager.getSecondarySubTitleStyle(),
+      ),
+    ],
+  );
+}
+
+Widget _verified({
+  required Owner owner,
+  required BuildContext context,
+  required AuthState state,
+}) {
+  return Column(children: [
+    SizedBox(
+      height: 2.h,
+    ),
+    Text(
+      owner.rate!.remainder(1).toString(),
+      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+    ),
+    RatingBar.builder(
+      initialRating: owner.rate!,
+      minRating: 1,
+      itemSize: 25.sp,
+      direction: Axis.horizontal,
+      ignoreGestures: true,
+      allowHalfRating: true,
+      itemPadding: EdgeInsets.zero,
+      itemBuilder: (context, _) => const Icon(
+        Icons.star,
+        color: ColorManager.golden,
+      ),
+      onRatingUpdate: (rating) {},
+    ),
+    SizedBox(
+      height: 2.h,
+    ),
+    owner.feedbacks.isEmpty
+        ? Container()
+        : Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "People Rate",
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  _seeAll(() {
+                    context.pushWithTransition(RatesScreen(
+                      owner: owner,
+                    ));
+                  })
+                ],
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              state is GetMyProfileLoadingState
+                  ? ShimmerWidget(
+                      height: 13.h,
+                      width: double.infinity,
+                      placeholder: ShimmerPlaceHolder(
+                        borderRadius: 15.sp,
+                      ),
+                    )
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) =>
+                          _peopleRateBuilder(owner.feedbacks[index]),
+                      separatorBuilder: (context, index) => SizedBox(
+                            height: 2.h,
+                          ),
+                      itemCount: owner.feedbacks.take(2).length),
+            ],
+          ),
+    SizedBox(
+      height: 2.h,
+    ),
+    Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: Text(
+        "My Wallet",
+        style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+      ),
+    ),
+    SizedBox(
+      height: 2.h,
+    ),
+    _walletWidget(() {}, owner.myWallet.toString()),
+  ]);
 }

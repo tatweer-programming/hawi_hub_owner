@@ -49,6 +49,10 @@ class AuthRepository {
     return _service.changeProfileImage(newProfileImage);
   }
 
+  Future<String> uploadNationalId(File nationalId) async {
+    return _service.uploadNationalId(nationalId);
+  }
+
   Future<String> changePassword({
     required String oldPassword,
     required String newPassword,

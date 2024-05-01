@@ -60,6 +60,7 @@ class HomePage extends StatelessWidget {
                       Routes.profile,
                       arguments: Owner(
                           id: 2,
+                          emailConfirmed:0,
                           userName: "userName",
                           email: "email",
                           profilePictureUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6T-mPdQetCXqpdgWRnFFjx0gAZUWVgXD8Mf6kuvvjSw&s",

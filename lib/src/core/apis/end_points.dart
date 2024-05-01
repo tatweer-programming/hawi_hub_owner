@@ -3,8 +3,9 @@ class EndPoints {
   static const String register = '/Owner/Signup';
   static const String verifyCode = '/verifycode';
   static const String resetPass = '/resetpass';
-  static const String changeProfile = '/changeprofile';
+  static const String changeImageProfile = '/changeprofile';
   static const String changePassword = '/ChangePassword';
+  static const String uploadFile = '/uploadFile';
 
   ///
   static const String chat = '/chat';

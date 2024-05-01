@@ -23,7 +23,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       BlocProvider.of<AuthBloc>(context);
 
   final AuthRepository _repository = AuthRepository();
-  File? image;
   Owner? owner;
 
   // time
@@ -143,14 +142,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(ResetPasswordErrorState(value));
           }
         });
-      } else if (event is AddProfilePictureEvent) {
-        File? imagePicked = await _captureAndSaveGalleryImage();
-        image = imagePicked;
-        emit(AddProfilePictureSuccessState(profilePictureFile: imagePicked!));
-        add(UpdateProfilePictureEvent(imagePicked));
+      } else if (event is AddImageEvent) {
+        await _captureAndSaveGalleryImage().then((imagePicked) {
+          emit(AddImageSuccessState(imagePicked: imagePicked!));
+        });
+      } else if (event is DeleteImageEvent) {
+        emit(DeleteImageState());
+      } else if (event is UploadNationalIdEvent) {
+        await _repository.uploadNationalId(event.nationalId);
+
       } else if (event is UpdateProfilePictureEvent) {
-        await _repository
-            .changeProfileImage(event.profileImage);
+        add(AddImageEvent());
+        if(state is AddImageSuccessState){
+          await _repository.changeProfileImage(event.profileImage);
+        }
       } else if (event is GetProfileEvent) {
         emit(GetMyProfileLoadingState());
         var res = await _repository.getProfile(event.id);
@@ -218,10 +223,8 @@ Future _clearUserData() async {
 Future<File?> _captureAndSaveGalleryImage() async {
   final picker = ImagePicker();
   final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
   if (pickedFile != null) {
     final image = File(pickedFile.path);
-
     return image;
   } else {
     return null;

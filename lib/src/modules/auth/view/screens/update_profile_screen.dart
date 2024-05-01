@@ -153,7 +153,7 @@ Widget _appBar(
               alignment: AlignmentDirectional.bottomStart,
               child: IconButton(
                   onPressed: () {
-                    bloc.add(AddProfilePictureEvent());
+                    bloc.add(AddImageEvent());
                   },
                   icon: CircleAvatar(
                     backgroundColor: ColorManager.white,

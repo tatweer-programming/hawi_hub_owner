@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/profile_screen.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/widgets/connectivity.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 
@@ -47,28 +48,28 @@ class MorePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
               child: Column(
                 children: [
-                  _settingWidget(
-                    onTap: () {
-                      // context.pushWithTransition(
-                      //   MyWallet(
-                      //     player: Player(
-                      //       id: 1,
-                      //       userName: "Mohamed",
-                      //       bookings: 8,
-                      //       games: 5,
-                      //       email: "",
-                      //       profilePictureUrl:
-                      //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyXXkiqJLhMZE69a4dTnH4Qd6GyzyFmqcmHu8EAhx8DQ&s",
-                      //       myWallet: 900,
-                      //       feedbacks: [],
-                      //       rate: 5,
-                      //     ),
-                      //   ),
-                      // );
-                    },
-                    icon: "assets/images/icons/money.webp",
-                    title: "My Wallet",
-                  ),
+                  // _settingWidget(
+                  //   onTap: () {
+                  //     // context.pushWithTransition(
+                  //     //   MyWallet(
+                  //     //     player: Player(
+                  //     //       id: 1,
+                  //     //       userName: "Mohamed",
+                  //     //       bookings: 8,
+                  //     //       games: 5,
+                  //     //       email: "",
+                  //     //       profilePictureUrl:
+                  //     //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyXXkiqJLhMZE69a4dTnH4Qd6GyzyFmqcmHu8EAhx8DQ&s",
+                  //     //       myWallet: 900,
+                  //     //       feedbacks: [],
+                  //     //       rate: 5,
+                  //     //     ),
+                  //     //   ),
+                  //     // );
+                  //   },
+                  //   icon: "assets/images/icons/money.webp",
+                  //   title: "My Wallet",
+                  // ),
                   _settingWidget(
                     onTap: () {},
                     icon: "assets/images/icons/privacy.webp",
@@ -221,33 +222,28 @@ showLogoutDialog(BuildContext context, AuthBloc bloc) {
   return showDialog(
     context: context,
     builder: (context) {
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.sp),
-        ),
-        child: AlertDialog(
-          actions: [
-            TextButton(
-              onPressed: () {
-                context.pop();
-              },
-              child: const Text(
-                "Cancel",
-              ),
+      return AlertDialog(
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.pop();
+            },
+            child: const Text(
+              "Cancel",
             ),
-            TextButton(
-              onPressed: () {
-                bloc.add(LogoutEvent());
-              },
-              child: const Text(
-                "Logout",
-              ),
-            )
-          ],
-          title: Text(
-            "Do you want to logout ?",
-            style: TextStyleManager.getRegularStyle(),
           ),
+          TextButton(
+            onPressed: () {
+              bloc.add(LogoutEvent());
+            },
+            child: const Text(
+              "Logout",
+            ),
+          )
+        ],
+        title: Text(
+          "Do you want to logout ?",
+          style: TextStyleManager.getRegularStyle(),
         ),
       );
     },

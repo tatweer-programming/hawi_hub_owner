@@ -192,10 +192,24 @@ class AuthService {
       Response response = await DioHelper.putDataFormData(
         token: ConstantsManager.userId.toString(),
         data: FormData.fromMap({'image': newProfileImage}),
-        path: EndPoints.changeProfile,
+        path: EndPoints.changeImageProfile,
       );
       if (response.statusCode == 200) {
         return "Profile image updated successfully";
+      }
+      return (response.data['msg']);
+    } catch (e) {
+      return e.toString();
+    }
+  } Future<String> uploadNationalId(File nationalId) async {
+    try {
+      Response response = await DioHelper.putDataFormData(
+        token: ConstantsManager.userId.toString(),
+        data: FormData.fromMap({'image': nationalId}),
+        path: EndPoints.uploadFile,
+      );
+      if (response.statusCode == 200) {
+        return "";
       }
       return (response.data['msg']);
     } catch (e) {

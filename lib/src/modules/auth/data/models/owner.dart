@@ -4,6 +4,7 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 
 class Owner {
   final int id;
+  final int emailConfirmed;
   final String userName;
   final double? rate;
   final String email;
@@ -11,15 +12,16 @@ class Owner {
   final double myWallet;
   final List<FeedBack> feedbacks;
   File? profilePictureFile;
-  File? ownershipProofFile;
+  File? nationalIdPicture;
 
   Owner({
     required this.id,
     required this.userName,
     required this.email,
+    required this.emailConfirmed,
     required this.profilePictureUrl,
     this.profilePictureFile,
-    this.ownershipProofFile,
+    this.nationalIdPicture,
     required this.myWallet,
     required this.feedbacks,
     required this.rate,
@@ -27,13 +29,17 @@ class Owner {
 
   factory Owner.fromJson(Map<String, dynamic> json) {
     return Owner(
-      profilePictureUrl: json['profile_image'],
-      id: json['id'],
-      userName: json['user_name'],
+      profilePictureUrl: json['profilePicture'],
+      id: json['ownerId'],
+      nationalIdPicture: json['nationalIdPicture'],
+      userName: json['userName'],
       email: json['email'],
-      myWallet: json['my_wallet'].toDouble(),
+      emailConfirmed: json['emailConfirmed'],
+      myWallet: json['wallet'].toDouble(),
       rate: json['rate'] != null ? json['rate'].toDouble() : 0.0,
-      feedbacks: [],
+      feedbacks: List.from(json['reviews'])
+          .map((feedBack) => FeedBack.fromJson(feedBack))
+          .toList(),
     );
   }
 }

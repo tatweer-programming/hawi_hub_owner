@@ -149,11 +149,13 @@ class ChangePasswordVisibilityState extends AuthState {
   ChangePasswordVisibilityState(this.visible);
 }
 
-class AddProfilePictureSuccessState extends AuthState {
-  final File profilePictureFile;
+class AddImageSuccessState extends AuthState {
+  final File? imagePicked;
 
-  AddProfilePictureSuccessState({required this.profilePictureFile});
+  AddImageSuccessState({required this.imagePicked});
 }
+
+class DeleteImageState extends AuthState {}
 
 class SelectSportState extends AuthState {
   final List<Sport> sports;

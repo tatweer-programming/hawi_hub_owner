@@ -16,9 +16,11 @@ class LoginPlayerEvent extends AuthEvent {
   LoginPlayerEvent({required this.email, required this.password});
 }
 
-class AddProfilePictureEvent extends AuthEvent {}
+class AddImageEvent extends AuthEvent {}
 
 class GetSportsEvent extends AuthEvent {}
+
+class DeleteImageEvent extends AuthEvent {}
 
 class LogoutEvent extends AuthEvent {}
 
@@ -77,6 +79,12 @@ class SelectSportEvent extends AuthEvent {
   SelectSportEvent({required this.sports, required this.sport});
 }
 
+class UploadNationalIdEvent extends AuthEvent {
+  final File nationalId;
+
+  UploadNationalIdEvent(this.nationalId);
+
+}
 class AcceptConfirmTermsEvent extends AuthEvent {
   final bool accept;
 
