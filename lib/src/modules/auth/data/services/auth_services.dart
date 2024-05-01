@@ -51,16 +51,10 @@ class AuthService {
   }
 
   Future<String> loginPlayer(
-      {required String email,
-      required String password,
-      required bool loginWithFBOrGG}) async {
+      {required String email, required String password, required bool loginWithFBOrGG}) async {
     try {
       Response response = await DioHelper.postData(
-        data: {
-          'Email': email,
-          'Password': password,
-          'loginWithFBOrGG': loginWithFBOrGG
-        },
+        data: {'Email': email, 'Password': password, 'loginWithFBOrGG': loginWithFBOrGG},
         path: EndPoints.login,
       );
       if (response.statusCode == 200) {
@@ -108,8 +102,7 @@ class AuthService {
       await googleSignIn.signOut();
       var googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
-        await loginPlayer(
-            email: googleUser.email, password: "string", loginWithFBOrGG: true);
+        await loginPlayer(email: googleUser.email, password: "string", loginWithFBOrGG: true);
         return const Right(true);
       }
       return const Right(false);
@@ -145,10 +138,7 @@ class AuthService {
       final LoginResult result = await FacebookAuth.instance.login();
       if (result.status == LoginStatus.success) {
         final userData = await FacebookAuth.instance.getUserData();
-        await loginPlayer(
-            email: userData['email'],
-            password: "string",
-            loginWithFBOrGG: true);
+        await loginPlayer(email: userData['email'], password: "string", loginWithFBOrGG: true);
         return const Right(true);
       }
       return const Right(false);
@@ -199,7 +189,7 @@ class AuthService {
 
   Future<String> changeProfileImage(File newProfileImage) async {
     try {
-      Response response = await DioHelper.putData(
+      Response response = await DioHelper.putDataFormData(
         token: ConstantsManager.userId.toString(),
         data: FormData.fromMap({'image': newProfileImage}),
         path: EndPoints.changeProfile,
