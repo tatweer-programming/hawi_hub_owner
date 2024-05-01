@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
+import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/register_screen.dart';
 import 'package:sizer/sizer.dart';
-import '../../../../core/common widgets/common_widgets.dart';
+import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../bloc/auth_bloc.dart';
 import '../widgets/widgets.dart';
@@ -25,8 +26,9 @@ class LoginScreen extends StatelessWidget {
               visible = state.visible;
             }
             if (state is LoginSuccessState) {
-              // context.pushAndRemove(Routes.home);
               bloc.add(PlaySoundEvent("audios/start.wav"));
+              defaultToast(msg: state.value);
+              context.pushAndRemove(Routes.home);
             } else if (state is LoginErrorState) {
               errorToast(msg: state.error);
             }

@@ -68,6 +68,7 @@ mainFormField(
         {String? label,
         Icon? prefix,
         String? hint,
+        String? helper,
         IconButton? suffix,
         bool? enabled = true,
         Color? fillColor,
@@ -121,7 +122,8 @@ mainFormField(
             filled: true,
             suffixIcon: suffix,
             labelText: label,
-            helperText: hint,
+            hintText: hint,
+            helperText: helper,
             labelStyle: labelStyle ??
                 TextStyle(color: ColorManager.grey3, fontSize: 12.sp)),
         validator: validator,

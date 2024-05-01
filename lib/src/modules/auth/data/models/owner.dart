@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'feedback.dart';
+
+import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 
 class Owner {
   final int id;

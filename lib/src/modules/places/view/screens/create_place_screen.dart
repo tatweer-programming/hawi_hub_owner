@@ -2,8 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
-import 'package:hawi_hub_owner/src/core/common%20widgets/common_widgets.dart';
-import 'package:hawi_hub_owner/src/core/common%20widgets/custom_app_bar.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
@@ -11,6 +10,7 @@ import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
@@ -399,6 +399,7 @@ class CreatePlaceScreen extends StatelessWidget {
               },
             ),
           ),
+          SizedBox(height: 1.5.h),
         ],
       ),
     );

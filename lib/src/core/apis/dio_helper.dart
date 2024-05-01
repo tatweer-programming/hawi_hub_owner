@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
@@ -12,7 +14,8 @@ class DioHelper {
         "Authorization": ApiManager.authToken,
       },
       connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 3),
+      receiveTimeout: const Duration(seconds: 5),
+      validateStatus: (_) => true,
     ));
   }
 
@@ -92,6 +95,10 @@ class DioHelper {
     String? token,
   }) async {
     try {
+      dio.options.headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token ?? '',
+      };
       return await dio.delete(
         path,
         queryParameters: query,
