@@ -25,7 +25,7 @@ class AppRouter {
       case Routes.splash:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(
-            nextScreen: MainScreen(),
+            nextScreen: ChatsScreen(),
             // nextScreen: ConstantsManager.userToken == null
             //     ? const GetStartedScreen()
             //     : const MainScreen(),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:voice_message_package/voice_message_package.dart';
 import 'package:web_socket_channel/io.dart';
 import 'dart:ui' as ui;
@@ -35,7 +35,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   WebSocket? socket;
-  late IO.Socket _socket;
   List<Message> messages = [];
   TextEditingController messageController = TextEditingController();
   String? imagePath;
@@ -46,27 +45,20 @@ class _ChatScreenState extends State<ChatScreen> {
     connect();
   }
 
-  // void connect() async {
-  //   try {
-  //     socket = await WebSocket.connect(
-  //         "ws://abdoo120-001-site1.ctempurl.com/api/chat",
-  //         headers: {"Authorization": "Basic MTExNzM2NDY6NjAtZGF5ZnJlZXRyaWFs"});
-  //     print(await socket!.isEmpty);
-  //     socket!.add('Hello, WebSocket!');
-  //   } catch (error) {
-  //     print('Error connecting: $error');
-  //   }
-  // }
   void connect() {
     final channel = IOWebSocketChannel.connect(
         'ws://abdoo120-001-site1.ctempurl.com/api/chat',
         headers: {
-          'Connection': 'upgrade',
-          'Upgrade': 'websocket',
           "Authorization": "Basic MTExNzM2NDY6NjAtZGF5ZnJlZXRyaWFs"
         });
+
+    final messageWithTrailingChars =
+        '{"protocol":"json","version":1}0x1E/U+001E';
+    channel.sink.add(messageWithTrailingChars);
+    channel.sink.add("بحبك");
+
     channel.stream.listen((message) {
-      channel.sink.add('received!');
+
       print("message $message");
     });
   }
