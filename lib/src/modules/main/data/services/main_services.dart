@@ -22,7 +22,7 @@ class MainServices {
       // }
       // await startTimer(.9);
       return Right(banners1);
-    } on Exception catch (e) {
+    } on Exception {
       return Right(banners1);
     }
   }

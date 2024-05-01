@@ -17,4 +17,6 @@ class Routes {
   static const String placeLocation = '/placeLocation';
   static const String pickLocation = '/pickLocation';
   static const String addWorkingHours = '/addWorkingHours';
+  static const String editWorkingHours = '/editWorkingHours';
+  static const String request = '/request';
 }

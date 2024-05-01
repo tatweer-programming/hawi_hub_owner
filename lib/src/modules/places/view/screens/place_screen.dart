@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/font_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
@@ -14,6 +14,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../main/view/widgets/components.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
+import '../../data/models/day.dart';
 import '../../data/models/place.dart';
 
 class PlaceScreen extends StatelessWidget {
@@ -115,10 +116,13 @@ class PlaceScreen extends StatelessWidget {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   ListTile(
-                                                    leading: Icon(Icons.edit),
+                                                    leading: const Icon(Icons.edit),
                                                     title: Text(S.of(context).editPlace),
                                                     onTap: () {
-                                                      Navigator.pop(context); // Close bottom sheet
+                                                      cubit.prepareEditForm(placeId);
+                                                      context.push(Routes.editPlace,
+                                                          arguments: {'id': placeId});
+                                                      // Navigator.pop(context); // Close bottom sheet
                                                       // Navigate to edit place screen
                                                       // Navigator.push(
                                                       //   context,
@@ -201,6 +205,14 @@ class PlaceScreen extends StatelessWidget {
                           height: 5.h,
                         ),
                       ),
+                      SubTitle(S.of(context).workingHours),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      _buildWorkingHours(context),
+                      SizedBox(
+                        height: 1.h,
+                      ),
                       SubTitle(S.of(context).location),
                       SizedBox(
                         height: 1.h,
@@ -212,7 +224,7 @@ class PlaceScreen extends StatelessWidget {
                       SizedBox(
                         height: 2.h,
                       ),
-                      _buildShowMapWidget(context),
+                      if (cubit.currentPlace!.location != null) _buildShowMapWidget(context),
                       Divider(
                         height: 5.h,
                       ),
@@ -230,27 +242,29 @@ class PlaceScreen extends StatelessWidget {
                                             style: TextStyleManager.getBlackCaptionTextStyle(),
                                           ),
                                           Expanded(
-                                            child: Center(
-                                              child: SizedBox(
-                                                height: 20.sp,
-                                                child: RatingBar.builder(
-                                                  glow: true,
-                                                  itemSize: 20.sp,
-                                                  direction: Axis.horizontal,
-                                                  allowHalfRating: true,
-                                                  wrapAlignment: WrapAlignment.center,
-                                                  initialRating: cubit.currentPlace!.rating!,
-                                                  itemCount: 5,
-                                                  glowColor: ColorManager.golden,
-                                                  ignoreGestures: true,
-                                                  itemBuilder: (context, _) => const Icon(
-                                                    Icons.star,
-                                                    color: ColorManager.golden,
-                                                  ),
-                                                  onRatingUpdate: (r) {},
-                                                ),
-                                              ),
-                                            ),
+                                            child: cubit.currentPlace!.rating != null
+                                                ? Center(
+                                                    child: SizedBox(
+                                                      height: 20.sp,
+                                                      child: RatingBar.builder(
+                                                        glow: true,
+                                                        itemSize: 20.sp,
+                                                        direction: Axis.horizontal,
+                                                        allowHalfRating: true,
+                                                        wrapAlignment: WrapAlignment.center,
+                                                        initialRating: cubit.currentPlace!.rating!,
+                                                        itemCount: 5,
+                                                        glowColor: ColorManager.golden,
+                                                        ignoreGestures: true,
+                                                        itemBuilder: (context, _) => const Icon(
+                                                          Icons.star,
+                                                          color: ColorManager.golden,
+                                                        ),
+                                                        onRatingUpdate: (r) {},
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Text(S.of(context).noRatings),
                                           )
                                         ],
                                       )
@@ -299,7 +313,7 @@ class PlaceScreen extends StatelessWidget {
                       _buildSportWidget(
                           MainCubit.get()
                               .sportsList
-                              .firstWhere((element) => cubit.currentPlace!.sportId == element.id)
+                              .firstWhere((element) => cubit.currentPlace!.id == element.id)
                               .name,
                           context),
                       SizedBox(
@@ -388,30 +402,36 @@ class PlaceScreen extends StatelessWidget {
   }
 
   Widget _buildShowMapWidget(BuildContext context) {
-    return Container(
-        height: 4.h,
-        width: 35.w,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: ColorManager.secondary,
+    return InkWell(
+      onTap: () {
+        context.push(Routes.placeLocation,
+            arguments: {"location": PlaceCubit.get().currentPlace!.location});
+      },
+      child: Container(
+          height: 4.h,
+          width: 35.w,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: ColorManager.secondary,
+            ),
+            borderRadius: BorderRadius.circular(10),
           ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Center(
-            child: Row(
-          children: [
-            Icon(
-              color: ColorManager.error,
-              Icons.location_on,
-            ),
-            Expanded(
-              child: Text(
-                S.of(context).showInMap,
-                style: TextStyleManager.getSecondaryRegularStyle(),
+          child: Center(
+              child: Row(
+            children: [
+              Icon(
+                color: ColorManager.error,
+                Icons.location_on,
               ),
-            ),
-          ],
-        )));
+              Expanded(
+                child: Text(
+                  S.of(context).showInMap,
+                  style: TextStyleManager.getSecondaryRegularStyle(),
+                ),
+              ),
+            ],
+          ))),
+    );
   }
 
   Widget _buildUserRatingWidget(BuildContext context, bool hasRated) {
@@ -457,5 +477,113 @@ class PlaceScreen extends StatelessWidget {
 
   Widget _buildCaptionWidget(String caption) {
     return Text(caption, style: TextStyleManager.getCaptionStyle());
+  }
+
+  Widget _buildWorkingHours(BuildContext context) {
+    Place place = PlaceCubit.get().currentPlace!;
+    if (_placeIsAlwaysOpen()) {
+      return OutLineContainer(child: Text(S.of(context).alwaysOpen));
+    } else {
+      return SizedBox(
+        child: Column(children: [
+          Row(mainAxisSize: MainAxisSize.min, children: [
+            Expanded(
+              child: _buildDay(
+                place.workingHours![0],
+                context,
+              ),
+            ),
+            SizedBox(
+              width: 2.w,
+            ),
+            Expanded(
+              child: _buildDay(
+                place.workingHours![1],
+                context,
+              ),
+            ),
+          ]),
+          SizedBox(
+            height: 1.h,
+          ),
+          Row(children: [
+            Expanded(
+              child: _buildDay(
+                place.workingHours![2],
+                context,
+              ),
+            ),
+            SizedBox(
+              width: 2.w,
+            ),
+            Expanded(
+              child: _buildDay(
+                place.workingHours![3],
+                context,
+              ),
+            ),
+          ]),
+          SizedBox(
+            height: 1.h,
+          ),
+          Row(children: [
+            Expanded(
+              child: _buildDay(
+                place.workingHours![4],
+                context,
+              ),
+            ),
+            SizedBox(
+              width: 2.w,
+            ),
+            Expanded(
+              child: _buildDay(
+                place.workingHours![5],
+                context,
+              ),
+            ),
+          ]),
+          SizedBox(
+            height: 1.h,
+          ),
+          _buildDay(
+            place.workingHours![6],
+            context,
+          ),
+        ]),
+      );
+    }
+  }
+
+  bool _placeIsAlwaysOpen() {
+    Place place = PlaceCubit.get().currentPlace!;
+    // check if place working hours list is all open from 00:00 to 24:00
+    return place.workingHours!
+            .where((element) =>
+                element.startTime.hour == 0 &&
+                element.endTime.hour == 23 &&
+                element.startTime.minute == 0 &&
+                element.endTime.minute == 59)
+            .length ==
+        place.workingHours!.length;
+  }
+
+  Widget _buildDay(
+    Day day,
+    BuildContext context,
+  ) {
+    return OutLineContainer(
+      child: Padding(
+        padding: const EdgeInsets.all(3),
+        child: Text(
+            maxLines: 2,
+            softWrap: true,
+            "${LocalizationManager.getDays()[day.dayOfWeek]}: ${day.startTime.format(context)} - ${day.endTime.format(context)}",
+            style: TextStyle(
+              fontWeight: FontWeightManager.bold,
+              fontSize: FontSizeManager.s10,
+            )),
+      ),
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:hawi_hub_owner/src/modules/places/view/screens/add_working_hours
 import 'package:hawi_hub_owner/src/modules/places/view/screens/create_place_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/edit_place_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/place_location_screen.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/request_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/share_loaction_screen.dart';
 
 import '../../modules/main/view/screens/main_screen.dart';
@@ -45,6 +46,9 @@ class AppRouter {
         Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
         print(arguments['id']);
         return MaterialPageRoute(builder: (_) => EditPlaceScreen(placeId: arguments['id']));
+      case Routes.request:
+        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(builder: (_) => RequestScreen(request: arguments['request']));
       case Routes.placeLocation:
         Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(

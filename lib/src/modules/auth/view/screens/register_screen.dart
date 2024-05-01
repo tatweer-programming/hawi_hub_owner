@@ -197,7 +197,7 @@ class RegisterScreen extends StatelessWidget {
                           height: 2.h,
                         ),
                         state is RegisterLoadingState
-                            ? CircularProgressIndicator()
+                            ? const CircularProgressIndicator()
                             : defaultButton(
                                 onPressed: () {
                                   if (formKey.currentState!.validate() && acceptTerms) {

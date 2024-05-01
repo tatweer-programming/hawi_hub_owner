@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/place_holder.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/shimmer_widget.dart';
@@ -67,14 +66,14 @@ class RequestItemShimmers extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   ShimmerPlaceHolder(
                     width: 30.w,
                     height: 2.h,
                   ),
                 ],
               ),
-              Expanded(child: SizedBox()),
+              const Expanded(child: SizedBox()),
               Expanded(
                   flex: 3,
                   child: Row(

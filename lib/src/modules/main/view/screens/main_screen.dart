@@ -5,7 +5,6 @@ import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/bottom_nav_bar.dart';
 
 import '../../../../core/routing/routes.dart';
-import '../../../places/data/models/place.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});

@@ -1,9 +1,8 @@
-import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 
 class Place extends Equatable {
@@ -13,7 +12,7 @@ class Place extends Equatable {
   List<Day>? workingHours; // int day, String startTime, String endTime
   PlaceLocation? location; // String longitude, String latitude
   String? description;
-  int sportId;
+  String sport;
   double price;
   int ownerId;
   int? minimumHours;
@@ -24,7 +23,7 @@ class Place extends Equatable {
   List<Feedback>? feedbacks;
   String ownerName;
   String ownerImageUrl;
-
+  int citId;
   Place({
     required this.id,
     required this.name,
@@ -32,7 +31,7 @@ class Place extends Equatable {
     this.workingHours,
     this.location,
     this.description,
-    required this.sportId,
+    required this.sport,
     required this.price,
     required this.ownerId,
     this.minimumHours,
@@ -43,10 +42,12 @@ class Place extends Equatable {
     this.feedbacks,
     required this.ownerName,
     required this.ownerImageUrl,
+    required this.citId,
   });
 
   factory Place.fromJson(Map<String, dynamic> json) {
     return Place(
+      citId: json['city_id'],
       id: json['id'],
       name: json['name'],
       description: json['description'],
@@ -65,37 +66,36 @@ class Place extends Equatable {
         json['working_hours'].map((x) => Day.fromJson(x)),
       ),
       location: PlaceLocation.fromString(json['location']),
-      sportId: json['sport_id'],
+      sport: json['sport_id'],
     );
   }
 
-  static List<Day> getWeekDays(Map<int, List<int>> weekDays) {
+  static List<Day> getWeekDays(Map<int, List<TimeOfDay>> weekDays) {
     List<Day> days = [];
-    weekDays.entries.forEach((element) {
+    for (var element in weekDays.entries) {
       days.add(Day.fromJson(element));
-    });
+    }
     return days;
   }
 
-  Place createCopy() {
-    return Place(
-      id: id,
+  PlaceEditForm createEditForm() {
+    List<String> modifiableImages = [];
+    for (var image in images) {
+      modifiableImages.add(image);
+    }
+    return PlaceEditForm(
       name: name,
-      description: description,
       address: address,
-      images: images,
-      ownerId: ownerId,
-      minimumHours: minimumHours,
-      price: price,
-      totalGames: totalGames,
-      totalRatings: totalRatings,
-      rating: rating,
-      feedbacks: feedbacks,
-      ownerName: ownerName,
-      ownerImageUrl: ownerImageUrl,
+      description: description,
+      images: modifiableImages,
       location: location,
-      sportId: sportId,
-      workingHours: workingHours,
+      minimumHours: minimumHours,
+      workingHours: workingHours!,
+      sport: sport,
+      price: price,
+      ownerId: ownerId,
+      imageFiles: [],
+      cityId: citId,
     );
   }
 

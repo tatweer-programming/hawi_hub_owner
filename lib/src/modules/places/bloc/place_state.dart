@@ -72,7 +72,7 @@ class GetPlacesSuccess extends PlaceState {
   final List<Place> places;
   GetPlacesSuccess(this.places);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [places];
 }
 
 class CreatePlaceLoading extends PlaceState {
@@ -148,8 +148,10 @@ class DeclineBookingRequestSuccess extends PlaceState {
 }
 
 class AddImagesSuccess extends PlaceState {
+  final List<String> paths;
+  AddImagesSuccess(this.paths);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [paths];
 }
 
 class RemoveImagesSuccess extends PlaceState {
@@ -164,4 +166,11 @@ class SelectOwnershipFileSuccess extends PlaceState {
   SelectOwnershipFileSuccess(this.path);
   @override
   List<Object?> get props => [];
+}
+
+class ChangeWeekEndStatusSuccess extends PlaceState {
+  bool status;
+  ChangeWeekEndStatusSuccess(this.status);
+  @override
+  List<Object?> get props => [status];
 }

@@ -519,6 +519,136 @@ class S {
       args: [],
     );
   }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weekend`
+  String get weekend {
+    return Intl.message(
+      'Weekend',
+      name: 'weekend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ownership file is required`
+  String get ownerShipIsRequired {
+    return Intl.message(
+      'Ownership file is required',
+      name: 'ownerShipIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image is required`
+  String get imageIsRequired {
+    return Intl.message(
+      'Image is required',
+      name: 'imageIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City is required`
+  String get cityIsRequired {
+    return Intl.message(
+      'City is required',
+      name: 'cityIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sport is required`
+  String get sportIsRequired {
+    return Intl.message(
+      'Sport is required',
+      name: 'sportIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Always open`
+  String get alwaysOpen {
+    return Intl.message(
+      'Always open',
+      name: 'alwaysOpen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Place edited successfully`
+  String get placeEditedSuccessfully {
+    return Intl.message(
+      'Place edited successfully',
+      name: 'placeEditedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View profile`
+  String get viewProfile {
+    return Intl.message(
+      'View profile',
+      name: 'viewProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booking time`
+  String get bookingTime {
+    return Intl.message(
+      'Booking time',
+      name: 'bookingTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get date {
+    return Intl.message(
+      'Date',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User name`
+  String get userName {
+    return Intl.message(
+      'User name',
+      name: 'userName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `minutes`
+  String get minutes {
+    return Intl.message(
+      'minutes',
+      name: 'minutes',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

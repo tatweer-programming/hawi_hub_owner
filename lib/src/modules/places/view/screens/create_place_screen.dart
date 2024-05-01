@@ -1,10 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/common%20widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/common%20widgets/custom_app_bar.dart';
@@ -12,12 +8,12 @@ import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
-import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
 import 'package:sizer/sizer.dart';
 import 'package:open_file/open_file.dart' as openFile;
@@ -91,6 +87,7 @@ class CreatePlaceScreen extends StatelessWidget {
                               if (value == null || value.isEmpty) {
                                 return S.of(context).requiredField;
                               }
+                              return null;
                             },
                           ),
                           SizedBox(height: 1.5.h),
@@ -120,6 +117,7 @@ class CreatePlaceScreen extends StatelessWidget {
                                 if (value == null || value.isEmpty) {
                                   return S.of(context).requiredField;
                                 }
+                                return null;
                               }),
                           SizedBox(height: 1.5.h),
                           Row(
@@ -267,24 +265,30 @@ class CreatePlaceScreen extends StatelessWidget {
                                         ],
                                       );
                                     }),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            IconButton(
-                                              onPressed: () async {
-                                                await cubit.addImages();
-                                              },
-                                              icon: const Icon(Icons.add_photo_alternate_outlined),
-                                            ),
-                                            Text(S.of(context).addImages)
-                                          ],
+                                    InkWell(
+                                      onTap: () async {
+                                        await cubit.addImages();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(),
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () async {
+                                                  await cubit.addImages();
+                                                },
+                                                icon:
+                                                    const Icon(Icons.add_photo_alternate_outlined),
+                                              ),
+                                              Text(S.of(context).addImages)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -376,17 +380,19 @@ class CreatePlaceScreen extends StatelessWidget {
                             name: nameController.text,
                             description: descriptionController.text,
                             address: addressController.text,
-                            minimumHours: int.parse(minimumHoursController.text),
+                            minimumHours: int.tryParse(minimumHoursController.text),
                             ownerId: 1,
-                            sport: cubit.selectedSport!,
-                            price: double.parse(priceController.text),
-                            location: PlaceCubit.get().placeLocation,
+                            sport: cubit.selectedSport ?? "",
+                            price: double.tryParse(priceController.text) ?? 0.0,
+                            location: PlaceLocation(latitude: 2, longitude: 2),
                             workingHours: PlaceCubit.get().workingHours,
                             imageFiles: cubit.imageFiles,
                             ownershipFile: cubit.selectedOwnershipFile!,
                             cityId: cubit.selectedCityId!,
                           );
                           await PlaceCubit.get().createPlace(placeCreationForm);
+                        } else {
+                          showRequiredFieldToast(context);
                         }
                       }),
                 );
@@ -407,5 +413,21 @@ class CreatePlaceScreen extends StatelessWidget {
         cubit.selectedCityId != null &&
         cubit.imageFiles.isNotEmpty &&
         cubit.selectedOwnershipFile != null);
+  }
+
+  void showRequiredFieldToast(BuildContext context) {
+    PlaceCubit cubit = PlaceCubit.get();
+    if (cubit.selectedSport == null) {
+      errorToast(msg: S.of(context).sportIsRequired);
+    }
+    if (cubit.selectedCityId == null) {
+      errorToast(msg: S.of(context).cityIsRequired);
+    }
+    if (cubit.imageFiles.isEmpty) {
+      errorToast(msg: S.of(context).imageIsRequired);
+    }
+    if (cubit.selectedOwnershipFile == null) {
+      errorToast(msg: S.of(context).ownerShipIsRequired);
+    }
   }
 }

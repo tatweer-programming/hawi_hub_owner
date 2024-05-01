@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
@@ -21,92 +19,98 @@ class BookingRequestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlaceCubit cubit = PlaceCubit.get();
-    return Container(
-      padding: const EdgeInsets.all(15),
-      height: 20.h,
-      width: 90.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: ColorManager.black, width: .6),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  context.push(Routes.bookingRequestDetails, arguments: {"id": bookingRequest.id});
-                },
-                child: Text(S.of(context).viewDetails,
-                    style: TextStyleManager.getGoldenRegularStyle()),
-              ),
-              const Icon(
-                Icons.arrow_forward,
-                color: ColorManager.golden,
-              )
-            ],
-          ),
-          Expanded(
-              flex: 3,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(bookingRequest.userImage),
-                    radius: 10.w,
-                    child: InkWell(onTap: () {
-                      context.push(Routes.profile, arguments: {"id": bookingRequest.userId});
-                    }),
-                  ),
-                  SizedBox(width: 4.w),
-                  Expanded(
-                      child: TitleText(
-                    bookingRequest.userName,
-                  ))
-                ],
-              )),
-          SizedBox(height: 2.h),
-          Expanded(
-              flex: 2,
-              child: BlocBuilder<PlaceCubit, PlaceState>(
-                  bloc: cubit,
-                  builder: (context, state) => Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: DefaultButton(
-                              text: S.of(context).accept,
-                              onPressed: () async {
-                                cubit.acceptBookingRequest(bookingRequest.id);
-                              },
-                              height: 10.h,
-                              width: 30.w,
-                              isLoading: state is AcceptBookingRequestLoading,
+    return InkWell(
+      onTap: () {
+        context.push(Routes.request, arguments: {"request": bookingRequest});
+      },
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        height: 20.h,
+        width: 90.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: ColorManager.black, width: .6),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Spacer(),
+                InkWell(
+                  onTap: () {
+                    context
+                        .push(Routes.bookingRequestDetails, arguments: {"id": bookingRequest.id});
+                  },
+                  child: Text(S.of(context).viewDetails,
+                      style: TextStyleManager.getGoldenRegularStyle()),
+                ),
+                const Icon(
+                  Icons.arrow_forward,
+                  color: ColorManager.golden,
+                )
+              ],
+            ),
+            Expanded(
+                flex: 3,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(bookingRequest.userImage),
+                      radius: 10.w,
+                      child: InkWell(onTap: () {
+                        context.push(Routes.profile, arguments: {"id": bookingRequest.userId});
+                      }),
+                    ),
+                    SizedBox(width: 4.w),
+                    Expanded(
+                        child: TitleText(
+                      bookingRequest.userName,
+                    ))
+                  ],
+                )),
+            SizedBox(height: 2.h),
+            Expanded(
+                flex: 2,
+                child: BlocBuilder<PlaceCubit, PlaceState>(
+                    bloc: cubit,
+                    builder: (context, state) => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: DefaultButton(
+                                text: S.of(context).accept,
+                                onPressed: () async {
+                                  cubit.acceptBookingRequest(bookingRequest.id);
+                                },
+                                height: 10.h,
+                                width: 30.w,
+                                isLoading: state is AcceptBookingRequestLoading,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 2.w),
-                          Expanded(
-                            child: DefaultButton(
-                              color: ColorManager.white,
-                              textColor: ColorManager.black,
-                              text: S.of(context).decline,
-                              borderColor: ColorManager.black,
-                              onPressed: () async {
-                                cubit.declineBookingRequest(bookingRequest.id);
-                              },
-                              width: 30.w,
-                              isLoading: state is DeclineBookingRequestLoading,
+                            SizedBox(width: 2.w),
+                            Expanded(
+                              child: DefaultButton(
+                                color: ColorManager.white,
+                                textColor: ColorManager.black,
+                                text: S.of(context).decline,
+                                borderColor: ColorManager.black,
+                                onPressed: () async {
+                                  cubit.declineBookingRequest(bookingRequest.id);
+                                },
+                                width: 30.w,
+                                isLoading: state is DeclineBookingRequestLoading,
+                              ),
                             ),
-                          ),
-                        ],
-                      ))),
-          SizedBox(height: 1.h),
-        ],
+                          ],
+                        ))),
+            SizedBox(height: 1.h),
+          ],
+        ),
       ),
     );
   }
@@ -220,6 +224,8 @@ Widget dropdownBuilder(
     required Function(String? value) onChanged,
     required List<String> items}) {
   return DropdownMenu<String>(
+    // errorText: text,
+    // controller: TextEditingController(),
     label: Text(text),
     enableFilter: false,
     requestFocusOnTap: false,

@@ -45,5 +45,18 @@
   "ownershipFile" : "Ownership file",
   "day" : "Day",
   "from" : "From",
-  "to" : "To"
+  "to" : "To",
+  "save" : "Save",
+  "weekend" : "Weekend",
+  "ownerShipIsRequired" : "Ownership file is required",
+  "imageIsRequired" : "Image is required",
+  "cityIsRequired" : "City is required",
+  "sportIsRequired" : "Sport is required",
+  "alwaysOpen" : "Always open",
+  "placeEditedSuccessfully" : "Place edited successfully",
+  "viewProfile" : "View profile",
+  "bookingTime" : "Booking time",
+  "date" : "Date",
+  "userName" : "User name",
+  "minutes" : "minutes"
 }

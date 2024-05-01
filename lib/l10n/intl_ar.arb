@@ -45,5 +45,19 @@
   "ownershipFile" : "ملف إثبات الملكية",
   "to": "إلى",
   "from": "من",
-  "day" : "اليوم"
+  "day" : "اليوم",
+  "save" : "حفظ",
+  "weekends" : "عطلة",
+  "ownerShipIsRequired" : "إثبات ملكية المكان مطلوب",
+   "imageIsRequired" : "يجب اختيار صورة علي الاقل",
+  "cityIsRequired" : "المدينة مطلوبة",
+  "sportIsRequired" : "الرياضة مطلوبة",
+  "alwaysOpen" :  "مفتوح دائما",
+  "placeEditedSuccessfully" : "تم تعديل أمكانك بنجاح",
+  "viewProfile" : "عرض الملف الشخصي",
+  "bookingTime" : "وقت الحجز",
+  "date" : "الموعد",
+  "userName" : "اسم المستخدم",
+  "minutes" : "دقائق"
+
 }

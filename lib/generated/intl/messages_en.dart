@@ -29,10 +29,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("Add working hours"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "alwaysOpen": MessageLookupByLibrary.simpleMessage("Always open"),
         "booking": MessageLookupByLibrary.simpleMessage("Booking"),
+        "bookingTime": MessageLookupByLibrary.simpleMessage("Booking time"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
+        "cityIsRequired":
+            MessageLookupByLibrary.simpleMessage("City is required"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm delete"),
+        "date": MessageLookupByLibrary.simpleMessage("Date"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "decline": MessageLookupByLibrary.simpleMessage("Decline"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
@@ -45,33 +50,46 @@ class MessageLookup extends MessageLookupByLibrary {
         "from": MessageLookupByLibrary.simpleMessage("From"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
+        "imageIsRequired":
+            MessageLookupByLibrary.simpleMessage("Image is required"),
         "location": MessageLookupByLibrary.simpleMessage("Location"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("Minimum booking"),
         "minimumHours":
             MessageLookupByLibrary.simpleMessage("Minimum hours for booking"),
+        "minutes": MessageLookupByLibrary.simpleMessage("minutes"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
         "noDetails": MessageLookupByLibrary.simpleMessage("No details"),
         "noPlaces": MessageLookupByLibrary.simpleMessage("No places found"),
         "noRatings": MessageLookupByLibrary.simpleMessage("No ratings found"),
         "noRequests": MessageLookupByLibrary.simpleMessage("No requests found"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "ownerShipIsRequired":
+            MessageLookupByLibrary.simpleMessage("Ownership file is required"),
         "ownershipFile": MessageLookupByLibrary.simpleMessage("Ownership file"),
         "perHour": MessageLookupByLibrary.simpleMessage("per hour"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("Request added successfully"),
+        "placeEditedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Place edited successfully"),
         "placeName": MessageLookupByLibrary.simpleMessage("Place name"),
         "places": MessageLookupByLibrary.simpleMessage("Places"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "requests": MessageLookupByLibrary.simpleMessage("Requests"),
         "requiredField": MessageLookupByLibrary.simpleMessage("Required field"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "showInMap": MessageLookupByLibrary.simpleMessage("Show in map"),
         "sport": MessageLookupByLibrary.simpleMessage("Sport"),
+        "sportIsRequired":
+            MessageLookupByLibrary.simpleMessage("Sport is required"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "totalGames": MessageLookupByLibrary.simpleMessage("Total games"),
+        "userName": MessageLookupByLibrary.simpleMessage("User name"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
+        "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),
+        "weekend": MessageLookupByLibrary.simpleMessage("Weekend"),
         "workingHours": MessageLookupByLibrary.simpleMessage("Working hours"),
         "yourPlaces": MessageLookupByLibrary.simpleMessage("Your places")
       };

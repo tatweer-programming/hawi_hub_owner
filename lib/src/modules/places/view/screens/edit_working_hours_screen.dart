@@ -7,37 +7,51 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/add_working_hours_screen.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../main/view/widgets/custom_app_bar.dart';
 
-class AddWorkingHours extends StatelessWidget {
-  const AddWorkingHours({
-    super.key,
-  });
+class EditWorkingHoursScreen extends StatelessWidget {
+  const EditWorkingHoursScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController sundayStartController = TextEditingController(text: "00:00");
-    TextEditingController sundayEndController = TextEditingController(text: "23:59");
+    List<Day> workingHours = PlaceCubit.get().placeEditForm!.workingHours;
+    TextEditingController sundayStartController = TextEditingController(
+        text: "${workingHours[0].startTime.hour}:${workingHours[0].startTime.minute}");
+    TextEditingController sundayEndController = TextEditingController(
+        text: "${workingHours[0].endTime.hour}:${workingHours[0].endTime.minute}");
 
-    TextEditingController mondayStartController = TextEditingController(text: "00:00");
-    TextEditingController mondayEndController = TextEditingController(text: "23:59");
+    TextEditingController mondayStartController = TextEditingController(
+        text: "${workingHours[1].startTime.hour}:${workingHours[1].startTime.minute}");
+    TextEditingController mondayEndController = TextEditingController(
+        text: "${workingHours[1].endTime.hour}:${workingHours[1].endTime.minute}");
 
-    TextEditingController tuesdayStartController = TextEditingController(text: "00:00");
-    TextEditingController tuesdayEndController = TextEditingController(text: "23:59");
+    TextEditingController tuesdayStartController = TextEditingController(
+        text: "${workingHours[2].startTime.hour}:${workingHours[2].startTime.minute}");
+    TextEditingController tuesdayEndController = TextEditingController(
+        text: "${workingHours[2].endTime.hour}:${workingHours[2].endTime.minute}");
 
-    TextEditingController wednesdayStartController = TextEditingController(text: "00:00");
-    TextEditingController wednesdayEndController = TextEditingController(text: "23:59");
+    TextEditingController wednesdayStartController = TextEditingController(
+        text: "${workingHours[3].startTime.hour}:${workingHours[3].startTime.minute}");
+    TextEditingController wednesdayEndController = TextEditingController(
+        text: "${workingHours[3].endTime.hour}:${workingHours[3].endTime.minute}");
 
-    TextEditingController thursdayStartController = TextEditingController(text: "00:00");
-    TextEditingController thursdayEndController = TextEditingController(text: "23:59");
+    TextEditingController thursdayStartController = TextEditingController(
+        text: "${workingHours[4].startTime.hour}:${workingHours[4].startTime.minute}");
+    TextEditingController thursdayEndController = TextEditingController(
+        text: "${workingHours[4].endTime.hour}:${workingHours[4].endTime.minute}");
 
-    TextEditingController fridayStartController = TextEditingController(text: "00:00");
-    TextEditingController fridayEndController = TextEditingController(text: "23:59");
+    TextEditingController fridayStartController = TextEditingController(
+        text: "${workingHours[5].startTime.hour}:${workingHours[5].startTime.minute}");
+    TextEditingController fridayEndController = TextEditingController(
+        text: "${workingHours[5].endTime.hour}:${workingHours[5].endTime.minute}");
 
-    TextEditingController saturdayStartController = TextEditingController(text: "00:00");
-    TextEditingController saturdayEndController = TextEditingController(text: "23:59");
+    TextEditingController saturdayStartController = TextEditingController(
+        text: "${workingHours[6].startTime.hour}:${workingHours[6].startTime.minute}");
+    TextEditingController saturdayEndController = TextEditingController(
+        text: "${workingHours[6].endTime.hour}:${workingHours[6].endTime.minute}");
 
     List<List<TextEditingController>> daysControllers = <List<TextEditingController>>[
       [sundayStartController, sundayEndController],
@@ -144,30 +158,6 @@ class AddWorkingHours extends StatelessWidget {
     );
   }
 
-  // Widget _buildDaysInput({
-  //   required String title,
-  //   required TextEditingController startController,
-  //   required TextEditingController endController,
-  // }) {
-  //   bool isWeekend = false;
-  //   return Row(children: [
-  //     Expanded(child: SubTitle(title)),
-  //     SizedBox(width: 2.w),
-  //     Expanded(
-  //       child: TextField(
-  //         keyboardType: TextInputType.datetime,
-  //         controller: startController,
-  //       ),
-  //     ),
-  //     SizedBox(width: 2.w),
-  //     Expanded(
-  //         child: TextField(
-  //       keyboardType: TextInputType.datetime,
-  //       controller: endController,
-  //     ))
-  //   ]);
-  // }
-
   void _saveWorkingHours(List<List<TextEditingController>> daysControllers) {
     PlaceCubit cubit = PlaceCubit.get();
     for (int i = 0; i < daysControllers.length; i++) {
@@ -177,62 +167,5 @@ class AddWorkingHours extends StatelessWidget {
         endTime: daysControllers[i][1].text.toTimeOfDay() ?? const TimeOfDay(hour: 23, minute: 59),
       );
     }
-  }
-}
-
-class DayWidget extends StatefulWidget {
-  TextEditingController startController;
-  TextEditingController endController;
-  final String title;
-  DayWidget(
-      {super.key, required this.title, required this.startController, required this.endController});
-
-  @override
-  State<DayWidget> createState() => _DayWidgetState();
-}
-
-class _DayWidgetState extends State<DayWidget> {
-  bool isWeekend = false;
-  @override
-  Widget build(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          child: Text(
-        widget.title,
-        style: const TextStyle(fontWeight: FontWeightManager.bold),
-      )),
-      SizedBox(width: 2.w),
-      Expanded(
-        child: TextField(
-          enabled: !isWeekend,
-          keyboardType: TextInputType.datetime,
-          controller: widget.startController,
-        ),
-      ),
-      SizedBox(width: 2.w),
-      Expanded(
-          child: TextField(
-        enabled: !isWeekend,
-        keyboardType: TextInputType.datetime,
-        controller: widget.endController,
-      )),
-      SizedBox(
-        width: 2.w,
-      ),
-      Checkbox(
-          value: isWeekend,
-          onChanged: (value) {
-            setState(() {
-              if (isWeekend) {
-                widget.startController.text = "00:00";
-                widget.endController.text = "23:59";
-              } else {
-                widget.startController.text = "00:00";
-                widget.endController.text = "00:00";
-              }
-              isWeekend = !isWeekend;
-            });
-          })
-    ]);
   }
 }

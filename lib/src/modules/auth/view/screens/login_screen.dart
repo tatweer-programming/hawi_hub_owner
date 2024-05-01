@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                             height: 2.h,
                           ),
                           state is LoginLoadingState
-                              ? CircularProgressIndicator()
+                              ? const CircularProgressIndicator()
                               : defaultButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {

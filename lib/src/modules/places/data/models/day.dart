@@ -1,34 +1,80 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Day extends Equatable {
-  final int dayId;
-  final int? startTime;
-  final int? endTime;
+  final int dayOfWeek;
+  final TimeOfDay startTime;
+  final TimeOfDay endTime;
 
-  const Day({required this.dayId, this.startTime, this.endTime});
+  const Day({required this.dayOfWeek, required this.startTime, required this.endTime});
 
   bool isWeekend() {
     return startTime == null && endTime == null;
   }
 
   bool isAllDay() {
-    return startTime == 0 && endTime == 24;
+    return startTime.hour == 0 &&
+        startTime.minute == 0 &&
+        endTime.hour == 23 &&
+        endTime.minute == 59;
   }
 
-  isBookingAvailable(int startTime, int endTime) {
-    if (!isWeekend()) {
-      return startTime >= this.startTime! && endTime <= this.endTime!;
-    }
-  }
+  // isBookingAvailable(int startTime, int endTime) {
+  //   if (!isWeekend()) {
+  //     return startTime >= this.startTime! && endTime <= this.endTime!;
+  //   }
+  // }
 
-  factory Day.fromJson(MapEntry<int, List<int?>> json) {
-    return Day(dayId: json.key, startTime: json.value[0], endTime: json.value[1]);
+  factory Day.fromJson(MapEntry<int, List<TimeOfDay>> json) {
+    return Day(dayOfWeek: json.key, startTime: json.value[0], endTime: json.value[1]);
   }
-  Map<int, List<int?>> toJson() => {
-        dayId: [startTime, endTime]
+  Map toJson() => {
+        "dayOfWeek": dayOfWeek,
+        "startTime": {
+          "ticks": 0,
+          "days": 0,
+          "hours": startTime.hour,
+          "milliseconds": 0,
+          "minutes": startTime.minute,
+          "seconds": 0
+        },
+        "endTime": {
+          "ticks": 0,
+          "days": 0,
+          "hours": endTime.hour,
+          "milliseconds": 0,
+          "minutes": endTime.minute,
+          "seconds": 0
+        }
       };
 
   @override
   List<Object?> get props => [];
+  bool isBookingAllowed(DateTime bookingStart, DateTime bookingEnd) {
+    // تحقق مما إذا كان وقت الحجز يقع ضمن وقت عمل الملعب
+    TimeOfDay startBooking = TimeOfDay.fromDateTime(bookingStart);
+    TimeOfDay endBooking = TimeOfDay.fromDateTime(bookingEnd);
+    return startBooking.hour >= startTime.hour &&
+        startBooking.minute >= startTime.minute &&
+        endBooking.hour <= endTime.hour &&
+        endBooking.minute <= endTime.minute;
+    return false;
+  }
+}
+
+extension TimeOfDayExtension on String {
+  TimeOfDay? toTimeOfDay() {
+    final List<String> parts = split(":");
+    if (parts.length != 2) {
+      return null;
+    }
+
+    final int? hour = int.tryParse(parts[0]);
+    final int? minute = int.tryParse(parts[1]);
+
+    if (hour == null || minute == null || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+      return null;
+    }
+    return TimeOfDay(hour: hour, minute: minute);
+  }
 }

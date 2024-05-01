@@ -13,7 +13,7 @@ class PlaceLocation {
       longitude: double.parse(string.split(",")[1]),
     );
   }
-  String toJson() {
-    return "{'latitude': $latitude, 'longitude': $longitude}";
+  String toStr() {
+    return "$latitude,$longitude";
   }
 }

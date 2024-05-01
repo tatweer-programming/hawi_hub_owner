@@ -98,7 +98,8 @@ List<BookingRequest> bookingRequests = [
     startTime: DateTime.now(),
     placeName: "place",
     userName: "username",
-    userImage: "assets/images/user.png",
+    userImage:
+        "https://images.pexels.com/photos/1036627/pexels-photo-1036627.jpeg?auto=compress&cs=tinysrgb&w=600",
     placeId: 1,
   ),
   BookingRequest(
