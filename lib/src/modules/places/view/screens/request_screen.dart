@@ -11,7 +11,6 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.da
 import 'package:sizer/sizer.dart';
 
 import '../../../../../generated/l10n.dart';
-import '../../../../core/common widgets/custom_app_bar.dart';
 
 class RequestScreen extends StatelessWidget {
   final BookingRequest request;

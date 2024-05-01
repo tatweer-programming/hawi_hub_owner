@@ -53,7 +53,7 @@ class AppRouter {
         Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
         print(arguments['id']);
         return MaterialPageRoute(builder: (_) => EditPlaceScreen(placeId: arguments['id']));
-        case Routes.profile:
+      case Routes.profile:
         Owner arguments = settings.arguments as Owner;
         return MaterialPageRoute(builder: (_) => ProfileScreen(owner: arguments));
       case Routes.request:
