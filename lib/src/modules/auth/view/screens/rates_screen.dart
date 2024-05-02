@@ -127,7 +127,7 @@ Widget _editIcon() {
   );
 }
 
-Widget _peopleRateBuilder(FeedBack feedBack) {
+Widget _peopleRateBuilder(AppFeedBack feedBack) {
   return Stack(
     children: [
       Column(

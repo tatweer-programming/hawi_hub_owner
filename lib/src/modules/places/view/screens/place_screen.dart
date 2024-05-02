@@ -394,6 +394,7 @@ class PlaceScreen extends StatelessWidget {
           child: DefaultButton(
               text: S.of(context).addBooking,
               onPressed: () {
+                context.push(Routes.addBooking, arguments: {"id": cubit.currentPlace!.id});
                 debugPrint("Book Now");
               }),
         ),

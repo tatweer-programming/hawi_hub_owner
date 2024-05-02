@@ -7,12 +7,18 @@ class PlaceLocation {
     required this.longitude,
   });
 
-  factory PlaceLocation.fromString(String string) {
-    return PlaceLocation(
-      latitude: double.parse(string.split(",")[0]),
-      longitude: double.parse(string.split(",")[1]),
-    );
+  static PlaceLocation? fromString(String string) {
+    List<String> parts = string.split(",");
+    if (parts.length == 2) {
+      double? latitude = double.tryParse(parts[0]);
+      double? longitude = double.tryParse(parts[1]);
+      if (latitude == null || longitude == null) {
+        return null;
+      }
+    }
+    return null;
   }
+
   String toStr() {
     return "$latitude,$longitude";
   }

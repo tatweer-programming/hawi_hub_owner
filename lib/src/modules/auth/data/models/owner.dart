@@ -10,7 +10,7 @@ class Owner {
   final String email;
   final String profilePictureUrl;
   final double myWallet;
-  final List<FeedBack> feedbacks;
+  final List<AppFeedBack> feedbacks;
   File? profilePictureFile;
   File? nationalIdPicture;
 
@@ -37,9 +37,8 @@ class Owner {
       emailConfirmed: json['emailConfirmed'],
       myWallet: json['wallet'].toDouble(),
       rate: json['rate'] != null ? json['rate'].toDouble() : 0.0,
-      feedbacks: List.from(json['reviews'])
-          .map((feedBack) => FeedBack.fromJson(feedBack))
-          .toList(),
+      feedbacks:
+          List.from(json['reviews']).map((feedBack) => AppFeedBack.fromJson(feedBack)).toList(),
     );
   }
 }

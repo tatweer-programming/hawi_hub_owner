@@ -154,8 +154,7 @@ Widget _settingWidget({
               ),
               Text(
                 title,
-                style: TextStyleManager.getCaptionStyle()
-                    .copyWith(color: ColorManager.black),
+                style: TextStyleManager.getCaptionStyle().copyWith(color: ColorManager.black),
               ),
               const Spacer(),
               Icon(
@@ -171,9 +170,9 @@ Widget _settingWidget({
 }
 
 Widget _appBar(
-    BuildContext context,
-    String imageProfileUrl,
-    ) {
+  BuildContext context,
+  String imageProfileUrl,
+) {
   return Stack(
     alignment: AlignmentDirectional.bottomCenter,
     children: [

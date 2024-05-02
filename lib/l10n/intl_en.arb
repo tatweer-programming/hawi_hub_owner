@@ -58,5 +58,10 @@
   "bookingTime" : "Booking time",
   "date" : "Date",
   "userName" : "User name",
-  "minutes" : "minutes"
+  "minutes" : "minutes",
+  "confirm" : "Confirm",
+  "startTime" : "Start time",
+  "endTime" : "End time",
+  "allFieldsIsRequired" : "All fields are required",
+  "endTimeMustBeAfterStartTime" : "End time must be after start time"
 }

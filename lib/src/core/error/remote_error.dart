@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-
 import '../utils/localization_manager.dart';
 
 class ExceptionManager implements Exception {
@@ -9,7 +7,7 @@ class ExceptionManager implements Exception {
 
   String translatedMessage() {
     if (LocalizationManager.getCurrentLocale().languageCode == "en") {
-      switch (error.response!.statusCode ?? 0) {
+      switch (error.response?.statusCode ?? 0) {
         case 100:
           return "Continue";
         case 101:
@@ -139,7 +137,7 @@ class ExceptionManager implements Exception {
           return "Unknown Error";
       }
     }
-    switch (error.response!.statusCode ?? 0) {
+    switch (error.response?.statusCode ?? 0) {
       case 100:
         return "استمرار";
       case 101:

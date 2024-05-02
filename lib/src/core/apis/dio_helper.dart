@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
@@ -12,6 +10,7 @@ class DioHelper {
       baseUrl: ApiManager.baseUrl,
       headers: {
         "Authorization": ApiManager.authToken,
+        "Connection": "keep-alive",
       },
       connectTimeout: const Duration(seconds: 5),
       receiveTimeout: const Duration(seconds: 5),

@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("اضافة ساعات العمل"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
+        "allFieldsIsRequired":
+            MessageLookupByLibrary.simpleMessage("جميع الحقول مطلوبة"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("مفتوح دائما"),
         "booking": MessageLookupByLibrary.simpleMessage("الحجز"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
@@ -36,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("المدينة مطلوبة"),
+        "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
         "date": MessageLookupByLibrary.simpleMessage("الموعد"),
         "day": MessageLookupByLibrary.simpleMessage("اليوم"),
@@ -47,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
         "editPlace": MessageLookupByLibrary.simpleMessage("تعديل المكان"),
+        "endTime": MessageLookupByLibrary.simpleMessage("وقت الانتهاء"),
+        "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
+            "وقت الانتهاء يجب أن يكون بعد وقت البدء"),
         "from": MessageLookupByLibrary.simpleMessage("من"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
@@ -85,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
         "sportIsRequired":
             MessageLookupByLibrary.simpleMessage("الرياضة مطلوبة"),
+        "startTime": MessageLookupByLibrary.simpleMessage("وقت البدء"),
         "to": MessageLookupByLibrary.simpleMessage("إلى"),
         "totalGames": MessageLookupByLibrary.simpleMessage("إجمالي الحجوزات"),
         "userName": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),

@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("Add working hours"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "allFieldsIsRequired":
+            MessageLookupByLibrary.simpleMessage("All fields are required"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("Always open"),
         "booking": MessageLookupByLibrary.simpleMessage("Booking"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("Booking time"),
@@ -36,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("City is required"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm delete"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
@@ -47,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "editPlace": MessageLookupByLibrary.simpleMessage("Edit place"),
+        "endTime": MessageLookupByLibrary.simpleMessage("End time"),
+        "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
+            "End time must be after start time"),
         "from": MessageLookupByLibrary.simpleMessage("From"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
@@ -83,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sport": MessageLookupByLibrary.simpleMessage("Sport"),
         "sportIsRequired":
             MessageLookupByLibrary.simpleMessage("Sport is required"),
+        "startTime": MessageLookupByLibrary.simpleMessage("Start time"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "totalGames": MessageLookupByLibrary.simpleMessage("Total games"),
         "userName": MessageLookupByLibrary.simpleMessage("User name"),

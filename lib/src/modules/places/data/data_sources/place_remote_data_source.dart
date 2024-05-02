@@ -13,22 +13,27 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.da
 class PlaceRemoteDataSource {
   Future<Either<Exception, List<Place>>> getPlaces() async {
     try {
+      print("getPlaces called");
       List<Place> places = [];
-      var response = await DioHelper.getData(path: EndPoints.getPlaces, query: {
+      var response = await DioHelper.getData(path: EndPoints.getPlaces + "1", query: {
         "id": 1 //ConstantsManager.userId
       });
       print(response.data);
+      print(response);
       if (response.statusCode == 200) {
         places = (response.data as List).map((e) => Place.fromJson(e)).toList();
 
-        print(places);
+        print(response.data);
       }
-      return Right(places);
+      return Right(dummyPlaces);
 
       // await startTimer(2.1);
       //
 
       // return Right(dummyPlaces);
+    } on FormatException catch (e) {
+      print(e);
+      return Right([]);
     } on Exception catch (e) {
       print(e);
       return Left(e);

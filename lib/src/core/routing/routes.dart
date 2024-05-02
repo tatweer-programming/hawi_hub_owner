@@ -19,4 +19,6 @@ class Routes {
   static const String addWorkingHours = '/addWorkingHours';
   static const String editWorkingHours = '/editWorkingHours';
   static const String request = '/request';
+
+  static const String addBooking = "/addBooking";
 }

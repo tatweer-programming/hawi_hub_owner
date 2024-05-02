@@ -1,7 +1,7 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 
@@ -15,7 +15,7 @@ class Place extends Equatable {
   String sport;
   double price;
   int ownerId;
-  int? minimumHours;
+  double? minimumHours;
   List<String> images;
   int totalGames;
   int totalRatings;
@@ -24,6 +24,7 @@ class Place extends Equatable {
   String ownerName;
   String ownerImageUrl;
   int citId;
+  int approvalStatus;
   Place({
     required this.id,
     required this.name,
@@ -43,36 +44,37 @@ class Place extends Equatable {
     required this.ownerName,
     required this.ownerImageUrl,
     required this.citId,
+    this.approvalStatus = 0,
   });
 
   factory Place.fromJson(Map<String, dynamic> json) {
     return Place(
-      citId: json['city_id'],
-      id: json['id'],
+      citId: json['cityId'],
+      id: json['stadiumId'],
       name: json['name'],
       description: json['description'],
       address: json['address'],
-      images: json['images'],
-      ownerId: json['owner_id'],
-      minimumHours: json['minimum_hours'],
-      price: json['price'],
-      totalGames: json['total_games'],
-      totalRatings: json['total_ratings'],
-      ownerName: json['owner_name'],
-      ownerImageUrl: json['owner_image_url'],
-      rating: json['rating'],
-      feedbacks: json['feedbacks'],
+      images: [],
+      ownerId: json['ownerId'],
+      minimumHours: json['minHoursReservation'],
+      price: json['pricePerHour'],
+      totalGames: json['totalGames'] ?? 0,
+      totalRatings: json['totalRatings'] ?? 0,
+      ownerName: json['ownerName'] ?? '',
+      ownerImageUrl: json['ownerImageUrl'] ?? '',
+      rating: json['rating'] ?? 0.0,
+      feedbacks: [],
       workingHours: List<Day>.from(
-        json['working_hours'].map((x) => Day.fromJson(x)),
+        json['openTimes'].map((x) => Day.fromJson(x)),
       ),
       location: PlaceLocation.fromString(json['location']),
-      sport: json['sport_id'],
+      sport: json['category'],
     );
   }
 
-  static List<Day> getWeekDays(Map<int, List<TimeOfDay>> weekDays) {
+  static List<Day> getWeekDays(List<Map<String, dynamic>> weekDays) {
     List<Day> days = [];
-    for (var element in weekDays.entries) {
+    for (var element in weekDays) {
       days.add(Day.fromJson(element));
     }
     return days;

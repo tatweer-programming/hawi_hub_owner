@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
-import 'package:http/http.dart' as http;
 import 'package:my_fatoorah/my_fatoorah.dart';
 
 import '../../../../core/utils/constance_manager.dart';

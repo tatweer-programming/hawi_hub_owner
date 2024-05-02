@@ -46,19 +46,14 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void connect() {
-    final channel = IOWebSocketChannel.connect(
-        'ws://abdoo120-001-site1.ctempurl.com/api/chat',
-        headers: {
-          "Authorization": "Basic MTExNzM2NDY6NjAtZGF5ZnJlZXRyaWFs"
-        });
+    final channel = IOWebSocketChannel.connect('ws://abdoo120-001-site1.ctempurl.com/api/chat',
+        headers: {"Authorization": "Basic MTExNzM2NDY6NjAtZGF5ZnJlZXRyaWFs"});
 
-    final messageWithTrailingChars =
-        '{"protocol":"json","version":1}0x1E/U+001E';
+    final messageWithTrailingChars = '{"protocol":"json","version":1}0x1E/U+001E';
     channel.sink.add(messageWithTrailingChars);
     channel.sink.add("بحبك");
 
     channel.stream.listen((message) {
-
       print("message $message");
     });
   }
@@ -99,8 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     Text(
                       messages[index].dateOfMessage,
-                      style: TextStyleManager.getCaptionStyle()
-                          .copyWith(fontSize: 10.sp),
+                      style: TextStyleManager.getCaptionStyle().copyWith(fontSize: 10.sp),
                     ),
                   ],
                 ),
@@ -119,8 +113,7 @@ class _ChatScreenState extends State<ChatScreen> {
             }),
           _sendButton((String? value) async {
             if (value == 'image') {
-              final pickedFile =
-                  await ImagePicker().pickImage(source: ImageSource.gallery);
+              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
               if (pickedFile != null) {
                 setState(() {
                   imagePath = pickedFile.path;
@@ -231,8 +224,7 @@ Widget _messageWidget({required Message message, required bool isSender}) {
 
 Widget _textWidget({required bool isSender, required String message}) {
   return Align(
-    alignment:
-        isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+    alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
     child: Container(
       decoration: BoxDecoration(
         color: ColorManager.grey3.withOpacity(0.4),
@@ -261,8 +253,7 @@ Widget _textWidget({required bool isSender, required String message}) {
 
 Widget _imageWidget({required bool isSender, required String image}) {
   return Align(
-    alignment:
-        isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+    alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
     child: Container(
       height: 20.h,
       width: 60.w,
@@ -292,9 +283,7 @@ Widget _voiceWidget({
     mainAxisSize: MainAxisSize.min,
     children: [
       Align(
-        alignment: isSender
-            ? AlignmentDirectional.topEnd
-            : AlignmentDirectional.topStart,
+        alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
         child: Directionality(
           textDirection: isSender ? ui.TextDirection.rtl : ui.TextDirection.ltr,
           child: VoiceMessageView(

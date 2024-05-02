@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
-import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
-import 'package:hawi_hub_owner/src/modules/auth/view/screens/get_started_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/profile_screen.dart';
-import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/add_booking_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/add_working_hours_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/create_place_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/edit_place_screen.dart';
@@ -25,7 +23,7 @@ class AppRouter {
       case Routes.splash:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(
-            nextScreen: ChatsScreen(),
+            nextScreen: MainScreen(),
             // nextScreen: ConstantsManager.userToken == null
             //     ? const GetStartedScreen()
             //     : const MainScreen(),
@@ -60,6 +58,12 @@ class AppRouter {
       case Routes.request:
         Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(builder: (_) => RequestScreen(request: arguments['request']));
+      case Routes.addBooking:
+        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (_) => AddBookingScreen(
+                  placeId: arguments['id'],
+                ));
       case Routes.placeLocation:
         Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(

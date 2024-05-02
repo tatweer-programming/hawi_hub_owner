@@ -53,10 +53,10 @@ android {
 
     signingConfigs {
         debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'HawiHubOwner_Tatweer'
-            storeFile file('keystore.jks')
-            storePassword 'HawiHubOwner_Tatweer'
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'HawiHubOwner_Tatweer'
+//            storeFile file('keystore.jks')
+//            storePassword 'HawiHubOwner_Tatweer'
         }
     }
     buildTypes {

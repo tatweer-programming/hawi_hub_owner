@@ -989,6 +989,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
+  progressive_time_picker:
+    dependency: "direct main"
+    description:
+      name: progressive_time_picker
+      sha256: a19e2effecd955ea01716f06d7efbb79788f4ed6c5bec32146c194fd4c901441
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.1"
   proj4dart:
     dependency: transitive
     description:

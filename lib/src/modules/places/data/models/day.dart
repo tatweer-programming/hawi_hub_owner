@@ -25,8 +25,11 @@ class Day extends Equatable {
   //   }
   // }
 
-  factory Day.fromJson(MapEntry<int, List<TimeOfDay>> json) {
-    return Day(dayOfWeek: json.key, startTime: json.value[0], endTime: json.value[1]);
+  factory Day.fromJson(Map<String, dynamic> json) {
+    return Day(
+        dayOfWeek: json['dayOfWeek'],
+        startTime: json['startTime'].toString().toTimeOfDay() ?? TimeOfDay(hour: 0, minute: 0),
+        endTime: json['endTime'].toString().toTimeOfDay() ?? TimeOfDay(hour: 23, minute: 59));
   }
   Map toJson() => {
         "dayOfWeek": dayOfWeek,
@@ -65,14 +68,11 @@ class Day extends Equatable {
 extension TimeOfDayExtension on String {
   TimeOfDay? toTimeOfDay() {
     final List<String> parts = split(":");
-    if (parts.length != 2) {
-      return null;
-    }
 
     final int? hour = int.tryParse(parts[0]);
     final int? minute = int.tryParse(parts[1]);
 
-    if (hour == null || minute == null || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+    if (hour == null || minute == null || hour < 0 || hour >= 23 || minute < 0 || minute >= 59) {
       return null;
     }
     return TimeOfDay(hour: hour, minute: minute);

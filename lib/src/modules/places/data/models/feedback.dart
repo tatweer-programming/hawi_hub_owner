@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class FeedBack extends Equatable {
+class AppFeedBack extends Equatable {
   final int? id;
   final int userId;
   final String? comment;
@@ -8,7 +8,7 @@ class FeedBack extends Equatable {
   final String? userImageUrl;
   final double rating;
 
-  const FeedBack({
+  const AppFeedBack({
     this.id,
     required this.userId,
     this.comment,
@@ -16,8 +16,8 @@ class FeedBack extends Equatable {
     this.userImageUrl,
     required this.rating,
   });
-  factory FeedBack.fromJson(Map<String, dynamic> json) {
-    return FeedBack(
+  factory AppFeedBack.fromJson(Map<String, dynamic> json) {
+    return AppFeedBack(
       id: json['id'],
       userId: json['user_id'],
       comment: json['comment'],
@@ -35,11 +35,11 @@ class FeedBack extends Equatable {
     };
   }
 
-  factory FeedBack.create({
+  factory AppFeedBack.create({
     String? comment,
     required double rating,
   }) {
-    return FeedBack(
+    return AppFeedBack(
       comment: comment,
       rating: rating,
       userId: 1,

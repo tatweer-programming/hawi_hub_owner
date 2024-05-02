@@ -649,6 +649,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start time`
+  String get startTime {
+    return Intl.message(
+      'Start time',
+      name: 'startTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End time`
+  String get endTime {
+    return Intl.message(
+      'End time',
+      name: 'endTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All fields are required`
+  String get allFieldsIsRequired {
+    return Intl.message(
+      'All fields are required',
+      name: 'allFieldsIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End time must be after start time`
+  String get endTimeMustBeAfterStartTime {
+    return Intl.message(
+      'End time must be after start time',
+      name: 'endTimeMustBeAfterStartTime',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

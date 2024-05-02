@@ -3,16 +3,13 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import '../models/auth_owner.dart';
 import '../models/owner.dart';
-import '../models/sport.dart';
 import '../services/auth_services.dart';
 
 class AuthRepository {
   final AuthService _service = AuthService();
 
   Future<String> loginPlayer(
-      {required String email,
-      required String password,
-      required bool loginWithFBOrGG}) async {
+      {required String email, required String password, required bool loginWithFBOrGG}) async {
     return await _service.loginPlayer(
         email: email, password: password, loginWithFBOrGG: loginWithFBOrGG);
   }
@@ -57,8 +54,7 @@ class AuthRepository {
     required String oldPassword,
     required String newPassword,
   }) async {
-    return _service.changePassword(
-        oldPassword: oldPassword, newPassword: newPassword);
+    return _service.changePassword(oldPassword: oldPassword, newPassword: newPassword);
   }
 
   // Future<String> deleteProfileImage() async {

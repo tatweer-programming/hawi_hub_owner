@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
-import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
-import 'package:hawi_hub_owner/src/modules/auth/view/screens/rates_screen.dart';
-import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/place_holder.dart';
-import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/shimmer_widget.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/color_manager.dart';
@@ -37,7 +30,7 @@ class EditProfileScreen extends StatelessWidget {
                   width: double.infinity,
                   child: Stack(
                     children: [
-                      _appBar(context:context, owner:owner,bloc:bloc),
+                      _appBar(context: context, owner: owner, bloc: bloc),
                     ],
                   ),
                 ),
@@ -108,10 +101,7 @@ class EditProfileScreen extends StatelessWidget {
   }
 }
 
-Widget _appBar(
-    {required BuildContext context,
-    required Owner owner,
-    required AuthBloc bloc}) {
+Widget _appBar({required BuildContext context, required Owner owner, required AuthBloc bloc}) {
   return Stack(
     alignment: AlignmentDirectional.bottomCenter,
     children: [
@@ -209,8 +199,7 @@ Widget changePassWidget(
                         onPressed: () {
                           bloc.add(ChangePasswordVisibilityEvent(visible));
                         },
-                        icon: Icon(
-                            visible ? Icons.visibility_off : Icons.visibility)),
+                        icon: Icon(visible ? Icons.visibility_off : Icons.visibility)),
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please enter password';

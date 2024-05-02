@@ -58,6 +58,10 @@
   "bookingTime" : "وقت الحجز",
   "date" : "الموعد",
   "userName" : "اسم المستخدم",
-  "minutes" : "دقائق"
-
+  "minutes" : "دقائق",
+  "confirm" : "تأكيد",
+  "startTime" : "وقت البدء",
+  "endTime" : "وقت الانتهاء",
+  "endTimeMustBeAfterStartTime" : "وقت الانتهاء يجب أن يكون بعد وقت البدء",
+   "allFieldsIsRequired" : "جميع الحقول مطلوبة"
 }

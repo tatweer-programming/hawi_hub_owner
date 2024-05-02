@@ -15,7 +15,7 @@ class PlaceEditForm {
 
   ///
   int ownerId;
-  int? minimumHours;
+  double? minimumHours;
 
   ///
   List<String> images;

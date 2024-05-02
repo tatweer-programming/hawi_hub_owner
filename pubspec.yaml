@@ -53,7 +53,7 @@ dependencies:
   flutter_rating_bar:
   shimmer: ^3.0.0
   share_plus: any
-
+  progressive_time_picker:
 
   # CHATS PACKAGES
   voice_message_package: ^2.1.4

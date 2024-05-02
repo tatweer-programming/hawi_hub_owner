@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -12,7 +11,6 @@ import '../../../../core/apis/end_points.dart';
 import '../../../../core/local/shared_prefrences.dart';
 import '../../../../core/utils/constance_manager.dart';
 import '../models/auth_owner.dart';
-import '../models/sport.dart';
 
 class AuthService {
   Future<String> registerPlayer({
@@ -201,7 +199,9 @@ class AuthService {
     } catch (e) {
       return e.toString();
     }
-  } Future<String> uploadNationalId(File nationalId) async {
+  }
+
+  Future<String> uploadNationalId(File nationalId) async {
     try {
       Response response = await DioHelper.putDataFormData(
         token: ConstantsManager.userId.toString(),
