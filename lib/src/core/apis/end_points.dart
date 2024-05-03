@@ -20,4 +20,5 @@ class EndPoints {
   static const String getBookingRequest = '/bookingrequests';
   static const String acceptBookingRequest = '/acceptbookingrequest';
   static const String declineBookingRequest = '/declinebookingrequest';
+  static const String createBooking = '/createbookingrequest';
 }

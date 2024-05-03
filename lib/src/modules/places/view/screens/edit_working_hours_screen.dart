@@ -163,8 +163,10 @@ class EditWorkingHoursScreen extends StatelessWidget {
     for (int i = 0; i < daysControllers.length; i++) {
       cubit.workingHours[i] = Day(
         dayOfWeek: cubit.workingHours[i].dayOfWeek,
-        startTime: daysControllers[i][0].text.toTimeOfDay() ?? const TimeOfDay(hour: 0, minute: 0),
-        endTime: daysControllers[i][1].text.toTimeOfDay() ?? const TimeOfDay(hour: 23, minute: 59),
+        startTime:
+            daysControllers[i][0].text.tryParseToTimeOfDay() ?? const TimeOfDay(hour: 0, minute: 0),
+        endTime: daysControllers[i][1].text.tryParseToTimeOfDay() ??
+            const TimeOfDay(hour: 23, minute: 59),
       );
     }
   }

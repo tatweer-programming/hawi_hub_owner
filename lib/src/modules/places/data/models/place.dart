@@ -48,13 +48,27 @@ class Place extends Equatable {
   });
 
   factory Place.fromJson(Map<String, dynamic> json) {
+    List openTimesList = json["openTimes"];
+    print(openTimesList);
+    List<Day> days = [];
+    openTimesList.forEach((element) {
+      print(Day.fromJson(element));
+      days.add(Day.fromJson(element));
+    });
     return Place(
       citId: json['cityId'],
       id: json['stadiumId'],
       name: json['name'],
       description: json['description'],
       address: json['address'],
-      images: [],
+      images: const [
+        "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
+      ],
+      /*
+       json['images'].map((x) => x['url']).toList(),
+       */
       ownerId: json['ownerId'],
       minimumHours: json['minHoursReservation'],
       price: json['pricePerHour'],
@@ -64,9 +78,7 @@ class Place extends Equatable {
       ownerImageUrl: json['ownerImageUrl'] ?? '',
       rating: json['rating'] ?? 0.0,
       feedbacks: [],
-      workingHours: List<Day>.from(
-        json['openTimes'].map((x) => Day.fromJson(x)),
-      ),
+      workingHours: List<Day>.from(json["openTimes"].map((x) => Day.fromJson(x))),
       location: PlaceLocation.fromString(json['location']),
       sport: json['category'],
     );
@@ -99,6 +111,32 @@ class Place extends Equatable {
       imageFiles: [],
       cityId: citId,
     );
+  }
+
+  bool isBookingAllowed(DateTime startTime, DateTime endTime) {
+    // get day index
+    // check if time is in working hours
+    int dayIndex = getDayIndex(startTime);
+    return workingHours![dayIndex].isBookingAllowed(startTime, endTime);
+  }
+
+  int getDayIndex(DateTime startTime) {
+    switch (startTime.weekday) {
+      case DateTime.sunday:
+        return 0;
+      case DateTime.monday:
+        return 1;
+      case DateTime.tuesday:
+        return 2;
+      case DateTime.wednesday:
+        return 3;
+      case DateTime.thursday:
+        return 4;
+      case DateTime.friday:
+        return 5;
+      default:
+        return 6;
+    }
   }
 
   @override

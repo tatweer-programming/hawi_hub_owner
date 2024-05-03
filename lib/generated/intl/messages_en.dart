@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("All fields are required"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("Always open"),
         "booking": MessageLookupByLibrary.simpleMessage("Booking"),
+        "bookingNotAllowed": MessageLookupByLibrary.simpleMessage(
+            "Booking outside working hours"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("Booking time"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
@@ -58,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
         "imageIsRequired":
             MessageLookupByLibrary.simpleMessage("Image is required"),
+        "invalidValue": MessageLookupByLibrary.simpleMessage("Invalid Value"),
         "location": MessageLookupByLibrary.simpleMessage("Location"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("Minimum booking"),
@@ -76,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "perHour": MessageLookupByLibrary.simpleMessage("per hour"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("Request added successfully"),
+        "placeDeleted":
+            MessageLookupByLibrary.simpleMessage("Place deleted successfully"),
         "placeEditedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Place edited successfully"),
         "placeName": MessageLookupByLibrary.simpleMessage("Place name"),

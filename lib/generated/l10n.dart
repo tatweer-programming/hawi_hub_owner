@@ -699,6 +699,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Booking outside working hours`
+  String get bookingNotAllowed {
+    return Intl.message(
+      'Booking outside working hours',
+      name: 'bookingNotAllowed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Place deleted successfully`
+  String get placeDeleted {
+    return Intl.message(
+      'Place deleted successfully',
+      name: 'placeDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid Value`
+  String get invalidValue {
+    return Intl.message(
+      'Invalid Value',
+      name: 'invalidValue',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

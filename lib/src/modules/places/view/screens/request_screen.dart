@@ -122,7 +122,7 @@ class RequestScreen extends StatelessWidget {
                             child: DefaultButton(
                               text: S.of(context).accept,
                               onPressed: () async {
-                                cubit.acceptBookingRequest(request.id);
+                                cubit.acceptBookingRequest(request.id!);
                               },
                               // height: 10.h,
                               width: 30.w,
@@ -137,7 +137,7 @@ class RequestScreen extends StatelessWidget {
                               text: S.of(context).decline,
                               borderColor: ColorManager.black,
                               onPressed: () async {
-                                cubit.declineBookingRequest(request.id);
+                                cubit.declineBookingRequest(request.id!);
                               },
                               width: 30.w,
                               isLoading: state is DeclineBookingRequestLoading,

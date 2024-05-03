@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/dummy_data.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
@@ -23,9 +24,10 @@ class PlaceRemoteDataSource {
       if (response.statusCode == 200) {
         places = (response.data as List).map((e) => Place.fromJson(e)).toList();
 
-        print(response.data);
+        print(places.map((e) => e.workingHours![0]));
       }
-      return Right(dummyPlaces);
+
+      return Right(places);
 
       // await startTimer(2.1);
       //
@@ -44,15 +46,11 @@ class PlaceRemoteDataSource {
     try {
       // return const Right(unit);
       FormData formData = placeCreationForm.toFormData();
-      var response = await DioHelper.postFormData(
+      await DioHelper.postFormData(
         EndPoints.createPlace,
         formData,
       );
-      if (response.statusCode == 200) {
-        print("added");
-        return const Right(unit);
-      }
-      return Left(Exception(response.data['errors']));
+      return const Right(unit);
     } on Exception catch (e) {
       print(e);
       return Left(e);
@@ -62,15 +60,13 @@ class PlaceRemoteDataSource {
   Future<Either<Exception, Unit>> updatePlace(int placeId,
       {required PlaceEditForm newPlace}) async {
     try {
-      var response = await DioHelper.putDataFormData(
+      await DioHelper.putDataFormData(
         query: {"id": placeId},
-        path: EndPoints.updatePlace,
+        path: EndPoints.updatePlace + placeId.toString(),
         data: newPlace.toFormData(),
       );
-      if (response.statusCode == 200) {
-        return const Right(unit);
-      }
-      return Left(Exception(response.data['message']));
+
+      return const Right(unit);
     } on Exception catch (e) {
       return Left(e);
     }
@@ -78,14 +74,16 @@ class PlaceRemoteDataSource {
 
   Future<Either<Exception, Unit>> deletePlace(int placeId) async {
     try {
-      var response =
-          await DioHelper.deleteData(path: EndPoints.deletePlace + placeId.toString(), query: {
+      await DioHelper.deleteData(path: EndPoints.deletePlace + placeId.toString(), query: {
         "id": placeId,
+      }).then((value) {
+        print(value.statusCode.toString() + value.data.toString());
+      }).catchError((e) {
+        return Left(e);
       });
-      if (response.statusCode == 200) {
-        return const Right(unit);
-      }
-      return Left(Exception(response.data['errors']));
+      return const Right(unit);
+    } on DioException catch (e) {
+      return Left(e);
     } on Exception catch (e) {
       return Left(e);
     }
@@ -126,6 +124,28 @@ class PlaceRemoteDataSource {
       }
       return Left(Exception(response.data['message']));
     } on Exception catch (e) {
+      return Left(e);
+    }
+  }
+
+  createBooking(
+      {required int placeId,
+      required DateTime bookingStartTime,
+      required DateTime bookingEndTime}) async {
+    try {
+      var response = await DioHelper.postData(
+        path: EndPoints.createBooking,
+        data: {
+          "place_id": placeId,
+          "booking_start_time": bookingStartTime,
+          "booking_end_time": bookingEndTime
+        },
+      );
+      if (response.statusCode == 200) {
+        print("added");
+      }
+    } on Exception catch (e) {
+      print(e);
       return Left(e);
     }
   }

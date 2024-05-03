@@ -117,6 +117,7 @@ class PlaceCubit extends Cubit<PlaceState> {
     result.fold((l) {
       emit(DeletePlaceError(l));
     }, (r) {
+      places.removeWhere((element) => element.id == placeId);
       emit(DeletePlaceSuccess());
     });
   }
@@ -206,5 +207,19 @@ class PlaceCubit extends Cubit<PlaceState> {
     print(placeEditForm!.images);
     placeEditForm!.images.removeWhere((element) => element == image);
     emit(RemoveImagesSuccess(image));
+  }
+
+  createBooking(DateTime bookingStartTime, DateTime bookingEndTime, int placeId) {
+    emit(CreateBookingLoading());
+    var result = dataSource.createBooking(
+      placeId: placeId,
+      bookingStartTime: bookingStartTime,
+      bookingEndTime: bookingEndTime,
+    );
+    result.fold((l) {
+      emit(CreateBookingError(l));
+    }, (r) {
+      emit(CreateBookingSuccess());
+    });
   }
 }

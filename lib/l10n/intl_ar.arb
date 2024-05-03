@@ -63,5 +63,8 @@
   "startTime" : "وقت البدء",
   "endTime" : "وقت الانتهاء",
   "endTimeMustBeAfterStartTime" : "وقت الانتهاء يجب أن يكون بعد وقت البدء",
-   "allFieldsIsRequired" : "جميع الحقول مطلوبة"
+   "allFieldsIsRequired" : "جميع الحقول مطلوبة",
+  "bookingNotAllowed" : "الحجز خارج أوقات عمل المكان",
+  "placeDeleted" : "تم حذف المكان بنجاح",
+ "invalidValue" : "قيمة غير صالخة"
 }

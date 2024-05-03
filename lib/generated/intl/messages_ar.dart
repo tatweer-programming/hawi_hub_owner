@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جميع الحقول مطلوبة"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("مفتوح دائما"),
         "booking": MessageLookupByLibrary.simpleMessage("الحجز"),
+        "bookingNotAllowed":
+            MessageLookupByLibrary.simpleMessage("الحجز خارج أوقات عمل المكان"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
@@ -58,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
         "imageIsRequired":
             MessageLookupByLibrary.simpleMessage("يجب اختيار صورة علي الاقل"),
+        "invalidValue": MessageLookupByLibrary.simpleMessage("قيمة غير صالخة"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
@@ -77,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "perHour": MessageLookupByLibrary.simpleMessage(" لكل ساعة"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("تمت إرسال طلب الاضافة"),
+        "placeDeleted":
+            MessageLookupByLibrary.simpleMessage("تم حذف المكان بنجاح"),
         "placeEditedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل أمكانك بنجاح"),
         "placeName": MessageLookupByLibrary.simpleMessage("اسم المكان"),

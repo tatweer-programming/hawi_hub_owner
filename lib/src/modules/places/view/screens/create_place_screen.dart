@@ -167,6 +167,9 @@ class CreatePlaceScreen extends StatelessWidget {
                               if (value == null || value.isEmpty) {
                                 return S.of(context).requiredField;
                               }
+                              if (double.tryParse(value) == null) {
+                                return S.of(context).invalidValue;
+                              }
                               return null;
                             },
                           ),

@@ -78,12 +78,15 @@ class AllPlacesPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 2.h),
-                ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (itemBuilder, index) => PlaceItem(place: cubit.places[index]),
-                    separatorBuilder: (itemBuilder, index) => SizedBox(height: 2.h),
-                    itemCount: cubit.places.length),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (itemBuilder, index) => PlaceItem(place: cubit.places[index]),
+                      separatorBuilder: (itemBuilder, index) => SizedBox(height: 2.h),
+                      itemCount: cubit.places.length),
+                ),
               ],
             );
           }),

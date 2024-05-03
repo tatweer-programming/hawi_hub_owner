@@ -162,15 +162,31 @@ class RemoveImagesSuccess extends PlaceState {
 }
 
 class SelectOwnershipFileSuccess extends PlaceState {
-  String path;
+  final String path;
   SelectOwnershipFileSuccess(this.path);
   @override
   List<Object?> get props => [];
 }
 
 class ChangeWeekEndStatusSuccess extends PlaceState {
-  bool status;
+  final bool status;
   ChangeWeekEndStatusSuccess(this.status);
   @override
   List<Object?> get props => [status];
+}
+
+class CreateBookingLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class CreateBookingSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class CreateBookingError extends PlaceError {
+  CreateBookingError(super.exception);
+  @override
+  List<Object?> get props => [];
 }

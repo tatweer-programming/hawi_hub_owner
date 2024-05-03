@@ -48,85 +48,88 @@ class AddWorkingHours extends StatelessWidget {
       [fridayStartController, fridayEndController],
       [saturdayStartController, saturdayEndController],
     ];
+    GlobalKey<FormState> key = GlobalKey();
     return Scaffold(
       body: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
-                child: Column(
-              children: [
-                CustomAppBar(
-                  actions: [
-                    SizedBox(
-                      height: 5.h,
-                    )
-                  ],
-                  height: 33.h,
-                  opacity: .15,
-                  backgroundImage: "assets/images/app_bar_backgrounds/5.webp",
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 5.w,
-                    ),
-                    child: SizedBox(
-                      height: 7.h,
-                      child: Text(
-                        S.of(context).workingHours,
-                        style: TextStyleManager.getAppBarTextStyle(),
+                child: Form(
+              key: key,
+              autovalidateMode: AutovalidateMode.always,
+              child: Column(
+                children: [
+                  CustomAppBar(
+                    actions: [
+                      SizedBox(
+                        height: 5.h,
+                      )
+                    ],
+                    height: 33.h,
+                    opacity: .15,
+                    backgroundImage: "assets/images/app_bar_backgrounds/5.webp",
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 5.w,
+                      ),
+                      child: SizedBox(
+                        height: 7.h,
+                        child: Text(
+                          S.of(context).workingHours,
+                          style: TextStyleManager.getAppBarTextStyle(),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 2.h),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: Column(children: [
-                      Row(children: [
-                        Expanded(
-                            child: Text(
-                          S.of(context).day,
-                          style: const TextStyle(fontWeight: FontWeightManager.bold),
-                        )),
-                        SizedBox(width: 2.w),
-                        Expanded(
-                            child: Text(
-                          S.of(context).from,
-                          style: const TextStyle(fontWeight: FontWeightManager.bold),
-                        )),
-                        SizedBox(width: 2.w),
-                        Expanded(
-                            child: Text(
-                          S.of(context).to,
-                          style: const TextStyle(fontWeight: FontWeightManager.bold),
-                        )),
-                        SizedBox(width: 2.w),
-                        FittedBox(
-                            child: Text(
-                          S.of(context).weekend,
-                          style: const TextStyle(fontWeight: FontWeightManager.bold),
-                        )),
-                      ]),
-                      Divider(
-                        thickness: .3,
-                        height: 3.h,
-                      ),
-                      ...LocalizationManager.getDays()
-                          .map((e) => Column(
-                                children: [
-                                  DayWidget(
-                                      title: e,
-                                      startController:
-                                          daysControllers[LocalizationManager.getDays().indexOf(e)]
-                                              [0],
-                                      endController:
-                                          daysControllers[LocalizationManager.getDays().indexOf(e)]
-                                              [1]),
-                                  SizedBox(height: 2.h),
-                                ],
-                              ))
-                          .toList()
-                    ])),
-              ],
+                  SizedBox(height: 2.h),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: Column(children: [
+                        Row(children: [
+                          Expanded(
+                              child: Text(
+                            S.of(context).day,
+                            style: const TextStyle(fontWeight: FontWeightManager.bold),
+                          )),
+                          SizedBox(width: 2.w),
+                          Expanded(
+                              child: Text(
+                            S.of(context).from,
+                            style: const TextStyle(fontWeight: FontWeightManager.bold),
+                          )),
+                          SizedBox(width: 2.w),
+                          Expanded(
+                              child: Text(
+                            S.of(context).to,
+                            style: const TextStyle(fontWeight: FontWeightManager.bold),
+                          )),
+                          SizedBox(width: 2.w),
+                          FittedBox(
+                              child: Text(
+                            S.of(context).weekend,
+                            style: const TextStyle(fontWeight: FontWeightManager.bold),
+                          )),
+                        ]),
+                        Divider(
+                          thickness: .3,
+                          height: 3.h,
+                        ),
+                        ...LocalizationManager.getDays()
+                            .map((e) => Column(
+                                  children: [
+                                    DayWidget(
+                                        title: e,
+                                        startController: daysControllers[
+                                            LocalizationManager.getDays().indexOf(e)][0],
+                                        endController: daysControllers[
+                                            LocalizationManager.getDays().indexOf(e)][1]),
+                                    SizedBox(height: 2.h),
+                                  ],
+                                ))
+                            .toList()
+                      ])),
+                ],
+              ),
             )),
           ),
           SizedBox(height: 2.h),
@@ -135,8 +138,10 @@ class AddWorkingHours extends StatelessWidget {
             child: DefaultButton(
                 text: S.of(context).save,
                 onPressed: () {
-                  _saveWorkingHours(daysControllers);
-                  context.pop();
+                  if (key.currentState!.validate()) {
+                    _saveWorkingHours(daysControllers);
+                    context.pop();
+                  }
                 }),
           )
         ],
@@ -173,8 +178,10 @@ class AddWorkingHours extends StatelessWidget {
     for (int i = 0; i < daysControllers.length; i++) {
       cubit.workingHours[i] = Day(
         dayOfWeek: cubit.workingHours[i].dayOfWeek,
-        startTime: daysControllers[i][0].text.toTimeOfDay() ?? const TimeOfDay(hour: 0, minute: 0),
-        endTime: daysControllers[i][1].text.toTimeOfDay() ?? const TimeOfDay(hour: 23, minute: 59),
+        startTime:
+            daysControllers[i][0].text.tryParseToTimeOfDay() ?? const TimeOfDay(hour: 0, minute: 0),
+        endTime: daysControllers[i][1].text.tryParseToTimeOfDay() ??
+            const TimeOfDay(hour: 23, minute: 59),
       );
     }
   }
@@ -203,7 +210,13 @@ class _DayWidgetState extends State<DayWidget> {
       )),
       SizedBox(width: 2.w),
       Expanded(
-        child: TextField(
+        child: TextFormField(
+          validator: (value) {
+            if (value!.split(":").length != 2 || value.contains(".") || value.contains("/")) {
+              return "";
+            }
+            return null;
+          },
           enabled: !isWeekend,
           keyboardType: TextInputType.datetime,
           controller: widget.startController,
@@ -211,7 +224,7 @@ class _DayWidgetState extends State<DayWidget> {
       ),
       SizedBox(width: 2.w),
       Expanded(
-          child: TextField(
+          child: TextFormField(
         enabled: !isWeekend,
         keyboardType: TextInputType.datetime,
         controller: widget.endController,

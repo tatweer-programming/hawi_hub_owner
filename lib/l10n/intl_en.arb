@@ -63,5 +63,8 @@
   "startTime" : "Start time",
   "endTime" : "End time",
   "allFieldsIsRequired" : "All fields are required",
-  "endTimeMustBeAfterStartTime" : "End time must be after start time"
+  "endTimeMustBeAfterStartTime" : "End time must be after start time",
+  "bookingNotAllowed" : "Booking outside working hours",
+  "placeDeleted" : "Place deleted successfully",
+  "invalidValue" : "Invalid Value"
 }

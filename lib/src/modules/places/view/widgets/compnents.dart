@@ -85,7 +85,7 @@ class BookingRequestWidget extends StatelessWidget {
                               child: DefaultButton(
                                 text: S.of(context).accept,
                                 onPressed: () async {
-                                  cubit.acceptBookingRequest(bookingRequest.id);
+                                  cubit.acceptBookingRequest(bookingRequest.id!);
                                 },
                                 height: 10.h,
                                 width: 30.w,
@@ -100,7 +100,7 @@ class BookingRequestWidget extends StatelessWidget {
                                 text: S.of(context).decline,
                                 borderColor: ColorManager.black,
                                 onPressed: () async {
-                                  cubit.declineBookingRequest(bookingRequest.id);
+                                  cubit.declineBookingRequest(bookingRequest.id!);
                                 },
                                 width: 30.w,
                                 isLoading: state is DeclineBookingRequestLoading,
@@ -181,36 +181,6 @@ class PlaceItem extends StatelessWidget {
                 ]))
               ]),
             ),
-            Align(
-              alignment: AlignmentDirectional.topEnd,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite_outlined,
-                    color: Colors.red,
-                  )),
-            ),
-            Align(
-              alignment: AlignmentDirectional.topStart,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.sp),
-                    color: Colors.black.withOpacity(0.4),
-                  ),
-                  height: 3.h,
-                  constraints: BoxConstraints(minWidth: 20.w, maxWidth: 50.w),
-                  child: Center(
-                    child: Text(place.ownerName,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyleManager.getBlackContainerTextStyle()),
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ),

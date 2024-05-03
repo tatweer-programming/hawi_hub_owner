@@ -9,7 +9,7 @@ class Day extends Equatable {
   const Day({required this.dayOfWeek, required this.startTime, required this.endTime});
 
   bool isWeekend() {
-    return startTime == null && endTime == null;
+    return startTime.hour == 0 && startTime.minute == 0 && endTime.hour == 0 && endTime.minute == 0;
   }
 
   bool isAllDay() {
@@ -28,8 +28,8 @@ class Day extends Equatable {
   factory Day.fromJson(Map<String, dynamic> json) {
     return Day(
         dayOfWeek: json['dayOfWeek'],
-        startTime: json['startTime'].toString().toTimeOfDay() ?? TimeOfDay(hour: 0, minute: 0),
-        endTime: json['endTime'].toString().toTimeOfDay() ?? TimeOfDay(hour: 23, minute: 59));
+        startTime: json['startTime'].toString().parseToTimeOfDay(),
+        endTime: json['endTime'].toString().parseToTimeOfDay());
   }
   Map toJson() => {
         "dayOfWeek": dayOfWeek,
@@ -66,7 +66,7 @@ class Day extends Equatable {
 }
 
 extension TimeOfDayExtension on String {
-  TimeOfDay? toTimeOfDay() {
+  TimeOfDay? tryParseToTimeOfDay() {
     final List<String> parts = split(":");
 
     final int? hour = int.tryParse(parts[0]);
@@ -76,5 +76,10 @@ extension TimeOfDayExtension on String {
       return null;
     }
     return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  TimeOfDay parseToTimeOfDay() {
+    final List<String> parts = split(":");
+    return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
   }
 }

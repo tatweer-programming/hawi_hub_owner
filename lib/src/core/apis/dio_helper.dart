@@ -12,8 +12,8 @@ class DioHelper {
         "Authorization": ApiManager.authToken,
         "Connection": "keep-alive",
       },
-      connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 5),
+      connectTimeout: const Duration(seconds: 20),
+      receiveTimeout: const Duration(seconds: 20),
       validateStatus: (_) => true,
     ));
   }
@@ -94,10 +94,6 @@ class DioHelper {
     String? token,
   }) async {
     try {
-      dio.options.headers = {
-        'Content-Type': 'application/json',
-        'Authorization': token ?? '',
-      };
       return await dio.delete(
         path,
         queryParameters: query,

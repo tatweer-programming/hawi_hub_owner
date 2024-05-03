@@ -7,7 +7,7 @@ class BookingRequest extends Equatable {
   final String userImage;
 
   // request data
-  final int id;
+  int? id;
   final DateTime startTime;
   final DateTime endTime;
   final double price;
@@ -17,11 +17,11 @@ class BookingRequest extends Equatable {
   final String address;
   final int placeId;
 
-  const BookingRequest({
+  BookingRequest({
     required this.userId,
     required this.userName,
     required this.userImage,
-    required this.id,
+    this.id,
     required this.startTime,
     required this.endTime,
     required this.price,
