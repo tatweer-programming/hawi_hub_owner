@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جميع الحقول مطلوبة"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("مفتوح دائما"),
         "booking": MessageLookupByLibrary.simpleMessage("الحجز"),
+        "bookingCreated":
+            MessageLookupByLibrary.simpleMessage("تمت إضافة الحجز بنجاح"),
         "bookingNotAllowed":
             MessageLookupByLibrary.simpleMessage("الحجز خارج أوقات عمل المكان"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),

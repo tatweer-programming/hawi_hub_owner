@@ -729,6 +729,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Booking Created Successfully`
+  String get bookingCreated {
+    return Intl.message(
+      'Booking Created Successfully',
+      name: 'bookingCreated',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

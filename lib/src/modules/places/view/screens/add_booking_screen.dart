@@ -148,6 +148,10 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
                       if (state is PlaceError) {
                         errorToast(msg: ExceptionManager(state.exception).translatedMessage());
                       }
+                      if (state is CreateBookingSuccess) {
+                        defaultToast(msg: S.of(context).bookingCreated);
+                        context.pop();
+                      }
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),

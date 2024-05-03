@@ -66,5 +66,6 @@
    "allFieldsIsRequired" : "جميع الحقول مطلوبة",
   "bookingNotAllowed" : "الحجز خارج أوقات عمل المكان",
   "placeDeleted" : "تم حذف المكان بنجاح",
- "invalidValue" : "قيمة غير صالخة"
+ "invalidValue" : "قيمة غير صالخة",
+ "bookingCreated" : "تمت إضافة الحجز بنجاح"
 }

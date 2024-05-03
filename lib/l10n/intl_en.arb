@@ -66,5 +66,6 @@
   "endTimeMustBeAfterStartTime" : "End time must be after start time",
   "bookingNotAllowed" : "Booking outside working hours",
   "placeDeleted" : "Place deleted successfully",
-  "invalidValue" : "Invalid Value"
+  "invalidValue" : "Invalid Value",
+  "bookingCreated" : "Booking Created Successfully"
 }

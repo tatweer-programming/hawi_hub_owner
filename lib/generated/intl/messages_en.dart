@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("All fields are required"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("Always open"),
         "booking": MessageLookupByLibrary.simpleMessage("Booking"),
+        "bookingCreated": MessageLookupByLibrary.simpleMessage(
+            "Booking Created Successfully"),
         "bookingNotAllowed": MessageLookupByLibrary.simpleMessage(
             "Booking outside working hours"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("Booking time"),

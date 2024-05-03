@@ -209,9 +209,9 @@ class PlaceCubit extends Cubit<PlaceState> {
     emit(RemoveImagesSuccess(image));
   }
 
-  createBooking(DateTime bookingStartTime, DateTime bookingEndTime, int placeId) {
+  createBooking(DateTime bookingStartTime, DateTime bookingEndTime, int placeId) async {
     emit(CreateBookingLoading());
-    var result = dataSource.createBooking(
+    var result = await dataSource.createBooking(
       placeId: placeId,
       bookingStartTime: bookingStartTime,
       bookingEndTime: bookingEndTime,

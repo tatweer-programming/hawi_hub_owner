@@ -128,12 +128,12 @@ class PlaceRemoteDataSource {
     }
   }
 
-  createBooking(
+  Future<Either<Exception, Unit>> createBooking(
       {required int placeId,
       required DateTime bookingStartTime,
       required DateTime bookingEndTime}) async {
     try {
-      var response = await DioHelper.postData(
+      await DioHelper.postData(
         path: EndPoints.createBooking,
         data: {
           "place_id": placeId,
@@ -141,9 +141,7 @@ class PlaceRemoteDataSource {
           "booking_end_time": bookingEndTime
         },
       );
-      if (response.statusCode == 200) {
-        print("added");
-      }
+      return Right(unit);
     } on Exception catch (e) {
       print(e);
       return Left(e);
