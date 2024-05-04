@@ -19,9 +19,6 @@ List<Place> dummyPlaces = [
       "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
     ],
     id: 1,
-    ownerImageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKYTt6cC8rwjl-DEuIPOY00lsOO6m7YuXejg&s',
-    ownerName: 'State owned',
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
@@ -79,9 +76,6 @@ List<Place> dummyPlaces = [
       "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
     ],
     id: 1,
-    ownerImageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKYTt6cC8rwjl-DEuIPOY00lsOO6m7YuXejg&s',
-    ownerName: 'State owned',
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
@@ -139,9 +133,6 @@ List<Place> dummyPlaces = [
       "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
     ],
     id: 1,
-    ownerImageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKYTt6cC8rwjl-DEuIPOY00lsOO6m7YuXejg&s',
-    ownerName: 'State owned',
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
@@ -170,9 +161,6 @@ List<Place> dummyPlaces = [
       "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
     ],
     id: 1,
-    ownerImageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKYTt6cC8rwjl-DEuIPOY00lsOO6m7YuXejg&s',
-    ownerName: 'State owned',
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
@@ -230,9 +218,6 @@ List<Place> dummyPlaces = [
       "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
     ],
     id: 1,
-    ownerImageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKYTt6cC8rwjl-DEuIPOY00lsOO6m7YuXejg&s',
-    ownerName: 'State owned',
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),

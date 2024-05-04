@@ -56,95 +56,24 @@ class PlaceEditForm {
   FormData toFormData() {
     //  Unit8List image = await ownershipFile.readAsBytes();
     return FormData.fromMap({
-      "CityId": cityId,
-      "OwnerId": ownerId,
-      "Name": name,
-      'Address': address,
-      "OpenTimes[0].DayOfWeek": 0,
-      "OpenTimes[0].StartTime":
-          "${workingHours[0].startTime.hour}:${workingHours[0].startTime.minute}:00",
-      "OpenTimes[0].EndTime":
-          "${workingHours[0].endTime.hour}:${workingHours[0].endTime.minute}:00",
-      "OpenTimes[1].DayOfWeek": 1,
-      "OpenTimes[1].StartTime":
-          "${workingHours[1].startTime.hour}:${workingHours[1].startTime.minute}:00",
-      "OpenTimes[1].EndTime":
-          "${workingHours[1].endTime.hour}:${workingHours[1].endTime.minute}:00",
-      "OpenTimes[2].DayOfWeek": 2,
-      "OpenTimes[2].StartTime":
-          "${workingHours[2].startTime.hour}:${workingHours[2].startTime.minute}:00",
-      "OpenTimes[2].EndTime":
-          "${workingHours[2].endTime.hour}:${workingHours[2].endTime.minute}:00",
-      "OpenTimes[3].DayOfWeek": 3,
-      "OpenTimes[3].StartTime":
-          "${workingHours[3].startTime.hour}:${workingHours[3].startTime.minute}:00",
-      "OpenTimes[3].EndTime":
-          "${workingHours[3].endTime.hour}:${workingHours[3].endTime.minute}:00",
-      "OpenTimes[4].DayOfWeek": 4,
-      "OpenTimes[4].StartTime":
-          "${workingHours[4].startTime.hour}:${workingHours[4].startTime.minute}:00",
-      "OpenTimes[4].EndTime":
-          "${workingHours[4].endTime.hour}:${workingHours[4].endTime.minute}:00",
-      "OpenTimes[5].DayOfWeek": 5,
-      "OpenTimes[5].StartTime":
-          "${workingHours[5].startTime.hour}:${workingHours[5].startTime.minute}:00",
-      "OpenTimes[5].EndTime":
-          "${workingHours[5].endTime.hour}:${workingHours[5].endTime.minute}:00",
-      "OpenTimes[6].DayOfWeek": 6,
-      "OpenTimes[6].StartTime":
-          "${workingHours[6].startTime.hour}:${workingHours[6].startTime.minute}:00",
-      "OpenTimes[6].EndTime":
-          "${workingHours[6].endTime.hour}:${workingHours[6].endTime.minute}:00",
-      "Location": location?.toStr(),
-      "Category": sport,
-      "Description": description,
-      "PricePerHour": price,
-      "MinHoursReservation": minimumHours,
-      // "ImagesFiles": imageFiles.map((e) => MultipartFile.fromFileSync(e.path)).toList(),
-      "Images": imageFiles
+      "city_id": cityId,
+      "owner_id": ownerId,
+      "name": name,
+      "address": address,
+      "open_times": workingHours
+          .map((workingHour) => {
+                'day_of_week': workingHour.dayOfWeek,
+                'start_time': '${workingHour.startTime.hour}:${workingHour.startTime.minute}:00',
+                'end_time': '${workingHour.endTime.hour}:${workingHour.endTime.minute}:00',
+              })
+          .toList(),
+      "location": location?.toStr(),
+      "category": sport,
+      "description": description,
+      "price_per_hour": price,
+      "min_hours_reservation": minimumHours,
+      "images": images,
+      "new_images": imageFiles,
     });
   }
-// Future<FormData> toFormData() async {
-//   var formData = FormData();
-//   formData.fields.add(MapEntry('Name', name));
-//   formData.fields.add(MapEntry('Address', address));
-//   formData.fields
-//       .add(MapEntry('OpenTimes', )));
-//   formData.fields.add(MapEntry('Category', sport));
-//   formData.fields.add(MapEntry('Description', description ?? ''));
-//   formData.fields.add(MapEntry('PricePerHour', price.toString()));
-//   formData.fields.add(MapEntry('MinHoursReservation', minimumHours.toString()));
-//   formData.fields.add(MapEntry('OwnerId', ownerId.toString()));
-//   formData.fields.add(MapEntry('CityId', cityId.toString()));
-//
-//   if (location != null) {
-//     // Add location data based on your Location model (assuming it has toStr())
-//     formData.fields.add(MapEntry('Location', location!.toStr()));
-//   }
-//
-//   // Add ProofOfOwnershipFile
-//   var ownershipBytes = await ownershipFile.readAsBytes();
-//   formData.files.add(MapEntry(
-//       'ProofOfOwnershipFile',
-//       MultipartFile.fromBytes(
-//         ownershipBytes,
-//         filename: ownershipFile.path.split('/').last,
-//       )));
-//
-//   // Add Images
-//   for (var file in imageFiles) {
-//     var bytes = await file.readAsBytes();
-//     formData.files.add(MapEntry(
-//         'Images[]',
-//         MultipartFile.fromBytes(
-//           bytes,
-//           filename: file.path.split('/').last,
-//         )));
-//   }
-//   print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-//   print(formData);
-//   formData.finalize();
-//   return formData;
-// }
-// //
 }

@@ -64,6 +64,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يجب اختيار صورة علي الاقل"),
         "invalidValue": MessageLookupByLibrary.simpleMessage("قيمة غير صالخة"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "loginFirst":
+            MessageLookupByLibrary.simpleMessage("يجب تسجيل الدخول أولا"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
         "minimumHours":
@@ -71,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes": MessageLookupByLibrary.simpleMessage("دقائق"),
         "more": MessageLookupByLibrary.simpleMessage("المزيد"),
         "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
+        "noMinimumBooking":
+            MessageLookupByLibrary.simpleMessage("لا يوجد حد أدنى"),
         "noPlaces": MessageLookupByLibrary.simpleMessage("لا يوجد أماكن"),
         "noRatings": MessageLookupByLibrary.simpleMessage("لا يوجد تقييمات"),
         "noRequests": MessageLookupByLibrary.simpleMessage("لا يوجد طلبات"),
@@ -94,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(" هذا الحقل مطلوب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "shouldActivate":
+            MessageLookupByLibrary.simpleMessage("يجب تفعيل الحساب أولا"),
         "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
         "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
         "sportIsRequired":
@@ -101,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "startTime": MessageLookupByLibrary.simpleMessage("وقت البدء"),
         "to": MessageLookupByLibrary.simpleMessage("إلى"),
         "totalGames": MessageLookupByLibrary.simpleMessage("إجمالي الحجوزات"),
+        "underReview": MessageLookupByLibrary.simpleMessage("تحت المراجعة"),
         "userName": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),

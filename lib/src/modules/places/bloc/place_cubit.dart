@@ -109,6 +109,8 @@ class PlaceCubit extends Cubit<PlaceState> {
     }, (r) {
       emit(UpdatePlaceSuccess());
     });
+    clearSelectedData();
+    getPlaces();
   }
 
   Future deletePlace(int placeId) async {
@@ -138,7 +140,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future acceptBookingRequest(int requestId) async {
-    emit(AcceptBookingRequestLoading());
+    emit(AcceptBookingRequestLoading(requestId));
     var result = await dataSource.acceptBookingRequest(requestId);
     result.fold((l) {
       emit(AcceptBookingRequestError(l));
@@ -148,7 +150,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future declineBookingRequest(int requestId) async {
-    emit(DeclineBookingRequestLoading());
+    emit(DeclineBookingRequestLoading(requestId));
     var result = await dataSource.declineBookingRequest(requestId);
     result.fold((l) {
       emit(DeclineBookingRequestError(l));
@@ -185,9 +187,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   void prepareEditForm(int placeId) {
-    selectedSport = null;
-    selectedCityId = null;
-    imageFiles.clear();
+    clearSelectedData();
     placeEditForm = places.firstWhere((element) => element.id == placeId).createEditForm();
   }
 
@@ -221,5 +221,11 @@ class PlaceCubit extends Cubit<PlaceState> {
     }, (r) {
       emit(CreateBookingSuccess());
     });
+  }
+
+  void clearSelectedData() {
+    selectedSport = null;
+    selectedCityId = null;
+    imageFiles.clear();
   }
 }

@@ -21,8 +21,7 @@ class Place extends Equatable {
   int totalRatings;
   double? rating;
   List<Feedback>? feedbacks;
-  String ownerName;
-  String ownerImageUrl;
+
   int citId;
   int approvalStatus;
   Place({
@@ -41,8 +40,6 @@ class Place extends Equatable {
     required this.totalRatings,
     this.rating,
     this.feedbacks,
-    required this.ownerName,
-    required this.ownerImageUrl,
     required this.citId,
     this.approvalStatus = 0,
   });
@@ -74,9 +71,7 @@ class Place extends Equatable {
       price: json['pricePerHour'],
       totalGames: json['totalGames'] ?? 0,
       totalRatings: json['totalRatings'] ?? 0,
-      ownerName: json['ownerName'] ?? '',
-      ownerImageUrl: json['ownerImageUrl'] ?? '',
-      rating: json['rating'] ?? 0.0,
+      rating: json['rating'],
       feedbacks: [],
       workingHours: List<Day>.from(json["openTimes"].map((x) => Day.fromJson(x))),
       location: PlaceLocation.fromString(json['location']),

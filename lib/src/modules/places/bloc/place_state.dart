@@ -128,6 +128,8 @@ class GetBookingRequestsSuccess extends PlaceState {
 }
 
 class AcceptBookingRequestLoading extends PlaceState {
+  final int requestId;
+  AcceptBookingRequestLoading(this.requestId);
   @override
   List<Object?> get props => [];
 }
@@ -138,6 +140,8 @@ class AcceptBookingRequestSuccess extends PlaceState {
 }
 
 class DeclineBookingRequestLoading extends PlaceState {
+  final int requestId;
+  DeclineBookingRequestLoading(this.requestId);
   @override
   List<Object?> get props => [];
 }

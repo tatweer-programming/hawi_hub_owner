@@ -39,21 +39,6 @@ class PlaceCreationForm {
     required this.cityId,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'address': address,
-      'description': description,
-      'sport_id': sport,
-      'price': price,
-      'owner_id': ownerId,
-      'minimum_hours': minimumHours,
-      'location': location?.toStr(),
-      'images': images,
-      "working_hours": workingHours.map((e) => e.toJson()).toList()
-    };
-  }
-
   FormData toFormData() {
     return FormData.fromMap({
       "dto.CityId": cityId,

@@ -67,5 +67,9 @@
   "bookingNotAllowed" : "الحجز خارج أوقات عمل المكان",
   "placeDeleted" : "تم حذف المكان بنجاح",
  "invalidValue" : "قيمة غير صالخة",
- "bookingCreated" : "تمت إضافة الحجز بنجاح"
+ "bookingCreated" : "تمت إضافة الحجز بنجاح",
+ "noMinimumBooking" : "لا يوجد حد أدنى",
+ "underReview" : "تحت المراجعة",
+ "shouldActivate" : "يجب تفعيل الحساب أولا",
+ "loginFirst" : "يجب تسجيل الدخول أولا"
 }

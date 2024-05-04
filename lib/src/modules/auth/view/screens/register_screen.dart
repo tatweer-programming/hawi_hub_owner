@@ -210,7 +210,7 @@ class RegisterScreen extends StatelessWidget {
                                             password: passwordController.text,
                                             userName: userNameController.text,
                                             email: emailController.text,
-                                            profilePictureUrl: authOwner!.profilePictureUrl),
+                                            profilePictureUrl: authOwner?.profilePictureUrl),
                                       ),
                                     );
                                   } else if (!acceptTerms) {

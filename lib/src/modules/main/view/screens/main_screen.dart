@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/generated/l10n.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/bottom_nav_bar.dart';
 
@@ -19,7 +22,15 @@ class MainScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_home_outlined),
         onPressed: () {
-          context.push(Routes.createPlace);
+          if (ConstantsManager.appUser == null) {
+            errorToast(msg: S.of(context).loginFirst);
+          } else {
+            if (ConstantsManager.appUser!.emailConfirmed == 0) {
+              errorToast(msg: S.of(context).shouldActivate);
+            } else {
+              context.push(Routes.createPlace);
+            }
+          }
         },
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(),
@@ -30,13 +41,6 @@ class MainScreen extends StatelessWidget {
             child: Column(
               children: [
                 mainCubit.pages[mainCubit.currentIndex],
-                // Center(
-                //   child: Padding(
-                //       padding: const EdgeInsets.all(8.0),
-                //       child: PlaceItem(
-                //         place: place,
-                //       )),
-                // ),
               ],
             ),
           );

@@ -290,10 +290,10 @@ class S {
     );
   }
 
-  /// `No ratings found`
+  /// `No ratings yet`
   String get noRatings {
     return Intl.message(
-      'No ratings found',
+      'No ratings yet',
       name: 'noRatings',
       desc: '',
       args: [],
@@ -735,6 +735,46 @@ class S {
     return Intl.message(
       'Booking Created Successfully',
       name: 'bookingCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No minimum booking`
+  String get noMinimumBooking {
+    return Intl.message(
+      'No minimum booking',
+      name: 'noMinimumBooking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Under review`
+  String get underReview {
+    return Intl.message(
+      'Under review',
+      name: 'underReview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You should activate your account first`
+  String get shouldActivate {
+    return Intl.message(
+      'You should activate your account first',
+      name: 'shouldActivate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You should login first`
+  String get loginFirst {
+    return Intl.message(
+      'You should login first',
+      name: 'loginFirst',
       desc: '',
       args: [],
     );

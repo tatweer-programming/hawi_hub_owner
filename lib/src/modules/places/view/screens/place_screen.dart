@@ -398,7 +398,7 @@ class PlaceScreen extends StatelessWidget {
                             Expanded(
                               child: OutLineContainer(
                                 child: Text(
-                                  "${cubit.currentPlace!.minimumHours}  ${S.of(context).hours}",
+                                  "${cubit.currentPlace!.minimumHours ?? S.of(context).noMinimumBooking}  ${S.of(context).hours}",
                                 ),
                               ),
                             )

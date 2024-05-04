@@ -141,7 +141,7 @@ class PlaceRemoteDataSource {
           "booking_end_time": bookingEndTime
         },
       );
-      return Right(unit);
+      return const Right(unit);
     } on Exception catch (e) {
       print(e);
       return Left(e);
@@ -152,7 +152,6 @@ class PlaceRemoteDataSource {
 Future<bool> startTimer(double seconds) async {
   int secondsInt = seconds.truncate();
   int milliseconds = (seconds - secondsInt).toInt() * 1000;
-
   await Future.delayed(Duration(seconds: secondsInt, milliseconds: milliseconds));
   return true;
 }

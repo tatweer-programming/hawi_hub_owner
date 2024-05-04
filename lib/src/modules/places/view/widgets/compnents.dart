@@ -89,7 +89,8 @@ class BookingRequestWidget extends StatelessWidget {
                                 },
                                 height: 10.h,
                                 width: 30.w,
-                                isLoading: state is AcceptBookingRequestLoading,
+                                isLoading: state is AcceptBookingRequestLoading &&
+                                    state.requestId == bookingRequest.id,
                               ),
                             ),
                             SizedBox(width: 2.w),
@@ -103,7 +104,8 @@ class BookingRequestWidget extends StatelessWidget {
                                   cubit.declineBookingRequest(bookingRequest.id!);
                                 },
                                 width: 30.w,
-                                isLoading: state is DeclineBookingRequestLoading,
+                                isLoading: state is DeclineBookingRequestLoading &&
+                                    state.requestId == bookingRequest.id,
                               ),
                             ),
                           ],
@@ -181,6 +183,28 @@ class PlaceItem extends StatelessWidget {
                 ]))
               ]),
             ),
+            if (place.approvalStatus == 0)
+              Align(
+                alignment: AlignmentDirectional.topStart,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: ColorManager.golden,
+                    ),
+                    height: 3.h,
+                    constraints: BoxConstraints(minWidth: 20.w, maxWidth: 40.w),
+                    child: Center(
+                      child: Text(S.of(context).underReview,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyleManager.getBlackContainerTextStyle()),
+                    ),
+                  ),
+                ),
+              )
           ],
         ),
       ),

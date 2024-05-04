@@ -64,6 +64,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Image is required"),
         "invalidValue": MessageLookupByLibrary.simpleMessage("Invalid Value"),
         "location": MessageLookupByLibrary.simpleMessage("Location"),
+        "loginFirst":
+            MessageLookupByLibrary.simpleMessage("You should login first"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("Minimum booking"),
         "minimumHours":
@@ -71,8 +73,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes": MessageLookupByLibrary.simpleMessage("minutes"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
         "noDetails": MessageLookupByLibrary.simpleMessage("No details"),
+        "noMinimumBooking":
+            MessageLookupByLibrary.simpleMessage("No minimum booking"),
         "noPlaces": MessageLookupByLibrary.simpleMessage("No places found"),
-        "noRatings": MessageLookupByLibrary.simpleMessage("No ratings found"),
+        "noRatings": MessageLookupByLibrary.simpleMessage("No ratings yet"),
         "noRequests": MessageLookupByLibrary.simpleMessage("No requests found"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "ownerShipIsRequired":
@@ -92,6 +96,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "requiredField": MessageLookupByLibrary.simpleMessage("Required field"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "shouldActivate": MessageLookupByLibrary.simpleMessage(
+            "You should activate your account first"),
         "showInMap": MessageLookupByLibrary.simpleMessage("Show in map"),
         "sport": MessageLookupByLibrary.simpleMessage("Sport"),
         "sportIsRequired":
@@ -99,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "startTime": MessageLookupByLibrary.simpleMessage("Start time"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "totalGames": MessageLookupByLibrary.simpleMessage("Total games"),
+        "underReview": MessageLookupByLibrary.simpleMessage("Under review"),
         "userName": MessageLookupByLibrary.simpleMessage("User name"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
