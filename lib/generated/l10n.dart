@@ -1000,6 +1000,26 @@ class S {
     );
   }
 
+  /// `People Rate`
+  String get peopleRate {
+    return Intl.message(
+      'People Rate',
+      name: 'peopleRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See all`
+  String get seeAll {
+    return Intl.message(
+      'See all',
+      name: 'seeAll',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `I agree to the Terms of Service and Privacy Policy.`
   String get agreeTerms {
     return Intl.message(

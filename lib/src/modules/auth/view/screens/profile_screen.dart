@@ -6,6 +6,7 @@ import 'package:google_sign_in/widgets.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
@@ -194,13 +195,13 @@ Widget _editIcon() {
   );
 }
 
-Widget _seeAll(VoidCallback onTap) {
+Widget _seeAll(VoidCallback onTap, BuildContext context) {
   return InkWell(
     onTap: onTap,
     child: Row(
       children: [
         Text(
-          "See all",
+          S.of(context).seeAll,
           style: TextStyle(
             fontSize: 11.sp,
             fontWeight: FontWeight.w600,
@@ -217,7 +218,7 @@ Widget _seeAll(VoidCallback onTap) {
   );
 }
 
-Widget _peopleRateBuilder(AppFeedBack feedBack) {
+Widget _peopleRateBuilder(AppFeedBack feedBack, BuildContext context) {
   return Stack(
     children: [
       Column(
@@ -244,7 +245,7 @@ Widget _peopleRateBuilder(AppFeedBack feedBack) {
                   width: 4.w,
                 ),
                 Expanded(
-                  child: Text(feedBack.comment ?? "No comment",
+                  child: Text(feedBack.comment ?? S.of(context).noComment,
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: ColorManager.black.withOpacity(0.5),
@@ -459,7 +460,7 @@ Widget _verified({
               Row(
                 children: [
                   Text(
-                    "People Rate",
+                    S.of(context).peopleRate,
                     style:
                         TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                   ),
@@ -468,7 +469,7 @@ Widget _verified({
                     context.pushWithTransition(RatesScreen(
                       owner: owner,
                     ));
-                  })
+                  }, context)
                 ],
               ),
               SizedBox(
@@ -486,7 +487,7 @@ Widget _verified({
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) =>
-                          _peopleRateBuilder(owner.feedbacks[index]),
+                          _peopleRateBuilder(owner.feedbacks[index], context),
                       separatorBuilder: (context, index) => SizedBox(
                             height: 2.h,
                           ),
@@ -506,6 +507,7 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    _walletWidget(() {}, owner.myWallet.toString()),
+    if (ConstantsManager.userId == owner.id)
+      _walletWidget(() {}, owner.myWallet.toString()),
   ]);
 }

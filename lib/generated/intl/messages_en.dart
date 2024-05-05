@@ -112,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordDoesNotMatch":
             MessageLookupByLibrary.simpleMessage(" Password does not match"),
+        "peopleRate": MessageLookupByLibrary.simpleMessage("People Rate"),
         "perHour": MessageLookupByLibrary.simpleMessage("per hour"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("Request added successfully"),
@@ -129,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "requiredField": MessageLookupByLibrary.simpleMessage("Required field"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
         "shouldActivate": MessageLookupByLibrary.simpleMessage(
             "You should activate your account first"),
         "showInMap": MessageLookupByLibrary.simpleMessage("Show in map"),

@@ -64,7 +64,7 @@ class RatesScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => SizedBox(
                               height: 2.h,
                             ),
-                        itemCount: owner.feedbacks!.length),
+                        itemCount: owner.feedbacks.length),
                   ),
               ],
             ),

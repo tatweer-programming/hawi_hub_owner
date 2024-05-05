@@ -112,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordDoesNotMatch":
             MessageLookupByLibrary.simpleMessage("كلمة السر غير متطابقة"),
+        "peopleRate": MessageLookupByLibrary.simpleMessage("تقيم الأشخاص"),
         "perHour": MessageLookupByLibrary.simpleMessage(" لكل ساعة"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("تمت إرسال طلب الاضافة"),
@@ -130,6 +131,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(" هذا الحقل مطلوب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "seeAll": MessageLookupByLibrary.simpleMessage("رؤية الكل"),
         "shouldActivate":
             MessageLookupByLibrary.simpleMessage("يجب تفعيل الحساب أولا"),
         "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
