@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
@@ -36,8 +37,9 @@ class MorePage extends StatelessWidget {
               width: double.infinity,
               child: Stack(
                 children: [
-                  _appBar(context,
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyXXkiqJLhMZE69a4dTnH4Qd6GyzyFmqcmHu8EAhx8DQ&s"),
+                  _appBar(
+                    context,
+                  ),
                 ],
               ),
             ),
@@ -154,7 +156,8 @@ Widget _settingWidget({
               ),
               Text(
                 title,
-                style: TextStyleManager.getCaptionStyle().copyWith(color: ColorManager.black),
+                style: TextStyleManager.getCaptionStyle()
+                    .copyWith(color: ColorManager.black),
               ),
               const Spacer(),
               Icon(
@@ -171,7 +174,6 @@ Widget _settingWidget({
 
 Widget _appBar(
   BuildContext context,
-  String imageProfileUrl,
 ) {
   return Stack(
     alignment: AlignmentDirectional.bottomCenter,
@@ -202,11 +204,21 @@ Widget _appBar(
                       ),
                     ),
                   ),
-                  CircleAvatar(
-                    radius: 30.sp,
-                    backgroundColor: ColorManager.grey3,
-                    backgroundImage: NetworkImage(imageProfileUrl),
-                  ),
+                  if (ConstantsManager.appUser != null &&
+                      ConstantsManager.appUser!.profilePictureUrl != null)
+                    CircleAvatar(
+                      radius: 30.sp,
+                      backgroundColor: ColorManager.grey3,
+                      backgroundImage: NetworkImage(
+                          ConstantsManager.appUser!.profilePictureUrl!),
+                    ),
+                  if (ConstantsManager.appUser == null || ConstantsManager.appUser!.profilePictureUrl == null)
+                    CircleAvatar(
+                      radius: 30.sp,
+                      backgroundColor: ColorManager.grey3,
+                      backgroundImage:
+                          const AssetImage("assets/images/icons/user.png"),
+                    ),
                 ],
               ),
             ],

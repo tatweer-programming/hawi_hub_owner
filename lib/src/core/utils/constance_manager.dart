@@ -6,7 +6,6 @@ class ConstantsManager {
 
   static bool? registrationSkipped;
   static int? userId;
-  static String? userToken;
   static String? userType;
   static bool? isNotificationsOn;
   static const String baseUrlNotification = "https://fcm.googleapis.com/fcm/send";

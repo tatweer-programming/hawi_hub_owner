@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("اضافة ساعات العمل"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
+        "agreeTerms": MessageLookupByLibrary.simpleMessage(
+            "أوافق على شروط الخدمة وسياسة الخصوصية."),
         "allFieldsIsRequired":
             MessageLookupByLibrary.simpleMessage("جميع الحقول مطلوبة"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("مفتوح دائما"),
@@ -44,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المدينة مطلوبة"),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
+        "confirmPassword":
+            MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
         "date": MessageLookupByLibrary.simpleMessage("الموعد"),
         "day": MessageLookupByLibrary.simpleMessage("اليوم"),
         "decline": MessageLookupByLibrary.simpleMessage("رفض"),
@@ -54,16 +58,33 @@ class MessageLookup extends MessageLookupByLibrary {
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
         "editPlace": MessageLookupByLibrary.simpleMessage("تعديل المكان"),
+        "email": MessageLookupByLibrary.simpleMessage(" الإيميل"),
         "endTime": MessageLookupByLibrary.simpleMessage("وقت الانتهاء"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
             "وقت الانتهاء يجب أن يكون بعد وقت البدء"),
+        "enterConfirmPassword": MessageLookupByLibrary.simpleMessage(
+            "الرجاء إدخال تأكيد كلمة المرور"),
+        "enterEmail":
+            MessageLookupByLibrary.simpleMessage("الرجاء إدخال الإيميل"),
+        "enterPassword":
+            MessageLookupByLibrary.simpleMessage("الرجاء إدخال كلمة المرور"),
+        "enterUsername":
+            MessageLookupByLibrary.simpleMessage("الرجاء إدخال الإسم"),
+        "fileUploaded": MessageLookupByLibrary.simpleMessage("تم رفع الملف "),
+        "forgotPassword":
+            MessageLookupByLibrary.simpleMessage("هل نسيت كلمة السر ؟"),
         "from": MessageLookupByLibrary.simpleMessage("من"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
+        "identificationPending":
+            MessageLookupByLibrary.simpleMessage("يتم مراجعة الملف الان"),
         "imageIsRequired":
             MessageLookupByLibrary.simpleMessage("يجب اختيار صورة علي الاقل"),
         "invalidValue": MessageLookupByLibrary.simpleMessage("قيمة غير صالخة"),
+        "keepMeLoggedIn":
+            MessageLookupByLibrary.simpleMessage("أبقِ تسجيل دخولي"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginFirst":
             MessageLookupByLibrary.simpleMessage("يجب تسجيل الدخول أولا"),
         "minimumBooking":
@@ -72,6 +93,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحد الادنى لساعات الحجز"),
         "minutes": MessageLookupByLibrary.simpleMessage("دقائق"),
         "more": MessageLookupByLibrary.simpleMessage("المزيد"),
+        "mustVerifyAccount": MessageLookupByLibrary.simpleMessage(
+            "يجب عليك التحقق من حسابك أولا "),
+        "myWallet": MessageLookupByLibrary.simpleMessage("محفظتي"),
+        "noAccount": MessageLookupByLibrary.simpleMessage("لا تمتلك حساب ؟"),
+        "noComment": MessageLookupByLibrary.simpleMessage("لا تعليق"),
         "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
         "noMinimumBooking":
             MessageLookupByLibrary.simpleMessage("لا يوجد حد أدنى"),
@@ -83,6 +109,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إثبات ملكية المكان مطلوب"),
         "ownershipFile":
             MessageLookupByLibrary.simpleMessage("ملف إثبات الملكية"),
+        "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
+        "passwordDoesNotMatch":
+            MessageLookupByLibrary.simpleMessage("كلمة السر غير متطابقة"),
         "perHour": MessageLookupByLibrary.simpleMessage(" لكل ساعة"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("تمت إرسال طلب الاضافة"),
@@ -93,6 +122,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "placeName": MessageLookupByLibrary.simpleMessage("اسم المكان"),
         "places": MessageLookupByLibrary.simpleMessage("الأماكن"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
+        "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "rejectIdCard": MessageLookupByLibrary.simpleMessage(
+            "تم رفض الملف تأكد من المطلوب جيدا واعد المحاولة"),
         "requests": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "requiredField":
             MessageLookupByLibrary.simpleMessage(" هذا الحقل مطلوب"),
@@ -101,14 +133,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "shouldActivate":
             MessageLookupByLibrary.simpleMessage("يجب تفعيل الحساب أولا"),
         "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
+        "signUp": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
         "sportIsRequired":
             MessageLookupByLibrary.simpleMessage("الرياضة مطلوبة"),
+        "start": MessageLookupByLibrary.simpleMessage("البدء"),
         "startTime": MessageLookupByLibrary.simpleMessage("وقت البدء"),
         "to": MessageLookupByLibrary.simpleMessage("إلى"),
         "totalGames": MessageLookupByLibrary.simpleMessage("إجمالي الحجوزات"),
         "underReview": MessageLookupByLibrary.simpleMessage("تحت المراجعة"),
+        "upload": MessageLookupByLibrary.simpleMessage("رفع"),
         "userName": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
+        "username": MessageLookupByLibrary.simpleMessage(" الإسم"),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("عرض الملف الشخصي"),

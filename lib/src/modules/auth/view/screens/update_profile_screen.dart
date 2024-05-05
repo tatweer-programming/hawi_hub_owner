@@ -138,7 +138,7 @@ Widget _appBar({required BuildContext context, required Owner owner, required Au
           return CircleAvatar(
             radius: 50.sp,
             backgroundColor: ColorManager.grey3,
-            backgroundImage: NetworkImage(owner.profilePictureUrl),
+            backgroundImage: NetworkImage(owner.profilePictureUrl!),
             child: Align(
               alignment: AlignmentDirectional.bottomStart,
               child: IconButton(

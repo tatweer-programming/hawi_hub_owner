@@ -49,10 +49,16 @@ class AuthService {
   }
 
   Future<String> loginPlayer(
-      {required String email, required String password, required bool loginWithFBOrGG}) async {
+      {required String email,
+      required String password,
+      required bool loginWithFBOrGG}) async {
     try {
       Response response = await DioHelper.postData(
-        data: {'Email': email, 'Password': password, 'loginWithFBOrGG': loginWithFBOrGG},
+        data: {
+          'Email': email,
+          'Password': password,
+          'loginWithFBOrGG': loginWithFBOrGG
+        },
         path: EndPoints.login,
       );
       if (response.statusCode == 200) {
@@ -86,6 +92,7 @@ class AuthService {
       }
       return const Right(null);
     } catch (e) {
+      print("ERORR $e");
       return Left(e.toString());
     }
   }
@@ -100,7 +107,8 @@ class AuthService {
       await googleSignIn.signOut();
       var googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
-        await loginPlayer(email: googleUser.email, password: "string", loginWithFBOrGG: true);
+        await loginPlayer(
+            email: googleUser.email, password: "string", loginWithFBOrGG: true);
         return const Right(true);
       }
       return const Right(false);
@@ -136,7 +144,10 @@ class AuthService {
       final LoginResult result = await FacebookAuth.instance.login();
       if (result.status == LoginStatus.success) {
         final userData = await FacebookAuth.instance.getUserData();
-        await loginPlayer(email: userData['email'], password: "string", loginWithFBOrGG: true);
+        await loginPlayer(
+            email: userData['email'],
+            password: "string",
+            loginWithFBOrGG: true);
         return const Right(true);
       }
       return const Right(false);
@@ -189,7 +200,7 @@ class AuthService {
     try {
       Response response = await DioHelper.putDataFormData(
         token: ConstantsManager.userId.toString(),
-        data: FormData.fromMap({'image': newProfileImage}),
+        data: FormData.fromMap({'ProfilePicture': newProfileImage}),
         path: EndPoints.changeImageProfile,
       );
       if (response.statusCode == 200) {
@@ -203,17 +214,22 @@ class AuthService {
 
   Future<String> uploadNationalId(File nationalId) async {
     try {
-      Response response = await DioHelper.putDataFormData(
-        token: ConstantsManager.userId.toString(),
-        data: FormData.fromMap({'image': nationalId}),
-        path: EndPoints.uploadFile,
+      print("object");
+      Response response = await DioHelper.postFormData(
+        "${EndPoints.verification}/${ConstantsManager.userId}",
+        FormData.fromMap(
+            {'proofOfIdentity': MultipartFile.fromFileSync(nationalId.path)}),
+        // path: ,
       );
       if (response.statusCode == 200) {
-        return "";
+        print(response.data);
+        print("Success");
+        return "Proof of identity has been added successfully";
       }
       return (response.data['msg']);
     } catch (e) {
-      return e.toString();
+      print(e);
+      return "Something went wrong";
     }
   }
 
@@ -258,7 +274,7 @@ class AuthService {
   Future<Either<String, Owner>> getProfile(int id) async {
     try {
       Response response = await DioHelper.getData(
-        path: "/$id",
+        path: "/Owner/$id",
       );
       Owner owner = Owner.fromJson(response.data);
       return Right(owner);

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/local/shared_prefrences.dart';
@@ -23,7 +24,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       BlocProvider.of<AuthBloc>(context);
 
   final AuthRepository _repository = AuthRepository();
-  Owner? owner;
 
   // time
   Timer? timeToResendCodeTimer;
@@ -149,11 +149,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else if (event is DeleteImageEvent) {
         emit(DeleteImageState());
       } else if (event is UploadNationalIdEvent) {
-        await _repository.uploadNationalId(event.nationalId);
-
+        emit(UploadNationalIdLoadingState());
+        String res = await _repository.uploadNationalId(event.nationalId);
+        if(res == "Something went wrong"){
+          emit(UploadNationalIdErrorState(res));
+        }else{
+          emit(UploadNationalIdSuccessState(res));
+        }
       } else if (event is UpdateProfilePictureEvent) {
         add(AddImageEvent());
-        if(state is AddImageSuccessState){
+        if (state is AddImageSuccessState) {
           await _repository.changeProfileImage(event.profileImage);
         }
       } else if (event is GetProfileEvent) {
@@ -162,8 +167,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         res.fold((l) {
           emit(GetMyProfileErrorState(l));
         }, (r) {
-          owner = r;
-          print(owner);
+          ConstantsManager.appUser = r;
           emit(GetMyProfileSuccessState());
         });
       } else if (event is AcceptConfirmTermsEvent) {
@@ -221,10 +225,13 @@ Future _clearUserData() async {
 }
 
 Future<File?> _captureAndSaveGalleryImage() async {
-  final picker = ImagePicker();
-  final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-  if (pickedFile != null) {
-    final image = File(pickedFile.path);
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf'],
+    allowMultiple: false,
+  );
+  if (result != null) {
+    final image = File(result.files.single.path!);
     return image;
   } else {
     return null;

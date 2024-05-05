@@ -30,39 +30,40 @@ Widget defaultButton({
         ));
 
 Widget authBackGround(double height) => Stack(
-      children: [
-        Align(
-          alignment: AlignmentDirectional.topCenter,
-          heightFactor: 0.9,
-          child: ClipPath(
-            clipper: HalfCircleCurve(height / 3),
-            child: Container(
-              height: height,
-              width: double.infinity,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              decoration: BoxDecoration(
-                color: ColorManager.grey1,
-                image: const DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                    "assets/images/auth_background.png",
-                  ),
-                ),
+  alignment: AlignmentDirectional.topCenter,
+  children: [
+    Align(
+      alignment: AlignmentDirectional.topCenter,
+      heightFactor: 0.9,
+      child: ClipPath(
+        clipper: HalfCircleCurve(height / 3),
+        child: Container(
+          height: height,
+          width: double.infinity,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+            color: ColorManager.grey1,
+            image: const DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(
+                "assets/images/auth_background.png",
               ),
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsetsDirectional.only(
-            top: 2.h,
-            start: 2.w,
-          ),
-          child: Image.asset(
-            "assets/images/logo2.png",
-          ),
-        ),
-      ],
-    );
+      ),
+    ),
+    Padding(
+      padding: EdgeInsetsDirectional.only(
+        top: 4.h,
+      ),
+      child: Image.asset(
+        "assets/images/logo2.png",
+        height: 7.h,width: 35.w,
+      ),
+    ),
+  ],
+);
 
 mainFormField(
         {String? label,

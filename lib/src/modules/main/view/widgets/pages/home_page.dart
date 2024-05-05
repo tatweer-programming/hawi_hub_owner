@@ -8,6 +8,7 @@ import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
+import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
@@ -20,6 +21,8 @@ import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/place_sh
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/request_shimmers.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../core/utils/constance_manager.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -29,6 +32,7 @@ class HomePage extends StatelessWidget {
     PlaceCubit placeCubit = PlaceCubit.get()
       ..getPlaces()
       ..getBookingRequests();
+
     return BlocConsumer<PlaceCubit, PlaceState>(
       listener: (context, state) {
         if (state is PlaceError) {
@@ -58,15 +62,7 @@ class HomePage extends StatelessWidget {
                   onTap: () {
                     context.push(
                       Routes.profile,
-                      arguments: Owner(
-                          id: 2,
-                          emailConfirmed:0,
-                          userName: "userName",
-                          email: "email",
-                          profilePictureUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6T-mPdQetCXqpdgWRnFFjx0gAZUWVgXD8Mf6kuvvjSw&s",
-                          myWallet: 60,
-                          feedbacks: [],
-                          rate: 5),
+                      arguments: ConstantsManager.appUser,
                     );
                   },
                   child: const CircleAvatar(

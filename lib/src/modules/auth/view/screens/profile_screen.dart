@@ -1,10 +1,10 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_sign_in/widgets.dart';
+import 'package:hawi_hub_owner/generated/l10n.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
@@ -28,41 +28,65 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthBloc bloc = AuthBloc.get(context);
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is UploadNationalIdSuccessState) {
+          context.pop();
+          defaultToast(msg: state.msg);
+          context.pop();
+        } else if (state is UploadNationalIdErrorState) {
+          errorToast(msg: state.error);
+        }
+        if (state is UploadNationalIdLoadingState) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return const Center(child: CircularProgressIndicator());
+            },
+          );
+        }
+      },
       builder: (context, state) {
         return Scaffold(
-          body: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    _appBar(context: context, owner: owner),
-                  ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      _appBar(context: context, owner: owner),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.symmetric(
-                  horizontal: 5.w,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Text(
-                      owner.userName,
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsetsDirectional.symmetric(
+                    horizontal: 5.w,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 2.h,
                       ),
-                    ),
-                    _emailConfirmed(bloc: bloc, owner: owner, context: context, state: state),
-                  ],
-                ),
-              )
-            ],
+                      Text(
+                        owner.userName,
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      _emailConfirmed(
+                          bloc: bloc,
+                          owner: owner,
+                          context: context,
+                          state: state),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         );
       },
@@ -122,7 +146,7 @@ Widget _appBar({
                 width: 20.w,
               ),
               Text(
-                "Profile",
+                S.of(context).profile,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: ColorManager.white,
@@ -130,7 +154,7 @@ Widget _appBar({
                 ),
               ),
               const Spacer(),
-              if (owner.emailConfirmed == 2)
+              if (owner.approvalStatus == 2)
                 InkWell(
                     onTap: () {
                       context.pushWithTransition(EditProfileScreen(
@@ -142,11 +166,18 @@ Widget _appBar({
           ),
         ),
       ),
-      CircleAvatar(
-        radius: 50.sp,
-        backgroundColor: ColorManager.grey3,
-        backgroundImage: NetworkImage(owner.profilePictureUrl),
-      )
+      if (owner.profilePictureUrl != null)
+        CircleAvatar(
+          radius: 50.sp,
+          backgroundColor: ColorManager.grey3,
+          backgroundImage: NetworkImage(owner.profilePictureUrl!),
+        ),
+      if (owner.profilePictureUrl == null)
+        CircleAvatar(
+          radius: 50.sp,
+          backgroundColor: ColorManager.grey3,
+          backgroundImage: const AssetImage("assets/images/icons/user.png"),
+        ),
     ],
   );
 }
@@ -197,10 +228,12 @@ Widget _peopleRateBuilder(AppFeedBack feedBack) {
           Container(
             height: 12.h,
             width: double.infinity,
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(25.sp), border: Border.all()),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.sp),
+                border: Border.all()),
             child: Padding(
-              padding: EdgeInsetsDirectional.symmetric(horizontal: 3.w, vertical: 1.h),
+              padding: EdgeInsetsDirectional.symmetric(
+                  horizontal: 3.w, vertical: 1.h),
               child: Row(children: [
                 CircleAvatar(
                   radius: 20.sp,
@@ -236,7 +269,10 @@ Widget _peopleRateBuilder(AppFeedBack feedBack) {
             children: [
               Text(
                 feedBack.userName,
-                style: TextStyle(fontSize: 12.sp, color: Colors.green, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.green,
+                    fontWeight: FontWeight.w500),
               ),
               SizedBox(width: 1.w),
               RatingBar.builder(
@@ -267,16 +303,19 @@ Widget _emailConfirmed({
   required AuthState state,
   required AuthBloc bloc,
 }) {
-  if (owner.emailConfirmed == 0) {
+  if (owner.nationalIdPicture == null && owner.approvalStatus == 0) {
     return _notVerified(bloc);
-  } else if (owner.emailConfirmed == 1) {
-    return _pending();
+  } else if (owner.approvalStatus == 0) {
+    return _pending(context, S.of(context).identificationPending);
+  } else if (owner.approvalStatus == 1) {
+    return _verified(
+      owner: owner,
+      context: context,
+      state: state,
+    );
+  } else {
+    return _pending(context, S.of(context).rejectIdCard);
   }
-  return _verified(
-    owner: owner,
-    context: context,
-    state: state,
-  );
 }
 
 Widget _notVerified(AuthBloc bloc) {
@@ -299,7 +338,7 @@ Widget _notVerified(AuthBloc bloc) {
             height: 10.h,
           ),
           Text(
-            "You must verify your account first",
+            S.of(context).mustVerifyAccount,
             style: TextStyleManager.getSecondarySubTitleStyle(),
           ),
           SizedBox(
@@ -312,34 +351,44 @@ Widget _notVerified(AuthBloc bloc) {
           SizedBox(
             height: 3.h,
           ),
+          InkWell(
+            onTap: () {
+              bloc.add(AddImageEvent());
+            },
+            child: Stack(
+              children: [
+                Container(
+                    padding: EdgeInsetsDirectional.all(25.sp),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: ColorManager.black),
+                      borderRadius: BorderRadius.circular(10.sp),
+                    ),
+                    child: imagePicked != null
+                        ? Text(S.of(context).fileUploaded)
+                        : const Icon(Icons.file_copy_outlined)),
+                if (imagePicked != null)
+                  InkWell(
+                    onTap: () {
+                      bloc.add(DeleteImageEvent());
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(5.sp),
+                      child: CircleAvatar(
+                          radius: 12.sp,
+                          backgroundColor: ColorManager.white,
+                          child: const Icon(
+                            Icons.close,
+                            color: ColorManager.primary,
+                          )),
+                    ),
+                  )
+              ],
+            ),
+          ),
           if (imagePicked != null)
             Column(
               children: [
-                Stack(
-                  children: [
-                    Image.file(
-                      imagePicked!,
-                      height: 25.h,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        bloc.add(DeleteImageEvent());
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(5.sp),
-                        child: CircleAvatar(
-                            radius: 12.sp,
-                            backgroundColor: ColorManager.white,
-                            child: const Icon(
-                              Icons.close,
-                              color: ColorManager.primary,
-                            )),
-                      ),
-                    )
-                  ],
-                ),
                 SizedBox(
                   height: 3.h,
                 ),
@@ -349,38 +398,24 @@ Widget _notVerified(AuthBloc bloc) {
                         bloc.add(UploadNationalIdEvent(imagePicked!));
                       }
                     },
-                    text: "Upload",
-                    fontSize: 17.sp)
+                    text: S.of(context).upload,
+                    fontSize: 17.sp),
               ],
-            ),
-          if (imagePicked == null)
-            InkWell(
-              onTap: () {
-                bloc.add(AddImageEvent());
-              },
-              child: Container(
-                  padding: EdgeInsetsDirectional.all(25.sp),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    border: Border.all(color: ColorManager.black),
-                    borderRadius: BorderRadius.circular(10.sp),
-                  ),
-                  child: const Icon(Icons.file_copy_outlined)),
-            ),
+            )
         ],
       );
     },
   );
 }
 
-Widget _pending() {
+Widget _pending(BuildContext context, String text) {
   return Column(
     children: [
       SizedBox(
         height: 10.h,
       ),
       Text(
-        "The ID card is being verified now",
+        text,
         style: TextStyleManager.getSecondarySubTitleStyle(),
       ),
     ],
@@ -425,7 +460,8 @@ Widget _verified({
                 children: [
                   Text(
                     "People Rate",
-                    style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
                   _seeAll(() {
@@ -449,7 +485,8 @@ Widget _verified({
                   : ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => _peopleRateBuilder(owner.feedbacks[index]),
+                      itemBuilder: (context, index) =>
+                          _peopleRateBuilder(owner.feedbacks[index]),
                       separatorBuilder: (context, index) => SizedBox(
                             height: 2.h,
                           ),
@@ -462,7 +499,7 @@ Widget _verified({
     Align(
       alignment: AlignmentDirectional.centerStart,
       child: Text(
-        "My Wallet",
+        S.of(context).myWallet,
         style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
       ),
     ),

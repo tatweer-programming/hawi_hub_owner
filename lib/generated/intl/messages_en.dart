@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("Add working hours"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "agreeTerms": MessageLookupByLibrary.simpleMessage(
+            "I agree to the Terms of Service and Privacy Policy."),
         "allFieldsIsRequired":
             MessageLookupByLibrary.simpleMessage("All fields are required"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("Always open"),
@@ -44,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("City is required"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm delete"),
+        "confirmPassword":
+            MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "decline": MessageLookupByLibrary.simpleMessage("Decline"),
@@ -54,16 +58,33 @@ class MessageLookup extends MessageLookupByLibrary {
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "editPlace": MessageLookupByLibrary.simpleMessage("Edit place"),
+        "email": MessageLookupByLibrary.simpleMessage(" Email"),
         "endTime": MessageLookupByLibrary.simpleMessage("End time"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
             "End time must be after start time"),
+        "enterConfirmPassword": MessageLookupByLibrary.simpleMessage(
+            "Please enter confirm password"),
+        "enterEmail":
+            MessageLookupByLibrary.simpleMessage("Please enter email"),
+        "enterPassword":
+            MessageLookupByLibrary.simpleMessage("Please enter password"),
+        "enterUsername":
+            MessageLookupByLibrary.simpleMessage("Please enter username"),
+        "fileUploaded": MessageLookupByLibrary.simpleMessage("File Uploaded"),
+        "forgotPassword":
+            MessageLookupByLibrary.simpleMessage("Forgot password ?"),
         "from": MessageLookupByLibrary.simpleMessage("From"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
+        "identificationPending": MessageLookupByLibrary.simpleMessage(
+            "The ID card is being verified now"),
         "imageIsRequired":
             MessageLookupByLibrary.simpleMessage("Image is required"),
         "invalidValue": MessageLookupByLibrary.simpleMessage("Invalid Value"),
+        "keepMeLoggedIn":
+            MessageLookupByLibrary.simpleMessage("Keep me logged in"),
         "location": MessageLookupByLibrary.simpleMessage("Location"),
+        "login": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "loginFirst":
             MessageLookupByLibrary.simpleMessage("You should login first"),
         "minimumBooking":
@@ -72,6 +93,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Minimum hours for booking"),
         "minutes": MessageLookupByLibrary.simpleMessage("minutes"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
+        "mustVerifyAccount": MessageLookupByLibrary.simpleMessage(
+            "You must verify your account first "),
+        "myWallet": MessageLookupByLibrary.simpleMessage("My Wallet"),
+        "noAccount":
+            MessageLookupByLibrary.simpleMessage("Don’t have an account ?"),
+        "noComment": MessageLookupByLibrary.simpleMessage("No comment"),
         "noDetails": MessageLookupByLibrary.simpleMessage("No details"),
         "noMinimumBooking":
             MessageLookupByLibrary.simpleMessage("No minimum booking"),
@@ -82,6 +109,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "ownerShipIsRequired":
             MessageLookupByLibrary.simpleMessage("Ownership file is required"),
         "ownershipFile": MessageLookupByLibrary.simpleMessage("Ownership file"),
+        "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "passwordDoesNotMatch":
+            MessageLookupByLibrary.simpleMessage(" Password does not match"),
         "perHour": MessageLookupByLibrary.simpleMessage("per hour"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("Request added successfully"),
@@ -92,6 +122,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "placeName": MessageLookupByLibrary.simpleMessage("Place name"),
         "places": MessageLookupByLibrary.simpleMessage("Places"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
+        "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "rejectIdCard": MessageLookupByLibrary.simpleMessage(
+            "The file was rejected. Check the required information carefully and try again"),
         "requests": MessageLookupByLibrary.simpleMessage("Requests"),
         "requiredField": MessageLookupByLibrary.simpleMessage("Required field"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
@@ -99,14 +132,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "shouldActivate": MessageLookupByLibrary.simpleMessage(
             "You should activate your account first"),
         "showInMap": MessageLookupByLibrary.simpleMessage("Show in map"),
+        "signUp": MessageLookupByLibrary.simpleMessage("SIGN UP"),
         "sport": MessageLookupByLibrary.simpleMessage("Sport"),
         "sportIsRequired":
             MessageLookupByLibrary.simpleMessage("Sport is required"),
+        "start": MessageLookupByLibrary.simpleMessage("Get Started"),
         "startTime": MessageLookupByLibrary.simpleMessage("Start time"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "totalGames": MessageLookupByLibrary.simpleMessage("Total games"),
         "underReview": MessageLookupByLibrary.simpleMessage("Under review"),
+        "upload": MessageLookupByLibrary.simpleMessage("Upload"),
         "userName": MessageLookupByLibrary.simpleMessage("User name"),
+        "username": MessageLookupByLibrary.simpleMessage(" Username"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),

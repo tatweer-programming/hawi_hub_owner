@@ -155,6 +155,20 @@ class AddImageSuccessState extends AuthState {
   AddImageSuccessState({required this.imagePicked});
 }
 
+class UploadNationalIdSuccessState extends AuthState {
+  final String msg;
+
+  UploadNationalIdSuccessState(this.msg);
+}
+
+class UploadNationalIdLoadingState extends AuthState {}
+
+class UploadNationalIdErrorState extends AuthState {
+  final String error;
+
+  UploadNationalIdErrorState(this.error);
+}
+
 class DeleteImageState extends AuthState {}
 
 class SelectSportState extends AuthState {
