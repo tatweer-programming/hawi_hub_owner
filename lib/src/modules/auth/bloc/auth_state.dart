@@ -53,7 +53,11 @@ class SignupWithFacebookErrorState extends AuthState {
 
 class VerifyCodeLoadingState extends AuthState {}
 
-class VerifyCodeSuccessState extends AuthState {}
+class VerifyCodeSuccessState extends AuthState {
+  final String value;
+
+  VerifyCodeSuccessState({required this.value});
+}
 
 class VerifyCodeErrorState extends AuthState {
   final String error;

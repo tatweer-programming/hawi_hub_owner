@@ -970,6 +970,16 @@ class S {
     );
   }
 
+  /// `Please enter new password`
+  String get enterNewPassword {
+    return Intl.message(
+      'Please enter new password',
+      name: 'enterNewPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Get Started`
   String get start {
     return Intl.message(
@@ -985,6 +995,66 @@ class S {
     return Intl.message(
       'Profile',
       name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code`
+  String get code {
+    return Intl.message(
+      'Code',
+      name: 'code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset Password`
+  String get resetPassword {
+    return Intl.message(
+      'Reset Password',
+      name: 'resetPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Code`
+  String get sendCode {
+    return Intl.message(
+      'Send Code',
+      name: 'sendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Received Code`
+  String get receivedCode {
+    return Intl.message(
+      'Received Code',
+      name: 'receivedCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `seconds`
+  String get seconds {
+    return Intl.message(
+      'seconds',
+      name: 'seconds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can resend code after `
+  String get sendCodeAfter {
+    return Intl.message(
+      'You can resend code after ',
+      name: 'sendCodeAfter',
       desc: '',
       args: [],
     );
@@ -1015,6 +1085,26 @@ class S {
     return Intl.message(
       'See all',
       name: 'seeAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter code`
+  String get enterCode {
+    return Intl.message(
+      'Please enter code',
+      name: 'enterCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Password`
+  String get newPassword {
+    return Intl.message(
+      'New Password',
+      name: 'newPassword',
       desc: '',
       args: [],
     );

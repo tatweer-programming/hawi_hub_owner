@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../../generated/l10n.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   final String email;
@@ -34,11 +37,11 @@ class ResetPasswordScreen extends StatelessWidget {
                   children: [
                     mainFormField(
                         controller: emailController,
-                        label: 'Email',
+                        label: S.of(context).email,
                         enabled: false,
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Please enter email';
+                            return S.of(context).enterEmail;
                           }
                           return null;
                         }),
@@ -47,11 +50,11 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     mainFormField(
                         controller: codeController,
-                        label: 'Code',
+                        label: S.of(context).code,
                         type: TextInputType.number,
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Please enter Code';
+                            return S.of(context).enterCode;
                           }
                           return null;
                         }),
@@ -67,7 +70,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       builder: (context, state) {
                         return mainFormField(
                           controller: passwordController,
-                          label: 'New Password',
+                          label: S.of(context).newPassword,
                           obscureText: visible,
                           suffix: IconButton(
                               onPressed: () {
@@ -81,7 +84,7 @@ class ResetPasswordScreen extends StatelessWidget {
                               )),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter new password';
+                              return S.of(context).enterNewPassword;
                             }
                             return null;
                           },
@@ -93,28 +96,33 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     BlocConsumer<AuthBloc, AuthState>(
                       listener: (context, state) {
-                        if (state is ResetPasswordSuccessState) {
-                          context.pushAndRemove(Routes.home);
-                        } else if (state is ResetPasswordErrorState) {
-                          // context.pushAndRemove(Routes.home);
+                        if (state is VerifyCodeSuccessState) {
+                          defaultToast(msg: state.value);
+                          Future.delayed(const Duration(seconds: 1), () {
+                            context.pushAndRemove(Routes.home);
+                          });
+                        } else if (state is VerifyCodeErrorState) {
+                          errorToast(msg: state.error);
                         }
                       },
                       builder: (context, state) {
-                        return state is ResetPasswordLoadingState ? const CircularProgressIndicator() : defaultButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              bloc.add(
-                                ResetPasswordEvent(
-                                  email: emailController.text,
-                                  code: codeController.text,
-                                  password: passwordController.text,
-                                ),
+                        return state is VerifyCodeLoadingState
+                            ? const CircularProgressIndicator()
+                            : defaultButton(
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    bloc.add(
+                                      VerifyCodeEvent(
+                                        email: emailController.text,
+                                        code: codeController.text,
+                                        password: passwordController.text,
+                                      ),
+                                    );
+                                  }
+                                },
+                                text: S.of(context).resetPassword,
+                                fontSize: 17.sp,
                               );
-                            }
-                          },
-                          text: "Reset Password",
-                          fontSize: 17.sp,
-                        );
                       },
                     ),
                   ],

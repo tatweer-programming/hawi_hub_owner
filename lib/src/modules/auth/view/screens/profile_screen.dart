@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -33,6 +34,7 @@ class ProfileScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is UploadNationalIdSuccessState) {
           context.pop();
+          bloc.add(GetProfileEvent(ConstantsManager.userId!));
           defaultToast(msg: state.msg);
           context.pop();
         } else if (state is UploadNationalIdErrorState) {
@@ -43,7 +45,9 @@ class ProfileScreen extends StatelessWidget {
             context: context,
             barrierDismissible: false,
             builder: (context) {
-              return const Center(child: CircularProgressIndicator());
+              return const AlertDialog(
+                content: Center(child: CircularProgressIndicator()),
+              );
             },
           );
         }

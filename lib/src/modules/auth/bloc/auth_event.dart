@@ -26,8 +26,11 @@ class LogoutEvent extends AuthEvent {}
 
 class VerifyCodeEvent extends AuthEvent {
   final String email;
+  final String code;
+  final String password;
 
-  VerifyCodeEvent(this.email);
+  VerifyCodeEvent(
+      {required this.email, required this.code, required this.password});
 }
 
 class ChangePasswordEvent extends AuthEvent {
@@ -53,11 +56,8 @@ class GetProfileEvent extends AuthEvent {
 
 class ResetPasswordEvent extends AuthEvent {
   final String email;
-  final String code;
-  final String password;
 
-  ResetPasswordEvent(
-      {required this.email, required this.code, required this.password});
+  ResetPasswordEvent(this.email);
 }
 
 class StartResendCodeTimerEvent extends AuthEvent {

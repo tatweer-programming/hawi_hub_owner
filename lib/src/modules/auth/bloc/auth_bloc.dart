@@ -56,13 +56,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           }
         });
       } else if (event is VerifyCodeEvent) {
-        add(StartResendCodeTimerEvent(60));
         emit(VerifyCodeLoadingState());
-        await _repository.verifyCode(event.email).then((value) {
-          if (value == "Code Sent") {
-            emit(VerifyCodeSuccessState());
+        await _repository
+            .verifyCode(
+          code: event.code,
+          email: event.email,
+          password: event.password,
+        )
+            .then((value) {
+          if (value == "Password reset successfully") {
+            emit(VerifyCodeSuccessState(value: value));
           } else {
             emit(VerifyCodeErrorState(value));
+          }
+        });
+      } else if (event is ResetPasswordEvent) {
+        add(StartResendCodeTimerEvent(120));
+        emit(ResetPasswordLoadingState());
+        await _repository.resetPassword(event.email).then((value) {
+          if (value == "Reset code sent successfully to ${event.email}.") {
+            emit(ResetPasswordSuccessState(value));
+          } else {
+            emit(ResetPasswordErrorState(value));
           }
         });
       } else if (event is LoginWithGoogleEvent) {
@@ -127,21 +142,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else {
           emit(ChangePasswordErrorState("Something went wrong"));
         }
-      } else if (event is ResetPasswordEvent) {
-        emit(ResetPasswordLoadingState());
-        await _repository
-            .resetPassword(
-          code: event.code,
-          email: event.email,
-          password: event.password,
-        )
-            .then((value) {
-          if (value == "Password Reset Successful") {
-            emit(ResetPasswordSuccessState(value));
-          } else {
-            emit(ResetPasswordErrorState(value));
-          }
-        });
       } else if (event is AddImageEvent) {
         await _captureAndSaveGalleryImage().then((imagePicked) {
           emit(AddImageSuccessState(imagePicked: imagePicked!));
@@ -151,9 +151,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else if (event is UploadNationalIdEvent) {
         emit(UploadNationalIdLoadingState());
         String res = await _repository.uploadNationalId(event.nationalId);
-        if(res == "Something went wrong"){
+        if (res == "Something went wrong") {
           emit(UploadNationalIdErrorState(res));
-        }else{
+        } else {
           emit(UploadNationalIdSuccessState(res));
         }
       } else if (event is UpdateProfilePictureEvent) {
@@ -205,7 +205,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _startResendCodeTimer(int timeToResendCode) {
-    timeToResendCode = 60;
+    timeToResendCode = 120;
     timeToResendCodeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (timeToResendCode > 0) {
         timeToResendCode--;

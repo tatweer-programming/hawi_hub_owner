@@ -7,6 +7,7 @@ import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/bottom_nav_bar.dart';
+import 'package:sizer/sizer.dart';
 import '../../../../core/routing/routes.dart';
 
 class MainScreen extends StatelessWidget {
@@ -41,6 +42,7 @@ class MainScreen extends StatelessWidget {
             child: Column(
               children: [
                 mainCubit.pages[mainCubit.currentIndex],
+                SizedBox(height: 1.h,)
               ],
             ),
           );

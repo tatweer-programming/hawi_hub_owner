@@ -10,7 +10,7 @@ class AuthRepository {
 
   Future<String> loginPlayer(
       {required String email, required String password, required bool loginWithFBOrGG}) async {
-    return await _service.loginPlayer(
+    return await _service.loginOwner(
         email: email, password: password, loginWithFBOrGG: loginWithFBOrGG);
   }
 
@@ -38,8 +38,8 @@ class AuthRepository {
     );
   }
 
-  Future<String> verifyCode(String email) async {
-    return _service.verifyCode(email);
+  Future<String> resetPassword(String email) async {
+    return _service.resetPassword(email);
   }
 
   Future<String> changeProfileImage(File newProfileImage) async {
@@ -61,12 +61,12 @@ class AuthRepository {
   //   return _service.deleteProfileImage();
   // }
 
-  Future<String> resetPassword({
+  Future<String> verifyCode({
     required String email,
     required String code,
     required String password,
   }) async {
-    return _service.resetPassword(email: email, code: code, password: password);
+    return _service.verifyCode(email: email, code: code, password: password);
   }
 
   Future<Either<String, Owner>> getProfile(int id) async {

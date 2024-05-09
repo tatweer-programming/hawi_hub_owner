@@ -48,7 +48,7 @@ class AuthService {
     }
   }
 
-  Future<String> loginPlayer(
+  Future<String> loginOwner(
       {required String email,
       required String password,
       required bool loginWithFBOrGG}) async {
@@ -107,7 +107,7 @@ class AuthService {
       await googleSignIn.signOut();
       var googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
-        await loginPlayer(
+        await loginOwner(
             email: googleUser.email, password: "string", loginWithFBOrGG: true);
         return const Right(true);
       }
@@ -144,7 +144,7 @@ class AuthService {
       final LoginResult result = await FacebookAuth.instance.login();
       if (result.status == LoginStatus.success) {
         final userData = await FacebookAuth.instance.getUserData();
-        await loginPlayer(
+        await loginOwner(
             email: userData['email'],
             password: "string",
             loginWithFBOrGG: true);
@@ -156,21 +156,17 @@ class AuthService {
     }
   }
 
-  Future<String> verifyCode(String email) async {
+  Future<String> resetPassword(String email) async {
     try {
       Response response = await DioHelper.postData(
         data: {
-          'mail': email,
+          'email': email,
         },
-        path: EndPoints.verifyCode,
+        path: EndPoints.resetPass,
       );
-      if (response.statusCode == 200) {
-        return "Code Sent";
-      }
-      return "No account for this user";
+      return response.data.toString();
     } catch (e) {
-      print("object $e");
-      return e.toString();
+      return "CHECK YOUR NETWORK";
     }
   }
 
@@ -196,6 +192,7 @@ class AuthService {
     }
   }
 
+  /// TODO
   Future<String> changeProfileImage(File newProfileImage) async {
     try {
       Response response = await DioHelper.putDataFormData(
@@ -205,8 +202,9 @@ class AuthService {
       );
       if (response.statusCode == 200) {
         return "Profile image updated successfully";
+        return (response.data['message']);
       }
-      return (response.data['msg']);
+      return (response.data.toString());
     } catch (e) {
       return e.toString();
     }
@@ -219,14 +217,13 @@ class AuthService {
         "${EndPoints.verification}/${ConstantsManager.userId}",
         FormData.fromMap(
             {'proofOfIdentity': MultipartFile.fromFileSync(nationalId.path)}),
-        // path: ,
       );
       if (response.statusCode == 200) {
         print(response.data);
         print("Success");
         return "Proof of identity has been added successfully";
       }
-      return (response.data['msg']);
+      return (response.data.toString());
     } catch (e) {
       print(e);
       return "Something went wrong";
@@ -248,26 +245,31 @@ class AuthService {
   //   }
   // }
 
-  Future<String> resetPassword({
+  Future<String> verifyCode({
     required String email,
     required String code,
     required String password,
   }) async {
     try {
+      print(email);
+      print(code);
+      print(password);
       Response response = await DioHelper.postData(
         data: {
-          'mail': email,
-          'code': code,
-          'pass': password,
+          "resetCode": code,
+          "email": email,
+          "newPassword": password,
         },
-        path: EndPoints.resetPass,
+        path: EndPoints.verifyResetCode,
       );
-      if (response.statusCode == 200) {
-        return "Password Reset Successful";
+      if(response.statusCode == 200) {
+        await loginOwner(email: email, password: password, loginWithFBOrGG: false);
+        return (response.data['message']);
       }
-      return (response.data['msg']);
+      return (response.data.toString());
     } catch (e) {
-      return e.toString();
+      print("e $e");
+      return "CHECK YOUR NETWORK";
     }
   }
 

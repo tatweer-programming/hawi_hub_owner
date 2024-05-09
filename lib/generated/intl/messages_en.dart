@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("City is required"),
+        "code": MessageLookupByLibrary.simpleMessage("Code"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm delete"),
         "confirmPassword":
@@ -62,10 +63,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "endTime": MessageLookupByLibrary.simpleMessage("End time"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
             "End time must be after start time"),
+        "enterCode": MessageLookupByLibrary.simpleMessage("Please enter code"),
         "enterConfirmPassword": MessageLookupByLibrary.simpleMessage(
             "Please enter confirm password"),
         "enterEmail":
             MessageLookupByLibrary.simpleMessage("Please enter email"),
+        "enterNewPassword":
+            MessageLookupByLibrary.simpleMessage("Please enter new password"),
         "enterPassword":
             MessageLookupByLibrary.simpleMessage("Please enter password"),
         "enterUsername":
@@ -96,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "mustVerifyAccount": MessageLookupByLibrary.simpleMessage(
             "You must verify your account first "),
         "myWallet": MessageLookupByLibrary.simpleMessage("My Wallet"),
+        "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
         "noAccount":
             MessageLookupByLibrary.simpleMessage("Don’t have an account ?"),
         "noComment": MessageLookupByLibrary.simpleMessage("No comment"),
@@ -124,13 +129,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "places": MessageLookupByLibrary.simpleMessage("Places"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "receivedCode": MessageLookupByLibrary.simpleMessage("Received Code"),
         "rejectIdCard": MessageLookupByLibrary.simpleMessage(
             "The file was rejected. Check the required information carefully and try again"),
         "requests": MessageLookupByLibrary.simpleMessage("Requests"),
         "requiredField": MessageLookupByLibrary.simpleMessage("Required field"),
+        "resetPassword": MessageLookupByLibrary.simpleMessage("Reset Password"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
+        "sendCode": MessageLookupByLibrary.simpleMessage("Send Code"),
+        "sendCodeAfter":
+            MessageLookupByLibrary.simpleMessage("You can resend code after "),
         "shouldActivate": MessageLookupByLibrary.simpleMessage(
             "You should activate your account first"),
         "showInMap": MessageLookupByLibrary.simpleMessage("Show in map"),

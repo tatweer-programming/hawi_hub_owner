@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("المدينة مطلوبة"),
+        "code": MessageLookupByLibrary.simpleMessage("الرمز "),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
         "confirmPassword":
@@ -62,10 +63,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "endTime": MessageLookupByLibrary.simpleMessage("وقت الانتهاء"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
             "وقت الانتهاء يجب أن يكون بعد وقت البدء"),
+        "enterCode":
+            MessageLookupByLibrary.simpleMessage("الرجاء إدخال الرمز "),
         "enterConfirmPassword": MessageLookupByLibrary.simpleMessage(
             "الرجاء إدخال تأكيد كلمة المرور"),
         "enterEmail":
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال الإيميل"),
+        "enterNewPassword": MessageLookupByLibrary.simpleMessage(
+            "الرجاء إدخال كلمة المرور الجديدة"),
         "enterPassword":
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال كلمة المرور"),
         "enterUsername":
@@ -96,6 +101,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mustVerifyAccount": MessageLookupByLibrary.simpleMessage(
             "يجب عليك التحقق من حسابك أولا "),
         "myWallet": MessageLookupByLibrary.simpleMessage("محفظتي"),
+        "newPassword":
+            MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
         "noAccount": MessageLookupByLibrary.simpleMessage("لا تمتلك حساب ؟"),
         "noComment": MessageLookupByLibrary.simpleMessage("لا تعليق"),
         "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
@@ -124,14 +131,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "places": MessageLookupByLibrary.simpleMessage("الأماكن"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "receivedCode": MessageLookupByLibrary.simpleMessage("استلمت الرمز"),
         "rejectIdCard": MessageLookupByLibrary.simpleMessage(
             "تم رفض الملف تأكد من المطلوب جيدا واعد المحاولة"),
         "requests": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "requiredField":
             MessageLookupByLibrary.simpleMessage(" هذا الحقل مطلوب"),
+        "resetPassword":
+            MessageLookupByLibrary.simpleMessage(" اعادة تعيين كلمة المرور"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "seeAll": MessageLookupByLibrary.simpleMessage("رؤية الكل"),
+        "sendCode": MessageLookupByLibrary.simpleMessage("إرسال الرمز"),
+        "sendCodeAfter":
+            MessageLookupByLibrary.simpleMessage("يمكنك الارسال بعد "),
         "shouldActivate":
             MessageLookupByLibrary.simpleMessage("يجب تفعيل الحساب أولا"),
         "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),

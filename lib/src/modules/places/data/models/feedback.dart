@@ -27,11 +27,11 @@ class AppFeedBack extends Equatable {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(String userId) {
     return {
-      'user_id': userId,
+      userId: this.userId,
       'comment': comment,
-      'rating': rating,
+      'rate': rating,
     };
   }
 
