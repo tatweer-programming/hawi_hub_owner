@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../generated/l10n.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
 import '../widgets/widgets.dart';
@@ -20,7 +22,14 @@ class EditProfileScreen extends StatelessWidget {
     AuthBloc bloc = AuthBloc.get(context);
     nameController.text = owner.userName;
     emailController.text = owner.email;
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is ChangePasswordSuccessState) {
+          defaultToast(msg: handleResponseTranslation(state.value, context));
+        } else if (state is ChangePasswordErrorState) {
+          errorToast(msg: handleResponseTranslation(state.error, context));
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -46,14 +55,14 @@ class EditProfileScreen extends StatelessWidget {
                       ),
                       mainFormField(
                         controller: nameController,
-                        label: "User Name",
+                        label: S.of(context).userName,
                       ),
                       SizedBox(
                         height: 2.h,
                       ),
                       mainFormField(
                         controller: emailController,
-                        label: "Email",
+                        label: S.of(context).email,
                       ),
                       SizedBox(
                         height: 2.h,
@@ -86,7 +95,7 @@ class EditProfileScreen extends StatelessWidget {
                             },
                           );
                         },
-                        text: "Change Password",
+                        text: S.of(context).changePassword,
                         fontSize: 17.sp,
                       ),
                     ],
@@ -101,7 +110,10 @@ class EditProfileScreen extends StatelessWidget {
   }
 }
 
-Widget _appBar({required BuildContext context, required Owner owner, required AuthBloc bloc}) {
+Widget _appBar(
+    {required BuildContext context,
+    required Owner owner,
+    required AuthBloc bloc}) {
   return Stack(
     alignment: AlignmentDirectional.bottomCenter,
     children: [
@@ -122,7 +134,7 @@ Widget _appBar({required BuildContext context, required Owner owner, required Au
                 width: 8.w,
               ),
               Text(
-                "Update Profile",
+                S.of(context).updateProfile,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: ColorManager.white,
@@ -193,16 +205,17 @@ Widget changePassWidget(
               children: <Widget>[
                 mainFormField(
                     controller: oldPasswordController,
-                    label: 'Password',
+                    label: S.of(context).password,
                     obscureText: visible,
                     suffix: IconButton(
                         onPressed: () {
                           bloc.add(ChangePasswordVisibilityEvent(visible));
                         },
-                        icon: Icon(visible ? Icons.visibility_off : Icons.visibility)),
+                        icon: Icon(
+                            visible ? Icons.visibility_off : Icons.visibility)),
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter password';
+                        return S.of(context).enterPassword;
                       }
                       return null;
                     }),
@@ -211,10 +224,12 @@ Widget changePassWidget(
                 ),
                 mainFormField(
                     controller: newPasswordController,
-                    label: 'New Password',
+                    label: S.of(context).newPassword,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter new password';
+                        return S.of(context).enterNewPassword;
+                      } else if (value.length < 6) {
+                        return S.of(context).shortPassword;
                       }
                       return null;
                     }),
@@ -223,10 +238,12 @@ Widget changePassWidget(
                 ),
                 mainFormField(
                     controller: confirmPasswordController,
-                    label: 'Confirm Password',
+                    label: S.of(context).confirmPassword,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter confirm password';
+                        return S.of(context).enterConfirmPassword;
+                      }else if (value != newPasswordController.text) {
+                        return S.of(context).passwordDoesNotMatch;
                       }
                       return null;
                     }),
@@ -247,7 +264,7 @@ Widget changePassWidget(
                           oldPassword: oldPasswordController.text,
                           newPassword: newPasswordController.text));
                     },
-                    text: "Change",
+                    text: S.of(context).change,
                     fontSize: 12.sp,
                   ),
                 ),

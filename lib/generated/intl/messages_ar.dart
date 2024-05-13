@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accept": MessageLookupByLibrary.simpleMessage("قبول"),
+        "accountCreatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم انشاء حسابك بنجاح"),
         "addBooking": MessageLookupByLibrary.simpleMessage("اضافة حجز"),
         "addImages": MessageLookupByLibrary.simpleMessage("اضافة صور"),
         "addPlace": MessageLookupByLibrary.simpleMessage("إضافة مكان"),
@@ -41,6 +43,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحجز خارج أوقات عمل المكان"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
+        "change": MessageLookupByLibrary.simpleMessage("تغير "),
+        "changePassword":
+            MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
+        "checkYourNetwork": MessageLookupByLibrary.simpleMessage(
+            "يرجى التحقق من الشبكة والمحاولة مرة أخرى."),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("المدينة مطلوبة"),
@@ -60,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
         "editPlace": MessageLookupByLibrary.simpleMessage("تعديل المكان"),
         "email": MessageLookupByLibrary.simpleMessage(" الإيميل"),
+        "emailAlreadyExist": MessageLookupByLibrary.simpleMessage(
+            "البريد الإلكتروني موجود مسبقا."),
         "endTime": MessageLookupByLibrary.simpleMessage("وقت الانتهاء"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
             "وقت الانتهاء يجب أن يكون بعد وقت البدء"),
@@ -85,6 +94,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يتم مراجعة الملف الان"),
         "imageIsRequired":
             MessageLookupByLibrary.simpleMessage("يجب اختيار صورة علي الاقل"),
+        "invalidEmailOrPassword": MessageLookupByLibrary.simpleMessage(
+            "البريد الإلكتروني أو كلمة السر خاطئة."),
         "invalidValue": MessageLookupByLibrary.simpleMessage("قيمة غير صالخة"),
         "keepMeLoggedIn":
             MessageLookupByLibrary.simpleMessage("أبقِ تسجيل دخولي"),
@@ -92,6 +103,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginFirst":
             MessageLookupByLibrary.simpleMessage("يجب تسجيل الدخول أولا"),
+        "loginSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "تم تسجيل الدخول إلى الحساب بنجاح"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
         "minimumHours":
@@ -117,8 +130,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "ownershipFile":
             MessageLookupByLibrary.simpleMessage("ملف إثبات الملكية"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
+        "passwordChangedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تغيير كلمة المرور بنجاح."),
         "passwordDoesNotMatch":
             MessageLookupByLibrary.simpleMessage("كلمة السر غير متطابقة"),
+        "passwordResetSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "تم إعادة تعيين كلمة المرور بنجاح"),
         "peopleRate": MessageLookupByLibrary.simpleMessage("تقيم الأشخاص"),
         "perHour": MessageLookupByLibrary.simpleMessage(" لكل ساعة"),
         "placeAdded":
@@ -131,12 +148,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "places": MessageLookupByLibrary.simpleMessage("الأماكن"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "proofOfIdentityAddedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم أضافة الملف بنجاح."),
         "receivedCode": MessageLookupByLibrary.simpleMessage("استلمت الرمز"),
         "rejectIdCard": MessageLookupByLibrary.simpleMessage(
             "تم رفض الملف تأكد من المطلوب جيدا واعد المحاولة"),
         "requests": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "requiredField":
             MessageLookupByLibrary.simpleMessage(" هذا الحقل مطلوب"),
+        "resetCodeSentSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم ارسال الرمز بنجاح ل "),
         "resetPassword":
             MessageLookupByLibrary.simpleMessage(" اعادة تعيين كلمة المرور"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
@@ -146,10 +167,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "sendCode": MessageLookupByLibrary.simpleMessage("إرسال الرمز"),
         "sendCodeAfter":
             MessageLookupByLibrary.simpleMessage("يمكنك الارسال بعد "),
+        "shortPassword": MessageLookupByLibrary.simpleMessage(
+            "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل."),
         "shouldActivate":
             MessageLookupByLibrary.simpleMessage("يجب تفعيل الحساب أولا"),
         "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
         "signUp": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
+        "somethingWentWrong":
+            MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
         "sport": MessageLookupByLibrary.simpleMessage("الرياضة"),
         "sportIsRequired":
             MessageLookupByLibrary.simpleMessage("الرياضة مطلوبة"),
@@ -158,13 +183,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "to": MessageLookupByLibrary.simpleMessage("إلى"),
         "totalGames": MessageLookupByLibrary.simpleMessage("إجمالي الحجوزات"),
         "underReview": MessageLookupByLibrary.simpleMessage("تحت المراجعة"),
+        "updateProfile":
+            MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
         "upload": MessageLookupByLibrary.simpleMessage("رفع"),
         "userName": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
+        "userNotFound": MessageLookupByLibrary.simpleMessage(
+            "البريد الإلكتروني غير موجود."),
         "username": MessageLookupByLibrary.simpleMessage(" الإسم"),
+        "usernameAlreadyExist":
+            MessageLookupByLibrary.simpleMessage("الأسم موجود مسبقا."),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("عرض الملف الشخصي"),
         "workingHours": MessageLookupByLibrary.simpleMessage("ساعات العمل"),
+        "wrongPassword":
+            MessageLookupByLibrary.simpleMessage("كلمة المرور خاطئة."),
         "yourPlaces": MessageLookupByLibrary.simpleMessage("أماكنك")
       };
 }

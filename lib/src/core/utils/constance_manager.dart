@@ -3,10 +3,10 @@ import 'localization_manager.dart';
 
 class ConstantsManager {
   static Owner? appUser;
-
+  static String? connectionId;
+  static String? connectionToken;
   static bool? registrationSkipped;
   static int? userId;
-  static String? userType;
   static bool? isNotificationsOn;
   static const String baseUrlNotification = "https://fcm.googleapis.com/fcm/send";
   static const String successUrl =

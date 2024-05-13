@@ -56,8 +56,9 @@ class GetProfileEvent extends AuthEvent {
 
 class ResetPasswordEvent extends AuthEvent {
   final String email;
+  final BuildContext context;
 
-  ResetPasswordEvent(this.email);
+  ResetPasswordEvent(this.email, this.context);
 }
 
 class StartResendCodeTimerEvent extends AuthEvent {
@@ -70,13 +71,6 @@ class ResetCodeTimerEvent extends AuthEvent {
   final int timeToResendCode;
 
   ResetCodeTimerEvent(this.timeToResendCode);
-}
-
-class SelectSportEvent extends AuthEvent {
-  final List<Sport> sports;
-  final Sport sport;
-
-  SelectSportEvent({required this.sports, required this.sport});
 }
 
 class UploadNationalIdEvent extends AuthEvent {

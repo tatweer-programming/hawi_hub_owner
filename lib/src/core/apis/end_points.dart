@@ -8,7 +8,7 @@ class EndPoints {
   static const String verification = '/Owner/Verification';
 
   ///
-  static const String chat = '/chat';
+  static const String chat = '/chat/negotiate?negotiateVersion=1';
 
   ///
   static const String getPlaces = 'Owner/GetStadiums/';

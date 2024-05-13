@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../generated/l10n.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/styles_manager.dart';
 
@@ -237,3 +238,18 @@ Widget orImageBuilder() => Stack(
     ),
   ],
 );
+
+String handleResponseTranslation(String state, BuildContext context) {
+  if(state == "Account Created Successfully")return S.of(context).accountCreatedSuccessfully;
+  if(state == "Email is not exists.")return S.of(context).emailAlreadyExist;
+  if(state == "Username is already exists.")return S.of(context).usernameAlreadyExist;
+  if(state == "Password reset successfully")return S.of(context).passwordResetSuccessfully;
+  if(state == "Invalid email or password.")return S.of(context).invalidEmailOrPassword;
+  if(state == "Account LogedIn Successfully")return S.of(context).loginSuccessfully;
+  if(state == "Something went wrong")return S.of(context).somethingWentWrong;
+  if(state == "Wrong password !")return S.of(context).wrongPassword;
+  if(state == "CHECK YOUR NETWORK")return S.of(context).checkYourNetwork;
+  if(state == "Password has been changed successfully")return S.of(context).passwordChangedSuccessfully;
+  if(state == "Proof of identity has been added successfully")return S.of(context).proofOfIdentityAddedSuccessfully;
+  return state;
+}

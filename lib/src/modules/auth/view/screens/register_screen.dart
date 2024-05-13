@@ -34,10 +34,10 @@ class RegisterScreen extends StatelessWidget {
         }
         if (state is RegisterSuccessState) {
           bloc.add(PlaySoundEvent("audios/start.wav"));
-          defaultToast(msg: state.value);
+          defaultToast(msg: handleResponseTranslation(state.value, context));
           context.pushAndRemove(Routes.home);
         } else if (state is RegisterErrorState) {
-          errorToast(msg: state.error);
+          errorToast(msg: handleResponseTranslation(state.error, context));
         }
         if (state is SignupWithGoogleSuccessState) {
           authOwner = state.authOwner;
@@ -47,6 +47,9 @@ class RegisterScreen extends StatelessWidget {
           authOwner = state.authOwner;
           userNameController.text = authOwner!.userName;
           emailController.text = authOwner!.email;
+        }
+        else if (state is SignupWithGoogleErrorState || state is SignupWithFacebookErrorState) {
+          errorToast(msg: handleResponseTranslation("Something went wrong", context));
         }
       },
       builder: (context, state) {
@@ -112,6 +115,8 @@ class RegisterScreen extends StatelessWidget {
                           validator: (value) {
                             if (value.isEmpty) {
                               return S.of(context).enterPassword;
+                            } else if (value.length < 6) {
+                              return S.of(context).shortPassword;
                             }
                             return null;
                           },

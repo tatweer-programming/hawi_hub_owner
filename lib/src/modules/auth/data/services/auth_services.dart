@@ -13,7 +13,7 @@ import '../../../../core/utils/constance_manager.dart';
 import '../models/auth_owner.dart';
 
 class AuthService {
-  Future<String> registerPlayer({
+  Future<Either<String, String>> registerPlayer({
     required AuthOwner authOwner,
   }) async {
     try {
@@ -22,7 +22,7 @@ class AuthService {
         'Username': authOwner.userName,
         'Password': authOwner.password,
       });
-      print(authOwner.profilePictureUrl);
+      // print(authOwner.profilePictureUrl);
       if (authOwner.profilePictureUrl != null) {
         map.fields.add(
           MapEntry(
@@ -31,20 +31,20 @@ class AuthService {
           ),
         );
       }
-      print(map.files);
+      // print(map.files);
       Response response = await DioHelper.postData(
         data: map,
         path: EndPoints.register,
       );
-      print(response.data.toString());
+      // print(response.data.toString());
       if (response.statusCode == 200) {
         ConstantsManager.userId = response.data['id'];
-        await CacheHelper.saveData(key: 'id', value: response.data['id']);
-        return response.data['message'];
+        await CacheHelper.saveData(key: 'userId', value: response.data['id']);
+        return Right(response.data['message']);
       }
-      return response.data.toString();
+      return Left(response.data.toString());
     } catch (e) {
-      return "CHECK YOUR NETWORK";
+      return const Left("CHECK YOUR NETWORK");
     }
   }
 
@@ -62,9 +62,11 @@ class AuthService {
         path: EndPoints.login,
       );
       if (response.statusCode == 200) {
-        ConstantsManager.userId = response.data['id'];
-        await CacheHelper.saveData(key: 'id', value: response.data['id']);
-        return response.data['message'];
+        if (response.data != "Email is not exists.") {
+          ConstantsManager.userId = response.data['id'];
+          await CacheHelper.saveData(key: 'userId', value: response.data['id']);
+          return response.data['message'];
+        }
       }
       return response.data.toString();
     } catch (e) {
@@ -92,12 +94,11 @@ class AuthService {
       }
       return const Right(null);
     } catch (e) {
-      print("ERORR $e");
       return Left(e.toString());
     }
   }
 
-  Future<Either<String, bool>> loginWithGoogle() async {
+  Future<Either<String, String>> loginWithGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
         scopes: <String>[
@@ -107,11 +108,11 @@ class AuthService {
       await googleSignIn.signOut();
       var googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
-        await loginOwner(
+        String message = await loginOwner(
             email: googleUser.email, password: "string", loginWithFBOrGG: true);
-        return const Right(true);
+        return Right(message);
       }
-      return const Right(false);
+      return const Right("Something went wrong");
     } catch (e) {
       return Left(e.toString());
     }
@@ -139,18 +140,18 @@ class AuthService {
     }
   }
 
-  Future<Either<String, bool>> loginWithFacebook() async {
+  Future<Either<String, String>> loginWithFacebook() async {
     try {
       final LoginResult result = await FacebookAuth.instance.login();
       if (result.status == LoginStatus.success) {
         final userData = await FacebookAuth.instance.getUserData();
-        await loginOwner(
+        String message = await loginOwner(
             email: userData['email'],
             password: "string",
             loginWithFBOrGG: true);
-        return const Right(true);
+        return Right(message);
       }
-      return const Right(false);
+      return const Right("Something went wrong");
     } catch (e) {
       return Left(e.toString());
     }
@@ -170,7 +171,7 @@ class AuthService {
     }
   }
 
-  Future<String> changePassword({
+  Future<Either<String, String>> changePassword({
     required String oldPassword,
     required String newPassword,
   }) async {
@@ -183,12 +184,14 @@ class AuthService {
         path: "${EndPoints.changePassword}/${ConstantsManager.userId}",
       );
       if (response.statusCode == 200) {
-        return response.data['message'];
+        if (response.data['message'] ==
+            "Password has been changed successfully") {
+          return Right(response.data['message']);
+        }
       }
-      return response.data.toString();
+      return Left(response.data.toString());
     } catch (e) {
-      print("object $e");
-      return "CHECK YOUR NETWORK";
+      return const Left("CHECK YOUR NETWORK");
     }
   }
 
@@ -202,7 +205,7 @@ class AuthService {
       );
       if (response.statusCode == 200) {
         return "Profile image updated successfully";
-        return (response.data['message']);
+        // return (response.data['message']);
       }
       return (response.data.toString());
     } catch (e) {
@@ -210,50 +213,31 @@ class AuthService {
     }
   }
 
-  Future<String> uploadNationalId(File nationalId) async {
+  Future<Either<String, String>> uploadNationalId(File nationalId) async {
     try {
-      print("object");
       Response response = await DioHelper.postFormData(
         "${EndPoints.verification}/${ConstantsManager.userId}",
         FormData.fromMap(
             {'proofOfIdentity': MultipartFile.fromFileSync(nationalId.path)}),
       );
       if (response.statusCode == 200) {
-        print(response.data);
-        print("Success");
-        return "Proof of identity has been added successfully";
+        if (response.data['message'] ==
+            "Proof of identity has been added successfully") {
+          return const Right("Proof of identity has been added successfully");
+        }
       }
-      return (response.data.toString());
+      return Left(response.data.toString());
     } catch (e) {
-      print(e);
-      return "Something went wrong";
+      return const Left("CHECK YOUR NETWORK");
     }
   }
 
-  // Future<String> deleteProfileImage() async {
-  //   try {
-  //     Response response = await DioHelper.deleteData(
-  //       token: ConstantsManager.userId.toString(),
-  //       path: EndPoints.deleteProfile,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       return "Profile image deleted";
-  //     }
-  //     return (response.data['msg']);
-  //   } catch (e) {
-  //     return e.toString();
-  //   }
-  // }
-
-  Future<String> verifyCode({
+  Future<Either<String, String>> verifyCode({
     required String email,
     required String code,
     required String password,
   }) async {
     try {
-      print(email);
-      print(code);
-      print(password);
       Response response = await DioHelper.postData(
         data: {
           "resetCode": code,
@@ -262,14 +246,14 @@ class AuthService {
         },
         path: EndPoints.verifyResetCode,
       );
-      if(response.statusCode == 200) {
-        await loginOwner(email: email, password: password, loginWithFBOrGG: false);
-        return (response.data['message']);
+      if (response.statusCode == 200) {
+        await loginOwner(
+            email: email, password: password, loginWithFBOrGG: false);
+        return Right(response.data['message']);
       }
-      return (response.data.toString());
+      return Left(response.data.toString());
     } catch (e) {
-      print("e $e");
-      return "CHECK YOUR NETWORK";
+      return const Left("CHECK YOUR NETWORK");
     }
   }
 
@@ -281,8 +265,7 @@ class AuthService {
       Owner owner = Owner.fromJson(response.data);
       return Right(owner);
     } catch (e) {
-      print(e);
-      return Left(e.toString());
+      return const Left("CHECK YOUR NETWORK");
     }
   }
 }

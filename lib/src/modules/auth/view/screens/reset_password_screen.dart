@@ -85,6 +85,8 @@ class ResetPasswordScreen extends StatelessWidget {
                           validator: (value) {
                             if (value.isEmpty) {
                               return S.of(context).enterNewPassword;
+                            } else if (value.length < 6) {
+                              return S.of(context).shortPassword;
                             }
                             return null;
                           },
@@ -97,12 +99,16 @@ class ResetPasswordScreen extends StatelessWidget {
                     BlocConsumer<AuthBloc, AuthState>(
                       listener: (context, state) {
                         if (state is VerifyCodeSuccessState) {
-                          defaultToast(msg: state.value);
+                          defaultToast(
+                              msg: handleResponseTranslation(
+                                  state.value, context));
                           Future.delayed(const Duration(seconds: 1), () {
                             context.pushAndRemove(Routes.home);
                           });
                         } else if (state is VerifyCodeErrorState) {
-                          errorToast(msg: state.error);
+                          errorToast(
+                              msg: handleResponseTranslation(
+                                  state.error, context));
                         }
                       },
                       builder: (context, state) {

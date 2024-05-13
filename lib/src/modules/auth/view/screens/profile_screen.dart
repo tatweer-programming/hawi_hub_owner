@@ -35,10 +35,10 @@ class ProfileScreen extends StatelessWidget {
         if (state is UploadNationalIdSuccessState) {
           context.pop();
           bloc.add(GetProfileEvent(ConstantsManager.userId!));
-          defaultToast(msg: state.msg);
+          errorToast(msg: handleResponseTranslation(state.msg, context));
           context.pop();
         } else if (state is UploadNationalIdErrorState) {
-          errorToast(msg: state.error);
+          errorToast(msg: handleResponseTranslation(state.error, context));
         }
         if (state is UploadNationalIdLoadingState) {
           showDialog(

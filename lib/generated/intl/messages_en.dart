@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
+        "accountCreatedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Account Created Successfully"),
         "addBooking": MessageLookupByLibrary.simpleMessage("Add booking"),
         "addImages": MessageLookupByLibrary.simpleMessage("Add images"),
         "addPlace": MessageLookupByLibrary.simpleMessage("Add place"),
@@ -41,6 +43,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Booking outside working hours"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("Booking time"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "change": MessageLookupByLibrary.simpleMessage("Change "),
+        "changePassword":
+            MessageLookupByLibrary.simpleMessage("Change Password"),
+        "checkYourNetwork":
+            MessageLookupByLibrary.simpleMessage("CHECK YOUR NETWORK"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("City is required"),
@@ -60,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "editPlace": MessageLookupByLibrary.simpleMessage("Edit place"),
         "email": MessageLookupByLibrary.simpleMessage(" Email"),
+        "emailAlreadyExist":
+            MessageLookupByLibrary.simpleMessage("Email is already exists."),
         "endTime": MessageLookupByLibrary.simpleMessage("End time"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
             "End time must be after start time"),
@@ -84,6 +93,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "The ID card is being verified now"),
         "imageIsRequired":
             MessageLookupByLibrary.simpleMessage("Image is required"),
+        "invalidEmailOrPassword":
+            MessageLookupByLibrary.simpleMessage("Invalid email or password."),
         "invalidValue": MessageLookupByLibrary.simpleMessage("Invalid Value"),
         "keepMeLoggedIn":
             MessageLookupByLibrary.simpleMessage("Keep me logged in"),
@@ -91,6 +102,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "loginFirst":
             MessageLookupByLibrary.simpleMessage("You should login first"),
+        "loginSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Account LogeIn Successfully"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("Minimum booking"),
         "minimumHours":
@@ -115,8 +128,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ownership file is required"),
         "ownershipFile": MessageLookupByLibrary.simpleMessage("Ownership file"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "passwordChangedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Password has been changed successfully"),
         "passwordDoesNotMatch":
             MessageLookupByLibrary.simpleMessage(" Password does not match"),
+        "passwordResetSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Password reset successfully"),
         "peopleRate": MessageLookupByLibrary.simpleMessage("People Rate"),
         "perHour": MessageLookupByLibrary.simpleMessage("per hour"),
         "placeAdded":
@@ -129,11 +146,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "places": MessageLookupByLibrary.simpleMessage("Places"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "proofOfIdentityAddedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Proof of identity has been added successfully"),
         "receivedCode": MessageLookupByLibrary.simpleMessage("Received Code"),
         "rejectIdCard": MessageLookupByLibrary.simpleMessage(
             "The file was rejected. Check the required information carefully and try again"),
         "requests": MessageLookupByLibrary.simpleMessage("Requests"),
         "requiredField": MessageLookupByLibrary.simpleMessage("Required field"),
+        "resetCodeSentSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Reset code sent successfully to "),
         "resetPassword": MessageLookupByLibrary.simpleMessage("Reset Password"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
@@ -142,10 +164,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "sendCode": MessageLookupByLibrary.simpleMessage("Send Code"),
         "sendCodeAfter":
             MessageLookupByLibrary.simpleMessage("You can resend code after "),
+        "shortPassword": MessageLookupByLibrary.simpleMessage(
+            "Password must be at least 6 characters."),
         "shouldActivate": MessageLookupByLibrary.simpleMessage(
             "You should activate your account first"),
         "showInMap": MessageLookupByLibrary.simpleMessage("Show in map"),
         "signUp": MessageLookupByLibrary.simpleMessage("SIGN UP"),
+        "somethingWentWrong":
+            MessageLookupByLibrary.simpleMessage("Something went wrong."),
         "sport": MessageLookupByLibrary.simpleMessage("Sport"),
         "sportIsRequired":
             MessageLookupByLibrary.simpleMessage("Sport is required"),
@@ -154,14 +180,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "totalGames": MessageLookupByLibrary.simpleMessage("Total games"),
         "underReview": MessageLookupByLibrary.simpleMessage("Under review"),
+        "updateProfile": MessageLookupByLibrary.simpleMessage("Update Profile"),
         "upload": MessageLookupByLibrary.simpleMessage("Upload"),
         "userName": MessageLookupByLibrary.simpleMessage("User name"),
+        "userNotFound":
+            MessageLookupByLibrary.simpleMessage("Email is not exists."),
         "username": MessageLookupByLibrary.simpleMessage(" Username"),
+        "usernameAlreadyExist":
+            MessageLookupByLibrary.simpleMessage("Username is already exists."),
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),
         "weekend": MessageLookupByLibrary.simpleMessage("Weekend"),
         "workingHours": MessageLookupByLibrary.simpleMessage("Working hours"),
+        "wrongPassword":
+            MessageLookupByLibrary.simpleMessage("Wrong password !"),
         "yourPlaces": MessageLookupByLibrary.simpleMessage("Your places")
       };
 }

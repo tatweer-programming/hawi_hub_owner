@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
@@ -27,6 +28,12 @@ class ForgetPasswordScreen extends StatelessWidget {
           }
           if (state is ResetCodeTimerState) {
             timeToResendCode = state.time;
+          }
+          if (state is ResetPasswordSuccessState) {
+            defaultToast(
+                msg: handleResponseTranslation(state.message, context));
+          } else if (state is ResetPasswordErrorState) {
+            errorToast(msg: handleResponseTranslation(state.error, context));
           }
         },
         builder: (context, state) {
@@ -59,7 +66,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                       Text(
+                                      Text(
                                         S.of(context).sendCodeAfter,
                                         style: const TextStyle(
                                           color: ColorManager.black,
@@ -99,8 +106,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                             : defaultButton(
                                 onPressed: () {
                                   if (formKey.currentState!.validate()) {
-                                    bloc.add(
-                                        ResetPasswordEvent(emailController.text));
+                                    bloc.add(ResetPasswordEvent(
+                                        emailController.text, context));
                                   }
                                 },
                                 text: S.of(context).sendCode,

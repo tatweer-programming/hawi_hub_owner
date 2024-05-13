@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/forget_password_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/register_screen.dart';
 import 'package:sizer/sizer.dart';
@@ -27,12 +28,12 @@ class LoginScreen extends StatelessWidget {
         if (state is ChangePasswordVisibilityState) {
           visible = state.visible;
         }
-        if (state is LoginSuccessState) {
+        if (state is LoginSuccessState && ConstantsManager.userId != null) {
           bloc.add(PlaySoundEvent("audios/start.wav"));
-          defaultToast(msg: state.value);
+          defaultToast(msg: handleResponseTranslation(state.value, context));
           context.pushAndRemove(Routes.home);
         } else if (state is LoginErrorState) {
-          errorToast(msg: state.error);
+          errorToast(msg: handleResponseTranslation(state.error, context));
         }
       },
       builder: (context, state) {

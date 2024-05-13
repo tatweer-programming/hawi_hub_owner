@@ -29,6 +29,7 @@ class GetChatsEvent extends ChatEvent {}
 class RemovePickedImageEvent extends ChatEvent {}
 
 class RemoveRecordEvent extends ChatEvent {}
+class GetConnectionEvent extends ChatEvent {}
 
 class StartRecordingEvent extends ChatEvent {}
 

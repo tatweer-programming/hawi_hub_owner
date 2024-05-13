@@ -65,21 +65,6 @@ class VerifyCodeErrorState extends AuthState {
   VerifyCodeErrorState(this.error);
 }
 
-// get sports
-class GetSportsLoadingState extends AuthState {}
-
-class GetSportsSuccessState extends AuthState {
-  final List<Sport> sports;
-
-  GetSportsSuccessState(this.sports);
-}
-
-class GetSportsErrorState extends AuthState {
-  final String error;
-
-  GetSportsErrorState(this.error);
-}
-
 // get My Profile
 class GetMyProfileLoadingState extends AuthState {}
 
@@ -139,13 +124,19 @@ class ResetPasswordErrorState extends AuthState {
   ResetPasswordErrorState(this.error);
 }
 
+// accept confirm terms
 class AcceptConfirmTermsState extends AuthState {
   final bool accept;
 
   AcceptConfirmTermsState(this.accept);
 }
 
+// update profile
 class UpdateProfileLoadingState extends AuthState {}
+
+class UpdateProfileSuccessfulState extends AuthState {}
+
+class UpdateProfileErrorState extends AuthState {}
 
 class ChangePasswordVisibilityState extends AuthState {
   final bool visible;
@@ -159,6 +150,7 @@ class AddImageSuccessState extends AuthState {
   AddImageSuccessState({required this.imagePicked});
 }
 
+// upload national id
 class UploadNationalIdSuccessState extends AuthState {
   final String msg;
 
@@ -173,14 +165,10 @@ class UploadNationalIdErrorState extends AuthState {
   UploadNationalIdErrorState(this.error);
 }
 
+// delete image
 class DeleteImageState extends AuthState {}
 
-class SelectSportState extends AuthState {
-  final List<Sport> sports;
-
-  SelectSportState({required this.sports});
-}
-
+// timer resend code
 class ChangeTimeToResendCodeState extends AuthState {
   final int time;
 
@@ -193,4 +181,5 @@ class ResetCodeTimerState extends AuthState {
   ResetCodeTimerState({required this.time});
 }
 
+// play sound
 class PlaySoundState extends AuthState {}

@@ -1,7 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
@@ -16,6 +13,8 @@ import 'package:web_socket_channel/io.dart';
 import 'dart:ui' as ui;
 import '../../../../core/utils/styles_manager.dart';
 import '../../../auth/view/widgets/widgets.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class ChatScreen extends StatefulWidget {
   final String receiverId;
@@ -34,8 +33,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  WebSocket? socket;
   List<Message> messages = [];
+  IOWebSocketChannel? channel;
+
   TextEditingController messageController = TextEditingController();
   String? imagePath;
 
@@ -45,16 +45,18 @@ class _ChatScreenState extends State<ChatScreen> {
     connect();
   }
 
-  void connect() {
-    final channel = IOWebSocketChannel.connect('ws://abdoo120-001-site1.ctempurl.com/api/chat',
-        headers: {"Authorization": "Basic MTExNzM2NDY6NjAtZGF5ZnJlZXRyaWFs"});
+  Future<void> connect() async {
+    channel = IOWebSocketChannel.connect(
+      ApiManager.webSocket + ConstantsManager.connectionToken!,
+      headers: {"Authorization": ApiManager.authToken},
+    );
 
-    final messageWithTrailingChars = '{"protocol":"json","version":1}0x1E/U+001E';
-    channel.sink.add(messageWithTrailingChars);
-    channel.sink.add("بحبك");
+    const String messageWithTrailingChars = '{"protocol":"json","version":1}';
+    channel!.sink.add(messageWithTrailingChars);
 
-    channel.stream.listen((message) {
-      print("message $message");
+    // Listen for messages from the server
+    channel!.stream.listen((message) {
+      print("message is $message");
     });
   }
 
@@ -63,6 +65,9 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       messages;
     });
+    const String messagee =
+        '{"type":1, "target":"PlayerSendMessageToOwner", "arguments":[{"PlayerId":1,"OwnerId":1,"Message":"Hi"}]}';
+    channel!.sink.add(messagee);
     // socket!.emit('SendMessage', message.toJson());
     messageController.clear();
     imagePath = null;
@@ -94,7 +99,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     Text(
                       messages[index].dateOfMessage,
-                      style: TextStyleManager.getCaptionStyle().copyWith(fontSize: 10.sp),
+                      style: TextStyleManager.getCaptionStyle()
+                          .copyWith(fontSize: 10.sp),
                     ),
                   ],
                 ),
@@ -113,7 +119,8 @@ class _ChatScreenState extends State<ChatScreen> {
             }),
           _sendButton((String? value) async {
             if (value == 'image') {
-              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+              final pickedFile =
+                  await ImagePicker().pickImage(source: ImageSource.gallery);
               if (pickedFile != null) {
                 setState(() {
                   imagePath = pickedFile.path;
@@ -224,7 +231,8 @@ Widget _messageWidget({required Message message, required bool isSender}) {
 
 Widget _textWidget({required bool isSender, required String message}) {
   return Align(
-    alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+    alignment:
+        isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
     child: Container(
       decoration: BoxDecoration(
         color: ColorManager.grey3.withOpacity(0.4),
@@ -253,7 +261,8 @@ Widget _textWidget({required bool isSender, required String message}) {
 
 Widget _imageWidget({required bool isSender, required String image}) {
   return Align(
-    alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+    alignment:
+        isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
     child: Container(
       height: 20.h,
       width: 60.w,
@@ -283,7 +292,9 @@ Widget _voiceWidget({
     mainAxisSize: MainAxisSize.min,
     children: [
       Align(
-        alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+        alignment: isSender
+            ? AlignmentDirectional.topEnd
+            : AlignmentDirectional.topStart,
         child: Directionality(
           textDirection: isSender ? ui.TextDirection.rtl : ui.TextDirection.ltr,
           child: VoiceMessageView(

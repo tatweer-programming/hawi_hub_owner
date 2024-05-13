@@ -5,6 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/local/shared_prefrences.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/auth_owner.dart';
@@ -32,15 +33,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>((event, emit) async {
       if (event is RegisterPlayerEvent) {
         emit(RegisterLoadingState());
-        await _repository
-            .registerPlayer(authOwner: event.authOwner)
-            .then((value) {
-          if (value == "Account Created Successfully") {
-            emit(RegisterSuccessState(value: value));
-          } else {
-            emit(RegisterErrorState(value));
-          }
-        });
+        var result =
+            await _repository.registerPlayer(authOwner: event.authOwner);
+        result.fold((l) => emit(RegisterErrorState(l)),
+            (r) => emit(RegisterSuccessState(value: r)));
       } else if (event is LoginPlayerEvent) {
         emit(LoginLoadingState());
         await _repository
@@ -57,25 +53,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         });
       } else if (event is VerifyCodeEvent) {
         emit(VerifyCodeLoadingState());
-        await _repository
-            .verifyCode(
+        var result = await _repository.verifyCode(
           code: event.code,
           email: event.email,
           password: event.password,
-        )
-            .then((value) {
-          if (value == "Password reset successfully") {
-            emit(VerifyCodeSuccessState(value: value));
-          } else {
-            emit(VerifyCodeErrorState(value));
-          }
-        });
+        );
+        result.fold((l) => emit(VerifyCodeErrorState(l)),
+            (r) => emit(VerifyCodeSuccessState(value: r)));
       } else if (event is ResetPasswordEvent) {
         add(StartResendCodeTimerEvent(120));
         emit(ResetPasswordLoadingState());
         await _repository.resetPassword(event.email).then((value) {
           if (value == "Reset code sent successfully to ${event.email}.") {
-            emit(ResetPasswordSuccessState(value));
+            String msg =
+                "${S.of(event.context).resetCodeSentSuccessfully} ${event.email}.";
+            emit(ResetPasswordSuccessState(msg));
           } else {
             emit(ResetPasswordErrorState(value));
           }
@@ -86,10 +78,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         result.fold((l) {
           emit(LoginErrorState(l));
         }, (r) {
-          if (r) {
-            emit(LoginSuccessState("Account LogedIn Successfully"));
+          if (r == "Account LogedIn Successfully") {
+            emit(LoginSuccessState(r));
           } else {
-            emit(LoginErrorState("Something went wrong"));
+            emit(LoginErrorState(r));
           }
         });
       } else if (event is LoginWithFacebookEvent) {
@@ -98,10 +90,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         result.fold((l) {
           emit(LoginErrorState(l));
         }, (r) {
-          if (r) {
-            emit(LoginSuccessState("Account LogedIn Successfully"));
+          if (r == "Account LogedIn Successfully") {
+            emit(LoginSuccessState(r));
           } else {
-            emit(LoginErrorState("Something went wrong"));
+            emit(LoginErrorState(r));
           }
         });
       } else if (event is SignupWithGoogleEvent) {
@@ -137,11 +129,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           oldPassword: event.oldPassword,
           newPassword: event.newPassword,
         );
-        if (result == "Password Changed Successfully") {
-          emit(ChangePasswordSuccessState(result));
-        } else {
-          emit(ChangePasswordErrorState("Something went wrong"));
-        }
+        result.fold((l) {
+          ChangePasswordErrorState(l);
+        }, (r) {
+          emit(ChangePasswordSuccessState(r));
+        });
       } else if (event is AddImageEvent) {
         await _captureAndSaveGalleryImage().then((imagePicked) {
           emit(AddImageSuccessState(imagePicked: imagePicked!));
@@ -150,12 +142,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(DeleteImageState());
       } else if (event is UploadNationalIdEvent) {
         emit(UploadNationalIdLoadingState());
-        String res = await _repository.uploadNationalId(event.nationalId);
-        if (res == "Something went wrong") {
-          emit(UploadNationalIdErrorState(res));
-        } else {
-          emit(UploadNationalIdSuccessState(res));
-        }
+        var res = await _repository.uploadNationalId(event.nationalId);
+        res.fold((l) {
+          emit(UploadNationalIdErrorState(l));
+        }, (r) {
+          emit(UploadNationalIdSuccessState(r));
+        });
       } else if (event is UpdateProfilePictureEvent) {
         add(AddImageEvent());
         if (state is AddImageSuccessState) {
@@ -181,15 +173,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(ChangePasswordVisibilityState(false));
         } else {
           emit(ChangePasswordVisibilityState(true));
-        }
-      } else if (event is SelectSportEvent) {
-        List<Sport> selectedSports = event.sports;
-        if (event.sports.contains(event.sport)) {
-          selectedSports.remove(event.sport);
-          emit(SelectSportState(sports: selectedSports));
-        } else {
-          selectedSports.add(event.sport);
-          emit(SelectSportState(sports: selectedSports));
         }
       } else if (event is StartResendCodeTimerEvent) {
         _startResendCodeTimer(event.timeToResendCode);
