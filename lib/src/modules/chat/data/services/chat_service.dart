@@ -13,8 +13,6 @@ class ChatService {
         path: EndPoints.chat, data: {},
       );
       Connection connection = Connection.fromJson(response.data);
-
-      print(connection);
       ConstantsManager.connectionToken = connection.token;
       ConstantsManager.connectionId = connection.id;
       // await CacheHelper.saveData(key: 'connectionToken', value: connection.token);

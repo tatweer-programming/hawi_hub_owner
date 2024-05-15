@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
-import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
@@ -13,8 +12,6 @@ import 'package:web_socket_channel/io.dart';
 import 'dart:ui' as ui;
 import '../../../../core/utils/styles_manager.dart';
 import '../../../auth/view/widgets/widgets.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 
 class ChatScreen extends StatefulWidget {
   final String receiverId;
@@ -54,7 +51,6 @@ class _ChatScreenState extends State<ChatScreen> {
     const String messageWithTrailingChars = '{"protocol":"json","version":1}';
     channel!.sink.add(messageWithTrailingChars);
 
-    // Listen for messages from the server
     channel!.stream.listen((message) {
       print("message is $message");
     });
