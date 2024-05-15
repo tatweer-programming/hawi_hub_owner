@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
+import 'package:hawi_hub_owner/src/modules/auth/view/screens/get_started_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/profile_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/add_booking_screen.dart';
@@ -10,7 +12,7 @@ import 'package:hawi_hub_owner/src/modules/places/view/screens/edit_place_screen
 import 'package:hawi_hub_owner/src/modules/places/view/screens/place_location_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/request_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/share_loaction_screen.dart';
-
+import '../../modules/chat/view/screens/chats_screen.dart';
 import '../../modules/main/view/screens/main_screen.dart';
 import '../../modules/main/view/screens/notifications_screen.dart';
 import '../../modules/main/view/screens/splash_screen.dart';
@@ -22,17 +24,19 @@ class AppRouter {
     switch (settings.name) {
       case Routes.splash:
         return MaterialPageRoute(
-          builder: (_) => const SplashScreen(
-            nextScreen: MainScreen(),
-            // nextScreen: ConstantsManager.userToken == null
-            //     ? const GetStartedScreen()
-            //     : const MainScreen(),
+          builder: (_) => SplashScreen(
+            // nextScreen: MainScreen(),
+            nextScreen: ConstantsManager.userId == null
+                ? const GetStartedScreen()
+                : const ChatsScreen(),
           ),
         );
       case Routes.place:
-        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
         print(arguments['id']);
-        return MaterialPageRoute(builder: (_) => PlaceScreen(placeId: arguments['id']));
+        return MaterialPageRoute(
+            builder: (_) => PlaceScreen(placeId: arguments['id']));
       // case Routes.login:
       //   return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.home:
@@ -49,23 +53,30 @@ class AppRouter {
       case Routes.pickLocation:
         return MaterialPageRoute(builder: (_) => const PickLocationScreen());
       case Routes.editPlace:
-        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
         print(arguments['id']);
-        return MaterialPageRoute(builder: (_) => EditPlaceScreen(placeId: arguments['id']));
+        return MaterialPageRoute(
+            builder: (_) => EditPlaceScreen(placeId: arguments['id']));
       case Routes.profile:
         Owner arguments = settings.arguments as Owner;
-        return MaterialPageRoute(builder: (_) => ProfileScreen(owner: arguments));
+        return MaterialPageRoute(
+            builder: (_) => ProfileScreen(owner: arguments));
       case Routes.request:
-        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
-        return MaterialPageRoute(builder: (_) => RequestScreen(request: arguments['request']));
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (_) => RequestScreen(request: arguments['request']));
       case Routes.addBooking:
-        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
             builder: (_) => AddBookingScreen(
                   placeId: arguments['id'],
                 ));
       case Routes.placeLocation:
-        Map<String, dynamic> arguments = settings.arguments as Map<String, dynamic>;
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
             builder: (_) => PlaceLocationScreen(
                   location: arguments['location'],

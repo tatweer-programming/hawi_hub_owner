@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/reset_password_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../../generated/l10n.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   final AuthBloc bloc;
@@ -26,6 +29,12 @@ class ForgetPasswordScreen extends StatelessWidget {
           if (state is ResetCodeTimerState) {
             timeToResendCode = state.time;
           }
+          if (state is ResetPasswordSuccessState) {
+            defaultToast(
+                msg: handleResponseTranslation(state.message, context));
+          } else if (state is ResetPasswordErrorState) {
+            errorToast(msg: handleResponseTranslation(state.error, context));
+          }
         },
         builder: (context, state) {
           return SingleChildScrollView(
@@ -41,10 +50,10 @@ class ForgetPasswordScreen extends StatelessWidget {
                       children: [
                         mainFormField(
                             controller: emailController,
-                            label: 'Email',
+                            label: S.of(context).email,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter email';
+                                return S.of(context).enterEmail;
                               }
                               return null;
                             }),
@@ -57,9 +66,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(
-                                        "You can resend code in  ",
-                                        style: TextStyle(
+                                      Text(
+                                        S.of(context).sendCodeAfter,
+                                        style: const TextStyle(
                                           color: ColorManager.black,
                                         ),
                                       ),
@@ -70,9 +79,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      const Text(
-                                        "seconds",
-                                        style: TextStyle(
+                                      Text(
+                                        S.of(context).seconds,
+                                        style: const TextStyle(
                                           color: ColorManager.black,
                                         ),
                                       ),
@@ -88,10 +97,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                                         bloc: bloc,
                                         email: emailController.text,
                                       ));
-                                      bloc.add(ResetCodeTimerEvent(
-                                          timeToResendCode));
                                     },
-                                    text: "Received code",
+                                    text: S.of(context).receivedCode,
                                     fontSize: 17.sp,
                                   ),
                                 ],
@@ -99,11 +106,11 @@ class ForgetPasswordScreen extends StatelessWidget {
                             : defaultButton(
                                 onPressed: () {
                                   if (formKey.currentState!.validate()) {
-                                    bloc.add(
-                                        VerifyCodeEvent(emailController.text));
+                                    bloc.add(ResetPasswordEvent(
+                                        emailController.text, context));
                                   }
                                 },
-                                text: "Send Code",
+                                text: S.of(context).sendCode,
                                 fontSize: 17.sp,
                               ),
                       ],

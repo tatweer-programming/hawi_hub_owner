@@ -4,17 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
+import 'package:hawi_hub_owner/src/modules/chat/data/services/chat_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
+
 part 'chat_state.dart';
+
 part 'chat_event.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   static ChatBloc get(BuildContext context) =>
       BlocProvider.of<ChatBloc>(context);
+
   // ChatRepository chatRepository = ChatRepository();
+  final ChatService _service = ChatService();
   AudioPlayer audioPlayer = AudioPlayer();
   String statusText = "Message";
   String? voiceNoteFilePath;
@@ -28,15 +33,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   ChatBloc(ChatInitial chatInitial) : super(ChatInitial()) {
     on<ChatEvent>((event, emit) async {
-     if (event is StartRecordingEvent) {
+      if (event is StartRecordingEvent) {
         await startRecord();
         emit(StartRecordState());
       } else if (event is EndRecordingEvent) {
         await stopRecord();
         emit(EndRecordState());
-      }  else if (event is ScrollingDownEvent) {
+      } else if (event is ScrollingDownEvent) {
         // if (event.listScrollController.hasClients) {
-        Future.delayed(const Duration(seconds: 1)).then((value)  {
+        Future.delayed(const Duration(seconds: 1)).then((value) {
           final position = event.listScrollController.position.maxScrollExtent;
           event.listScrollController.jumpTo(position);
           print("object");
@@ -91,6 +96,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       } else if (event is RemoveRecordEvent) {
         voiceNoteFilePath = null;
         emit(RemoveRecordState());
+      } else if (event is GetConnectionEvent) {
+        var response = await _service.connection();
+        response.fold((l) => null, (r) {
+          emit(GetConnectionSuccessState());
+        });
       }
     });
   }
@@ -114,7 +124,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
     return "$sdPath/${DateTime.now().millisecondsSinceEpoch.toString()}.mp3";
   }
-
 
   Future<void> startRecord() async {
     bool hasPermission = await checkPermission();

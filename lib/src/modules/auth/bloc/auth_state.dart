@@ -53,27 +53,16 @@ class SignupWithFacebookErrorState extends AuthState {
 
 class VerifyCodeLoadingState extends AuthState {}
 
-class VerifyCodeSuccessState extends AuthState {}
+class VerifyCodeSuccessState extends AuthState {
+  final String value;
+
+  VerifyCodeSuccessState({required this.value});
+}
 
 class VerifyCodeErrorState extends AuthState {
   final String error;
 
   VerifyCodeErrorState(this.error);
-}
-
-// get sports
-class GetSportsLoadingState extends AuthState {}
-
-class GetSportsSuccessState extends AuthState {
-  final List<Sport> sports;
-
-  GetSportsSuccessState(this.sports);
-}
-
-class GetSportsErrorState extends AuthState {
-  final String error;
-
-  GetSportsErrorState(this.error);
 }
 
 // get My Profile
@@ -135,13 +124,19 @@ class ResetPasswordErrorState extends AuthState {
   ResetPasswordErrorState(this.error);
 }
 
+// accept confirm terms
 class AcceptConfirmTermsState extends AuthState {
   final bool accept;
 
   AcceptConfirmTermsState(this.accept);
 }
 
+// update profile
 class UpdateProfileLoadingState extends AuthState {}
+
+class UpdateProfileSuccessfulState extends AuthState {}
+
+class UpdateProfileErrorState extends AuthState {}
 
 class ChangePasswordVisibilityState extends AuthState {
   final bool visible;
@@ -155,14 +150,25 @@ class AddImageSuccessState extends AuthState {
   AddImageSuccessState({required this.imagePicked});
 }
 
-class DeleteImageState extends AuthState {}
+// upload national id
+class UploadNationalIdSuccessState extends AuthState {
+  final String msg;
 
-class SelectSportState extends AuthState {
-  final List<Sport> sports;
-
-  SelectSportState({required this.sports});
+  UploadNationalIdSuccessState(this.msg);
 }
 
+class UploadNationalIdLoadingState extends AuthState {}
+
+class UploadNationalIdErrorState extends AuthState {
+  final String error;
+
+  UploadNationalIdErrorState(this.error);
+}
+
+// delete image
+class DeleteImageState extends AuthState {}
+
+// timer resend code
 class ChangeTimeToResendCodeState extends AuthState {
   final int time;
 
@@ -175,4 +181,5 @@ class ResetCodeTimerState extends AuthState {
   ResetCodeTimerState({required this.time});
 }
 
+// play sound
 class PlaySoundState extends AuthState {}

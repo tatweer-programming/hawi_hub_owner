@@ -15,12 +15,16 @@ class GetMessagesSuccessState extends ChatState {
 class SendMessagesSuccessState extends ChatState {}
 
 class EndChatSuccessState extends ChatState {}
+
+class GetConnectionSuccessState extends ChatState {}
+
 class ScrollingDownState extends ChatState {}
 
 class EndChatErrorState extends ChatState {
   final String error;
 
-  const EndChatErrorState(this.error);}
+  const EndChatErrorState(this.error);
+}
 
 class StartRecordState extends ChatState {}
 

@@ -11,6 +11,7 @@ import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/theme_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
+import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:sizer/sizer.dart';
@@ -22,7 +23,7 @@ Future<void> main() async {
   await CacheHelper.init();
 
   DioHelper.init();
-  ConstantsManager.userId = await CacheHelper.getData(key: 'id');
+  ConstantsManager.userId = await CacheHelper.getData(key: 'userId');
   await LocalizationManager.init();
   runApp(const MyApp());
 }
@@ -42,6 +43,11 @@ class MyApp extends StatelessWidget {
           BlocProvider<AuthBloc>(
             create: (BuildContext context) => AuthBloc(
               AuthInitial(),
+            ),
+          ),
+          BlocProvider<ChatBloc>(
+            create: (BuildContext context) => ChatBloc(
+              ChatInitial(),
             ),
           ),
           //   BlocProvider<GamesBloc>(create: (BuildContext context) => GamesBloc.get()),

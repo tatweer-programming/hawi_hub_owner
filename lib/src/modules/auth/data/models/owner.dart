@@ -4,21 +4,21 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 
 class Owner {
   final int id;
-  final int emailConfirmed;
+  final int approvalStatus;
   final String userName;
   final double? rate;
   final String email;
-  final String profilePictureUrl;
+  final String? profilePictureUrl;
   final double myWallet;
   final List<AppFeedBack> feedbacks;
   File? profilePictureFile;
-  File? nationalIdPicture;
+  String? nationalIdPicture;
 
   Owner({
     required this.id,
     required this.userName,
     required this.email,
-    required this.emailConfirmed,
+    required this.approvalStatus,
     required this.profilePictureUrl,
     this.profilePictureFile,
     this.nationalIdPicture,
@@ -28,17 +28,34 @@ class Owner {
   });
 
   factory Owner.fromJson(Map<String, dynamic> json) {
+    List<AppFeedBack> feedbacks = List.from(json['reviews']??[])
+        .map((feedback) => AppFeedBack.fromJson(feedback))
+        .toList();
     return Owner(
       profilePictureUrl: json['profilePicture'],
-      id: json['ownerId'],
-      nationalIdPicture: json['nationalIdPicture'],
+      id: json['id'],
+      nationalIdPicture: json['proofOfIdentity'],
       userName: json['userName'],
       email: json['email'],
-      emailConfirmed: json['emailConfirmed'],
+      approvalStatus: json['approvalStatus'],
       myWallet: json['wallet'].toDouble(),
-      rate: json['rate'] != null ? json['rate'].toDouble() : 0.0,
-      feedbacks:
-          List.from(json['reviews']).map((feedBack) => AppFeedBack.fromJson(feedBack)).toList(),
+      feedbacks: feedbacks,
+      rate: _calculateAverage(feedbacks),
     );
+  }
+
+  static double _calculateAverage(List<AppFeedBack>? feedbacks) {
+    List<double> numbers =
+        List.from(feedbacks!.map((feedBack) => feedBack.rating));
+    if (numbers.isEmpty) {
+      return 0.0; // Or you can return null or throw an exception, depending on your requirements
+    }
+
+    double sum = 0.0;
+    for (double number in numbers) {
+      sum += number;
+    }
+
+    return sum / numbers.length;
   }
 }

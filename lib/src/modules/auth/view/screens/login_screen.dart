@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/forget_password_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/register_screen.dart';
 import 'package:sizer/sizer.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../bloc/auth_bloc.dart';
@@ -26,12 +28,12 @@ class LoginScreen extends StatelessWidget {
         if (state is ChangePasswordVisibilityState) {
           visible = state.visible;
         }
-        if (state is LoginSuccessState) {
+        if (state is LoginSuccessState && ConstantsManager.userId != null) {
           bloc.add(PlaySoundEvent("audios/start.wav"));
-          defaultToast(msg: state.value);
+          defaultToast(msg: handleResponseTranslation(state.value, context));
           context.pushAndRemove(Routes.home);
         } else if (state is LoginErrorState) {
-          errorToast(msg: state.error);
+          errorToast(msg: handleResponseTranslation(state.error, context));
         }
       },
       builder: (context, state) {
@@ -47,10 +49,10 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       mainFormField(
                           controller: emailController,
-                          label: 'Email',
+                          label: S.of(context).email,
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter email';
+                              return S.of(context).enterEmail;
                             }
                             return null;
                           }),
@@ -59,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       mainFormField(
                           controller: passwordController,
-                          label: 'Password',
+                          label: S.of(context).password,
                           obscureText: visible,
                           suffix: IconButton(
                               onPressed: () {
@@ -71,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                                   : Icons.visibility)),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter password';
+                              return S.of(context).enterPassword;
                             }
                             return null;
                           }),
@@ -88,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                                       password: passwordController.text));
                                 }
                               },
-                              text: "LOGIN",
+                              text: S.of(context).login,
                               fontSize: 17.sp,
                             ),
                       Padding(
@@ -97,8 +99,8 @@ class LoginScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Text(
-                              "Keep me logged in",
+                            Text(
+                              S.of(context).keepMeLoggedIn,
                             ),
                             TextButton(
                               onPressed: () {
@@ -106,9 +108,9 @@ class LoginScreen extends StatelessWidget {
                                   bloc: bloc,
                                 ));
                               },
-                              child: const Text(
-                                "Forgot password?",
-                                style: TextStyle(color: ColorManager.black),
+                              child: Text(
+                                S.of(context).forgotPassword,
+                                style: const TextStyle(color: ColorManager.black),
                               ),
                             ),
                           ],
@@ -178,9 +180,9 @@ class LoginScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "Don’t have an account?",
-                            style: TextStyle(
+                          Text(
+                            S.of(context).noAccount,
+                            style: const TextStyle(
                               color: ColorManager.black,
                             ),
                           ),
@@ -190,9 +192,9 @@ class LoginScreen extends StatelessWidget {
                                 bloc: bloc,
                               ));
                             },
-                            child: const Text(
-                              "SIGN UP",
-                              style: TextStyle(
+                            child: Text(
+                              S.of(context).signUp,
+                              style: const TextStyle(
                                 color: Colors.green,
                                 decoration: TextDecoration.underline,
                               ),

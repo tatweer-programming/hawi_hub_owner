@@ -4,6 +4,7 @@ import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/auth_owner.dart';
 import 'package:sizer/sizer.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
 import '../../../../core/routing/routes.dart';
 import '../widgets/widgets.dart';
@@ -33,10 +34,10 @@ class RegisterScreen extends StatelessWidget {
         }
         if (state is RegisterSuccessState) {
           bloc.add(PlaySoundEvent("audios/start.wav"));
-          defaultToast(msg: state.value);
+          defaultToast(msg: handleResponseTranslation(state.value, context));
           context.pushAndRemove(Routes.home);
         } else if (state is RegisterErrorState) {
-          errorToast(msg: state.error);
+          errorToast(msg: handleResponseTranslation(state.error, context));
         }
         if (state is SignupWithGoogleSuccessState) {
           authOwner = state.authOwner;
@@ -46,6 +47,9 @@ class RegisterScreen extends StatelessWidget {
           authOwner = state.authOwner;
           userNameController.text = authOwner!.userName;
           emailController.text = authOwner!.email;
+        }
+        else if (state is SignupWithGoogleErrorState || state is SignupWithFacebookErrorState) {
+          errorToast(msg: handleResponseTranslation("Something went wrong", context));
         }
       },
       builder: (context, state) {
@@ -57,13 +61,15 @@ class RegisterScreen extends StatelessWidget {
                 children: [
                   authBackGround(40.h),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Get Started",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.sp),
+                          S.of(context).start,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 22.sp),
                         ),
                         SizedBox(
                           height: 3.h,
@@ -71,10 +77,10 @@ class RegisterScreen extends StatelessWidget {
                         mainFormField(
                             controller: userNameController,
                             type: TextInputType.name,
-                            label: 'Username',
+                            label: S.of(context).userName,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter username';
+                                return S.of(context).enterUsername;
                               }
                               return null;
                             }),
@@ -83,11 +89,11 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         mainFormField(
                             controller: emailController,
-                            label: 'Email',
+                            label: S.of(context).email,
                             type: TextInputType.emailAddress,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter email';
+                                return S.of(context).enterEmail;
                               }
                               return null;
                             }),
@@ -96,16 +102,21 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         mainFormField(
                           controller: passwordController,
-                          label: 'Password',
+                          label: S.of(context).password,
                           obscureText: visible,
                           suffix: IconButton(
                               onPressed: () {
-                                bloc.add(ChangePasswordVisibilityEvent(visible));
+                                bloc.add(
+                                    ChangePasswordVisibilityEvent(visible));
                               },
-                              icon: Icon(visible ? Icons.visibility_off : Icons.visibility)),
+                              icon: Icon(visible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility)),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter password';
+                              return S.of(context).enterPassword;
+                            } else if (value.length < 6) {
+                              return S.of(context).shortPassword;
                             }
                             return null;
                           },
@@ -115,12 +126,12 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         mainFormField(
                             controller: confirmPasswordController,
-                            label: 'Confirm Password',
+                            label: S.of(context).confirmPassword,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Please enter confirm password';
+                                return S.of(context).enterConfirmPassword;
                               } else if (value != passwordController.text) {
-                                return 'Password does not match';
+                                return S.of(context).passwordDoesNotMatch;
                               }
                               return null;
                             }),
@@ -192,6 +203,7 @@ class RegisterScreen extends StatelessWidget {
                           height: 2.h,
                         ),
                         _confirmTerms(
+                            context: context,
                             onTap: () {
                               bloc.add(AcceptConfirmTermsEvent(acceptTerms));
                             },
@@ -203,14 +215,16 @@ class RegisterScreen extends StatelessWidget {
                             ? const Center(child: CircularProgressIndicator())
                             : defaultButton(
                                 onPressed: () {
-                                  if (formKey.currentState!.validate() && acceptTerms) {
+                                  if (formKey.currentState!.validate() &&
+                                      acceptTerms) {
                                     bloc.add(
                                       RegisterPlayerEvent(
                                         authOwner: AuthOwner(
                                             password: passwordController.text,
                                             userName: userNameController.text,
                                             email: emailController.text,
-                                            profilePictureUrl: authOwner?.profilePictureUrl),
+                                            profilePictureUrl:
+                                                authOwner?.profilePictureUrl),
                                       ),
                                     );
                                   } else if (!acceptTerms) {
@@ -220,7 +234,7 @@ class RegisterScreen extends StatelessWidget {
                                   }
                                 },
                                 fontSize: 17.sp,
-                                text: "REGISTER",
+                                text: S.of(context).signUp,
                               ),
                         SizedBox(
                           height: 2.h,
@@ -238,14 +252,19 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
-Widget _confirmTerms({required VoidCallback onTap, required bool acceptTerms}) => Row(
+Widget _confirmTerms(
+        {required VoidCallback onTap,
+        required BuildContext context,
+        required bool acceptTerms}) =>
+    Row(
       children: [
         IconButton(
             onPressed: onTap,
-            icon: Icon(acceptTerms ? Icons.check_box : Icons.check_box_outline_blank)),
+            icon: Icon(
+                acceptTerms ? Icons.check_box : Icons.check_box_outline_blank)),
         Expanded(
             child: Text(
-          "I agree to the Terms of Service and Privacy Policy.",
+          S.of(context).agreeTerms,
           style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
         ))
       ],

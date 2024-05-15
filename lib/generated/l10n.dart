@@ -779,6 +779,526 @@ class S {
       args: [],
     );
   }
+
+  /// `The ID card is being verified now`
+  String get identificationPending {
+    return Intl.message(
+      'The ID card is being verified now',
+      name: 'identificationPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You must verify your account first `
+  String get mustVerifyAccount {
+    return Intl.message(
+      'You must verify your account first ',
+      name: 'mustVerifyAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File Uploaded`
+  String get fileUploaded {
+    return Intl.message(
+      'File Uploaded',
+      name: 'fileUploaded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload`
+  String get upload {
+    return Intl.message(
+      'Upload',
+      name: 'upload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Wallet`
+  String get myWallet {
+    return Intl.message(
+      'My Wallet',
+      name: 'myWallet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SIGN UP`
+  String get signUp {
+    return Intl.message(
+      'SIGN UP',
+      name: 'signUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don’t have an account ?`
+  String get noAccount {
+    return Intl.message(
+      'Don’t have an account ?',
+      name: 'noAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Keep me logged in`
+  String get keepMeLoggedIn {
+    return Intl.message(
+      'Keep me logged in',
+      name: 'keepMeLoggedIn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LOGIN`
+  String get login {
+    return Intl.message(
+      'LOGIN',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter password`
+  String get enterPassword {
+    return Intl.message(
+      'Please enter password',
+      name: 'enterPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter email`
+  String get enterEmail {
+    return Intl.message(
+      'Please enter email',
+      name: 'enterEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter username`
+  String get enterUsername {
+    return Intl.message(
+      'Please enter username',
+      name: 'enterUsername',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password ?`
+  String get forgotPassword {
+    return Intl.message(
+      'Forgot password ?',
+      name: 'forgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Username`
+  String get username {
+    return Intl.message(
+      ' Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Password does not match`
+  String get passwordDoesNotMatch {
+    return Intl.message(
+      ' Password does not match',
+      name: 'passwordDoesNotMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Email`
+  String get email {
+    return Intl.message(
+      ' Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get confirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter confirm password`
+  String get enterConfirmPassword {
+    return Intl.message(
+      'Please enter confirm password',
+      name: 'enterConfirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter new password`
+  String get enterNewPassword {
+    return Intl.message(
+      'Please enter new password',
+      name: 'enterNewPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get Started`
+  String get start {
+    return Intl.message(
+      'Get Started',
+      name: 'start',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message(
+      'Profile',
+      name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code`
+  String get code {
+    return Intl.message(
+      'Code',
+      name: 'code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset Password`
+  String get resetPassword {
+    return Intl.message(
+      'Reset Password',
+      name: 'resetPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Code`
+  String get sendCode {
+    return Intl.message(
+      'Send Code',
+      name: 'sendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Received Code`
+  String get receivedCode {
+    return Intl.message(
+      'Received Code',
+      name: 'receivedCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `seconds`
+  String get seconds {
+    return Intl.message(
+      'seconds',
+      name: 'seconds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can resend code after `
+  String get sendCodeAfter {
+    return Intl.message(
+      'You can resend code after ',
+      name: 'sendCodeAfter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password reset successfully`
+  String get passwordResetSuccessfully {
+    return Intl.message(
+      'Password reset successfully',
+      name: 'passwordResetSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Created Successfully`
+  String get accountCreatedSuccessfully {
+    return Intl.message(
+      'Account Created Successfully',
+      name: 'accountCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is not exists.`
+  String get userNotFound {
+    return Intl.message(
+      'Email is not exists.',
+      name: 'userNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is already exists.`
+  String get emailAlreadyExist {
+    return Intl.message(
+      'Email is already exists.',
+      name: 'emailAlreadyExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username is already exists.`
+  String get usernameAlreadyExist {
+    return Intl.message(
+      'Username is already exists.',
+      name: 'usernameAlreadyExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least 6 characters.`
+  String get shortPassword {
+    return Intl.message(
+      'Password must be at least 6 characters.',
+      name: 'shortPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid email or password.`
+  String get invalidEmailOrPassword {
+    return Intl.message(
+      'Invalid email or password.',
+      name: 'invalidEmailOrPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account LogeIn Successfully`
+  String get loginSuccessfully {
+    return Intl.message(
+      'Account LogeIn Successfully',
+      name: 'loginSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong.`
+  String get somethingWentWrong {
+    return Intl.message(
+      'Something went wrong.',
+      name: 'somethingWentWrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong password !`
+  String get wrongPassword {
+    return Intl.message(
+      'Wrong password !',
+      name: 'wrongPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password has been changed successfully`
+  String get passwordChangedSuccessfully {
+    return Intl.message(
+      'Password has been changed successfully',
+      name: 'passwordChangedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset code sent successfully to `
+  String get resetCodeSentSuccessfully {
+    return Intl.message(
+      'Reset code sent successfully to ',
+      name: 'resetCodeSentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Proof of identity has been added successfully`
+  String get proofOfIdentityAddedSuccessfully {
+    return Intl.message(
+      'Proof of identity has been added successfully',
+      name: 'proofOfIdentityAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Profile`
+  String get updateProfile {
+    return Intl.message(
+      'Update Profile',
+      name: 'updateProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change `
+  String get change {
+    return Intl.message(
+      'Change ',
+      name: 'change',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get changePassword {
+    return Intl.message(
+      'Change Password',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No comment`
+  String get noComment {
+    return Intl.message(
+      'No comment',
+      name: 'noComment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CHECK YOUR NETWORK`
+  String get checkYourNetwork {
+    return Intl.message(
+      'CHECK YOUR NETWORK',
+      name: 'checkYourNetwork',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `People Rate`
+  String get peopleRate {
+    return Intl.message(
+      'People Rate',
+      name: 'peopleRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See all`
+  String get seeAll {
+    return Intl.message(
+      'See all',
+      name: 'seeAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter code`
+  String get enterCode {
+    return Intl.message(
+      'Please enter code',
+      name: 'enterCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Password`
+  String get newPassword {
+    return Intl.message(
+      'New Password',
+      name: 'newPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I agree to the Terms of Service and Privacy Policy.`
+  String get agreeTerms {
+    return Intl.message(
+      'I agree to the Terms of Service and Privacy Policy.',
+      name: 'agreeTerms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The file was rejected. Check the required information carefully and try again`
+  String get rejectIdCard {
+    return Intl.message(
+      'The file was rejected. Check the required information carefully and try again',
+      name: 'rejectIdCard',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
