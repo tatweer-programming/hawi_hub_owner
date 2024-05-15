@@ -45,8 +45,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           //   BlocProvider<GamesBloc>(create: (BuildContext context) => GamesBloc.get()),
-          BlocProvider<PlaceCubit>(
-              create: (BuildContext context) => PlaceCubit.get()),
+          BlocProvider<PlaceCubit>(create: (BuildContext context) => PlaceCubit.get()),
         ],
         child: Sizer(builder: (context, orientation, deviceType) {
           AppRouter appRouter = AppRouter();

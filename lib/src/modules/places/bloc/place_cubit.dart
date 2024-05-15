@@ -3,6 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/modules/auth/data/models/sport.dart';
+import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
@@ -69,7 +71,7 @@ class PlaceCubit extends Cubit<PlaceState> {
     ),
   ];
   int? selectedCityId;
-  String? selectedSport;
+  int? selectedSport;
   List<File> imageFiles = [];
   File? selectedOwnershipFile;
 
@@ -143,8 +145,10 @@ class PlaceCubit extends Cubit<PlaceState> {
     emit(AcceptBookingRequestLoading(requestId));
     var result = await dataSource.acceptBookingRequest(requestId);
     result.fold((l) {
+      print(l);
       emit(AcceptBookingRequestError(l));
     }, (r) {
+      print(r);
       emit(AcceptBookingRequestSuccess());
     });
   }
@@ -221,6 +225,10 @@ class PlaceCubit extends Cubit<PlaceState> {
     }, (r) {
       emit(CreateBookingSuccess());
     });
+  }
+
+  void chooseSport(String newSport) {
+    selectedSport = MainCubit.get().sportsList.firstWhere((element) => element.name == newSport).id;
   }
 
   void clearSelectedData() {

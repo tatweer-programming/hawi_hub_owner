@@ -16,9 +16,11 @@ class PlaceRemoteDataSource {
     try {
       print("getPlaces called");
       List<Place> places = [];
-      var response = await DioHelper.getData(path: EndPoints.getPlaces + "1", query: {
+      var response =
+          await DioHelper.getData(path: EndPoints.getPlaces + "1" /*TODO : userId */, query: {
         "id": 1 //ConstantsManager.userId
       });
+
       print(response.data);
       print(response);
       if (response.statusCode == 200) {
@@ -67,7 +69,11 @@ class PlaceRemoteDataSource {
       );
 
       return const Right(unit);
+    } on DioException catch (e) {
+      print(e);
+      return Left(e);
     } on Exception catch (e) {
+      print(e);
       return Left(e);
     }
   }
@@ -78,8 +84,6 @@ class PlaceRemoteDataSource {
         "id": placeId,
       }).then((value) {
         print(value.statusCode.toString() + value.data.toString());
-      }).catchError((e) {
-        return Left(e);
       });
       return const Right(unit);
     } on DioException catch (e) {
@@ -97,6 +101,8 @@ class PlaceRemoteDataSource {
       //   bookingRequests = (response.data as List).map((e) => BookingRequest.fromJson(e)).toList();
       // }
       return Right(bookingRequests);
+    } on DioException catch (e) {
+      return Left(e);
     } on Exception catch (e) {
       return Left(e);
     }
@@ -104,25 +110,25 @@ class PlaceRemoteDataSource {
 
   Future<Either<Exception, Unit>> acceptBookingRequest(int requestId) async {
     try {
-      var response = await DioHelper.postData(
-          path: EndPoints.acceptBookingRequest, data: {"request_id": requestId});
-      if (response.statusCode == 200) {
-        return const Right(unit);
-      }
-      return Left(Exception(response.data['message']));
-    } on Exception catch (e) {
+      await DioHelper.postData(
+          path: EndPoints.acceptBookingRequest, data: {"request_id": requestId}).then((value) {
+        print(value.statusCode.toString() + value.data.toString());
+      });
+      return const Right(unit);
+    } on DioException catch (e) {
       return Left(e);
+    } catch (e) {
+      return Left(e as Exception);
     }
   }
 
   Future<Either<Exception, Unit>> declineBookingRequest(int requestId) async {
     try {
-      var response = await DioHelper.postData(
+      await DioHelper.postData(
           path: EndPoints.declineBookingRequest, data: {"request_id": requestId});
-      if (response.statusCode == 200) {
-        return const Right(unit);
-      }
-      return Left(Exception(response.data['message']));
+      return const Right(unit);
+    } on DioException catch (e) {
+      return Left(e);
     } on Exception catch (e) {
       return Left(e);
     }

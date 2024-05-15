@@ -12,6 +12,7 @@ import 'package:hawi_hub_owner/src/core/utils/font_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/models/sport.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:sizer/sizer.dart';
 
@@ -28,6 +29,8 @@ class PlaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlaceCubit cubit = PlaceCubit.get();
+    Place place = cubit.places.firstWhere((element) => element.id == placeId);
+    cubit.currentPlace = place;
     return Scaffold(
         body: Column(
       children: [
@@ -78,7 +81,7 @@ class PlaceScreen extends StatelessWidget {
                                       pauseAutoPlayOnManualNavigate: true,
                                       height: 30.h,
                                     ),
-                                    items: cubit.currentPlace!.images.map((i) {
+                                    items: place.images.map((i) {
                                       return Builder(
                                         builder: (BuildContext context) {
                                           return Container(
@@ -218,12 +221,12 @@ class PlaceScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TitleText(cubit.currentPlace!.name),
+                        TitleText(place.name),
                         SizedBox(
                           height: 1.h,
                         ),
                         Text(
-                          cubit.currentPlace!.address,
+                          place.address,
                           style: TextStyleManager.getRegularStyle(),
                         ),
                         SizedBox(
@@ -245,13 +248,13 @@ class PlaceScreen extends StatelessWidget {
                           height: 1.h,
                         ),
                         Text(
-                          cubit.currentPlace!.address,
+                          place.address,
                           style: TextStyleManager.getCaptionStyle(),
                         ),
                         SizedBox(
                           height: 2.h,
                         ),
-                        if (cubit.currentPlace!.location != null) _buildShowMapWidget(context),
+                        if (place.location != null) _buildShowMapWidget(context),
                         Divider(
                           height: 5.h,
                         ),
@@ -260,16 +263,16 @@ class PlaceScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                  child: (cubit.currentPlace!.rating != null)
+                                  child: (place.rating != null)
                                       ? Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              cubit.currentPlace!.rating.toString(),
+                                              place.rating.toString(),
                                               style: TextStyleManager.getBlackCaptionTextStyle(),
                                             ),
                                             Expanded(
-                                              child: cubit.currentPlace!.rating != null
+                                              child: place.rating != null
                                                   ? Center(
                                                       child: SizedBox(
                                                         height: 20.sp,
@@ -279,8 +282,7 @@ class PlaceScreen extends StatelessWidget {
                                                           direction: Axis.horizontal,
                                                           allowHalfRating: true,
                                                           wrapAlignment: WrapAlignment.center,
-                                                          initialRating:
-                                                              cubit.currentPlace!.rating!,
+                                                          initialRating: place.rating!,
                                                           itemCount: 5,
                                                           glowColor: ColorManager.golden,
                                                           ignoreGestures: true,
@@ -303,7 +305,7 @@ class PlaceScreen extends StatelessWidget {
                               Expanded(
                                   child: Row(
                                 children: [
-                                  Text(cubit.currentPlace!.totalGames.toString()),
+                                  Text(place.totalGames.toString()),
                                   SizedBox(
                                     width: 2.w,
                                   ),
@@ -341,7 +343,8 @@ class PlaceScreen extends StatelessWidget {
                         _buildSportWidget(
                             MainCubit.get()
                                 .sportsList
-                                .firstWhere((element) => cubit.currentPlace!.id == element.id)
+                                .firstWhere((element) => element.id == place.sport,
+                                    orElse: () => Sport.unKnown())
                                 .name,
                             context),
                         SizedBox(
@@ -351,7 +354,7 @@ class PlaceScreen extends StatelessWidget {
                         SizedBox(
                           height: 1.h,
                         ),
-                        _buildCaptionWidget(cubit.currentPlace!.description ?? ""),
+                        _buildCaptionWidget(place.description ?? ""),
                         Divider(
                           height: 4.h,
                         ),
@@ -388,7 +391,7 @@ class PlaceScreen extends StatelessWidget {
                             Expanded(
                               child: OutLineContainer(
                                 child: Text(
-                                  "${cubit.currentPlace!.price}  ${S.of(context).sar} ${S.of(context).perHour}",
+                                  "${place.price}  ${S.of(context).sar} ${S.of(context).perHour}",
                                 ),
                               ),
                             ),
@@ -398,7 +401,7 @@ class PlaceScreen extends StatelessWidget {
                             Expanded(
                               child: OutLineContainer(
                                 child: Text(
-                                  "${cubit.currentPlace!.minimumHours ?? S.of(context).noMinimumBooking}  ${S.of(context).hours}",
+                                  "${place.minimumHours ?? S.of(context).noMinimumBooking}  ${S.of(context).hours}",
                                 ),
                               ),
                             )
@@ -423,7 +426,7 @@ class PlaceScreen extends StatelessWidget {
           child: DefaultButton(
               text: S.of(context).addBooking,
               onPressed: () {
-                context.push(Routes.addBooking, arguments: {"id": cubit.currentPlace!.id});
+                context.push(Routes.addBooking, arguments: {"id": place.id});
                 debugPrint("Book Now");
               }),
         ),

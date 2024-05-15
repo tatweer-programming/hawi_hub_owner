@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
+import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
@@ -42,6 +43,7 @@ class CreatePlaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlaceCubit cubit = PlaceCubit.get();
+    MainCubit mainCubit = MainCubit.get();
     return Scaffold(
       body: Column(
         children: [
@@ -176,20 +178,22 @@ class CreatePlaceScreen extends StatelessWidget {
                           SizedBox(height: 1.5.h),
                           Row(children: [
                             Expanded(
-                              child: dropdownBuilder(
-                                  text: cubit.selectedSport == null
-                                      ? S.of(context).sport
-                                      : cubit.selectedSport!,
-                                  onChanged: (sport) {
-                                    cubit.selectedSport = sport;
-                                    print(cubit.selectedSport);
-                                  },
-                                  items: [
-                                    "Football",
-                                    "Volleyball",
-                                    "Tennis",
-                                    "Badminton",
-                                  ]),
+                              child: BlocBuilder<MainCubit, MainState>(
+                                bloc: mainCubit,
+                                builder: (context, state) {
+                                  return dropdownBuilder(
+                                      text: cubit.selectedSport == null
+                                          ? S.of(context).sport
+                                          : mainCubit.sportsList
+                                              .firstWhere(
+                                                  (element) => element.id == cubit.selectedSport!)
+                                              .name,
+                                      onChanged: (sport) {
+                                        cubit.chooseSport(sport!);
+                                      },
+                                      items: mainCubit.sportsList.map((e) => e.name).toList());
+                                },
+                              ),
                             ),
                             SizedBox(width: 2.w),
                             Expanded(
@@ -385,7 +389,7 @@ class CreatePlaceScreen extends StatelessWidget {
                             address: addressController.text,
                             minimumHours: int.tryParse(minimumHoursController.text),
                             ownerId: 1,
-                            sport: cubit.selectedSport ?? "",
+                            sportId: cubit.selectedSport!,
                             price: double.tryParse(priceController.text) ?? 0.0,
                             location: PlaceLocation(latitude: 2, longitude: 2),
                             workingHours: PlaceCubit.get().workingHours,

@@ -12,7 +12,7 @@ class Place extends Equatable {
   List<Day>? workingHours; // int day, String startTime, String endTime
   PlaceLocation? location; // String longitude, String latitude
   String? description;
-  String sport;
+  int sport;
   double price;
   int ownerId;
   double? minimumHours;
@@ -75,7 +75,7 @@ class Place extends Equatable {
       feedbacks: [],
       workingHours: List<Day>.from(json["openTimes"].map((x) => Day.fromJson(x))),
       location: PlaceLocation.fromString(json['location']),
-      sport: json['category'],
+      sport: json['CategoryId'] ?? 0,
     );
   }
 

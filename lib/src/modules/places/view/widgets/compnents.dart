@@ -85,7 +85,7 @@ class BookingRequestWidget extends StatelessWidget {
                               child: DefaultButton(
                                 text: S.of(context).accept,
                                 onPressed: () async {
-                                  cubit.acceptBookingRequest(bookingRequest.id!);
+                                  await cubit.acceptBookingRequest(bookingRequest.id!);
                                 },
                                 height: 10.h,
                                 width: 30.w,
@@ -101,7 +101,7 @@ class BookingRequestWidget extends StatelessWidget {
                                 text: S.of(context).decline,
                                 borderColor: ColorManager.black,
                                 onPressed: () async {
-                                  cubit.declineBookingRequest(bookingRequest.id!);
+                                  await cubit.declineBookingRequest(bookingRequest.id!);
                                 },
                                 width: 30.w,
                                 isLoading: state is DeclineBookingRequestLoading &&
@@ -126,7 +126,6 @@ class PlaceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        PlaceCubit.get().currentPlace = place;
         context.push(Routes.place, arguments: {"id": place.id});
       },
       child: Container(

@@ -14,7 +14,6 @@ class DioHelper {
       },
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
-      validateStatus: (_) => true,
     ));
   }
 
@@ -22,7 +21,7 @@ class DioHelper {
     required String path,
     Map<String, dynamic>? query,
   }) async {
-    return await dio.get(
+    return dio.get(
       path,
       queryParameters: query,
     );
@@ -34,18 +33,11 @@ class DioHelper {
     required dynamic data,
     String? token,
   }) async {
-    try {
-      return await dio.post(
-        path,
-        queryParameters: query,
-        data: data,
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error posting data: $e');
-      }
-      rethrow; // Rethrow the error to be handled elsewhere
-    }
+    return dio.post(
+      path,
+      queryParameters: query,
+      data: data,
+    );
   }
 
   static Future<Response> putData({
@@ -54,18 +46,11 @@ class DioHelper {
     required Map<String, dynamic>? data,
     String? token,
   }) async {
-    try {
-      return await dio.put(
-        path,
-        queryParameters: query,
-        data: data,
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error putting data: $e');
-      }
-      rethrow; // Rethrow the error to be handled elsewhere
-    }
+    return await dio.put(
+      path,
+      queryParameters: query,
+      data: data,
+    );
   }
 
   static Future<Response> putDataFormData({
@@ -74,18 +59,11 @@ class DioHelper {
     required FormData data,
     String? token,
   }) async {
-    try {
-      return await dio.put(
-        path,
-        queryParameters: query,
-        data: data,
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error putting data: $e');
-      }
-      rethrow; // Rethrow the error to be handled elsewhere
-    }
+    return await dio.put(
+      path,
+      queryParameters: query,
+      data: data,
+    );
   }
 
   static Future<Response> deleteData({
@@ -93,29 +71,16 @@ class DioHelper {
     Map<String, dynamic>? query,
     String? token,
   }) async {
-    try {
-      return await dio.delete(
-        path,
-        queryParameters: query,
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error putting data: $e');
-      }
-      rethrow; // Rethrow the error to be handled elsewhere
-    }
+    return dio.delete(
+      path,
+      queryParameters: query,
+    );
   }
 
   static Future<Response> postFormData(String path, FormData formData) async {
-    return await dio
-        .post(
+    return dio.post(
       path,
       data: formData,
-    )
-        .catchError((e) {
-      if (kDebugMode) {
-        print('Error ########################: $e');
-      }
-    });
+    );
   }
 }

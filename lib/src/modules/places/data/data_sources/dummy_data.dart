@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 
@@ -22,7 +23,7 @@ List<Place> dummyPlaces = [
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
-    sport: "",
+    sport: 1,
     workingHours: const [
       Day(
         dayOfWeek: 0,
@@ -79,7 +80,7 @@ List<Place> dummyPlaces = [
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
-    sport: "",
+    sport: 1,
     workingHours: const [
       Day(
         dayOfWeek: 0,
@@ -136,7 +137,7 @@ List<Place> dummyPlaces = [
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
-    sport: "",
+    sport: 1,
     workingHours: const [
       Day(
         dayOfWeek: 1,
@@ -164,7 +165,7 @@ List<Place> dummyPlaces = [
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
-    sport: "",
+    sport: 1,
     workingHours: const [
       Day(
         dayOfWeek: 0,
@@ -221,7 +222,7 @@ List<Place> dummyPlaces = [
     price: 300,
     minimumHours: 2,
     location: PlaceLocation(latitude: 31.333333333, longitude: 30.333333333),
-    sport: "",
+    sport: 1,
     workingHours: const [
       Day(
         dayOfWeek: 0,
@@ -260,4 +261,59 @@ List<Place> dummyPlaces = [
       ),
     ],
   ),
+];
+
+List<BookingRequest> bookingRequests = [
+  BookingRequest(
+    id: 1,
+    price: 200,
+    userId: 1,
+    address: "address",
+    endTime: DateTime.now().add(const Duration(hours: 1)),
+    startTime: DateTime.now(),
+    placeName: "place",
+    userName: "username",
+    userImage:
+        "https://images.pexels.com/photos/1036627/pexels-photo-1036627.jpeg?auto=compress&cs=tinysrgb&w=600",
+    placeId: 1,
+  ),
+  BookingRequest(
+    id: 2,
+    price: 200,
+    userId: 1,
+    address: "address",
+    endTime: DateTime.now().add(const Duration(hours: 1)),
+    startTime: DateTime.now(),
+    placeName: "place",
+    userName: "username",
+    userImage:
+        "https://images.pexels.com/photos/1036627/pexels-photo-1036627.jpeg?auto=compress&cs=tinysrgb&w=600",
+    placeId: 1,
+  ),
+  BookingRequest(
+    id: 3,
+    price: 200,
+    userId: 1,
+    address: "address",
+    endTime: DateTime.now().add(const Duration(hours: 1)),
+    startTime: DateTime.now(),
+    placeName: "place",
+    userName: "username",
+    userImage:
+        "https://images.pexels.com/photos/1036627/pexels-photo-1036627.jpeg?auto=compress&cs=tinysrgb&w=600",
+    placeId: 1,
+  ),
+  BookingRequest(
+    id: 4,
+    price: 200,
+    userId: 1,
+    address: "address",
+    endTime: DateTime.now().add(const Duration(hours: 1)),
+    startTime: DateTime.now(),
+    placeName: "place",
+    userName: "username",
+    userImage:
+        "https://images.pexels.com/photos/1036627/pexels-photo-1036627.jpeg?auto=compress&cs=tinysrgb&w=600",
+    placeId: 1,
+  )
 ];

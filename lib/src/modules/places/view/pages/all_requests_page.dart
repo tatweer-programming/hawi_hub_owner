@@ -7,6 +7,7 @@ import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/data_sources/dummy_data.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/request_shimmers.dart';
 import 'package:sizer/sizer.dart';
@@ -101,55 +102,3 @@ class AllRequestsPage extends StatelessWidget {
     PlaceCubit.get().getBookingRequests();
   }
 }
-
-List<BookingRequest> bookingRequests = [
-  BookingRequest(
-    id: 1,
-    price: 200,
-    userId: 1,
-    address: "address",
-    endTime: DateTime.now().add(const Duration(hours: 1)),
-    startTime: DateTime.now(),
-    placeName: "place",
-    userName: "username",
-    userImage:
-        "https://images.pexels.com/photos/1036627/pexels-photo-1036627.jpeg?auto=compress&cs=tinysrgb&w=600",
-    placeId: 1,
-  ),
-  BookingRequest(
-    id: 2,
-    price: 200,
-    userId: 1,
-    address: "address",
-    endTime: DateTime.now().add(const Duration(hours: 1)),
-    startTime: DateTime.now(),
-    placeName: "place",
-    userName: "username",
-    userImage: "assets/images/user.png",
-    placeId: 1,
-  ),
-  BookingRequest(
-    id: 3,
-    price: 200,
-    userId: 1,
-    address: "address",
-    endTime: DateTime.now().add(const Duration(hours: 1)),
-    startTime: DateTime.now(),
-    placeName: "place",
-    userName: "username",
-    userImage: "assets/images/user.png",
-    placeId: 1,
-  ),
-  BookingRequest(
-    id: 4,
-    price: 200,
-    userId: 1,
-    address: "address",
-    endTime: DateTime.now().add(const Duration(hours: 1)),
-    startTime: DateTime.now(),
-    placeName: "place",
-    userName: "username",
-    userImage: "assets/images/user.png",
-    placeId: 1,
-  )
-];

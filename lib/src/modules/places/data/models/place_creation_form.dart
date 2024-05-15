@@ -10,7 +10,7 @@ class PlaceCreationForm {
   List<Day> workingHours; // int day, String startTime, String endTime  ///
   PlaceLocation? location; // String longitude, String latitude
   String? description;
-  String sport;
+  int sportId;
   double price;
 
   ///
@@ -30,7 +30,7 @@ class PlaceCreationForm {
     required this.workingHours,
     this.location,
     this.description,
-    required this.sport,
+    required this.sportId,
     required this.price,
     required this.ownerId,
     this.minimumHours,
@@ -81,7 +81,7 @@ class PlaceCreationForm {
       "dto.OpenTimes[6].EndTime":
           "${workingHours[6].endTime.hour}:${workingHours[6].endTime.minute}:00",
       "dto.Location": location?.toStr(),
-      "dto.Category": sport,
+      "dto.CategoryId": sportId,
       "dto.Description": description,
       "dto.PricePerHour": price,
       "dto.MinHoursReservation": minimumHours,

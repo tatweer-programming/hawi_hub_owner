@@ -8,6 +8,7 @@ import 'package:hawi_hub_owner/src/core/local/shared_prefrences.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/auth_owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/repositories/auth_repository.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/models/sport.dart';
 import 'package:image_picker/image_picker.dart';
 import '../data/models/owner.dart';
 import '../data/models/sport.dart';
@@ -19,8 +20,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   static AuthBloc instance = AuthBloc(AuthInitial());
 
-  static AuthBloc get(BuildContext context) =>
-      BlocProvider.of<AuthBloc>(context);
+  static AuthBloc get(BuildContext context) => BlocProvider.of<AuthBloc>(context);
 
   final AuthRepository _repository = AuthRepository();
   Owner? owner;
@@ -32,9 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>((event, emit) async {
       if (event is RegisterPlayerEvent) {
         emit(RegisterLoadingState());
-        await _repository
-            .registerPlayer(authOwner: event.authOwner)
-            .then((value) {
+        await _repository.registerPlayer(authOwner: event.authOwner).then((value) {
           if (value == "Account Created Successfully") {
             emit(RegisterSuccessState(value: value));
           } else {
@@ -44,10 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else if (event is LoginPlayerEvent) {
         emit(LoginLoadingState());
         await _repository
-            .loginPlayer(
-                email: event.email,
-                password: event.password,
-                loginWithFBOrGG: false)
+            .loginPlayer(email: event.email, password: event.password, loginWithFBOrGG: false)
             .then((value) {
           if (value == "Account LogedIn Successfully") {
             emit(LoginSuccessState(value));
@@ -150,10 +145,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(DeleteImageState());
       } else if (event is UploadNationalIdEvent) {
         await _repository.uploadNationalId(event.nationalId);
-
       } else if (event is UpdateProfilePictureEvent) {
         add(AddImageEvent());
-        if(state is AddImageSuccessState){
+        if (state is AddImageSuccessState) {
           await _repository.changeProfileImage(event.profileImage);
         }
       } else if (event is GetProfileEvent) {

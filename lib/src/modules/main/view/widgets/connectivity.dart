@@ -21,7 +21,7 @@ class ConnectionWidget extends StatefulWidget {
 }
 
 class _ConnectionWidgetState extends State<ConnectionWidget> {
-  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
+  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.mobile];
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 

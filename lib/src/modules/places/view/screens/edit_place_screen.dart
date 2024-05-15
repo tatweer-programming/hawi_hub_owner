@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
+import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
@@ -165,20 +166,28 @@ class EditPlaceScreen extends StatelessWidget {
                           SizedBox(height: 1.5.h),
                           Row(children: [
                             Expanded(
-                              child: dropdownBuilder(
-                                  text: cubit.selectedSport == null
-                                      ? cubit.placeEditForm!.sport
-                                      : cubit.selectedSport!,
-                                  onChanged: (sport) {
-                                    cubit.selectedSport = sport;
-                                    print(cubit.selectedSport);
-                                  },
-                                  items: [
-                                    "Football",
-                                    "Volleyball",
-                                    "Tennis",
-                                    "Badminton",
-                                  ]),
+                              child: BlocBuilder<MainCubit, MainState>(
+                                bloc: MainCubit.get(),
+                                builder: (context, state) {
+                                  return dropdownBuilder(
+                                      text: MainCubit.get()
+                                          .sportsList
+                                          .firstWhere(
+                                              (element) => element.id == cubit.placeEditForm!.sport,
+                                              orElse: () => MainCubit.get().sportsList[0])
+                                          .name,
+                                      onChanged: (sport) {
+                                        cubit.placeEditForm!.sport = MainCubit.get()
+                                            .sportsList
+                                            .firstWhere((element) => element.name == sport,
+                                                orElse: () => MainCubit.get().sportsList[0])
+                                            .id;
+                                        print(cubit.selectedSport);
+                                      },
+                                      items:
+                                          MainCubit.get().sportsList.map((e) => e.name).toList());
+                                },
+                              ),
                             ),
                             SizedBox(width: 2.w),
                             Expanded(
@@ -356,7 +365,7 @@ class EditPlaceScreen extends StatelessWidget {
                             address: addressController.text,
                             minimumHours: 1,
                             ownerId: 1,
-                            sport: "cubit.selectedSport!",
+                            sport: cubit.placeEditForm!.sport ?? 0,
                             price: 1,
                             location: PlaceLocation(latitude: 2, longitude: 2),
                             workingHours: PlaceCubit.get().workingHours,
