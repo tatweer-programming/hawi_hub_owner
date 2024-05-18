@@ -20,7 +20,7 @@ class Place extends Equatable {
   int totalGames;
   int totalRatings;
   double? rating;
-  List<Feedback>? feedbacks;
+  List<AppFeedBack>? feedbacks;
 
   int citId;
   int approvalStatus;
@@ -46,10 +46,10 @@ class Place extends Equatable {
 
   factory Place.fromJson(Map<String, dynamic> json) {
     List openTimesList = json["openTimes"];
-    print(openTimesList);
+     (openTimesList);
     List<Day> days = [];
     openTimesList.forEach((element) {
-      print(Day.fromJson(element));
+       //print(Day.fromJson(element));
       days.add(Day.fromJson(element));
     });
     return Place(

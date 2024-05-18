@@ -44,7 +44,6 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
     if (pickedDate != null) {
       setState(() {
         selectedDate = pickedDate;
-        print(selectedDate);
       });
     }
   }
@@ -78,7 +77,7 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
   }
 
   Future<void> _makeBooking() async {
-    print(selectedDate);
+    //print(selectedDate);
     if (selectedDate == null || startTime == null || endTime == null) {
       // Show error message
       errorToast(msg: S.of(context).allFieldsIsRequired);

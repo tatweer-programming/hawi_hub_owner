@@ -83,6 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please enter password"),
         "enterUsername":
             MessageLookupByLibrary.simpleMessage("Please enter username"),
+        "feedbacks": MessageLookupByLibrary.simpleMessage("Feedbacks"),
         "fileUploaded": MessageLookupByLibrary.simpleMessage("File Uploaded"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot password ?"),
@@ -116,8 +117,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
         "noAccount":
             MessageLookupByLibrary.simpleMessage("Don’t have an account ?"),
+        "noAlerts": MessageLookupByLibrary.simpleMessage("No Alerts"),
         "noComment": MessageLookupByLibrary.simpleMessage("No comment"),
         "noDetails": MessageLookupByLibrary.simpleMessage("No details"),
+        "noFeedbacks": MessageLookupByLibrary.simpleMessage("No Feedbacks yet"),
         "noMinimumBooking":
             MessageLookupByLibrary.simpleMessage("No minimum booking"),
         "noPlaces": MessageLookupByLibrary.simpleMessage("No places found"),
@@ -182,6 +185,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "underReview": MessageLookupByLibrary.simpleMessage("Under review"),
         "updateProfile": MessageLookupByLibrary.simpleMessage("Update Profile"),
         "upload": MessageLookupByLibrary.simpleMessage("Upload"),
+        "uploadingAttachment":
+            MessageLookupByLibrary.simpleMessage("Uploading Attachments..."),
         "userName": MessageLookupByLibrary.simpleMessage("User name"),
         "userNotFound":
             MessageLookupByLibrary.simpleMessage("Email is not exists."),
@@ -190,6 +195,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Username is already exists."),
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
+        "viewFeedbacks": MessageLookupByLibrary.simpleMessage("View Feedbacks"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),
         "weekend": MessageLookupByLibrary.simpleMessage("Weekend"),
         "workingHours": MessageLookupByLibrary.simpleMessage("Working hours"),

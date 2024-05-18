@@ -1299,6 +1299,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Feedbacks`
+  String get feedbacks {
+    return Intl.message(
+      'Feedbacks',
+      name: 'feedbacks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Feedbacks yet`
+  String get noFeedbacks {
+    return Intl.message(
+      'No Feedbacks yet',
+      name: 'noFeedbacks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Alerts`
+  String get noAlerts {
+    return Intl.message(
+      'No Alerts',
+      name: 'noAlerts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Feedbacks`
+  String get viewFeedbacks {
+    return Intl.message(
+      'View Feedbacks',
+      name: 'viewFeedbacks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uploading Attachments...`
+  String get uploadingAttachment {
+    return Intl.message(
+      'Uploading Attachments...',
+      name: 'uploadingAttachment',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

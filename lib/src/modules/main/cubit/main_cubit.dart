@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/sport.dart';
 
 import 'package:hawi_hub_owner/src/modules/main/data/services/main_services.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/pages/home_page.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/pages/more_page.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/pages/all_requests_page.dart';
@@ -26,6 +28,7 @@ class MainCubit extends Cubit<MainState> {
   int currentIndex = 0;
   List<String> bannerList = [];
   List<Sport> sportsList = [];
+  List<AppNotification> notifications = [];
   void changePage(int index) {
     currentIndex = index;
     emit(ChangePage(index));
@@ -51,6 +54,18 @@ class MainCubit extends Cubit<MainState> {
     }, (r) {
       sportsList = r;
       emit(GetSportsSuccess(r));
+    });
+  }
+
+  getNotifications() async {
+    emit(GetNotificationsLoading());
+    NotificationServices notificationServices = NotificationServices();
+    var result = await notificationServices.getNotifications();
+    result.fold((l) {
+      emit(GetNotificationsError(l));
+    }, (r) {
+      notifications = r;
+      emit(GetNotificationsSuccess(r));
     });
   }
 }

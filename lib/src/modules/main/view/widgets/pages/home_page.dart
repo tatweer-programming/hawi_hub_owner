@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                       Routes.profile,
                       arguments: Owner(
                           id: 2,
-                          emailConfirmed: 0,
+                          approvalStatus: 0,
                           userName: "userName",
                           email: "email",
                           profilePictureUrl:

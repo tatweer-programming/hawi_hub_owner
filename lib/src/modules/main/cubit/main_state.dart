@@ -66,3 +66,24 @@ class GetSportsError extends MainError {
   @override
   List<Object> get props => [];
 }
+
+class GetNotificationsLoading extends MainState {
+  @override
+  List<Object> get props => [];
+}
+
+class GetNotificationsSuccess extends MainState {
+  final List<AppNotification> notifications;
+
+  const GetNotificationsSuccess(this.notifications);
+
+  @override
+  List<Object> get props => [];
+}
+
+class GetNotificationsError extends MainError {
+  const GetNotificationsError(super.exception);
+
+  @override
+  List<Object> get props => [];
+}

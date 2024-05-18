@@ -105,8 +105,7 @@ Widget _appBar(
   );
 }
 
-Widget _chatWidget({required Chat chat, required VoidCallback onTap}) =>
-    Padding(
+Widget _chatWidget({required Chat chat, required VoidCallback onTap}) => Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 7.w,
         vertical: 2.h,
@@ -136,14 +135,12 @@ Widget _chatWidget({required Chat chat, required VoidCallback onTap}) =>
                           chat.name,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: TextStyle(
-                              fontSize: 15.sp, fontWeight: FontWeight.w500),
+                          style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
                         ),
                       ),
                       Text(
                         chat.dateOfLastSeen,
-                        style: TextStyleManager.getCaptionStyle()
-                            .copyWith(fontSize: 10.sp),
+                        style: TextStyleManager.getCaptionStyle().copyWith(fontSize: 10.sp),
                       ),
                     ],
                   ),

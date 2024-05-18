@@ -21,8 +21,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   static AuthBloc instance = AuthBloc(AuthInitial());
 
-  static AuthBloc get(BuildContext context) =>
-      BlocProvider.of<AuthBloc>(context);
+  static AuthBloc get(BuildContext context) => BlocProvider.of<AuthBloc>(context);
 
   final AuthRepository _repository = AuthRepository();
 
@@ -33,17 +32,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>((event, emit) async {
       if (event is RegisterPlayerEvent) {
         emit(RegisterLoadingState());
-        var result =
-            await _repository.registerPlayer(authOwner: event.authOwner);
-        result.fold((l) => emit(RegisterErrorState(l)),
-            (r) => emit(RegisterSuccessState(value: r)));
+        var result = await _repository.registerPlayer(authOwner: event.authOwner);
+        result.fold(
+            (l) => emit(RegisterErrorState(l)), (r) => emit(RegisterSuccessState(value: r)));
       } else if (event is LoginPlayerEvent) {
         emit(LoginLoadingState());
         await _repository
-            .loginPlayer(
-                email: event.email,
-                password: event.password,
-                loginWithFBOrGG: false)
+            .loginPlayer(email: event.email, password: event.password, loginWithFBOrGG: false)
             .then((value) {
           if (value == "Account LogedIn Successfully") {
             emit(LoginSuccessState(value));
@@ -58,15 +53,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: event.email,
           password: event.password,
         );
-        result.fold((l) => emit(VerifyCodeErrorState(l)),
-            (r) => emit(VerifyCodeSuccessState(value: r)));
+        result.fold(
+            (l) => emit(VerifyCodeErrorState(l)), (r) => emit(VerifyCodeSuccessState(value: r)));
       } else if (event is ResetPasswordEvent) {
         add(StartResendCodeTimerEvent(120));
         emit(ResetPasswordLoadingState());
         await _repository.resetPassword(event.email).then((value) {
           if (value == "Reset code sent successfully to ${event.email}.") {
-            String msg =
-                "${S.of(event.context).resetCodeSentSuccessfully} ${event.email}.";
+            String msg = "${S.of(event.context).resetCodeSentSuccessfully} ${event.email}.";
             emit(ResetPasswordSuccessState(msg));
           } else {
             emit(ResetPasswordErrorState(value));

@@ -204,7 +204,7 @@ class CreatePlaceScreen extends StatelessWidget {
                                   onChanged: (city) {
                                     cubit.selectedCityId =
                                         LocalizationManager.getSaudiCities.indexOf(city!);
-                                    print(cubit.selectedCityId);
+                                    //print(cubit.selectedCityId);
                                   },
                                   items: LocalizationManager.getSaudiCities),
                             )
@@ -380,7 +380,10 @@ class CreatePlaceScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 5.w),
                   child: DefaultButton(
                       isLoading: state is CreatePlaceLoading,
-                      text: S.of(context).addPlace,
+                      enabled: state is! UploadAttachmentsLoading,
+                      text: state is UploadAttachmentsLoading
+                          ? S.of(context).uploadingAttachment
+                          : S.of(context).addPlace,
                       onPressed: () async {
                         if (_checkCreateValidation(formKey)) {
                           PlaceCreationForm placeCreationForm = PlaceCreationForm(
@@ -391,7 +394,7 @@ class CreatePlaceScreen extends StatelessWidget {
                             ownerId: 1,
                             sportId: cubit.selectedSport!,
                             price: double.tryParse(priceController.text) ?? 0.0,
-                            location: PlaceLocation(latitude: 2, longitude: 2),
+                            location: cubit.placeLocation,
                             workingHours: PlaceCubit.get().workingHours,
                             imageFiles: cubit.imageFiles,
                             ownershipFile: cubit.selectedOwnershipFile!,

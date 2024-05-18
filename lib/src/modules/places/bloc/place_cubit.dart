@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
@@ -36,38 +38,38 @@ class PlaceCubit extends Cubit<PlaceState> {
   List<Day> workingHours = [
     const Day(
       dayOfWeek: 0,
-      endTime: TimeOfDay(hour: 00, minute: 00),
-      startTime: TimeOfDay(hour: 23, minute: 59),
+      endTime: TimeOfDay(hour: 23, minute: 59),
+      startTime: TimeOfDay(hour: 00, minute: 00),
     ),
     const Day(
       dayOfWeek: 1,
-      endTime: TimeOfDay(hour: 00, minute: 00),
-      startTime: TimeOfDay(hour: 23, minute: 59),
+      endTime: TimeOfDay(hour: 23, minute: 59),
+      startTime: TimeOfDay(hour: 00, minute: 00),
     ),
     const Day(
       dayOfWeek: 2,
-      endTime: TimeOfDay(hour: 00, minute: 00),
-      startTime: TimeOfDay(hour: 23, minute: 59),
+      endTime: TimeOfDay(hour: 23, minute: 59),
+      startTime: TimeOfDay(hour: 00, minute: 00),
     ),
     const Day(
       dayOfWeek: 3,
-      endTime: TimeOfDay(hour: 00, minute: 00),
-      startTime: TimeOfDay(hour: 23, minute: 59),
+      endTime: TimeOfDay(hour: 23, minute: 59),
+      startTime: TimeOfDay(hour: 00, minute: 00),
     ),
     const Day(
       dayOfWeek: 4,
-      endTime: TimeOfDay(hour: 00, minute: 00),
-      startTime: TimeOfDay(hour: 23, minute: 59),
+      endTime: TimeOfDay(hour: 23, minute: 59),
+      startTime: TimeOfDay(hour: 00, minute: 00),
     ),
     const Day(
       dayOfWeek: 5,
-      endTime: TimeOfDay(hour: 00, minute: 00),
-      startTime: TimeOfDay(hour: 23, minute: 59),
+      endTime: TimeOfDay(hour: 23, minute: 59),
+      startTime: TimeOfDay(hour: 00, minute: 00),
     ),
     const Day(
       dayOfWeek: 6,
-      endTime: TimeOfDay(hour: 00, minute: 00),
-      startTime: TimeOfDay(hour: 23, minute: 59),
+      endTime: TimeOfDay(hour: 23, minute: 59),
+      startTime: TimeOfDay(hour: 00, minute: 00),
     ),
   ];
   int? selectedCityId;
@@ -84,9 +86,9 @@ class PlaceCubit extends Cubit<PlaceState> {
         isPlacesLoading = false;
         emit(GetPlacesError(l));
       }, (r) {
-        print("getPlaces");
+        //print("getPlaces");
         places = r;
-        print(places.length);
+        //print(places.length);
         isPlacesLoading = false;
         emit(GetPlacesSuccess(r));
       });
@@ -94,13 +96,37 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future createPlace(PlaceCreationForm placeCreationForm) async {
-    emit(CreatePlaceLoading());
-    var createPlaceResult = await dataSource.createPlace(placeCreationForm);
-    createPlaceResult.fold((l) {
-      emit(CreatePlaceError(l));
+    String ownershipUrl = "";
+    List<String> imagesUrl = [];
+    debugPrint("creating place");
+    emit(UploadAttachmentsLoading());
+    var ownershipResult = await _uploadProofOfOwnership(file: selectedOwnershipFile!);
+    ownershipResult.fold((l) {
+      print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      emit(UploadAttachmentsError(l));
     }, (r) {
-      emit(CreatePlaceSuccess());
+      print(r);
+      ownershipUrl = r;
     });
+    var imageResult = await _uploadPlaceImages(files: imageFiles);
+    imageResult.fold((l) {
+      print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+      emit(UploadAttachmentsError(l));
+    }, (r) {
+      print(r);
+      imagesUrl = r;
+    });
+    if (ownershipUrl != "" && imagesUrl.isNotEmpty) {
+      placeCreationForm.setAttachments(imagesUrl, ownershipUrl);
+      print(placeCreationForm.ownershipUrl);
+      emit(CreatePlaceLoading());
+      var createPlaceResult = await dataSource.createPlace(placeCreationForm);
+      createPlaceResult.fold((l) {
+        emit(CreatePlaceError(l));
+      }, (r) {
+        emit(CreatePlaceSuccess());
+      });
+    }
   }
 
   Future updatePlace(int placeId, {required PlaceEditForm newPlace}) async {
@@ -145,10 +171,10 @@ class PlaceCubit extends Cubit<PlaceState> {
     emit(AcceptBookingRequestLoading(requestId));
     var result = await dataSource.acceptBookingRequest(requestId);
     result.fold((l) {
-      print(l);
+      //print(l);
       emit(AcceptBookingRequestError(l));
     }, (r) {
-      print(r);
+      //print(r);
       emit(AcceptBookingRequestSuccess());
     });
   }
@@ -208,7 +234,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   void removeNetworkImageFromEditForm(String image) {
-    print(placeEditForm!.images);
+    //print(placeEditForm!.images);
     placeEditForm!.images.removeWhere((element) => element == image);
     emit(RemoveImagesSuccess(image));
   }
@@ -225,6 +251,25 @@ class PlaceCubit extends Cubit<PlaceState> {
     }, (r) {
       emit(CreateBookingSuccess());
     });
+  }
+
+  Future getPlaceFeedbacks(int placeId) async {
+    emit(GetPlaceReviewsLoading());
+    var result = await dataSource.getPlaceFeedbacks(placeId);
+    result.fold((l) {
+      emit(GetPlaceReviewsError(l));
+    }, (r) {
+      currentPlace!.feedbacks = r;
+      emit(GetPlaceReviewsSuccess(r));
+    });
+  }
+
+  Future<Either<Exception, String>> _uploadProofOfOwnership({required File file}) async {
+    return await dataSource.uploadProfFile(file: file);
+  }
+
+  Future<Either<Exception, List<String>>> _uploadPlaceImages({required List<File> files}) async {
+    return await dataSource.uploadPlaceImages(files: files);
   }
 
   void chooseSport(String newSport) {

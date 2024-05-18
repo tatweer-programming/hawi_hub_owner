@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/notification_shimmers.dart';
 
 import 'package:sizer/sizer.dart';
 
@@ -13,6 +16,8 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MainCubit cubit = MainCubit.get()..getNotifications();
+
     return Scaffold(
       body: SingleChildScrollView(
           child: Column(
@@ -33,20 +38,28 @@ class NotificationsScreen extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w),
-            child: ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => NotificationWidget(
-                    notification: AppNotification(
-                        image:
-                            "https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436190.jpg?size=626&ext=jpg",
-                        DateTime.now(),
-                        title: "title ${index + 1}",
-                        body: "body ${index + 1} body body body  body body body  body body body ")),
-                separatorBuilder: (context, index) => SizedBox(
-                      height: 2.h,
-                    ),
-                itemCount: 10),
+            child: BlocBuilder<MainCubit, MainState>(
+              bloc: cubit,
+              builder: (context, state) {
+                return state is GetNotificationsLoading
+                    ? const Center(
+                        child: VerticalNotificationsShimmer(),
+                      )
+                    : cubit.notifications.isEmpty
+                        ? Center(
+                            child: SubTitle(S.of(context).noAlerts),
+                          )
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) =>
+                                NotificationWidget(notification: cubit.notifications[index]),
+                            separatorBuilder: (context, index) => SizedBox(
+                                  height: 2.h,
+                                ),
+                            itemCount: cubit.notifications.length);
+              },
+            ),
           ),
         ],
       )),

@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال كلمة المرور"),
         "enterUsername":
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال الإسم"),
+        "feedbacks": MessageLookupByLibrary.simpleMessage("التعليقات"),
         "fileUploaded": MessageLookupByLibrary.simpleMessage("تم رفع الملف "),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة السر ؟"),
@@ -117,8 +118,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
         "noAccount": MessageLookupByLibrary.simpleMessage("لا تمتلك حساب ؟"),
+        "noAlerts": MessageLookupByLibrary.simpleMessage("لا يوجد تنبيهات"),
         "noComment": MessageLookupByLibrary.simpleMessage("لا تعليق"),
         "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
+        "noFeedbacks": MessageLookupByLibrary.simpleMessage("لا يوجد تعليقات"),
         "noMinimumBooking":
             MessageLookupByLibrary.simpleMessage("لا يوجد حد أدنى"),
         "noPlaces": MessageLookupByLibrary.simpleMessage("لا يوجد أماكن"),
@@ -186,6 +189,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateProfile":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
         "upload": MessageLookupByLibrary.simpleMessage("رفع"),
+        "uploadingAttachment":
+            MessageLookupByLibrary.simpleMessage("جاري رفع المرفقات..."),
         "userName": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "userNotFound": MessageLookupByLibrary.simpleMessage(
             "البريد الإلكتروني غير موجود."),
@@ -194,6 +199,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الأسم موجود مسبقا."),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
+        "viewFeedbacks": MessageLookupByLibrary.simpleMessage("عرض التعليقات"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("عرض الملف الشخصي"),
         "workingHours": MessageLookupByLibrary.simpleMessage("ساعات العمل"),
         "wrongPassword":

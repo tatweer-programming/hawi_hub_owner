@@ -123,5 +123,10 @@
   "enterCode": "Please enter code",
   "newPassword": "New Password",
   "agreeTerms": "I agree to the Terms of Service and Privacy Policy.",
-  "rejectIdCard": "The file was rejected. Check the required information carefully and try again"
+  "rejectIdCard": "The file was rejected. Check the required information carefully and try again",
+  "feedbacks": "Feedbacks",
+  "noFeedbacks": "No Feedbacks yet",
+  "noAlerts": "No Alerts",
+  "viewFeedbacks": "View Feedbacks",
+  "uploadingAttachment" : "Uploading Attachments..."
 }

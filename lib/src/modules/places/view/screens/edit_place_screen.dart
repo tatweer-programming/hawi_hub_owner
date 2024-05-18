@@ -177,12 +177,12 @@ class EditPlaceScreen extends StatelessWidget {
                                               orElse: () => MainCubit.get().sportsList[0])
                                           .name,
                                       onChanged: (sport) {
-                                        cubit.placeEditForm!.sport = MainCubit.get()
+                                        cubit.selectedSport = MainCubit.get()
                                             .sportsList
                                             .firstWhere((element) => element.name == sport,
                                                 orElse: () => MainCubit.get().sportsList[0])
                                             .id;
-                                        print(cubit.selectedSport);
+                                        //print(cubit.selectedSport);
                                       },
                                       items:
                                           MainCubit.get().sportsList.map((e) => e.name).toList());
@@ -199,7 +199,7 @@ class EditPlaceScreen extends StatelessWidget {
                                   onChanged: (city) {
                                     cubit.selectedCityId =
                                         LocalizationManager.getSaudiCities.indexOf(city!);
-                                    print(cubit.selectedCityId);
+                                    //print(cubit.selectedCityId);
                                   },
                                   items: LocalizationManager.getSaudiCities),
                             )
@@ -365,11 +365,11 @@ class EditPlaceScreen extends StatelessWidget {
                             address: addressController.text,
                             minimumHours: 1,
                             ownerId: 1,
-                            sport: cubit.placeEditForm!.sport ?? 0,
+                            sport: cubit.selectedSport ?? cubit.currentPlace!.sport,
                             price: 1,
                             location: PlaceLocation(latitude: 2, longitude: 2),
                             workingHours: PlaceCubit.get().workingHours,
-                            imageFiles: cubit.imageFiles,
+                            imageFiles: cubit.placeEditForm!.imageFiles,
                             images: cubit.placeEditForm!.images,
                             cityId: 1,
                           );

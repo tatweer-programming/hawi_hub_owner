@@ -194,3 +194,37 @@ class CreateBookingError extends PlaceError {
   @override
   List<Object?> get props => [];
 }
+
+class GetPlaceReviewsError extends PlaceError {
+  GetPlaceReviewsError(super.exception);
+  @override
+  List<Object?> get props => [];
+}
+
+class GetPlaceReviewsSuccess extends PlaceState {
+  final List<AppFeedBack> placeReviews;
+  GetPlaceReviewsSuccess(this.placeReviews);
+  @override
+  List<Object?> get props => [placeReviews];
+}
+
+class GetPlaceReviewsLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UploadAttachmentsError extends PlaceError {
+  UploadAttachmentsError(super.exception);
+  @override
+  List<Object?> get props => [];
+}
+
+class UploadAttachmentsSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UploadAttachmentsLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}

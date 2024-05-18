@@ -33,22 +33,8 @@ class Day extends Equatable {
   }
   Map toJson() => {
         "dayOfWeek": dayOfWeek,
-        "startTime": {
-          "ticks": 0,
-          "days": 0,
-          "hours": startTime.hour,
-          "milliseconds": 0,
-          "minutes": startTime.minute,
-          "seconds": 0
-        },
-        "endTime": {
-          "ticks": 0,
-          "days": 0,
-          "hours": endTime.hour,
-          "milliseconds": 0,
-          "minutes": endTime.minute,
-          "seconds": 0
-        }
+        "startTime": startTime.toStr(),
+        "endTime": endTime.toStr(),
       };
 
   @override
@@ -81,5 +67,11 @@ extension TimeOfDayExtension on String {
   TimeOfDay parseToTimeOfDay() {
     final List<String> parts = split(":");
     return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
+  }
+}
+
+extension TimeOfDayExtensionToStr on TimeOfDay {
+  String toStr() {
+    return "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}:00";
   }
 }

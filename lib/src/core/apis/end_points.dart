@@ -17,10 +17,14 @@ class EndPoints {
   static const String updatePlace = '/Stadium/Update/';
   static const String deletePlace = '/Stadium/Delete/';
   static const String uploadImages = '/uploadimage';
-  static const String getBookingRequest = '/bookingrequests';
+  static const String getBookingRequest = '/Stadium/GetOwnerStadiumsReservations/';
   static const String acceptBookingRequest = '/acceptbookingrequest';
   static const String declineBookingRequest = '/declinebookingrequest';
   static const String createBooking = '/createbookingrequest';
   static const String getSports = '/Category';
   static const String getBanners = '/Banner';
+  static const String getNotifications = '/Notification';
+  static const String getPlaceFeedbacks = '/Stadium/GetFeedbacks/';
+  static const String uploadProofOfOwnership = '/Stadium/UploadStadiumProofOfOwnership';
+  static const String uploadPlaceImages = '/Stadium/UploadStadiumImages';
 }

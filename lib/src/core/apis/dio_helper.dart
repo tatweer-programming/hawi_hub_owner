@@ -77,10 +77,8 @@ class DioHelper {
     );
   }
 
-  static Future<Response> postFormData(String path, FormData formData) async {
-    return dio.post(
-      path,
-      data: formData,
-    );
+  static Future<Response> postFormData(String path, FormData formData,
+      {Map<String, dynamic>? query}) async {
+    return dio.post(path, data: formData, queryParameters: query);
   }
 }

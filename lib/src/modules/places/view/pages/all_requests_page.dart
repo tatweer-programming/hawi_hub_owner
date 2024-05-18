@@ -6,6 +6,7 @@ import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/dummy_data.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
@@ -81,16 +82,21 @@ class AllRequestsPage extends StatelessWidget {
                 builder: (context, state) {
                   return (state is GetBookingRequestsLoading)
                       ? const VerticalRequestsShimmer()
-                      : Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
-                          child: ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) =>
-                                  BookingRequestWidget(bookingRequest: bookingRequests[index]),
-                              separatorBuilder: (itemContext, index) => const Divider(),
-                              itemCount: bookingRequests.length),
-                        );
+                      : PlaceCubit.get().bookingRequests.isEmpty
+                          ? Padding(
+                              padding: EdgeInsets.only(top: 20.h),
+                              child: Center(child: SubTitle(S.of(context).noRequests)),
+                            )
+                          : Padding(
+                              padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
+                              child: ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) => BookingRequestWidget(
+                                      bookingRequest: PlaceCubit.get().bookingRequests[index]),
+                                  separatorBuilder: (itemContext, index) => const Divider(),
+                                  itemCount: PlaceCubit.get().bookingRequests.length),
+                            );
                 })
           ],
         ),

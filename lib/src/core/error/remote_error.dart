@@ -134,7 +134,7 @@ class ExceptionManager implements Exception {
         case 511:
           return "Network Authentication Required";
         default:
-          return "Unknown Error";
+          return "Unknown Error ${error}";
       }
     }
     switch (error.response?.statusCode ?? 0) {

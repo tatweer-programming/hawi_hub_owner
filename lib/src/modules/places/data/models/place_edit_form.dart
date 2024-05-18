@@ -98,7 +98,7 @@ class PlaceEditForm {
       "dto.Location": location?.toStr(),
       "dto.CategoryId": sport,
       "dto.Description": description,
-      "dto.PricePerHour": price,
+      "dto.PricePerHour": 10,
       "dto.MinHoursReservation": minimumHours,
       "dto.Images": imageFiles.map((e) => MultipartFile.fromFileSync(e.path)).toList(),
     });

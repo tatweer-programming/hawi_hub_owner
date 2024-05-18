@@ -14,10 +14,10 @@ class MainServices {
     try {
       List<String> banners = [];
       var response = await DioHelper.getData(path: EndPoints.getBanners);
-      print(response.data);
+
       if (response.statusCode == 200 && response.data.isNotEmpty) {
         for (var item in response.data) {
-          banners.add(item.toString());
+          banners.add(item["bannerImageUrl"].toString());
         }
         return Right(banners);
       }
@@ -37,7 +37,7 @@ class MainServices {
           sports.add(Sport.fromJson(item));
         }
       }
-      print(sports);
+      //print(sports);
       return Right(sports);
     } on Exception catch (e) {
       return Left(e);

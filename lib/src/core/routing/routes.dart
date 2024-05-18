@@ -21,4 +21,5 @@ class Routes {
   static const String request = '/request';
 
   static const String addBooking = "/addBooking";
+  static const String placeFeedbacks = "/placeFeedbacks";
 }

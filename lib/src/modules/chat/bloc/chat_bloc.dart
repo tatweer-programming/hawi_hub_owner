@@ -15,8 +15,7 @@ part 'chat_state.dart';
 part 'chat_event.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  static ChatBloc get(BuildContext context) =>
-      BlocProvider.of<ChatBloc>(context);
+  static ChatBloc get(BuildContext context) => BlocProvider.of<ChatBloc>(context);
 
   // ChatRepository chatRepository = ChatRepository();
   final ChatService _service = ChatService();
@@ -44,7 +43,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         Future.delayed(const Duration(seconds: 1)).then((value) {
           final position = event.listScrollController.position.maxScrollExtent;
           event.listScrollController.jumpTo(position);
-          print("object");
+          //print("object");
         });
         emit(ScrollingDownState());
         // }
@@ -56,13 +55,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           await audioPlayer.stop();
           event.isPlaying = false;
         }
-        emit(PlayRecordUrlState(
-            voiceNoteUrl: event.voiceNoteUrl, isPlaying: event.isPlaying));
+        emit(PlayRecordUrlState(voiceNoteUrl: event.voiceNoteUrl, isPlaying: event.isPlaying));
         audioPlayer.onPlayerComplete.listen((_) {
           add(CompleteRecordEvent(
-              isFile: false,
-              voiceNote: event.voiceNoteUrl,
-              isPlaying: event.isPlaying));
+              isFile: false, voiceNote: event.voiceNoteUrl, isPlaying: event.isPlaying));
         });
       } else if (event is TurnOnRecordFileEvent) {
         await audioPlayer.play(DeviceFileSource(voiceNoteFilePath!));
@@ -70,9 +66,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(PlayRecordFileState());
         audioPlayer.onPlayerComplete.listen((_) {
           add(CompleteRecordEvent(
-              isFile: true,
-              voiceNote: voiceNoteFilePath!,
-              isPlaying: isPlaying));
+              isFile: true, voiceNote: voiceNoteFilePath!, isPlaying: isPlaying));
         });
       } else if (event is CompleteRecordEvent) {
         if (event.isFile) {
@@ -80,12 +74,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           emit(CompleteRecordFileState());
         } else {
           event.isPlaying = false;
-          emit(CompleteRecordUrlState(
-              voiceNoteUrl: event.voiceNote, isPlaying: event.isPlaying));
+          emit(CompleteRecordUrlState(voiceNoteUrl: event.voiceNote, isPlaying: event.isPlaying));
         }
       } else if (event is PickImageEvent) {
-        final pickedFile =
-            await ImagePicker().pickImage(source: ImageSource.gallery);
+        final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
         if (pickedFile != null) {
           imageFilePath = pickedFile.path;
           emit(PickImageState());
@@ -129,8 +121,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     bool hasPermission = await checkPermission();
     if (hasPermission) {
       AudioPlayer audioPlayer = AudioPlayer();
-      await audioPlayer
-          .play(AssetSource("audios/notiication_start_recording.wav"));
+      await audioPlayer.play(AssetSource("audios/notiication_start_recording.wav"));
       statusText = "Recording...";
       audioPlayer.onPlayerComplete.listen((_) async {
         voiceNoteFilePath = await getFilePath();
@@ -157,8 +148,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
     voiceNoteDuration = seconds.round();
     AudioPlayer audioPlayerAsset = AudioPlayer();
-    await audioPlayerAsset
-        .play(AssetSource("audios/notiication_end_recording.wav"));
+    await audioPlayerAsset.play(AssetSource("audios/notiication_end_recording.wav"));
     audioPlayerAsset.onPlayerComplete.listen((_) {
       if (voiceNoteFilePath != null) {
         statusText = "Message";

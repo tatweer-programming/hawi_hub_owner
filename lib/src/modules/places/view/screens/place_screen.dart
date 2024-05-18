@@ -316,6 +316,17 @@ class PlaceScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Center(
+                            child: TextButton(
+                                onPressed: () {
+                                  context.push(Routes.placeFeedbacks, arguments: {"id": place.id});
+                                },
+                                child: Text(S.of(context).viewFeedbacks,
+                                    style: TextStyleManager.getGoldenRegularStyle()))),
+
                         // Padding(
                         //   padding: EdgeInsets.symmetric(vertical: 2.h),
                         //   child: SizedBox(
@@ -427,7 +438,7 @@ class PlaceScreen extends StatelessWidget {
               text: S.of(context).addBooking,
               onPressed: () {
                 context.push(Routes.addBooking, arguments: {"id": place.id});
-                debugPrint("Book Now");
+                // debug //print("Book Now");
               }),
         ),
       ],

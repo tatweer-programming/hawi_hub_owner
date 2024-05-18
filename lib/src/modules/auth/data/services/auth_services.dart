@@ -22,7 +22,7 @@ class AuthService {
         'Username': authOwner.userName,
         'Password': authOwner.password,
       });
-      // print(authOwner.profilePictureUrl);
+      //  //print(authOwner.profilePictureUrl);
       if (authOwner.profilePictureUrl != null) {
         map.fields.add(
           MapEntry(
@@ -31,12 +31,12 @@ class AuthService {
           ),
         );
       }
-      // print(map.files);
+      //  //print(map.files);
       Response response = await DioHelper.postData(
         data: map,
         path: EndPoints.register,
       );
-      // print(response.data.toString());
+      //  //print(response.data.toString());
       if (response.statusCode == 200) {
         ConstantsManager.userId = response.data['id'];
         await CacheHelper.saveData(key: 'userId', value: response.data['id']);
