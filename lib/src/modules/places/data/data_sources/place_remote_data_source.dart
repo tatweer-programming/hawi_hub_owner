@@ -25,7 +25,7 @@ class PlaceRemoteDataSource {
         "id": 1 //ConstantsManager.userId
       });
 
-      //print(response.data);
+      print(response.data);
       //print(response);
       if (response.statusCode == 200) {
         places = (response.data as List).map((e) => Place.fromJson(e)).toList();
@@ -68,18 +68,30 @@ class PlaceRemoteDataSource {
   Future<Either<Exception, Unit>> updatePlace(int placeId,
       {required PlaceEditForm newPlace}) async {
     try {
-      await DioHelper.putDataFormData(
+      await DioHelper.putData(
         query: {"id": placeId},
         path: EndPoints.updatePlace + placeId.toString(),
-        data: newPlace.toFormData(),
+        data: newPlace.toJson(),
       );
 
       return const Right(unit);
     } on DioException catch (e) {
-      //print(e);
+      DioException dioException = e;
+      print(
+          "......................................................................الايرور هنا ....................................................");
+      print(dioException.error.toString() +
+          dioException.response.toString() +
+          dioException.message.toString() +
+          dioException.requestOptions.toString());
       return Left(e);
     } on Exception catch (e) {
-      //print(e);
+      DioException dioException = e as DioException;
+      print(
+          "......................................................................الايرور هنا ....................................................");
+      print(dioException.error.toString() +
+          dioException.response.toString() +
+          dioException.message.toString() +
+          dioException.requestOptions.toString());
       return Left(e);
     }
   }
@@ -102,8 +114,8 @@ class PlaceRemoteDataSource {
   Future<Either<Exception, List<BookingRequest>>> getBookingRequests() async {
     try {
       List<BookingRequest> bookingRequests = [];
-      var response = await DioHelper.getData(
-          path: EndPoints.getBookingRequest + ConstantsManager.userId!.toString());
+      var response =
+          await DioHelper.getData(path: EndPoints.getBookingRequest + "2", query: {"stadiumId": 2});
       if (response.statusCode == 200) {
         bookingRequests = (response.data as List).map((e) => BookingRequest.fromJson(e)).toList();
       }
@@ -119,8 +131,10 @@ class PlaceRemoteDataSource {
     try {
       await DioHelper.postData(
           query: {"id": requestId},
-          path: EndPoints.acceptBookingRequest + requestId.toString(),
-          data: {}).then((value) {
+          path: EndPoints.acceptBookingRequest,
+          data: {
+            {"id": requestId}
+          }).then((value) {
         //print(value.statusCode.toString() + value.data.toString());
       });
       return const Right(unit);
@@ -134,7 +148,9 @@ class PlaceRemoteDataSource {
   Future<Either<Exception, Unit>> declineBookingRequest(int requestId) async {
     try {
       await DioHelper.postData(
-          query: {"id": requestId}, path: EndPoints.declineBookingRequest, data: {});
+        query: {"id": requestId},
+        path: EndPoints.declineBookingRequest,
+      );
       return const Right(unit);
     } on DioException catch (e) {
       return Left(e);
@@ -149,11 +165,11 @@ class PlaceRemoteDataSource {
       required DateTime bookingEndTime}) async {
     try {
       await DioHelper.postData(
-        path: EndPoints.createBooking,
+        path: EndPoints.createBooking + placeId.toString(),
+        query: {"id": placeId},
         data: {
-          "place_id": placeId,
-          "booking_start_time": bookingStartTime,
-          "booking_end_time": bookingEndTime
+          "reservationStartTime": bookingStartTime.toString(),
+          "reservationEndTime": bookingEndTime.toString()
         },
       );
       return const Right(unit);

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hawi_hub_owner/src/core/utils/images_manager.dart';
 
 class BookingRequest extends Equatable {
 // use data
@@ -16,7 +17,7 @@ class BookingRequest extends Equatable {
   final String placeName;
   final String address;
   final int placeId;
-
+  // final List<Player> players = [];
   BookingRequest({
     required this.userId,
     required this.userName,
@@ -31,16 +32,16 @@ class BookingRequest extends Equatable {
   });
   factory BookingRequest.fromJson(Map<String, dynamic> json) {
     return BookingRequest(
-      userId: json['user_id'],
-      userName: json['user_name'],
-      userImage: json['user_image'],
-      id: json['id'],
-      startTime: DateTime.parse(json['start_time']),
-      endTime: DateTime.parse(json['end_time']),
-      price: json['price'],
-      placeName: json['place_name'],
-      address: json['address'],
-      placeId: json['place_id'],
+      userId: json['playerId'],
+      userName: json['player']['userName'],
+      userImage: json['player']['profilePictureUrl'] ?? ImagesManager.defaultProfile,
+      id: json['playerId'],
+      startTime: DateTime.parse(json["reservationStartTime"]),
+      endTime: DateTime.parse(json['reservationEndTime']),
+      price: json['reservationPrice'].toDouble(),
+      placeName: "",
+      address: "",
+      placeId: json['stadiumId'],
     );
   }
   @override

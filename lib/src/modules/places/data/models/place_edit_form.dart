@@ -39,68 +39,27 @@ class PlaceEditForm {
   });
 
   Map<String, dynamic> toJson() {
+    print("name: $name , \n address: $address , \n sport: $sport , \n price: $price ,"
+        " \n ownerId: $ownerId ,"
+        " \n minimumHours: $minimumHours , \n imageFiles: $imageFiles , \n cityId: $cityId , \n images: $images");
     return {
-      'name': name,
+      // "cityId": cityId,
+      // "ownerId": ownerId,
+      "name": name,
       'address': address,
-      'description': description,
-      'sport_id': sport,
-      'price': price,
-      'owner_id': ownerId,
-      'minimum_hours': minimumHours,
-      'location': location?.toStr(),
-      'deletedImages': images,
-      "working_hours": workingHours.map((e) => e.toJson()).toList()
+      "openTimes": workingHours.map((e) => e.toJson()).toList(),
+      "location": location?.toStr(),
+      // "categoryId": sport,
+      "description": description,
+      "pricePerHour": price,
+      "minHoursReservation": minimumHours,
+      "imagesUrl": [
+        "Files\\Stadium\\Images\\a783bdf0-2479-48bb-a317-659a06556770_download (1).png"
+      ], // images,
     };
   }
 
-  FormData toFormData() {
-    //  Unit8List image = await ownershipFile.readAsBytes();
-    return FormData.fromMap({
-      "dto.CityId": cityId,
-      "dto.OwnerId": ownerId,
-      "dto.Name": name,
-      'dto.Address': address,
-      "dto.OpenTimes[0].DayOfWeek": 0,
-      "dto.OpenTimes[0].StartTime":
-          "${workingHours[0].startTime.hour}:${workingHours[0].startTime.minute}:00",
-      "dto.OpenTimes[0].EndTime":
-          "${workingHours[0].endTime.hour}:${workingHours[0].endTime.minute}:00",
-      "dto.OpenTimes[1].DayOfWeek": 1,
-      "dto.OpenTimes[1].StartTime":
-          "${workingHours[1].startTime.hour}:${workingHours[1].startTime.minute}:00",
-      "dto.OpenTimes[1].EndTime":
-          "${workingHours[1].endTime.hour}:${workingHours[1].endTime.minute}:00",
-      "dto.OpenTimes[2].DayOfWeek": 2,
-      "dto.OpenTimes[2].StartTime":
-          "${workingHours[2].startTime.hour}:${workingHours[2].startTime.minute}:00",
-      "dto.OpenTimes[2].EndTime":
-          "${workingHours[2].endTime.hour}:${workingHours[2].endTime.minute}:00",
-      "dto.OpenTimes[3].DayOfWeek": 3,
-      "dto.OpenTimes[3].StartTime":
-          "${workingHours[3].startTime.hour}:${workingHours[3].startTime.minute}:00",
-      "dto.OpenTimes[3].EndTime":
-          "${workingHours[3].endTime.hour}:${workingHours[3].endTime.minute}:00",
-      "dto.OpenTimes[4].DayOfWeek": 4,
-      "dto.OpenTimes[4].StartTime":
-          "${workingHours[4].startTime.hour}:${workingHours[4].startTime.minute}:00",
-      "dto.OpenTimes[4].EndTime":
-          "${workingHours[4].endTime.hour}:${workingHours[4].endTime.minute}:00",
-      "dto.OpenTimes[5].DayOfWeek": 5,
-      "dto.OpenTimes[5].StartTime":
-          "${workingHours[5].startTime.hour}:${workingHours[5].startTime.minute}:00",
-      "dto.OpenTimes[5].EndTime":
-          "${workingHours[5].endTime.hour}:${workingHours[5].endTime.minute}:00",
-      "dto.OpenTimes[6].DayOfWeek": 6,
-      "dto.OpenTimes[6].StartTime":
-          "${workingHours[6].startTime.hour}:${workingHours[6].startTime.minute}:00",
-      "dto.OpenTimes[6].EndTime":
-          "${workingHours[6].endTime.hour}:${workingHours[6].endTime.minute}:00",
-      "dto.Location": location?.toStr(),
-      "dto.CategoryId": sport,
-      "dto.Description": description,
-      "dto.PricePerHour": 10,
-      "dto.MinHoursReservation": minimumHours,
-      "dto.Images": imageFiles.map((e) => MultipartFile.fromFileSync(e.path)).toList(),
-    });
+  void updateImages(List<String> images) {
+    this.images = images;
   }
 }

@@ -97,8 +97,16 @@ class RequestScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 6.w),
                       child: Column(children: [
                         _buildRequestItem(S.of(context).userName, request.userName),
-                        _buildRequestItem(S.of(context).placeName, request.placeName),
-                        _buildRequestItem(S.of(context).address, request.address),
+                        _buildRequestItem(
+                            S.of(context).placeName,
+                            cubit.places
+                                .firstWhere((element) => element.id == request.placeId)
+                                .name),
+                        _buildRequestItem(
+                            S.of(context).address,
+                            cubit.places
+                                .firstWhere((element) => element.id == request.placeId)
+                                .address),
                         _buildRequestItem(
                             S.of(context).price, "${request.price} ${S.of(context).sar}"),
                         _buildRequestItem(S.of(context).date,

@@ -197,12 +197,12 @@ class HomePage extends StatelessWidget {
                                       )
                                     : ListView.separated(
                                         scrollDirection: Axis.horizontal,
-                                        itemBuilder: (context, index) =>
-                                            PlaceItem(place: placeCubit.places[index]),
+                                        itemBuilder: (context, index) => BookingRequestWidget(
+                                            bookingRequest: placeCubit.bookingRequests[index]),
                                         separatorBuilder: (context, index) => SizedBox(
                                               width: 4.w,
                                             ),
-                                        itemCount: placeCubit.places.length < 3
+                                        itemCount: placeCubit.bookingRequests.length < 3
                                             ? placeCubit.places.length
                                             : 3);
                           }),

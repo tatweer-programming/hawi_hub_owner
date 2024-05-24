@@ -130,6 +130,19 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future updatePlace(int placeId, {required PlaceEditForm newPlace}) async {
+    List<String> imagesUrl = newPlace.images;
+    if (newPlace.imageFiles.isNotEmpty) {
+      emit(UploadAttachmentsLoading());
+      var imageResult = await _uploadPlaceImages(files: imageFiles);
+      imageResult.fold((l) {
+        print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+        emit(UploadAttachmentsError(l));
+      }, (r) {
+        print(r);
+        imagesUrl.addAll(r);
+        newPlace.updateImages(imagesUrl);
+      });
+    }
     emit(UpdatePlaceLoading());
     var result = await dataSource.updatePlace(placeId, newPlace: newPlace);
     result.fold((l) {

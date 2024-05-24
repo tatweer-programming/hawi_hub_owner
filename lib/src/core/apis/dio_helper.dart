@@ -30,7 +30,7 @@ class DioHelper {
   static Future<Response> postData({
     required String path,
     Map<String, dynamic>? query,
-    required dynamic data,
+    dynamic data,
     String? token,
   }) async {
     return dio.post(

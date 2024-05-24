@@ -17,7 +17,7 @@ class MainServices {
 
       if (response.statusCode == 200 && response.data.isNotEmpty) {
         for (var item in response.data) {
-          banners.add(item["bannerImageUrl"].toString());
+          banners.add(item["bannerImageUrl"].toString().replaceAll("\\", "/"));
         }
         return Right(banners);
       }

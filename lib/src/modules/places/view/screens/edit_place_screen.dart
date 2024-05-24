@@ -164,46 +164,46 @@ class EditPlaceScreen extends StatelessWidget {
                             },
                           ),
                           SizedBox(height: 1.5.h),
-                          Row(children: [
-                            Expanded(
-                              child: BlocBuilder<MainCubit, MainState>(
-                                bloc: MainCubit.get(),
-                                builder: (context, state) {
-                                  return dropdownBuilder(
-                                      text: MainCubit.get()
-                                          .sportsList
-                                          .firstWhere(
-                                              (element) => element.id == cubit.placeEditForm!.sport,
-                                              orElse: () => MainCubit.get().sportsList[0])
-                                          .name,
-                                      onChanged: (sport) {
-                                        cubit.selectedSport = MainCubit.get()
-                                            .sportsList
-                                            .firstWhere((element) => element.name == sport,
-                                                orElse: () => MainCubit.get().sportsList[0])
-                                            .id;
-                                        //print(cubit.selectedSport);
-                                      },
-                                      items:
-                                          MainCubit.get().sportsList.map((e) => e.name).toList());
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 2.w),
-                            Expanded(
-                              child: dropdownBuilder(
-                                  text: cubit.selectedCityId == null
-                                      ? LocalizationManager
-                                          .getSaudiCities[cubit.placeEditForm!.cityId]
-                                      : LocalizationManager.getSaudiCities[cubit.selectedCityId!],
-                                  onChanged: (city) {
-                                    cubit.selectedCityId =
-                                        LocalizationManager.getSaudiCities.indexOf(city!);
-                                    //print(cubit.selectedCityId);
-                                  },
-                                  items: LocalizationManager.getSaudiCities),
-                            )
-                          ]),
+                          // Row(children: [
+                          //   Expanded(
+                          //     child: BlocBuilder<MainCubit, MainState>(
+                          //       bloc: MainCubit.get(),
+                          //       builder: (context, state) {
+                          //         return dropdownBuilder(
+                          //             text: MainCubit.get()
+                          //                 .sportsList
+                          //                 .firstWhere(
+                          //                     (element) => element.id == cubit.placeEditForm!.sport,
+                          //                     orElse: () => MainCubit.get().sportsList[0])
+                          //                 .name,
+                          //             onChanged: (sport) {
+                          //               cubit.selectedSport = MainCubit.get()
+                          //                   .sportsList
+                          //                   .firstWhere((element) => element.name == sport,
+                          //                       orElse: () => MainCubit.get().sportsList[0])
+                          //                   .id;
+                          //               //print(cubit.selectedSport);
+                          //             },
+                          //             items:
+                          //                 MainCubit.get().sportsList.map((e) => e.name).toList());
+                          //       },
+                          //     ),
+                          //   ),
+                          //   SizedBox(width: 2.w),
+                          //   Expanded(
+                          //     child: dropdownBuilder(
+                          //         text: cubit.selectedCityId == null
+                          //             ? LocalizationManager
+                          //                 .getSaudiCities[cubit.placeEditForm!.cityId]
+                          //             : LocalizationManager.getSaudiCities[cubit.selectedCityId!],
+                          //         onChanged: (city) {
+                          //           cubit.selectedCityId =
+                          //               LocalizationManager.getSaudiCities.indexOf(city!);
+                          //           //print(cubit.selectedCityId);
+                          //         },
+                          //         items: LocalizationManager.getSaudiCities),
+                          //   )
+                          // ]),
                           SizedBox(height: 5.h),
                           Container(
                             width: double.infinity,

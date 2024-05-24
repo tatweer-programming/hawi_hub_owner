@@ -46,18 +46,19 @@ class Place extends Equatable {
 
   factory Place.fromJson(Map<String, dynamic> json) {
     List openTimesList = json["openTimes"];
-     (openTimesList);
+    (openTimesList);
     List<Day> days = [];
     openTimesList.forEach((element) {
-       //print(Day.fromJson(element));
+      //print(Day.fromJson(element));
       days.add(Day.fromJson(element));
     });
+    print(json);
     return Place(
       citId: json['cityId'],
       id: json['stadiumId'],
-      name: json['name'],
-      description: json['description'],
-      address: json['address'],
+      name: json['name'] ?? "",
+      description: json['description'] ?? "",
+      address: json['address'] ?? "",
       images: const [
         "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=400",
         "https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&w=400",
@@ -66,16 +67,17 @@ class Place extends Equatable {
       /*
        json['images'].map((x) => x['url']).toList(),
        */
-      ownerId: json['ownerId'],
-      minimumHours: json['minHoursReservation'],
-      price: json['pricePerHour'],
+      ownerId: json['ownerId'] ?? 0,
+      minimumHours: json['minHoursReservation'] ?? 0,
+      price: json['pricePerHour'] ?? 0,
       totalGames: json['totalGames'] ?? 0,
       totalRatings: json['totalRatings'] ?? 0,
-      rating: json['rating'],
+      rating: json['rating'] ?? 0,
       feedbacks: [],
       workingHours: List<Day>.from(json["openTimes"].map((x) => Day.fromJson(x))),
-      location: PlaceLocation.fromString(json['location']),
-      sport: json['CategoryId'] ?? 0,
+      location: json['location'] == null ? null : PlaceLocation.fromString(json['location']),
+      sport: json['categoryId'] ?? 0,
+      approvalStatus: json['approvalStatus'] ?? 0,
     );
   }
 
@@ -92,11 +94,12 @@ class Place extends Equatable {
     for (var image in images) {
       modifiableImages.add(image);
     }
+    print("images : $images");
     return PlaceEditForm(
       name: name,
       address: address,
       description: description,
-      images: modifiableImages,
+      images: [...images],
       location: location,
       minimumHours: minimumHours,
       workingHours: workingHours!,

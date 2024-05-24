@@ -18,8 +18,9 @@ class EndPoints {
   static const String deletePlace = '/Stadium/Delete/';
   static const String uploadImages = '/uploadimage';
   static const String getBookingRequest = '/Stadium/GetOwnerStadiumsReservations/';
-  static const String acceptBookingRequest = '/acceptbookingrequest';
-  static const String declineBookingRequest = '/declinebookingrequest';
+  static const String getPlaceReservations = '/Stadium/GetReservations';
+  static const String acceptBookingRequest = '/Owner/AcceptStadiumReservation/';
+  static const String declineBookingRequest = '/Owner/RejectStadiumReservation/';
   static const String createBooking = '/createbookingrequest';
   static const String getSports = '/Category';
   static const String getBanners = '/Banner';
