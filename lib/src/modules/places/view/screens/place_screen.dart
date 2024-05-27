@@ -93,9 +93,10 @@ class PlaceScreen extends StatelessWidget {
                                                 color: Colors.grey,
                                                 image: DecorationImage(
                                                   fit: BoxFit.cover,
-                                                  image: NetworkImage(i, headers: {
-                                                    'Authorization': ApiManager.authToken
-                                                  }),
+                                                  image: NetworkImage(ApiManager.handleImageUrl(i),
+                                                      headers: {
+                                                        'Authorization': ApiManager.authToken
+                                                      }),
                                                 )),
                                           );
                                         },

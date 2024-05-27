@@ -60,25 +60,29 @@ class MyApp extends StatelessWidget {
             )..add(GetConnectionEvent()),
           ),
           //   BlocProvider<GamesBloc>(create: (BuildContext context) => GamesBloc.get()),
-          BlocProvider<PlaceCubit>(
-              create: (BuildContext context) => PlaceCubit.get()),
+          BlocProvider<PlaceCubit>(create: (BuildContext context) => PlaceCubit.get()),
         ],
         child: Sizer(builder: (context, orientation, deviceType) {
           AppRouter appRouter = AppRouter();
-          return MaterialApp(
-            title: LocalizationManager.getAppTitle(),
-            initialRoute: Routes.splash,
-            onGenerateRoute: appRouter.onGenerateRoute,
-            locale: LocalizationManager.getCurrentLocale(),
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: S.delegate.supportedLocales,
-            theme: getAppTheme(),
+          return BlocBuilder<MainCubit, MainState>(
+            bloc: MainCubit.get(),
+            builder: (context, state) {
+              return MaterialApp(
+                title: LocalizationManager.getAppTitle(),
+                initialRoute: Routes.splash,
+                onGenerateRoute: appRouter.onGenerateRoute,
+                locale: LocalizationManager.getCurrentLocale(),
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                theme: getAppTheme(),
+              );
+            },
           );
         }));
   }

@@ -131,7 +131,6 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future updatePlace(int placeId, {required PlaceEditForm newPlace}) async {
-    List<String> imagesUrl = newPlace.images;
     if (newPlace.imageFiles.isNotEmpty) {
       emit(UploadAttachmentsLoading());
       var imageResult = await _uploadPlaceImages(files: newPlace.imageFiles);
@@ -139,9 +138,12 @@ class PlaceCubit extends Cubit<PlaceState> {
         print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
         emit(UploadAttachmentsError(l));
       }, (r) {
+        List<String> imagesUrl = newPlace.images;
+        print(imagesUrl);
         print(r);
-        imagesUrl.addAll(r.map((e) => ApiManager.handleImageUrl(e)));
+        imagesUrl.addAll(r);
         newPlace.updateImages(imagesUrl);
+        print(newPlace.images);
       });
     }
     emit(UpdatePlaceLoading());

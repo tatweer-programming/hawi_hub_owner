@@ -145,7 +145,7 @@ class PlaceItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15.sp),
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(place.images.first,
+                        image: NetworkImage(ApiManager.handleImageUrl(place.images.first),
                             headers: {'Authorization': ApiManager.authToken}),
                       )),
                 ),
