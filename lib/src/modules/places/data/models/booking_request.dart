@@ -35,7 +35,7 @@ class BookingRequest extends Equatable {
       userId: json['playerId'],
       userName: json['player']['userName'],
       userImage: json['player']['profilePictureUrl'] ?? ImagesManager.defaultProfile,
-      id: json['playerId'],
+      id: json['reservationId'],
       startTime: DateTime.parse(json["reservationStartTime"]),
       endTime: DateTime.parse(json['reservationEndTime']),
       price: json['reservationPrice'].toDouble(),

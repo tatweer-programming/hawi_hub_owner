@@ -164,6 +164,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "receivedCode": MessageLookupByLibrary.simpleMessage("استلمت الرمز"),
         "rejectIdCard": MessageLookupByLibrary.simpleMessage(
             "تم رفض الملف تأكد من المطلوب جيدا واعد المحاولة"),
+        "requestAccepted":
+            MessageLookupByLibrary.simpleMessage("تم قبول الطلب"),
         "requests": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "requiredField":
             MessageLookupByLibrary.simpleMessage(" هذا الحقل مطلوب"),

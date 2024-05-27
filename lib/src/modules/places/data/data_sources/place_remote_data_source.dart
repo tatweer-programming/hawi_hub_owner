@@ -20,10 +20,9 @@ class PlaceRemoteDataSource {
     try {
       //print("getPlaces called");
       List<Place> places = [];
-      var response =
-          await DioHelper.getData(path: EndPoints.getPlaces + "1" /*TODO : userId */, query: {
-        "id": 1 //ConstantsManager.userId
-      });
+      var response = await DioHelper.getData(
+          path: "${EndPoints.getPlaces}${ConstantsManager.userId}" /*TODO : userId */,
+          query: {"id": ConstantsManager.userId});
 
       print(response.data);
       //print(response);
@@ -114,10 +113,13 @@ class PlaceRemoteDataSource {
   Future<Either<Exception, List<BookingRequest>>> getBookingRequests() async {
     try {
       List<BookingRequest> bookingRequests = [];
-      var response =
-          await DioHelper.getData(path: EndPoints.getBookingRequest + "2", query: {"stadiumId": 2});
+      var response = await DioHelper.getData(
+          path: "${EndPoints.getBookingRequest}${ConstantsManager.userId}",
+          query: {"id": ConstantsManager.userId});
       if (response.statusCode == 200) {
-        bookingRequests = (response.data as List).map((e) => BookingRequest.fromJson(e)).toList();
+        List data = response.data as List;
+        data.removeWhere((element) => element["approvalStatus"] != 0);
+        bookingRequests = (data).map((e) => BookingRequest.fromJson(e)).toList();
       }
       return Right(bookingRequests);
     } on DioException catch (e) {
@@ -130,15 +132,18 @@ class PlaceRemoteDataSource {
   Future<Either<Exception, Unit>> acceptBookingRequest(int requestId) async {
     try {
       await DioHelper.postData(
-          query: {"id": requestId},
-          path: EndPoints.acceptBookingRequest,
-          data: {
-            {"id": requestId}
-          }).then((value) {
-        //print(value.statusCode.toString() + value.data.toString());
-      });
+        query: {"id": requestId},
+        path: EndPoints.acceptBookingRequest + requestId.toString(),
+      );
       return const Right(unit);
     } on DioException catch (e) {
+      DioException dioException = e;
+      print(
+          "......................................................................الايرور هنا ....................................................");
+      print(dioException.error.toString() +
+          dioException.response.toString() +
+          dioException.message.toString() +
+          dioException.requestOptions.toString());
       return Left(e);
     } catch (e) {
       return Left(e as Exception);
@@ -149,10 +154,17 @@ class PlaceRemoteDataSource {
     try {
       await DioHelper.postData(
         query: {"id": requestId},
-        path: EndPoints.declineBookingRequest,
+        path: EndPoints.declineBookingRequest + requestId.toString(),
       );
       return const Right(unit);
     } on DioException catch (e) {
+      DioException dioException = e;
+      print(
+          "......................................................................الايرور هنا ....................................................");
+      print(dioException.error.toString() +
+          dioException.response.toString() +
+          dioException.message.toString() +
+          dioException.requestOptions.toString());
       return Left(e);
     } on Exception catch (e) {
       return Left(e);

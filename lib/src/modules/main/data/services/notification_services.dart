@@ -1,13 +1,14 @@
 import 'package:dartz/dartz.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class NotificationServices {
   Future<void> init() async {
-    final wsUrl = Uri.parse('ws://example.com');
+    final wsUrl = Uri.parse(ApiManager.webSocket);
     final channel = WebSocketChannel.connect(wsUrl);
     await channel.ready;
-
     channel.stream.listen((message) {
       channel.sink.add(message);
       channel.sink.close();
@@ -15,6 +16,7 @@ class NotificationServices {
   }
 
   Future<Either<Exception, List<AppNotification>>> getNotifications() async {
+    await startTimer(1);
     return const Right([]);
   }
 

@@ -163,6 +163,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "receivedCode": MessageLookupByLibrary.simpleMessage("Received Code"),
         "rejectIdCard": MessageLookupByLibrary.simpleMessage(
             "The file was rejected. Check the required information carefully and try again"),
+        "requestAccepted":
+            MessageLookupByLibrary.simpleMessage("Request Accepted"),
+        "requestRejected":
+            MessageLookupByLibrary.simpleMessage("Request Rejected"),
         "requests": MessageLookupByLibrary.simpleMessage("Requests"),
         "requiredField": MessageLookupByLibrary.simpleMessage("Required field"),
         "resetCodeSentSuccessfully": MessageLookupByLibrary.simpleMessage(

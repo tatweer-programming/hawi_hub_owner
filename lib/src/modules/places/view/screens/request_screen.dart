@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
+import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/extentions/date_extention.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
@@ -120,39 +122,52 @@ class RequestScreen extends StatelessWidget {
           ),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w),
-              child: BlocBuilder<PlaceCubit, PlaceState>(
-                  bloc: cubit,
-                  builder: (context, state) => Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: DefaultButton(
-                              text: S.of(context).accept,
-                              onPressed: () async {
-                                cubit.acceptBookingRequest(request.id!);
-                              },
-                              // height: 10.h,
-                              width: 30.w,
-                              isLoading: state is AcceptBookingRequestLoading,
+              child: BlocListener<PlaceCubit, PlaceState>(
+                listener: (context, state) {
+                  if (state is AcceptBookingRequestSuccess) {
+                    defaultToast(msg: S.of(context).requestAccepted);
+                    Navigator.pop(context);
+                  } else if (state is DeclineBookingRequestSuccess) {
+                    defaultToast(msg: S.of(context).requestRejected);
+                    Navigator.pop(context);
+                  } else if (state is PlaceError) {
+                    errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+                  }
+                },
+                child: BlocBuilder<PlaceCubit, PlaceState>(
+                    bloc: cubit,
+                    builder: (context, state) => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: DefaultButton(
+                                text: S.of(context).accept,
+                                onPressed: () async {
+                                  cubit.acceptBookingRequest(request.id!);
+                                },
+                                // height: 10.h,
+                                width: 30.w,
+                                isLoading: state is AcceptBookingRequestLoading,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 2.w),
-                          Expanded(
-                            child: DefaultButton(
-                              color: ColorManager.white,
-                              textColor: ColorManager.black,
-                              text: S.of(context).decline,
-                              borderColor: ColorManager.black,
-                              onPressed: () async {
-                                cubit.declineBookingRequest(request.id!);
-                              },
-                              width: 30.w,
-                              isLoading: state is DeclineBookingRequestLoading,
+                            SizedBox(width: 2.w),
+                            Expanded(
+                              child: DefaultButton(
+                                color: ColorManager.white,
+                                textColor: ColorManager.black,
+                                text: S.of(context).decline,
+                                borderColor: ColorManager.black,
+                                onPressed: () async {
+                                  cubit.declineBookingRequest(request.id!);
+                                },
+                                width: 30.w,
+                                isLoading: state is DeclineBookingRequestLoading,
+                              ),
                             ),
-                          ),
-                        ],
-                      )))
+                          ],
+                        )),
+              ))
         ],
       ),
     );

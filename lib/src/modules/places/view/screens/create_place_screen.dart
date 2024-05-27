@@ -7,6 +7,7 @@ import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
@@ -200,10 +201,11 @@ class CreatePlaceScreen extends StatelessWidget {
                               child: dropdownBuilder(
                                   text: cubit.selectedCityId == null
                                       ? S.of(context).city
-                                      : LocalizationManager.getSaudiCities[cubit.selectedCityId!],
+                                      : LocalizationManager
+                                          .getSaudiCities[cubit.selectedCityId! - 1],
                                   onChanged: (city) {
                                     cubit.selectedCityId =
-                                        LocalizationManager.getSaudiCities.indexOf(city!);
+                                        LocalizationManager.getSaudiCities.indexOf(city!) + 1;
                                     //print(cubit.selectedCityId);
                                   },
                                   items: LocalizationManager.getSaudiCities),
@@ -391,7 +393,7 @@ class CreatePlaceScreen extends StatelessWidget {
                             description: descriptionController.text,
                             address: addressController.text,
                             minimumHours: int.tryParse(minimumHoursController.text),
-                            ownerId: 1,
+                            ownerId: ConstantsManager.userId!,
                             sportId: cubit.selectedSport!,
                             price: double.tryParse(priceController.text) ?? 0.0,
                             location: cubit.placeLocation,

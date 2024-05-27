@@ -27,24 +27,28 @@ class MainScreen extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add_home_outlined),
             onPressed: () {
-              // if (ConstantsManager.appUser == null) {
-              //   errorToast(msg: S.of(context).loginFirst);
-              // } else {
-              //   if (ConstantsManager.appUser!.emailConfirmed == 0) {
-              //     errorToast(msg: S.of(context).shouldActivate);
-              //   } else {
-              //     context.push(Routes.createPlace);
-              //   }
-              // }
-              context.push(Routes.createPlace);
+              if (ConstantsManager.userId == null) {
+                errorToast(msg: S.of(context).loginFirst);
+              } else {
+                if (ConstantsManager.appUser!.approvalStatus == 0) {
+                  errorToast(msg: S.of(context).shouldActivate);
+                  context.push(Routes.createPlace);
+                } else {
+                  context.push(Routes.createPlace);
+                }
+              }
+              // context.push(Routes.createPlace);
             },
           ),
           bottomNavigationBar: const CustomBottomNavigationBar(),
           body: BlocListener<PlaceCubit, PlaceState>(
             listener: (context, state) {
               if (state is PlaceError) {
-                errorToast(
-                    msg: ExceptionManager(state.exception).translatedMessage());
+                errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+              } else if (state is AcceptBookingRequestSuccess) {
+                defaultToast(msg: S.of(context).requestAccepted);
+              } else if (state is DeclineBookingRequestSuccess) {
+                defaultToast(msg: S.of(context).requestRejected);
               }
             },
             child: BlocBuilder<MainCubit, MainState>(

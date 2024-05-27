@@ -190,7 +190,7 @@ class PlaceCubit extends Cubit<PlaceState> {
       //print(l);
       emit(AcceptBookingRequestError(l));
     }, (r) {
-      //print(r);
+      bookingRequests.removeWhere((element) => element.id == requestId);
       emit(AcceptBookingRequestSuccess());
     });
   }
@@ -201,6 +201,7 @@ class PlaceCubit extends Cubit<PlaceState> {
     result.fold((l) {
       emit(DeclineBookingRequestError(l));
     }, (r) {
+      bookingRequests.removeWhere((element) => element.id == requestId);
       emit(DeclineBookingRequestSuccess());
     });
   }
