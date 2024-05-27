@@ -6,4 +6,8 @@ class ApiManager {
   static String handleImageUrl(String url) {
     return baseUrl.replaceAll("/api", "") + url.toString().replaceAll("\\", "/");
   }
+
+  static String convertUrlToPath(String url) {
+    return url.replaceAll("/", "\\").replaceAll(baseUrl.replaceAll("/api", ""), "");
+  }
 }

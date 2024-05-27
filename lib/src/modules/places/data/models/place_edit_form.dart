@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 
@@ -53,13 +54,11 @@ class PlaceEditForm {
       "description": description,
       "pricePerHour": price,
       "minHoursReservation": minimumHours,
-      "imagesUrl": [
-        "Files\\Stadium\\Images\\a783bdf0-2479-48bb-a317-659a06556770_download (1).png"
-      ], // images,
+      "imagesUrl": images, // images,
     };
   }
 
   void updateImages(List<String> images) {
-    this.images = images;
+    this.images = images.map((e) => ApiManager.convertUrlToPath(e)).toList();
   }
 }

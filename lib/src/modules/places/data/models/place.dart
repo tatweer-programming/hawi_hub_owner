@@ -60,8 +60,7 @@ class Place extends Equatable {
       name: json['name'] ?? "",
       description: json['description'] ?? "",
       address: json['address'] ?? "",
-      images: List<String>.from(
-          json['images'].map((x) => ApiManager.handleImageUrl(x['stadiumImageUrl']))).toList(),
+      images: List<String>.from(json['images'].map((x) => x['stadiumImageUrl'])).toList(),
       // images: const [
       //   "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=400",
       //   "https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&w=400",

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
@@ -245,7 +246,8 @@ class EditPlaceScreen extends StatelessWidget {
                                                     borderRadius: BorderRadius.circular(15),
                                                     image: DecorationImage(
                                                       fit: BoxFit.cover,
-                                                      image: NetworkImage(i),
+                                                      image: NetworkImage(
+                                                          ApiManager.handleImageUrl(i)),
                                                     )),
                                               );
                                             },
@@ -359,20 +361,21 @@ class EditPlaceScreen extends StatelessWidget {
                       isLoading: state is UpdatePlaceLoading,
                       text: S.of(context).editPlace,
                       onPressed: () async {
-                        if (formKey.currentState!.validate()) {
+                        if (formKey.currentState!.validate() && validateImages()) {
                           PlaceEditForm placeEditForm = PlaceEditForm(
                             name: nameController.text,
                             description: descriptionController.text,
                             address: addressController.text,
-                            minimumHours: 1,
-                            ownerId: 1,
+                            minimumHours: double.tryParse(minimumHoursController.text) ??
+                                cubit.placeEditForm?.minimumHours,
+                            ownerId: cubit.currentPlace!.ownerId,
                             sport: cubit.selectedSport ?? cubit.currentPlace!.sport,
-                            price: 1,
+                            price: double.parse(priceController.text),
                             location: PlaceLocation(latitude: 2, longitude: 2),
                             workingHours: PlaceCubit.get().workingHours,
                             imageFiles: cubit.placeEditForm!.imageFiles,
                             images: cubit.placeEditForm!.images,
-                            cityId: 1,
+                            cityId: cubit.placeEditForm!.cityId,
                           );
                           await PlaceCubit.get().updatePlace(placeId, newPlace: placeEditForm);
                         } else {
@@ -389,18 +392,13 @@ class EditPlaceScreen extends StatelessWidget {
   }
 
   void showRequiredFieldToast(BuildContext context) {
-    PlaceCubit cubit = PlaceCubit.get();
-    if (cubit.selectedSport == null) {
-      errorToast(msg: S.of(context).sportIsRequired);
-    }
-    if (cubit.selectedCityId == null) {
-      errorToast(msg: S.of(context).cityIsRequired);
-    }
-    if (cubit.imageFiles.isEmpty) {
+    if (validateImages() == false) {
       errorToast(msg: S.of(context).imageIsRequired);
     }
-    if (cubit.selectedOwnershipFile == null) {
-      errorToast(msg: S.of(context).ownerShipIsRequired);
-    }
+  }
+
+  bool validateImages() {
+    return PlaceCubit.get().placeEditForm!.imageFiles.isNotEmpty ||
+        PlaceCubit.get().placeEditForm!.images.isNotEmpty;
   }
 }
