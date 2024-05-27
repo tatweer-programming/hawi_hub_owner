@@ -47,7 +47,6 @@ class Day extends Equatable {
         startBooking.minute >= startTime.minute &&
         endBooking.hour <= endTime.hour &&
         endBooking.minute <= endTime.minute;
-    return false;
   }
 }
 

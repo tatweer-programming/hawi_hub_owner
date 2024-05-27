@@ -8,15 +8,11 @@ import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
-import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
-import 'package:hawi_hub_owner/src/modules/auth/view/screens/profile_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
-import 'package:hawi_hub_owner/src/modules/main/view/widgets/connectivity.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../../generated/l10n.dart';
-import '../../../../payment/presentation/screens/my_wallet.dart';
 import '../custom_app_bar.dart';
 
 class MorePage extends StatelessWidget {

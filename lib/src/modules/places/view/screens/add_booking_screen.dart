@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
@@ -12,9 +9,7 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:intl/intl.dart';
-import 'package:progressive_time_picker/progressive_time_picker.dart';
 import 'package:sizer/sizer.dart';
 
 class AddBookingScreen extends StatefulWidget {
@@ -78,11 +73,11 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
 
   Future<void> _makeBooking() async {
     //print(selectedDate);
-    if (selectedDate == null || startTime == null || endTime == null) {
-      // Show error message
-      errorToast(msg: S.of(context).allFieldsIsRequired);
-      return;
-    }
+    // if (startTime == null) {
+    //   // Show error message
+    //   errorToast(msg: S.of(context).allFieldsIsRequired);
+    //   return;
+    // }
 
     // Validate that end time is after start time
     if (endTime.hour < startTime.hour ||

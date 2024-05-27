@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 

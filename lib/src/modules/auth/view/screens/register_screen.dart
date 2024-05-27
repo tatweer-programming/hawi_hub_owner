@@ -263,9 +263,19 @@ Widget _confirmTerms(
             icon: Icon(
                 acceptTerms ? Icons.check_box : Icons.check_box_outline_blank)),
         Expanded(
-            child: Text(
-          S.of(context).agreeTerms,
-          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
-        ))
+            child: InkWell(
+              onTap: (){
+                context.push(Routes.termsAndCondition);
+              },
+              child: Padding(
+                padding: EdgeInsetsDirectional.symmetric(
+                  vertical: 1.5.h
+                ),
+                child: Text(
+                          S.of(context).agreeTerms,
+                          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                        ),
+              ),
+            ))
       ],
     );

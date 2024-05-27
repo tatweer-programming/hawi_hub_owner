@@ -8,15 +8,12 @@ import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/data_sources/dummy_data.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/request_shimmers.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../core/utils/color_manager.dart';
 import '../../../main/view/widgets/connectivity.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
-import '../../data/models/booking_request.dart';
 
 class AllRequestsPage extends StatelessWidget {
   const AllRequestsPage({super.key});

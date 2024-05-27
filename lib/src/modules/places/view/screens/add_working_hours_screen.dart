@@ -186,12 +186,11 @@ class AddWorkingHours extends StatelessWidget {
     }
   }
 }
-
 class DayWidget extends StatefulWidget {
-  TextEditingController startController;
-  TextEditingController endController;
+  final TextEditingController startController;
+  final TextEditingController endController;
   final String title;
-  DayWidget(
+  const DayWidget(
       {super.key, required this.title, required this.startController, required this.endController});
 
   @override

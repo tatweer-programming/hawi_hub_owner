@@ -113,7 +113,7 @@ Widget _appBar(
         CircleAvatar(
           radius: 50.sp,
           backgroundColor: ColorManager.grey3,
-          backgroundImage: NetworkImage(profilePictureUrl!),
+          backgroundImage: NetworkImage(profilePictureUrl),
         ),
       if (profilePictureUrl == null)
         CircleAvatar(

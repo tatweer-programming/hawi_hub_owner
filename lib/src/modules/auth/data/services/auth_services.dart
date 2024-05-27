@@ -22,12 +22,13 @@ class AuthService {
           'email': authOwner.email,
           'username': authOwner.userName,
           'password': authOwner.password,
-          "profilePictureUrl" : authOwner.profilePictureUrl,
+          if (authOwner.profilePictureUrl != null)
+            "profilePictureUrl": authOwner.profilePictureUrl,
         },
         path: EndPoints.register,
       );
       //  //print(response.data.toString());
-       print(response.statusCode);
+      print(response.statusCode);
       if (response.statusCode == 200) {
         ConstantsManager.userId = response.data['id'];
         await CacheHelper.saveData(key: 'userId', value: response.data['id']);
@@ -42,8 +43,8 @@ class AuthService {
 
   Future<String> loginOwner(
       {required String email,
-        required String password,
-        required bool loginWithFBOrGG}) async {
+      required String password,
+      required bool loginWithFBOrGG}) async {
     try {
       Response response = await DioHelper.postData(
         data: {
