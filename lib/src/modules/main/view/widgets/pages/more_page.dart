@@ -75,7 +75,9 @@ class MorePage extends StatelessWidget {
                   //   title: "My Wallet",
                   // ),
                   _settingWidget(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(Routes.termsAndCondition);
+                    },
                     icon: "assets/images/icons/privacy.webp",
                     title: S.of(context).preferenceAndPrivacy,
                   ),
@@ -95,7 +97,9 @@ class MorePage extends StatelessWidget {
                     ),
                   ),
                   _settingWidget(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(Routes.questions);
+                    },
                     color: ColorManager.grey1,
                     icon: "assets/images/icons/question.webp",
                     title: S.of(context).commonQuestions,
