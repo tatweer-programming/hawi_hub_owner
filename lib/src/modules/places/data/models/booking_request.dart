@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hawi_hub_owner/src/core/utils/images_manager.dart';
-
+// ignore: must_be_immutable
 class BookingRequest extends Equatable {
 // use data
   final int userId;

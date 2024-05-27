@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,10 +14,6 @@ import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 import 'package:sizer/sizer.dart';
 import "package:timeago/timeago.dart" as timeago;
 

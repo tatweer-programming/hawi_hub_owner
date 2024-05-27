@@ -15,7 +15,6 @@ import 'package:hawi_hub_owner/src/modules/places/view/screens/place_location_sc
 import 'package:hawi_hub_owner/src/modules/places/view/screens/place_reviews.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/request_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/share_loaction_screen.dart';
-import '../../modules/chat/view/screens/chats_screen.dart';
 import '../../modules/main/view/screens/main_screen.dart';
 import '../../modules/main/view/screens/notifications_screen.dart';
 import '../../modules/main/view/screens/splash_screen.dart';

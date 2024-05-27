@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
-import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 
 //ignore: must_be_immutable
 class Message extends Equatable {

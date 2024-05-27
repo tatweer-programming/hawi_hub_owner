@@ -10,10 +10,6 @@ import 'package:hawi_hub_owner/src/core/local/shared_prefrences.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/auth_owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/repositories/auth_repository.dart';
-import 'package:image_picker/image_picker.dart';
-import '../data/models/owner.dart';
-import '../data/models/sport.dart';
-
 part 'auth_event.dart';
 
 part 'auth_state.dart';

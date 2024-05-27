@@ -14,13 +14,13 @@ import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
 import 'package:sizer/sizer.dart';
 import 'package:open_file/open_file.dart' as openFile;
 
 class CreatePlaceScreen extends StatelessWidget {
   CreatePlaceScreen({super.key});
+
   /*
    String name;
   String address;
@@ -34,14 +34,14 @@ class CreatePlaceScreen extends StatelessWidget {
   List<String> images;
   List<File> imageFiles;
     */
-  TextEditingController nameController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController minimumHoursController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController descriptionController = TextEditingController();
+    TextEditingController addressController = TextEditingController();
+    TextEditingController minimumHoursController = TextEditingController();
+    TextEditingController priceController = TextEditingController();
+    GlobalKey<FormState> formKey = GlobalKey<FormState>();
     PlaceCubit cubit = PlaceCubit.get();
     MainCubit mainCubit = MainCubit.get();
     return Scaffold(
@@ -110,7 +110,8 @@ class CreatePlaceScreen extends StatelessWidget {
                                   onPressed: () {
                                     context.push(Routes.pickLocation);
                                   },
-                                  icon: const Icon(Icons.add_location_alt_outlined),
+                                  icon: const Icon(
+                                      Icons.add_location_alt_outlined),
                                 ),
                                 labelText: S.of(context).address,
                                 hintText: S.of(context).address,
@@ -141,16 +142,19 @@ class CreatePlaceScreen extends StatelessWidget {
                                     TextField(
                                       readOnly: true,
                                       decoration: InputDecoration(
-                                        labelStyle:
-                                            Theme.of(context).inputDecorationTheme.labelStyle,
+                                        labelStyle: Theme.of(context)
+                                            .inputDecorationTheme
+                                            .labelStyle,
                                         labelText: S.of(context).workingHours,
                                       ),
                                     ),
                                     Positioned.fill(
                                         child: InkWell(
-                                            borderRadius: BorderRadius.circular(22),
+                                            borderRadius:
+                                                BorderRadius.circular(22),
                                             onTap: () {
-                                              context.push(Routes.addWorkingHours);
+                                              context
+                                                  .push(Routes.addWorkingHours);
                                             }))
                                   ],
                                 ),
@@ -162,7 +166,8 @@ class CreatePlaceScreen extends StatelessWidget {
                             controller: priceController,
                             decoration: InputDecoration(
                               labelText: S.of(context).price,
-                              hintText: S.of(context).price + S.of(context).perHour,
+                              hintText:
+                                  S.of(context).price + S.of(context).perHour,
                             ),
                             keyboardType: TextInputType.number,
                             validator: (value) {
@@ -185,13 +190,16 @@ class CreatePlaceScreen extends StatelessWidget {
                                       text: cubit.selectedSport == null
                                           ? S.of(context).sport
                                           : mainCubit.sportsList
-                                              .firstWhere(
-                                                  (element) => element.id == cubit.selectedSport!)
+                                              .firstWhere((element) =>
+                                                  element.id ==
+                                                  cubit.selectedSport!)
                                               .name,
                                       onChanged: (sport) {
                                         cubit.chooseSport(sport!);
                                       },
-                                      items: mainCubit.sportsList.map((e) => e.name).toList());
+                                      items: mainCubit.sportsList
+                                          .map((e) => e.name)
+                                          .toList());
                                 },
                               ),
                             ),
@@ -200,10 +208,12 @@ class CreatePlaceScreen extends StatelessWidget {
                               child: dropdownBuilder(
                                   text: cubit.selectedCityId == null
                                       ? S.of(context).city
-                                      : LocalizationManager.getSaudiCities[cubit.selectedCityId!],
+                                      : LocalizationManager.getSaudiCities[
+                                          cubit.selectedCityId!],
                                   onChanged: (city) {
-                                    cubit.selectedCityId =
-                                        LocalizationManager.getSaudiCities.indexOf(city!);
+                                    cubit.selectedCityId = LocalizationManager
+                                        .getSaudiCities
+                                        .indexOf(city!);
                                     //print(cubit.selectedCityId);
                                   },
                                   items: LocalizationManager.getSaudiCities),
@@ -246,7 +256,9 @@ class CreatePlaceScreen extends StatelessWidget {
                                                 width: 88.w,
                                                 decoration: BoxDecoration(
                                                     color: Colors.grey,
-                                                    borderRadius: BorderRadius.circular(15),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
                                                     image: DecorationImage(
                                                       fit: BoxFit.cover,
                                                       image: FileImage(i),
@@ -255,13 +267,16 @@ class CreatePlaceScreen extends StatelessWidget {
                                             },
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional.topEnd,
+                                            alignment:
+                                                AlignmentDirectional.topEnd,
                                             child: IconButton(
                                               onPressed: () {
                                                 cubit.removeImage(i.path);
                                               },
                                               icon: CircleAvatar(
-                                                backgroundColor: ColorManager.black.withOpacity(.5),
+                                                backgroundColor: ColorManager
+                                                    .black
+                                                    .withOpacity(.5),
                                                 child: const Icon(
                                                   Icons.remove_circle_outline,
                                                   color: ColorManager.white,
@@ -279,19 +294,22 @@ class CreatePlaceScreen extends StatelessWidget {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(),
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
                                         child: Center(
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
                                               IconButton(
                                                 onPressed: () async {
                                                   await cubit.addImages();
                                                 },
-                                                icon:
-                                                    const Icon(Icons.add_photo_alternate_outlined),
+                                                icon: const Icon(Icons
+                                                    .add_photo_alternate_outlined),
                                               ),
                                               Text(S.of(context).addImages)
                                             ],
@@ -318,29 +336,40 @@ class CreatePlaceScreen extends StatelessWidget {
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(22),
                                         borderSide: BorderSide(
-                                            color: cubit.selectedOwnershipFile == null
-                                                ? ColorManager.black
-                                                : ColorManager.primary),
+                                            color:
+                                                cubit.selectedOwnershipFile ==
+                                                        null
+                                                    ? ColorManager.black
+                                                    : ColorManager.primary),
                                       ),
-                                      labelStyle: Theme.of(context).inputDecorationTheme.labelStyle,
-                                      labelText: cubit.selectedOwnershipFile == null
+                                      labelStyle: Theme.of(context)
+                                          .inputDecorationTheme
+                                          .labelStyle,
+                                      labelText: cubit.selectedOwnershipFile ==
+                                              null
                                           ? S.of(context).ownershipFile
-                                          : cubit.selectedOwnershipFile!.path.split('/').last,
+                                          : cubit.selectedOwnershipFile!.path
+                                              .split('/')
+                                              .last,
                                     ),
                                   ),
                                   Positioned.fill(
                                       child: InkWell(
                                           customBorder: Border.all(
-                                              color: cubit.selectedOwnershipFile == null
-                                                  ? ColorManager.black
-                                                  : ColorManager.primary),
-                                          borderRadius: BorderRadius.circular(22),
+                                              color:
+                                                  cubit.selectedOwnershipFile ==
+                                                          null
+                                                      ? ColorManager.black
+                                                      : ColorManager.primary),
+                                          borderRadius:
+                                              BorderRadius.circular(22),
                                           onTap: () async {
-                                            if (cubit.selectedOwnershipFile == null) {
+                                            if (cubit.selectedOwnershipFile ==
+                                                null) {
                                               await cubit.selectOwnershipFile();
                                             } else {
-                                              await openFile.OpenFile.open(
-                                                  cubit.selectedOwnershipFile!.path);
+                                              await openFile.OpenFile.open(cubit
+                                                  .selectedOwnershipFile!.path);
                                             }
                                           })),
                                   Align(
@@ -371,7 +400,8 @@ class CreatePlaceScreen extends StatelessWidget {
                 defaultToast(msg: S.of(context).placeAdded);
                 context.pop();
               } else if (state is CreatePlaceError) {
-                errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+                errorToast(
+                    msg: ExceptionManager(state.exception).translatedMessage());
               }
             },
             child: BlocBuilder<PlaceCubit, PlaceState>(
@@ -386,11 +416,13 @@ class CreatePlaceScreen extends StatelessWidget {
                           : S.of(context).addPlace,
                       onPressed: () async {
                         if (_checkCreateValidation(formKey)) {
-                          PlaceCreationForm placeCreationForm = PlaceCreationForm(
+                          PlaceCreationForm placeCreationForm =
+                              PlaceCreationForm(
                             name: nameController.text,
                             description: descriptionController.text,
                             address: addressController.text,
-                            minimumHours: int.tryParse(minimumHoursController.text),
+                            minimumHours:
+                                int.tryParse(minimumHoursController.text),
                             ownerId: 1,
                             sportId: cubit.selectedSport!,
                             price: double.tryParse(priceController.text) ?? 0.0,

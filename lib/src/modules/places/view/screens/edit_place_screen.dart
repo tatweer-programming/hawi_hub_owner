@@ -8,14 +8,11 @@ import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
-import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
-import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
-import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
 import 'package:sizer/sizer.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
 
