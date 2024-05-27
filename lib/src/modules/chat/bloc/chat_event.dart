@@ -4,11 +4,7 @@ abstract class ChatEvent {
   const ChatEvent();
 }
 
-class GetMessagesEvent extends ChatEvent {
-  final String receiverId;
-
-  const GetMessagesEvent({required this.receiverId});
-}
+class GetMessagesEvent extends ChatEvent {}
 
 class EndChatEvent extends ChatEvent {
   final String receiverId;
@@ -24,12 +20,20 @@ class SendMessageEvent extends ChatEvent {
 
 class PickImageEvent extends ChatEvent {}
 
-class GetChatsEvent extends ChatEvent {}
-
 class RemovePickedImageEvent extends ChatEvent {}
 
 class RemoveRecordEvent extends ChatEvent {}
+
 class GetConnectionEvent extends ChatEvent {}
+
+class GetAllChatsEvent extends ChatEvent {}
+
+class GetChatMessagesEvent extends ChatEvent {
+  final int conversationId;
+  final int index;
+
+  GetChatMessagesEvent({required this.conversationId, required this.index});
+}
 
 class StartRecordingEvent extends ChatEvent {}
 

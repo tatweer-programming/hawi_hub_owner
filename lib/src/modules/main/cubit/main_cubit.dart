@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/sport.dart';
 
@@ -18,6 +19,7 @@ class MainCubit extends Cubit<MainState> {
 
   static MainCubit get() => cubit;
   MainServices mainServices = MainServices();
+
   MainCubit() : super(MainInitial());
   List<Widget> pages = [
     const HomePage(),
@@ -29,6 +31,7 @@ class MainCubit extends Cubit<MainState> {
   List<String> bannerList = [];
   List<Sport> sportsList = [];
   List<AppNotification> notifications = [];
+
   void changePage(int index) {
     currentIndex = index;
     emit(ChangePage(index));
@@ -44,6 +47,15 @@ class MainCubit extends Cubit<MainState> {
       bannerList = r;
       emit(GetBannersSuccess(r));
     });
+  }
+
+  Future<void> changeLanguage(int index) async {
+    await LocalizationManager.setLocale(index);
+    emit(ChangeLocaleState(index));
+  }
+
+  Future<void> showDialog() async {
+    emit(ShowDialogState());
   }
 
   Future<void> getSports() async {

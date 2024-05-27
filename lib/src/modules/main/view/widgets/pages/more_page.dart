@@ -10,10 +10,12 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/profile_screen.dart';
+import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/connectivity.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../../generated/l10n.dart';
 import '../../../../payment/presentation/screens/my_wallet.dart';
 import '../custom_app_bar.dart';
 
@@ -23,11 +25,11 @@ class MorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthBloc bloc = AuthBloc.get(context);
-    return BlocConsumer<AuthBloc, AuthState>(
+    MainCubit mainCubit = MainCubit.get();
+    return BlocConsumer<MainCubit, MainState>(
       listener: (context, state) {
-        if (state is LogoutSuccessState) {
-          bloc.add(PlaySoundEvent("audios/end.wav"));
-          context.pushAndRemove(Routes.login);
+        if (state is ShowDialogState) {
+          _showDialogForLanguage(context, mainCubit);
         }
       },
       builder: (context, state) {
@@ -75,12 +77,14 @@ class MorePage extends StatelessWidget {
                   _settingWidget(
                     onTap: () {},
                     icon: "assets/images/icons/privacy.webp",
-                    title: "Preference and Privacy",
+                    title: S.of(context).preferenceAndPrivacy,
                   ),
                   _settingWidget(
-                    onTap: () {},
-                    icon: "assets/images/icons/history.webp",
-                    title: "History",
+                    onTap: () {
+                      mainCubit.showDialog();
+                    },
+                    icon: "assets/images/icons/lang.png",
+                    title: S.of(context).language,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 1.h),
@@ -94,25 +98,35 @@ class MorePage extends StatelessWidget {
                     onTap: () {},
                     color: ColorManager.grey1,
                     icon: "assets/images/icons/question.webp",
-                    title: "Common Questions",
+                    title: S.of(context).commonQuestions,
                   ),
                   _settingWidget(
                     onTap: () {
                       Share.share(
-                          'hey! to share our app visit :https://play.google.com/store/apps/details?id=com.instagram.android',
-                          subject: 'Look what I made!');
+                          '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
+                          );
                     },
                     icon: "assets/images/icons/share_2.webp",
-                    title: "Share",
+                    title: S.of(context).share,
                     color: ColorManager.grey1,
                   ),
-                  _settingWidget(
-                    onTap: () {
-                      showLogoutDialog(context, bloc);
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is LogoutSuccessState) {
+                        bloc.add(PlaySoundEvent("audios/end.wav"));
+                        context.pushAndRemove(Routes.login);
+                      }
                     },
-                    icon: "assets/images/icons/logout.webp",
-                    title: "Logout",
-                    color: ColorManager.grey1,
+                    builder: (context, state) {
+                      return _settingWidget(
+                        onTap: () {
+                          showLogoutDialog(context, bloc);
+                        },
+                        icon: "assets/images/icons/logout.webp",
+                        title: S.of(context).logout,
+                        color: ColorManager.grey1,
+                      );
+                    },
                   ),
                 ],
               ),
@@ -156,7 +170,8 @@ Widget _settingWidget({
               ),
               Text(
                 title,
-                style: TextStyleManager.getCaptionStyle().copyWith(color: ColorManager.black),
+                style: TextStyleManager.getCaptionStyle()
+                    .copyWith(color: ColorManager.black),
               ),
               const Spacer(),
               Icon(
@@ -208,14 +223,16 @@ Widget _appBar(
                     CircleAvatar(
                       radius: 30.sp,
                       backgroundColor: ColorManager.grey3,
-                      backgroundImage: NetworkImage(ConstantsManager.appUser!.profilePictureUrl!),
+                      backgroundImage: NetworkImage(
+                          ConstantsManager.appUser!.profilePictureUrl!),
                     ),
                   if (ConstantsManager.appUser == null ||
                       ConstantsManager.appUser!.profilePictureUrl == null)
                     CircleAvatar(
                       radius: 30.sp,
                       backgroundColor: ColorManager.grey3,
-                      backgroundImage: const AssetImage("assets/images/icons/user.png"),
+                      backgroundImage:
+                          const AssetImage("assets/images/icons/user.png"),
                     ),
                 ],
               ),
@@ -237,16 +254,16 @@ showLogoutDialog(BuildContext context, AuthBloc bloc) {
             onPressed: () {
               context.pop();
             },
-            child: const Text(
-              "Cancel",
+            child: Text(
+              S.of(context).cancel,
             ),
           ),
           TextButton(
             onPressed: () {
               bloc.add(LogoutEvent());
             },
-            child: const Text(
-              "Logout",
+            child: Text(
+              S.of(context).logout,
             ),
           )
         ],
@@ -257,4 +274,30 @@ showLogoutDialog(BuildContext context, AuthBloc bloc) {
       );
     },
   );
+}
+
+_showDialogForLanguage(BuildContext context, MainCubit mainCubit) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            title: Row(
+          children: [
+            Expanded(
+                child: TextButton(
+                    onPressed: () {
+                      mainCubit.changeLanguage(0);
+                      context.pop();
+                    },
+                    child: const Text("Arabic"))),
+            Expanded(
+                child: TextButton(
+                    onPressed: () {
+                      mainCubit.changeLanguage(1);
+                      context.pop();
+                    },
+                    child: const Text("English"))),
+          ],
+        ));
+      });
 }

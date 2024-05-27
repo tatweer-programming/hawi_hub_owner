@@ -1349,6 +1349,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Preference and Privacy`
+  String get preferenceAndPrivacy {
+    return Intl.message(
+      'Preference and Privacy',
+      name: 'preferenceAndPrivacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share`
+  String get share {
+    return Intl.message(
+      'Share',
+      name: 'share',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Common Questions`
+  String get commonQuestions {
+    return Intl.message(
+      'Common Questions',
+      name: 'commonQuestions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `hey! to share our app visit `
+  String get shareApp {
+    return Intl.message(
+      'hey! to share our app visit ',
+      name: 'shareApp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

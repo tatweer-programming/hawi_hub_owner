@@ -57,10 +57,11 @@ class MyApp extends StatelessWidget {
           BlocProvider<ChatBloc>(
             create: (BuildContext context) => ChatBloc(
               ChatInitial(),
-            ),
+            )..add(GetConnectionEvent()),
           ),
           //   BlocProvider<GamesBloc>(create: (BuildContext context) => GamesBloc.get()),
-          BlocProvider<PlaceCubit>(create: (BuildContext context) => PlaceCubit.get()),
+          BlocProvider<PlaceCubit>(
+              create: (BuildContext context) => PlaceCubit.get()),
         ],
         child: Sizer(builder: (context, orientation, deviceType) {
           AppRouter appRouter = AppRouter();

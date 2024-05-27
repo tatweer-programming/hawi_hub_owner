@@ -17,26 +17,17 @@ class AuthService {
     required AuthOwner authOwner,
   }) async {
     try {
-      FormData map = FormData.fromMap({
-        'Email': authOwner.email,
-        'Username': authOwner.userName,
-        'Password': authOwner.password,
-      });
-      //  //print(authOwner.profilePictureUrl);
-      if (authOwner.profilePictureUrl != null) {
-        map.fields.add(
-          MapEntry(
-            'ProfilePicture',
-            authOwner.profilePictureUrl!,
-          ),
-        );
-      }
-      //  //print(map.files);
       Response response = await DioHelper.postData(
-        data: map,
+        data: {
+          'email': authOwner.email,
+          'username': authOwner.userName,
+          'password': authOwner.password,
+          "profilePictureUrl" : authOwner.profilePictureUrl,
+        },
         path: EndPoints.register,
       );
       //  //print(response.data.toString());
+       print(response.statusCode);
       if (response.statusCode == 200) {
         ConstantsManager.userId = response.data['id'];
         await CacheHelper.saveData(key: 'userId', value: response.data['id']);
@@ -44,19 +35,20 @@ class AuthService {
       }
       return Left(response.data.toString());
     } catch (e) {
+      print(e);
       return const Left("CHECK YOUR NETWORK");
     }
   }
 
   Future<String> loginOwner(
       {required String email,
-      required String password,
-      required bool loginWithFBOrGG}) async {
+        required String password,
+        required bool loginWithFBOrGG}) async {
     try {
       Response response = await DioHelper.postData(
         data: {
-          'Email': email,
-          'Password': password,
+          'email': email,
+          'password': password,
           'loginWithFBOrGG': loginWithFBOrGG
         },
         path: EndPoints.login,

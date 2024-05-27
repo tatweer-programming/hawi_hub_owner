@@ -8,7 +8,13 @@ class EndPoints {
   static const String verification = '/Owner/Verification';
 
   ///
-  static const String chat = '/chat/negotiate?negotiateVersion=1';
+  static const String getConnection = '/Hub/negotiate?negotiateVersion=1';
+  static const String addConnectionId = '/Hub/AddOwnerConnectionId/';
+  static const String addConversation = '/Hub/AddConversation';
+  static const String getOwnerConversations = '/Hub/OwnerConversations/';
+  static const String getConversation = '/Hub/Conversation/';
+  static const String uploadConversationAttachment =
+      '/Hub/UploadConversationAttachment';
 
   ///
   static const String getPlaces = 'Owner/GetStadiums/';
@@ -17,7 +23,8 @@ class EndPoints {
   static const String updatePlace = '/Stadium/Update/';
   static const String deletePlace = '/Stadium/Delete/';
   static const String uploadImages = '/uploadimage';
-  static const String getBookingRequest = '/Stadium/GetOwnerStadiumsReservations/';
+  static const String getBookingRequest =
+      '/Stadium/GetOwnerStadiumsReservations/';
   static const String getPlaceReservations = '/Stadium/GetReservations';
   static const String acceptBookingRequest = '/Owner/AcceptStadiumReservation/';
   static const String declineBookingRequest = '/Owner/RejectStadiumReservation/';
@@ -26,6 +33,7 @@ class EndPoints {
   static const String getBanners = '/Banner';
   static const String getNotifications = '/Notification';
   static const String getPlaceFeedbacks = '/Stadium/GetFeedbacks/';
-  static const String uploadProofOfOwnership = '/Stadium/UploadStadiumProofOfOwnership';
+  static const String uploadProofOfOwnership =
+      '/Stadium/UploadStadiumProofOfOwnership';
   static const String uploadPlaceImages = '/Stadium/UploadStadiumImages';
 }

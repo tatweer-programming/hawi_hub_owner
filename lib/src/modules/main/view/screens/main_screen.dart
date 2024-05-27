@@ -21,42 +21,47 @@ class MainScreen extends StatelessWidget {
       ..getBanner()
       ..getSports();
     AuthBloc.get(context).add(GetProfileEvent(ConstantsManager.userId!));
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_home_outlined),
-        onPressed: () {
-          // if (ConstantsManager.appUser == null) {
-          //   errorToast(msg: S.of(context).loginFirst);
-          // } else {
-          //   if (ConstantsManager.appUser!.emailConfirmed == 0) {
-          //     errorToast(msg: S.of(context).shouldActivate);
-          //   } else {
-          //     context.push(Routes.createPlace);
-          //   }
-          // }
-          context.push(Routes.createPlace);
-        },
-      ),
-      bottomNavigationBar: const CustomBottomNavigationBar(),
-      body: BlocListener<PlaceCubit, PlaceState>(
-        listener: (context, state) {
-          if (state is PlaceError) {
-            errorToast(msg: ExceptionManager(state.exception).translatedMessage());
-          }
-        },
-        child: BlocBuilder<MainCubit, MainState>(
-          bloc: mainCubit,
-          builder: (context, state) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  mainCubit.pages[mainCubit.currentIndex],
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+    return BlocBuilder<MainCubit, MainState>(
+      builder: (context, state) {
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add_home_outlined),
+            onPressed: () {
+              // if (ConstantsManager.appUser == null) {
+              //   errorToast(msg: S.of(context).loginFirst);
+              // } else {
+              //   if (ConstantsManager.appUser!.emailConfirmed == 0) {
+              //     errorToast(msg: S.of(context).shouldActivate);
+              //   } else {
+              //     context.push(Routes.createPlace);
+              //   }
+              // }
+              context.push(Routes.createPlace);
+            },
+          ),
+          bottomNavigationBar: const CustomBottomNavigationBar(),
+          body: BlocListener<PlaceCubit, PlaceState>(
+            listener: (context, state) {
+              if (state is PlaceError) {
+                errorToast(
+                    msg: ExceptionManager(state.exception).translatedMessage());
+              }
+            },
+            child: BlocBuilder<MainCubit, MainState>(
+              bloc: mainCubit,
+              builder: (context, state) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      mainCubit.pages[mainCubit.currentIndex],
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
+import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
+import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -13,129 +16,123 @@ import 'dart:ui' as ui;
 import '../../../../core/utils/styles_manager.dart';
 import '../../../auth/view/widgets/widgets.dart';
 
-class ChatScreen extends StatefulWidget {
-  final String receiverId;
-  final String receiverName;
-  final String imageProfile;
+class ChatScreen extends StatelessWidget {
+  final ChatBloc chatBloc;
+  final Chat? chat;
 
   const ChatScreen({
     super.key,
-    required this.receiverId,
-    required this.receiverName,
-    required this.imageProfile,
+    required this.chat,
+    required this.chatBloc,
   });
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  List<Message> messages = [];
-  IOWebSocketChannel? channel;
-
-  TextEditingController messageController = TextEditingController();
-  String? imagePath;
-
-  @override
-  void initState() {
-    super.initState();
-    connect();
-  }
-
-  Future<void> connect() async {
-    channel = IOWebSocketChannel.connect(
-      ApiManager.webSocket + ConstantsManager.connectionToken!,
-      headers: {"Authorization": ApiManager.authToken},
-    );
-
-    const String messageWithTrailingChars = '{"protocol":"json","version":1}';
-    channel!.sink.add(messageWithTrailingChars);
-
-    channel!.stream.listen((message) {
-      //print("message is $message");
-    });
-  }
-
-  sendMessage(Message message) {
-    messages.add(message);
-    setState(() {
-      messages;
-    });
-    const String messagee =
-        '{"type":1, "target":"PlayerSendMessageToOwner", "arguments":[{"PlayerId":1,"OwnerId":1,"Message":"Hi"}]}';
-    channel!.sink.add(messagee);
-    // socket!.emit('SendMessage', message.toJson());
-    messageController.clear();
-    imagePath = null;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _appBar(
-              context: context,
-              receiverName: widget.receiverName,
-              imageProfile: widget.imageProfile),
-          Expanded(
-              child: ListView.separated(
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 3.w,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _messageWidget(message: messages[index], isSender: true),
-                    SizedBox(
-                      height: 0.5.h,
-                    ),
-                    Text(
-                      messages[index].dateOfMessage,
-                      style: TextStyleManager.getCaptionStyle().copyWith(fontSize: 10.sp),
-                    ),
-                  ],
-                ),
-              );
-            },
-            separatorBuilder: (context, index) => SizedBox(
-              height: 2.h,
-            ),
-            itemCount: messages.length,
-          )),
-          if (imagePath != null)
-            _messageInput(imagePath, () {
-              setState(() {
-                imagePath = null;
-              });
-            }),
-          _sendButton((String? value) async {
-            if (value == 'image') {
-              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-              if (pickedFile != null) {
-                setState(() {
-                  imagePath = pickedFile.path;
-                });
-              }
-            } else if (value == 'voice') {
-              // Add code to record and send voice note
-            }
-          }, () {
-            setState(() {
-              sendMessage(Message(
-                  message: messageController.text,
-                  senderId: ConstantsManager.userId!,
-                  receiverId: 2,
-                  dateOfMessage: DateFormat('hh:mm a').format(DateTime.now()),
-                  imageUrl: null,
-                  voiceNoteUrl: null));
-            });
-          }),
-        ],
-      ),
+    TextEditingController messageController = TextEditingController();
+    String? imagePath;
+    List<Message> messages = [];
+    return BlocConsumer<ChatBloc, ChatState>(
+      listener: (context, state) {
+        if (state is GetChatMessagesSuccessState) {
+          messages = state.messages;
+        }
+        if (state is PickImageState) {
+          imagePath = state.imagePath;
+        } else if (state is RemovePickedImageState) {
+          imagePath = null;
+        }
+        if (state is SendMessageSuccessState) {
+          messages.add(state.message);
+          messageController.clear();
+          imagePath = null;
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _appBar(
+                  context: context,
+                  receiverName: chat!.lastMessage.player.userName,
+                  imageProfile: chat!.lastMessage.player.profilePictureUrl),
+              Expanded(
+                  child: StreamBuilder<Message>(
+                      stream: null,
+                      builder: (context, snapshot) {
+                        return ListView.separated(
+                          padding: EdgeInsetsDirectional.zero,
+                          itemBuilder: (context, index) {
+                            String formattedDate = '';
+                            if (messages[index].timeStamp != null) {
+                              formattedDate = DateFormat('mm:ss').format(
+                                  DateTime.parse(messages[index].timeStamp!));
+                            }
+                            bool? isOwner = messages[index].isOwner;
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 3.w,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: !isOwner!
+                                    ? CrossAxisAlignment.end
+                                    : CrossAxisAlignment.start,
+                                children: [
+                                  _messageWidget(
+                                      message: messages[index],
+                                      isSender: !isOwner),
+                                  SizedBox(
+                                    height: 0.5.h,
+                                  ),
+                                  Text(
+                                    formattedDate,
+                                    style: TextStyleManager.getCaptionStyle()
+                                        .copyWith(
+                                            fontSize: 10.sp,
+                                            color: ColorManager.black),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 2.h,
+                          ),
+                          itemCount: messages.length,
+                        );
+                      })),
+              if (imagePath != null)
+                _messageInput(imagePath, () {
+                  chatBloc.add(RemovePickedImageEvent());
+                }),
+              _sendButton(
+                (String? value) async {
+                  if (value == 'image') {
+                    chatBloc.add(PickImageEvent());
+                  } else if (value == 'voice') {
+                    // Add code to record and send voice note
+                  }
+                },
+                () {
+                  if (messageController.text.isNotEmpty || imagePath != null) {
+                    chatBloc.add(SendMessageEvent(
+                      message: Message(
+                        message: messageController.text,
+                        conversationId: chat!.conversationId,
+                        connectionId: ConstantsManager.connectionId,
+                        attachmentUrl: imagePath,
+                        isOwner: false,
+                        timeStamp: DateTime.now().toString(),
+                      ),
+                    ));
+                  }
+                },
+                messageController,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -166,7 +163,7 @@ Widget _messageInput(String? image, VoidCallback onTap) {
 Widget _appBar({
   required BuildContext context,
   required String receiverName,
-  required String imageProfile,
+  required String? imageProfile,
 }) {
   return Container(
     height: 18.h,
@@ -192,7 +189,8 @@ Widget _appBar({
               CircleAvatar(
                 radius: 16.sp,
                 backgroundColor: ColorManager.primary,
-                backgroundImage: NetworkImage(imageProfile),
+                backgroundImage:
+                    imageProfile == null ? null : NetworkImage(imageProfile),
               ),
               SizedBox(
                 width: 2.w,
@@ -214,9 +212,9 @@ Widget _messageWidget({required Message message, required bool isSender}) {
   if (message.message != null) {
     return _textWidget(isSender: isSender, message: message.message!);
   }
-  if (message.imageUrl != null) {
-    return _imageWidget(isSender: isSender, image: message.imageUrl!);
-  }
+  // if (message.attachmentUrl != null) {
+  //   return _imageWidget(isSender: isSender, image: message.attachmentUrl!);
+  // }
   if (message.voiceNoteUrl != null) {
     return _voiceWidget(isSender: isSender, voice: message.voiceNoteUrl!);
   }
@@ -225,7 +223,8 @@ Widget _messageWidget({required Message message, required bool isSender}) {
 
 Widget _textWidget({required bool isSender, required String message}) {
   return Align(
-    alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+    alignment:
+        isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
     child: Container(
       decoration: BoxDecoration(
         color: ColorManager.grey3.withOpacity(0.4),
@@ -254,7 +253,8 @@ Widget _textWidget({required bool isSender, required String message}) {
 
 Widget _imageWidget({required bool isSender, required String image}) {
   return Align(
-    alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+    alignment:
+        isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
     child: Container(
       height: 20.h,
       width: 60.w,
@@ -284,7 +284,9 @@ Widget _voiceWidget({
     mainAxisSize: MainAxisSize.min,
     children: [
       Align(
-        alignment: isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+        alignment: isSender
+            ? AlignmentDirectional.topEnd
+            : AlignmentDirectional.topStart,
         child: Directionality(
           textDirection: isSender ? ui.TextDirection.rtl : ui.TextDirection.ltr,
           child: VoiceMessageView(
@@ -317,7 +319,8 @@ Widget _voiceWidget({
   );
 }
 
-Widget _sendButton(ValueChanged<String?> onTap, VoidCallback onSend) {
+Widget _sendButton(ValueChanged<String?> onTap, VoidCallback onSend,
+    TextEditingController messageController) {
   return Padding(
     padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 1.h),
     child: Row(
@@ -325,35 +328,36 @@ Widget _sendButton(ValueChanged<String?> onTap, VoidCallback onSend) {
         SizedBox(
           height: 8.h,
           child: DropdownButton<String>(
-              items: const [
-                DropdownMenuItem<String>(
-                  value: 'image',
-                  child: Icon(Icons.image),
+            items: const [
+              DropdownMenuItem<String>(
+                value: 'image',
+                child: Icon(Icons.image),
+              ),
+              DropdownMenuItem<String>(
+                value: 'voice',
+                child: Icon(Icons.mic),
+              ),
+            ],
+            underline: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                CircleAvatar(
+                  backgroundColor: ColorManager.third,
+                  radius: 19.sp,
                 ),
-                DropdownMenuItem<String>(
-                  value: 'voice',
-                  child: Icon(Icons.mic),
+                CircleAvatar(
+                  backgroundColor: ColorManager.white,
+                  radius: 15.sp,
+                  child: Icon(
+                    Icons.add,
+                    size: 20.sp,
+                    color: ColorManager.primary,
+                  ),
                 ),
               ],
-              underline: Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: ColorManager.third,
-                    radius: 19.sp,
-                  ),
-                  CircleAvatar(
-                    backgroundColor: ColorManager.white,
-                    radius: 15.sp,
-                    child: Icon(
-                      Icons.add,
-                      size: 20.sp,
-                      color: ColorManager.primary,
-                    ),
-                  ),
-                ],
-              ),
-              onChanged: onTap),
+            ),
+            onChanged: onTap,
+          ),
         ),
         SizedBox(
           width: 3.w,
@@ -362,6 +366,7 @@ Widget _sendButton(ValueChanged<String?> onTap, VoidCallback onSend) {
           child: SizedBox(
             height: 6.h,
             child: TextField(
+              controller: messageController,
               decoration: InputDecoration(
                 fillColor: ColorManager.grey3.withOpacity(0.3),
                 filled: true,

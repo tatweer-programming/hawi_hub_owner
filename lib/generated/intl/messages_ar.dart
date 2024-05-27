@@ -52,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("المدينة مطلوبة"),
         "code": MessageLookupByLibrary.simpleMessage("الرمز "),
+        "commonQuestions":
+            MessageLookupByLibrary.simpleMessage("الاسئلة الشائعة"),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
         "confirmPassword":
@@ -100,12 +102,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidValue": MessageLookupByLibrary.simpleMessage("قيمة غير صالخة"),
         "keepMeLoggedIn":
             MessageLookupByLibrary.simpleMessage("أبقِ تسجيل دخولي"),
+        "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginFirst":
             MessageLookupByLibrary.simpleMessage("يجب تسجيل الدخول أولا"),
         "loginSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم تسجيل الدخول إلى الحساب بنجاح"),
+        "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
         "minimumHours":
@@ -149,6 +153,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل أمكانك بنجاح"),
         "placeName": MessageLookupByLibrary.simpleMessage("اسم المكان"),
         "places": MessageLookupByLibrary.simpleMessage("الأماكن"),
+        "preferenceAndPrivacy":
+            MessageLookupByLibrary.simpleMessage("التفضيل والخصوصية"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "proofOfIdentityAddedSuccessfully":
@@ -170,6 +176,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "sendCode": MessageLookupByLibrary.simpleMessage("إرسال الرمز"),
         "sendCodeAfter":
             MessageLookupByLibrary.simpleMessage("يمكنك الارسال بعد "),
+        "share": MessageLookupByLibrary.simpleMessage("مشاركة"),
+        "shareApp":
+            MessageLookupByLibrary.simpleMessage("لمشاركة التطبيق زور  "),
         "shortPassword": MessageLookupByLibrary.simpleMessage(
             "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل."),
         "shouldActivate":

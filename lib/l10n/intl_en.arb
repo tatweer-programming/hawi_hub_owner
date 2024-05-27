@@ -128,5 +128,11 @@
   "noFeedbacks": "No Feedbacks yet",
   "noAlerts": "No Alerts",
   "viewFeedbacks": "View Feedbacks",
-  "uploadingAttachment" : "Uploading Attachments..."
+  "uploadingAttachment" : "Uploading Attachments...",
+  "preferenceAndPrivacy": "Preference and Privacy",
+  "logout": "Logout",
+  "share": "Share",
+  "commonQuestions": "Common Questions",
+  "language": "Language",
+  "shareApp": "hey! to share our app visit "
 }

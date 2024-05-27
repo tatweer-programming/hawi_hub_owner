@@ -1,43 +1,25 @@
 import 'package:equatable/equatable.dart';
+import 'package:hawi_hub_owner/src/modules/chat/data/models/last_message.dart';
 
 class Chat extends Equatable {
-  final String name;
-  final String lastMessage;
-  final String imageProfile;
-  final String dateOfLastSeen;
-  final String userId;
-  final int numberOfUnreadMessages;
+  final int ownerId;
+  final int conversationId;
+  final LastMessage lastMessage;
 
   const Chat({
-    required this.name,
+    required this.ownerId,
+    required this.conversationId,
     required this.lastMessage,
-    required this.imageProfile,
-    required this.dateOfLastSeen,
-    required this.userId,
-    required this.numberOfUnreadMessages,
   });
 
   factory Chat.fromJson(Map<String, dynamic> json) {
     return Chat(
-      name: json["name"],
-      lastMessage: json["lastMessage"],
-      imageProfile: json["imageProfile"],
-      dateOfLastSeen: json["dateOfLastSeen"],
-      userId: json["userId"],
-      numberOfUnreadMessages: json["numberOfUnreadMessages"],
+      conversationId: json["conversationId"],
+      ownerId: json["ownerId"],
+      lastMessage: LastMessage.fromJson(json["lastMessage"]),
     );
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [
-    name,
-  ];
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     "receiverName": receiverName,
-  //     "receiverId": receiverId,
-  //   };
-  // }
-
+  List<Object?> get props => [];
 }

@@ -11,7 +11,9 @@ final class MainInitial extends MainState {
 
 class MainError extends MainState {
   final Exception exception;
+
   const MainError(this.exception);
+
   @override
   List<Object> get props => [];
 }
@@ -34,6 +36,20 @@ class GetBannersSuccess extends MainState {
   final List<String> banners;
 
   const GetBannersSuccess(this.banners);
+
+  @override
+  List<Object> get props => [];
+}
+
+class ChangeLocaleState extends MainState {
+  final int index;
+
+  const ChangeLocaleState(this.index);
+
+  @override
+  List<Object> get props => [index];
+}
+class ShowDialogState extends MainState {
 
   @override
   List<Object> get props => [];

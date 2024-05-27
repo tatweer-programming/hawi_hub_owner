@@ -52,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("City is required"),
         "code": MessageLookupByLibrary.simpleMessage("Code"),
+        "commonQuestions":
+            MessageLookupByLibrary.simpleMessage("Common Questions"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm delete"),
         "confirmPassword":
@@ -99,12 +101,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidValue": MessageLookupByLibrary.simpleMessage("Invalid Value"),
         "keepMeLoggedIn":
             MessageLookupByLibrary.simpleMessage("Keep me logged in"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
         "location": MessageLookupByLibrary.simpleMessage("Location"),
         "login": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "loginFirst":
             MessageLookupByLibrary.simpleMessage("You should login first"),
         "loginSuccessfully":
             MessageLookupByLibrary.simpleMessage("Account LogeIn Successfully"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("Minimum booking"),
         "minimumHours":
@@ -147,6 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Place edited successfully"),
         "placeName": MessageLookupByLibrary.simpleMessage("Place name"),
         "places": MessageLookupByLibrary.simpleMessage("Places"),
+        "preferenceAndPrivacy":
+            MessageLookupByLibrary.simpleMessage("Preference and Privacy"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "proofOfIdentityAddedSuccessfully":
@@ -167,6 +173,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "sendCode": MessageLookupByLibrary.simpleMessage("Send Code"),
         "sendCodeAfter":
             MessageLookupByLibrary.simpleMessage("You can resend code after "),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "shareApp": MessageLookupByLibrary.simpleMessage(
+            "hey! to share our app visit "),
         "shortPassword": MessageLookupByLibrary.simpleMessage(
             "Password must be at least 6 characters."),
         "shouldActivate": MessageLookupByLibrary.simpleMessage(
