@@ -32,6 +32,8 @@ Future<void> main() async {
   ConstantsManager.userId = await CacheHelper.getData(key: 'userId');
 
   await LocalizationManager.init();
+  print(DateTime.now().add(Duration(days: 1, hours: 1)));
+  print(DateTime.now().add(Duration(days: 1, hours: 2)));
   runApp(const MyApp());
 }
 

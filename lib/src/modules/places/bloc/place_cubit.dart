@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/sport.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
@@ -133,13 +134,13 @@ class PlaceCubit extends Cubit<PlaceState> {
     List<String> imagesUrl = newPlace.images;
     if (newPlace.imageFiles.isNotEmpty) {
       emit(UploadAttachmentsLoading());
-      var imageResult = await _uploadPlaceImages(files: imageFiles);
+      var imageResult = await _uploadPlaceImages(files: newPlace.imageFiles);
       imageResult.fold((l) {
         print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
         emit(UploadAttachmentsError(l));
       }, (r) {
         print(r);
-        imagesUrl.addAll(r);
+        imagesUrl.addAll(r.map((e) => ApiManager.handleImageUrl(e)));
         newPlace.updateImages(imagesUrl);
       });
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
@@ -292,4 +293,8 @@ class FeedBackWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+ImageProvider getDefaultNetworkImageProvider(String url) {
+  return NetworkImage(url, headers: const {'Authorization': ApiManager.authToken});
 }

@@ -15,7 +15,7 @@ class NotificationServices {
   }
 
   Future<Either<Exception, List<AppNotification>>> getNotifications() async {
-    throw UnimplementedError();
+    return const Right([]);
   }
 
   Future<Either<Exception, Unit>> sendNotification(AppNotification appNotification) async {

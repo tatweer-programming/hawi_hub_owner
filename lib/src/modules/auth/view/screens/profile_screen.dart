@@ -82,11 +82,7 @@ class ProfileScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      _emailConfirmed(
-                          bloc: bloc,
-                          owner: owner,
-                          context: context,
-                          state: state),
+                      _emailConfirmed(bloc: bloc, owner: owner, context: context, state: state),
                     ],
                   ),
                 )
@@ -233,12 +229,10 @@ Widget _peopleRateBuilder(AppFeedBack feedBack, BuildContext context) {
           Container(
             height: 12.h,
             width: double.infinity,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.sp),
-                border: Border.all()),
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(25.sp), border: Border.all()),
             child: Padding(
-              padding: EdgeInsetsDirectional.symmetric(
-                  horizontal: 3.w, vertical: 1.h),
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 3.w, vertical: 1.h),
               child: Row(children: [
                 CircleAvatar(
                   radius: 20.sp,
@@ -274,10 +268,7 @@ Widget _peopleRateBuilder(AppFeedBack feedBack, BuildContext context) {
             children: [
               Text(
                 feedBack.userName,
-                style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.green,
-                    fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 12.sp, color: Colors.green, fontWeight: FontWeight.w500),
               ),
               SizedBox(width: 1.w),
               RatingBar.builder(
@@ -465,8 +456,7 @@ Widget _verified({
                 children: [
                   Text(
                     S.of(context).peopleRate,
-                    style:
-                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
                   _seeAll(() {
@@ -511,7 +501,6 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    if (ConstantsManager.userId == owner.id)
-      _walletWidget(() {}, owner.myWallet.toString()),
+    if (ConstantsManager.userId == owner.id) _walletWidget(() {}, owner.myWallet.toString()),
   ]);
 }

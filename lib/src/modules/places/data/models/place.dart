@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
@@ -59,13 +60,14 @@ class Place extends Equatable {
       name: json['name'] ?? "",
       description: json['description'] ?? "",
       address: json['address'] ?? "",
-      images: const [
-        "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=400",
-        "https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&w=400",
-        "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
-      ],
+      images: List<String>.from(
+          json['images'].map((x) => ApiManager.handleImageUrl(x['stadiumImageUrl']))).toList(),
+      // images: const [
+      //   "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=400",
+      //   "https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&w=400",
+      //   "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
+      // ],
       /*
-       json['images'].map((x) => x['url']).toList(),
        */
       ownerId: json['ownerId'] ?? 0,
       minimumHours: json['minHoursReservation'] ?? 0,

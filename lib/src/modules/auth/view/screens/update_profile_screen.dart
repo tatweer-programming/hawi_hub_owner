@@ -110,10 +110,7 @@ class EditProfileScreen extends StatelessWidget {
   }
 }
 
-Widget _appBar(
-    {required BuildContext context,
-    required Owner owner,
-    required AuthBloc bloc}) {
+Widget _appBar({required BuildContext context, required Owner owner, required AuthBloc bloc}) {
   return Stack(
     alignment: AlignmentDirectional.bottomCenter,
     children: [
@@ -211,8 +208,7 @@ Widget changePassWidget(
                         onPressed: () {
                           bloc.add(ChangePasswordVisibilityEvent(visible));
                         },
-                        icon: Icon(
-                            visible ? Icons.visibility_off : Icons.visibility)),
+                        icon: Icon(visible ? Icons.visibility_off : Icons.visibility)),
                     validator: (value) {
                       if (value.isEmpty) {
                         return S.of(context).enterPassword;
@@ -242,7 +238,7 @@ Widget changePassWidget(
                     validator: (value) {
                       if (value.isEmpty) {
                         return S.of(context).enterConfirmPassword;
-                      }else if (value != newPasswordController.text) {
+                      } else if (value != newPasswordController.text) {
                         return S.of(context).passwordDoesNotMatch;
                       }
                       return null;

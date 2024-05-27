@@ -43,8 +43,7 @@ class MyWallet extends StatelessWidget {
                   alignment: AlignmentDirectional.centerStart,
                   child: Text(
                     "My Wallet",
-                    style:
-                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(

@@ -32,8 +32,9 @@ class EditPlaceScreen extends StatelessWidget {
         TextEditingController(text: cubit.placeEditForm!.address);
     TextEditingController minimumHoursController =
         TextEditingController(text: cubit.placeEditForm!.minimumHours?.toString());
-    TextEditingController priceController =
-        TextEditingController(text: cubit.placeEditForm!.price.toString());
+    TextEditingController priceController = TextEditingController(
+      text: cubit.placeEditForm!.price.toString(),
+    );
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: Column(

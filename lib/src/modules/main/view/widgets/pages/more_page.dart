@@ -156,8 +156,7 @@ Widget _settingWidget({
               ),
               Text(
                 title,
-                style: TextStyleManager.getCaptionStyle()
-                    .copyWith(color: ColorManager.black),
+                style: TextStyleManager.getCaptionStyle().copyWith(color: ColorManager.black),
               ),
               const Spacer(),
               Icon(
@@ -209,15 +208,14 @@ Widget _appBar(
                     CircleAvatar(
                       radius: 30.sp,
                       backgroundColor: ColorManager.grey3,
-                      backgroundImage: NetworkImage(
-                          ConstantsManager.appUser!.profilePictureUrl!),
+                      backgroundImage: NetworkImage(ConstantsManager.appUser!.profilePictureUrl!),
                     ),
-                  if (ConstantsManager.appUser == null || ConstantsManager.appUser!.profilePictureUrl == null)
+                  if (ConstantsManager.appUser == null ||
+                      ConstantsManager.appUser!.profilePictureUrl == null)
                     CircleAvatar(
                       radius: 30.sp,
                       backgroundColor: ColorManager.grey3,
-                      backgroundImage:
-                          const AssetImage("assets/images/icons/user.png"),
+                      backgroundImage: const AssetImage("assets/images/icons/user.png"),
                     ),
                 ],
               ),

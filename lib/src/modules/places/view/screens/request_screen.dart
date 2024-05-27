@@ -41,7 +41,7 @@ class RequestScreen extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 10.h,
                             backgroundColor: ColorManager.grey1,
-                            backgroundImage: NetworkImage(request.userImage),
+                            backgroundImage: getDefaultNetworkImageProvider(request.userImage),
                           ),
                         ),
                         SafeArea(

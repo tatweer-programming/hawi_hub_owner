@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
@@ -144,7 +145,8 @@ class PlaceItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15.sp),
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(place.images.first),
+                        image: NetworkImage(place.images.first,
+                            headers: {'Authorization': ApiManager.authToken}),
                       )),
                 ),
                 Expanded(
