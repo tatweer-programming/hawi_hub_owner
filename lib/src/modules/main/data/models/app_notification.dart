@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class AppNotification {
   final String title;
   final String body;
@@ -14,5 +16,20 @@ class AppNotification {
       image: json['image'],
       link: json['link'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'body': body,
+      'image': image,
+      'link': link,
+      'date_time': DateTime.now().toIso8601String(),
+    };
+  }
+
+  String jsonBody() {
+    String argumentsJson = jsonEncode([toJson()]);
+    return '{"type":1, "target":"SendMessageToPlayer", "arguments":$argumentsJson}';
   }
 }

@@ -124,6 +124,7 @@ class PlaceCubit extends Cubit<PlaceState> {
         emit(CreatePlaceError(l));
       }, (r) {
         emit(CreatePlaceSuccess());
+        getPlaces();
       });
     }
   }

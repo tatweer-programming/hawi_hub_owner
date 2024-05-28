@@ -11,6 +11,7 @@ class DioHelper {
         "Authorization": ApiManager.authToken,
         "Connection": "keep-alive",
       },
+      contentType: "application/json",
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
     ));

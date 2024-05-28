@@ -77,7 +77,8 @@ dependencies:
   file_picker: ^8.0.2
   open_file:
   open_file_plus: ^3.4.1+1
-
+  flutter_local_notifications:
+  signalr_core:
 dev_dependencies:
   flutter_test:
     sdk: flutter

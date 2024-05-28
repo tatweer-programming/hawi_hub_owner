@@ -13,6 +13,7 @@ import 'package:hawi_hub_owner/src/core/utils/theme_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:sizer/sizer.dart';
 import "package:timeago/timeago.dart" as timeago;
@@ -26,8 +27,7 @@ Future<void> main() async {
   ConstantsManager.userId = await CacheHelper.getData(key: 'userId');
   ConstantsManager.isFirstTime = await CacheHelper.getData(key: 'firstTime');
   await LocalizationManager.init();
-  print(DateTime.now().add(const Duration(days: 1, hours: 1)));
-  print(DateTime.now().add(const Duration(days: 1, hours: 2)));
+  await NotificationServices.init();
 
   runApp(const MyApp());
 }
