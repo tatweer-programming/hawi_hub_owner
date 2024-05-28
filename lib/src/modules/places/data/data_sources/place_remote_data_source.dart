@@ -21,7 +21,8 @@ class PlaceRemoteDataSource {
       //print("getPlaces called");
       List<Place> places = [];
       var response = await DioHelper.getData(
-          path: "${EndPoints.getPlaces}${ConstantsManager.userId}" /*TODO : userId */,
+          path:
+              "${EndPoints.getPlaces}${ConstantsManager.userId}" /*TODO : userId */,
           query: {"id": ConstantsManager.userId});
 
       print(response.data);
@@ -47,7 +48,8 @@ class PlaceRemoteDataSource {
     }
   }
 
-  Future<Either<Exception, Unit>> createPlace(PlaceCreationForm placeCreationForm) async {
+  Future<Either<Exception, Unit>> createPlace(
+      PlaceCreationForm placeCreationForm) async {
     try {
       debugPrint("creating place");
       var res = await DioHelper.postData(
@@ -97,9 +99,11 @@ class PlaceRemoteDataSource {
 
   Future<Either<Exception, Unit>> deletePlace(int placeId) async {
     try {
-      await DioHelper.deleteData(path: EndPoints.deletePlace + placeId.toString(), query: {
-        "id": placeId,
-      }).then((value) {
+      await DioHelper.deleteData(
+          path: EndPoints.deletePlace + placeId.toString(),
+          query: {
+            "id": placeId,
+          }).then((value) {
         //print(value.statusCode.toString() + value.data.toString());
       });
       return const Right(unit);
@@ -119,7 +123,8 @@ class PlaceRemoteDataSource {
       if (response.statusCode == 200) {
         List data = response.data as List;
         data.removeWhere((element) => element["approvalStatus"] != 0);
-        bookingRequests = (data).map((e) => BookingRequest.fromJson(e)).toList();
+        bookingRequests =
+            (data).map((e) => BookingRequest.fromJson(e)).toList();
       }
       return Right(bookingRequests);
     } on DioException catch (e) {
@@ -135,6 +140,7 @@ class PlaceRemoteDataSource {
         query: {"id": requestId},
         path: EndPoints.acceptBookingRequest + requestId.toString(),
       );
+      await _createChat();
       return const Right(unit);
     } on DioException catch (e) {
       DioException dioException = e;
@@ -191,13 +197,32 @@ class PlaceRemoteDataSource {
     }
   }
 
-  Future<Either<Exception, List<AppFeedBack>>> getPlaceFeedbacks(int placeId) async {
+  Future<Either<Exception, Unit>> _createChat() async {
+    try {
+      var res = await DioHelper.postData(
+        path: EndPoints.addConversation,
+        data: {
+          "ownerId": ConstantsManager.userId,
+          "playerId": 1,
+          "lastTimeToChat": "2025-05-27T16:37:05.049Z"
+        },
+      );
+      return const Right(unit);
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
+
+  Future<Either<Exception, List<AppFeedBack>>> getPlaceFeedbacks(
+      int placeId) async {
     try {
       List<AppFeedBack> appFeedBacks = [];
-      var response =
-          await DioHelper.getData(path: EndPoints.getPlaceFeedbacks + placeId.toString());
+      var response = await DioHelper.getData(
+          path: EndPoints.getPlaceFeedbacks + placeId.toString());
       if (response.statusCode == 200) {
-        appFeedBacks = (response.data as List).map((e) => AppFeedBack.fromJson(e)).toList();
+        appFeedBacks = (response.data as List)
+            .map((e) => AppFeedBack.fromJson(e))
+            .toList();
       }
       return Right(appFeedBacks);
     } on Exception catch (e) {
@@ -212,7 +237,8 @@ class PlaceRemoteDataSource {
       FormData formData = FormData.fromMap({
         "ProofOfOwnershipFile": MultipartFile.fromFileSync(file.path),
       });
-      var response = await DioHelper.postFormData(EndPoints.uploadProofOfOwnership, formData);
+      var response = await DioHelper.postFormData(
+          EndPoints.uploadProofOfOwnership, formData);
       print(response.data);
       return Right(response.data["proofOfOwnershipUrl"]);
     } on Exception catch (e) {
@@ -228,11 +254,14 @@ class PlaceRemoteDataSource {
       var response = await DioHelper.postFormData(
           EndPoints.uploadPlaceImages,
           FormData.fromMap({
-            "images": files.map((e) => MultipartFile.fromFileSync(e.path)).toList(),
+            "images":
+                files.map((e) => MultipartFile.fromFileSync(e.path)).toList(),
           }));
 
       if (response.statusCode == 200) {
-        images = (response.data["imegesUrl"] as List).map((e) => e.toString()).toList();
+        images = (response.data["imegesUrl"] as List)
+            .map((e) => e.toString())
+            .toList();
       }
       return Right(images);
     } on Exception catch (e) {
@@ -244,6 +273,7 @@ class PlaceRemoteDataSource {
 Future<bool> startTimer(double seconds) async {
   int secondsInt = seconds.truncate();
   int milliseconds = (seconds - secondsInt).toInt() * 1000;
-  await Future.delayed(Duration(seconds: secondsInt, milliseconds: milliseconds));
+  await Future.delayed(
+      Duration(seconds: secondsInt, milliseconds: milliseconds));
   return true;
 }
