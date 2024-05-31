@@ -32,17 +32,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc(ChatInitial chatInitial) : super(ChatInitial()) {
     on<ChatEvent>((event, emit) async {
       if (event is StartRecordingEvent) {
-        await startRecord();
+        await _startRecord();
         emit(StartRecordState());
       } else if (event is EndRecordingEvent) {
-        await stopRecord();
+        await _stopRecord();
         emit(EndRecordState());
       } else if (event is ScrollingDownEvent) {
         // if (event.listScrollController.hasClients) {
-        Future.delayed(const Duration(seconds: 1)).then((value) {
-          final position = event.listScrollController.position.maxScrollExtent;
-          event.listScrollController.jumpTo(position);
-          //print("object");
+        // Future.delayed(const Duration(seconds: 1)).then((value) {
+        //   final position = event.listScrollController.position.maxScrollExtent;
+        //   event.listScrollController.jumpTo(position);
+        //   //print("object");
+        // });
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _scrollToBottom(event.listScrollController);
         });
         emit(ScrollingDownState());
         // }
@@ -126,11 +129,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         }, (r) {
           emit(SendMessageSuccessState(event.message));
         });
+      } else if (event is StreamMessagesEvent) {
+        // listenToMessages();
+        var stream = _service.streamMessage();
+        await for (Message message in stream) {
+          emit(StreamMessagesSuccessState(message));
+        }
       }
     });
   }
 
-  Future<bool> checkPermission() async {
+  Future<bool> _checkPermission() async {
     if (!await Permission.microphone.isGranted) {
       PermissionStatus status = await Permission.microphone.request();
       if (status != PermissionStatus.granted) {
@@ -140,7 +149,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     return true;
   }
 
-  Future<String> getFilePath() async {
+  Future<String> _getFilePath() async {
     Directory storageDirectory = await getApplicationDocumentsDirectory();
     String sdPath = "${storageDirectory.path}/record";
     var d = Directory(sdPath);
@@ -150,15 +159,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     return "$sdPath/${DateTime.now().millisecondsSinceEpoch.toString()}.mp3";
   }
 
-  Future<void> startRecord() async {
-    bool hasPermission = await checkPermission();
+  Future<void> _startRecord() async {
+    bool hasPermission = await _checkPermission();
     if (hasPermission) {
       AudioPlayer audioPlayer = AudioPlayer();
       await audioPlayer
           .play(AssetSource("audios/notiication_start_recording.wav"));
       statusText = "Recording...";
       audioPlayer.onPlayerComplete.listen((_) async {
-        voiceNoteFilePath = await getFilePath();
+        voiceNoteFilePath = await _getFilePath();
         statusText = "Message";
         isComplete = false;
         if (await record.hasPermission()) {
@@ -170,7 +179,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-  Future<void> stopRecord() async {
+  void _scrollToBottom(ScrollController scrollController) {
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 5),
+      curve: Curves.easeOut,
+    );
+  }
+
+  Future<void> _stopRecord() async {
     AudioPlayer audioPlayer = AudioPlayer();
     voiceNoteFilePath = await record.stop();
     double seconds = 0;

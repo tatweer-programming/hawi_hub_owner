@@ -41,10 +41,9 @@ class Message extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      "Message": message,
-      "AttachmentUrl": attachmentUrl,
       "ConversationId": conversationId,
-      "ConnectionId": connectionId,
+      "Message": message,
+      "AttachmentUrl": attachmentUrl
     };
   }
 

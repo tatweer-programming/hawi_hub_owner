@@ -46,11 +46,14 @@ class AuthService {
       required String password,
       required bool loginWithFBOrGG}) async {
     try {
+      print(email);
+      print(password);
+      print(loginWithFBOrGG);
       Response response = await DioHelper.postData(
         data: {
-          'email': email,
-          'password': password,
-          'loginWithFBOrGG': loginWithFBOrGG
+          "email": email,
+          "password": password,
+          "loginWithFBOrGG": loginWithFBOrGG
         },
         path: EndPoints.login,
       );
@@ -63,7 +66,7 @@ class AuthService {
       }
       return response.data.toString();
     } catch (e) {
-      return "CHECK YOUR NETWORK";
+      return "Email is not exists.";
     }
   }
 

@@ -35,54 +35,54 @@ final ThemeData customTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
           return const Color(0x1F000000);
-        } else if (states.contains(MaterialState.dragged) ||
-            states.contains(MaterialState.error) ||
-            states.contains(MaterialState.focused) ||
-            states.contains(MaterialState.hovered) ||
-            states.contains(MaterialState.pressed) ||
-            states.contains(MaterialState.scrolledUnder) ||
-            states.contains(MaterialState.selected)) {
+        } else if (states.contains(WidgetState.dragged) ||
+            states.contains(WidgetState.error) ||
+            states.contains(WidgetState.focused) ||
+            states.contains(WidgetState.hovered) ||
+            states.contains(WidgetState.pressed) ||
+            states.contains(WidgetState.scrolledUnder) ||
+            states.contains(WidgetState.selected)) {
           return const Color(0xFF00DB55);
         }
         return null;
       }),
-      elevation: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
+      elevation: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
           return 0;
-        } else if (states.contains(MaterialState.focused) ||
-            states.contains(MaterialState.hovered)) {
+        } else if (states.contains(WidgetState.focused) ||
+            states.contains(WidgetState.hovered)) {
           return 4;
-        } else if (states.contains(MaterialState.pressed)) {
+        } else if (states.contains(WidgetState.pressed)) {
           return 8;
         }
         return 1;
       }),
-      foregroundColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
+      foregroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
           return const Color(0x61000000);
         } else {
           return const Color(0xFFFFFFFF);
         }
       }),
-      minimumSize: MaterialStateProperty.resolveWith((states) {
+      minimumSize: WidgetStateProperty.resolveWith((states) {
         return const Size(64, 36);
       }),
-      overlayColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.focused)) {
+      overlayColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.focused)) {
           return const Color(0x3D000000);
-        } else if (states.contains(MaterialState.hovered) ||
-            states.contains(MaterialState.pressed)) {
+        } else if (states.contains(WidgetState.hovered) ||
+            states.contains(WidgetState.pressed)) {
           return const Color(0x14000000);
         }
         return null;
       }),
-      shadowColor: MaterialStateProperty.resolveWith((states) {
+      shadowColor: WidgetStateProperty.resolveWith((states) {
         return const Color(0xFF000000);
       }),
-      shape: MaterialStateProperty.resolveWith((states) {
+      shape: WidgetStateProperty.resolveWith((states) {
         return const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.elliptical(26, 26),
@@ -99,10 +99,10 @@ final ThemeData customTheme = ThemeData(
     foregroundColor: Color(0xFFFFFFFF),
   ),
   focusColor: const Color(0x1F000000),
-  highlightColor: const Color(0xff66bcbcbc),
+  highlightColor: const Color(0xffbcbcbc),
   hintColor: const Color(0x99000000),
   hoverColor: const Color(0x0A000000),
-  indicatorColor: const Color(0xffff00db55),
+  indicatorColor: const Color(0xff00db55),
   inputDecorationTheme: const InputDecorationTheme(
     alignLabelWithHint: false,
     border: OutlineInputBorder(
@@ -147,7 +147,7 @@ final ThemeData customTheme = ThemeData(
       textBaseline: TextBaseline.alphabetic,
     ),
     bodyMedium: TextStyle(
-      color: Color(0xff0424242),
+      color: Color(0xff424242),
       decoration: TextDecoration.none,
       fontFamily: 'Roboto_regular',
       fontFamilyFallback: ['Roboto'],
@@ -292,13 +292,11 @@ final ThemeData customTheme = ThemeData(
       textBaseline: TextBaseline.alphabetic,
     ),
   ), colorScheme: const ColorScheme(
-    background: Color(0xffff4de688),
     brightness: Brightness.light,
     error: Color(0xFFB00020),
     errorContainer: Color(0xFFB00020),
     inversePrimary: Color(0xFFFFFFFF),
     inverseSurface: Color(0xFF000000),
-    onBackground: Color(0xFF000000),
     onError: Color(0xFFFFFFFF),
     onErrorContainer: Color(0xFFFFFFFF),
     onInverseSurface: Color(0xFFFFFFFF),
@@ -320,7 +318,6 @@ final ThemeData customTheme = ThemeData(
     shadow: Color(0xFF000000),
     surface: Color(0xFFFFFFFF),
     surfaceTint: Color(0xFF6200EE),
-    surfaceVariant: Color(0xFFFFFFFF),
     tertiary: Color(0xFF03DAC6),
     tertiaryContainer: Color(0xFF03DAC6),
   ).copyWith(error: ColorManager.error),

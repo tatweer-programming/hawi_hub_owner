@@ -62,7 +62,11 @@ class GetChatMessagesErrorState extends ChatState {
 }
 
 //stream messages
-class StreamMessagesSuccessState extends ChatState {}
+class StreamMessagesSuccessState extends ChatState {
+  Message streamMessage;
+
+  StreamMessagesSuccessState(this.streamMessage);
+}
 
 class ScrollingDownState extends ChatState {}
 

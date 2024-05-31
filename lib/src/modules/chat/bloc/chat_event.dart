@@ -20,6 +20,8 @@ class SendMessageEvent extends ChatEvent {
 
 class PickImageEvent extends ChatEvent {}
 
+class StreamMessagesEvent extends ChatEvent {}
+
 class RemovePickedImageEvent extends ChatEvent {}
 
 class RemoveRecordEvent extends ChatEvent {}

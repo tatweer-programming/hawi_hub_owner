@@ -126,7 +126,7 @@ class AddWorkingHours extends StatelessWidget {
                                     SizedBox(height: 2.h),
                                   ],
                                 ))
-                            .toList()
+
                       ])),
                 ],
               ),
