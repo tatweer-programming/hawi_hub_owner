@@ -10,4 +10,12 @@ class AuthOwner {
     required this.email,
     required this.profilePictureUrl,
   });
+  Map<String, dynamic> toJson(){
+    return {
+      "userName": userName,
+      "email": email,
+      "password": password,
+      // "profilePictureUrl": profilePictureUrl
+    };
+  }
 }

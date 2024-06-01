@@ -16,10 +16,10 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthBloc.get(context).add(GetProfileEvent(ConstantsManager.userId!));
     MainCubit mainCubit = MainCubit.get()
       ..getBanner()
       ..getSports();
-    AuthBloc.get(context).add(GetProfileEvent(ConstantsManager.userId!));
     return BlocBuilder<MainCubit, MainState>(
       builder: (context, state) {
         return Scaffold(

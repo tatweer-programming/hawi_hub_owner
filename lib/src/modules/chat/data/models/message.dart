@@ -8,8 +8,8 @@ class Message extends Equatable {
   final int? conversationId;
   final String? connectionId;
   final bool? isOwner;
-  final String? message;
-  final String? attachmentUrl;
+  String? message;
+  String? attachmentUrl;
   final String? timeStamp;
   String? voiceNoteUrl;
 
@@ -35,6 +35,7 @@ class Message extends Equatable {
   }
 
   String jsonBody() {
+    print(toJson());
     String argumentsJson = jsonEncode([toJson()]);
     return '{"type":1, "target":"SendMessageToPlayer", "arguments":$argumentsJson}';
   }

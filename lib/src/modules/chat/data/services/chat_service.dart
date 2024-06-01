@@ -73,6 +73,11 @@ class ChatService {
 
   Future<Either<String, Unit>> sendMessage({required Message message}) async {
     try {
+      if (message.attachmentUrl != null) {
+        message.attachmentUrl =
+            await uploadFile(message.attachmentUrl!, message.conversationId!);
+        message.message = null;
+      }
       socket!.add(message.jsonBody());
       return const Right(unit);
     } catch (e) {
@@ -82,12 +87,15 @@ class ChatService {
 
   Stream<Message> streamMessage() {
     try {
-      StreamController<Message> messageStreamController = StreamController<Message>.broadcast();
+      StreamController<Message> messageStreamController =
+          StreamController<Message>.broadcast();
       socket!.listen((data) {
+        print("data  $data");
         if (data != '{"type":6}' && data != '{}') {
           String message =
               data.toString().replaceAll(RegExp(r'[\x00-\x1F]+'), '');
           final Map<String, dynamic> jsonData = jsonDecode(message);
+          print(jsonData);
           messageStreamController.add(Message(
             message: jsonData["arguments"][0]["playerMessage"],
             attachmentUrl: jsonData["arguments"][0]["playerAttachmentUrl"],
@@ -120,6 +128,24 @@ class ChatService {
     } catch (e) {
       print(e);
       return Left(e.toString());
+    }
+  }
+
+  Future<String> uploadFile(String filePath, int conversationId) async {
+    try {
+      FormData formData = FormData.fromMap({
+        "ConversationId": conversationId.toString(),
+        "ConversationAttachment": MultipartFile.fromFileSync(filePath),
+      });
+      Response response = await DioHelper.postFormData(
+          EndPoints.uploadConversationAttachment, formData);
+      if (response.statusCode == 200) {
+        return response.data['conversationImageUrl'];
+      }
+      return response.data.toString();
+    } catch (e) {
+      print(e);
+      return e.toString();
     }
   }
 

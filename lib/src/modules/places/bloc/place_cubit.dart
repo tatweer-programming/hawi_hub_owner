@@ -220,7 +220,7 @@ class PlaceCubit extends Cubit<PlaceState> {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowMultiple: false,
-      allowedExtensions: ['pdf'],
+      allowedExtensions: ['pdfs'],
     );
 
     if (result != null) {

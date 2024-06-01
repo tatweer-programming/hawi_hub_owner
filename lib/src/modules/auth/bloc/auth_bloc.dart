@@ -4,12 +4,16 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/local/shared_prefrences.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/auth_owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/repositories/auth_repository.dart';
+import 'package:open_file_plus/open_file_plus.dart';
+import 'package:path_provider/path_provider.dart';
+
 part 'auth_event.dart';
 
 part 'auth_state.dart';
@@ -17,7 +21,8 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   static AuthBloc instance = AuthBloc(AuthInitial());
 
-  static AuthBloc get(BuildContext context) => BlocProvider.of<AuthBloc>(context);
+  static AuthBloc get(BuildContext context) =>
+      BlocProvider.of<AuthBloc>(context);
 
   final AuthRepository _repository = AuthRepository();
 
@@ -28,13 +33,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>((event, emit) async {
       if (event is RegisterPlayerEvent) {
         emit(RegisterLoadingState());
-        var result = await _repository.registerPlayer(authOwner: event.authOwner);
-        result.fold(
-            (l) => emit(RegisterErrorState(l)), (r) => emit(RegisterSuccessState(value: r)));
+        var result =
+            await _repository.registerPlayer(authOwner: event.authOwner);
+        result.fold((l) => emit(RegisterErrorState(l)),
+            (r) => emit(RegisterSuccessState(value: r)));
       } else if (event is LoginPlayerEvent) {
         emit(LoginLoadingState());
         await _repository
-            .loginPlayer(email: event.email, password: event.password, loginWithFBOrGG: false)
+            .loginPlayer(
+                email: event.email,
+                password: event.password,
+                loginWithFBOrGG: false)
             .then((value) {
           if (value == "Account LogedIn Successfully") {
             emit(LoginSuccessState(value));
@@ -49,14 +58,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: event.email,
           password: event.password,
         );
-        result.fold(
-            (l) => emit(VerifyCodeErrorState(l)), (r) => emit(VerifyCodeSuccessState(value: r)));
+        result.fold((l) => emit(VerifyCodeErrorState(l)),
+            (r) => emit(VerifyCodeSuccessState(value: r)));
       } else if (event is ResetPasswordEvent) {
         add(StartResendCodeTimerEvent(120));
         emit(ResetPasswordLoadingState());
         await _repository.resetPassword(event.email).then((value) {
           if (value == "Reset code sent successfully to ${event.email}.") {
-            String msg = "${S.of(event.context).resetCodeSentSuccessfully} ${event.email}.";
+            String msg =
+                "${S.of(event.context).resetCodeSentSuccessfully} ${event.email}.";
             emit(ResetPasswordSuccessState(msg));
           } else {
             emit(ResetPasswordErrorState(value));
@@ -138,6 +148,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }, (r) {
           emit(UploadNationalIdSuccessState(r));
         });
+      } else if (event is OpenPdfEvent) {
+        File pdfFile = await _loadPdfFromAssets();
+        OpenFile.open(pdfFile.path);
+        emit(OpenPdfState());
       } else if (event is UpdateProfilePictureEvent) {
         add(AddImageEvent());
         if (state is AddImageSuccessState) {
@@ -191,10 +205,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
   }
 }
-
+Future<File> _loadPdfFromAssets() async {
+  final byteData = await rootBundle.load('assets/pdfs/Requirements.pdf');
+  final file = File('${(await getTemporaryDirectory()).path}/Requirements.pdf');
+  await file.writeAsBytes(byteData.buffer.asUint8List());
+  return file;
+}
 Future _clearUserData() async {
   ConstantsManager.userId = null;
-  await CacheHelper.removeData(key: "id");
+  ConstantsManager.appUser = null;
+  await CacheHelper.removeData(key: "userId");
 }
 
 Future<File?> _captureAndSaveGalleryImage() async {

@@ -32,9 +32,9 @@ class ProfileScreen extends StatelessWidget {
         if (state is UploadNationalIdSuccessState) {
           context.pop();
           bloc.add(GetProfileEvent(ConstantsManager.userId!));
-          errorToast(msg: handleResponseTranslation(state.msg, context));
           context.pop();
         } else if (state is UploadNationalIdErrorState) {
+          context.pop();
           errorToast(msg: handleResponseTranslation(state.error, context));
         }
         if (state is UploadNationalIdLoadingState) {
@@ -43,7 +43,12 @@ class ProfileScreen extends StatelessWidget {
             barrierDismissible: false,
             builder: (context) {
               return const AlertDialog(
-                content: Center(child: CircularProgressIndicator()),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Center(child: CircularProgressIndicator()),
+                  ],
+                ),
               );
             },
           );
@@ -79,7 +84,11 @@ class ProfileScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      _emailConfirmed(bloc: bloc, owner: owner, context: context, state: state),
+                      _emailConfirmed(
+                          bloc: bloc,
+                          owner: owner,
+                          context: context,
+                          state: state),
                     ],
                   ),
                 )
@@ -226,10 +235,12 @@ Widget _peopleRateBuilder(AppFeedBack feedBack, BuildContext context) {
           Container(
             height: 12.h,
             width: double.infinity,
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(25.sp), border: Border.all()),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.sp),
+                border: Border.all()),
             child: Padding(
-              padding: EdgeInsetsDirectional.symmetric(horizontal: 3.w, vertical: 1.h),
+              padding: EdgeInsetsDirectional.symmetric(
+                  horizontal: 3.w, vertical: 1.h),
               child: Row(children: [
                 CircleAvatar(
                   radius: 20.sp,
@@ -265,7 +276,10 @@ Widget _peopleRateBuilder(AppFeedBack feedBack, BuildContext context) {
             children: [
               Text(
                 feedBack.userName,
-                style: TextStyle(fontSize: 12.sp, color: Colors.green, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.green,
+                    fontWeight: FontWeight.w500),
               ),
               SizedBox(width: 1.w),
               RatingBar.builder(
@@ -307,7 +321,7 @@ Widget _emailConfirmed({
       state: state,
     );
   } else {
-    return _pending(context, S.of(context).rejectIdCard);
+    return _rejectedAndTryAgain(context, S.of(context).rejectIdCard, bloc);
   }
 }
 
@@ -337,9 +351,20 @@ Widget _notVerified(AuthBloc bloc) {
           SizedBox(
             height: 2.h,
           ),
-          Text(
-            "Upload your national ID",
-            style: TextStyleManager.getSubTitleStyle(),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  S.of(context).addRequiredPdf,
+                  style: TextStyleManager.getSubTitleStyle(),
+                ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    bloc.add(OpenPdfEvent());
+                  },
+                  icon: const Icon(Icons.picture_as_pdf))
+            ],
           ),
           SizedBox(
             height: 3.h,
@@ -415,6 +440,21 @@ Widget _pending(BuildContext context, String text) {
   );
 }
 
+Widget _rejectedAndTryAgain(BuildContext context, String text, AuthBloc bloc) {
+  return Column(
+    children: [
+      SizedBox(
+        height: 10.h,
+      ),
+      Text(
+        text,
+        style: TextStyleManager.getSecondarySubTitleStyle(),
+      ),
+      _notVerified(bloc)
+    ],
+  );
+}
+
 Widget _verified({
   required Owner owner,
   required BuildContext context,
@@ -453,7 +493,8 @@ Widget _verified({
                 children: [
                   Text(
                     S.of(context).peopleRate,
-                    style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
                   _seeAll(() {
@@ -498,6 +539,7 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    if (ConstantsManager.userId == owner.id) _walletWidget(() {}, owner.myWallet.toString()),
+    if (ConstantsManager.userId == owner.id)
+      _walletWidget(() {}, owner.myWallet.toString()),
   ]);
 }

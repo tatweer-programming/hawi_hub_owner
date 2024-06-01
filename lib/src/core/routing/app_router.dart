@@ -33,7 +33,7 @@ class AppRouter {
                 ? (ConstantsManager.isFirstTime == true || ConstantsManager.isFirstTime == null
                     ? const GetStartedScreen()
                     : const LoginScreen())
-                : const ChatsScreen(),
+                : const MainScreen(),
           ),
         );
       case Routes.place:
@@ -50,7 +50,7 @@ class AppRouter {
       // case Routes.profile:
       //   return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case Routes.createPlace:
-        return MaterialPageRoute(builder: (_) => CreatePlaceScreen());
+        return MaterialPageRoute(builder: (_) => const CreatePlaceScreen());
       case Routes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.pickLocation:

@@ -7,6 +7,7 @@ import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 
@@ -216,22 +217,7 @@ Widget _appBar(
                       ),
                     ),
                   ),
-                  if (ConstantsManager.appUser != null &&
-                      ConstantsManager.appUser!.profilePictureUrl != null)
-                    CircleAvatar(
-                      radius: 30.sp,
-                      backgroundColor: ColorManager.grey3,
-                      backgroundImage: NetworkImage(
-                          ConstantsManager.appUser!.profilePictureUrl!),
-                    ),
-                  if (ConstantsManager.appUser == null ||
-                      ConstantsManager.appUser!.profilePictureUrl == null)
-                    CircleAvatar(
-                      radius: 30.sp,
-                      backgroundColor: ColorManager.grey3,
-                      backgroundImage:
-                          const AssetImage("assets/images/icons/user.png"),
-                    ),
+                  navToProfile(context:context,radius: 30.sp)
                 ],
               ),
             ],

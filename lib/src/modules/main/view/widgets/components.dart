@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
+import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
+import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
@@ -23,6 +26,7 @@ class DefaultButton extends StatelessWidget {
   final double? radius;
   final bool isLoading;
   final bool enabled;
+
   const DefaultButton(
       {super.key,
       required this.text,
@@ -61,7 +65,8 @@ class DefaultButton extends StatelessWidget {
             SizedBox(width: 5.sp),
             isLoading
                 ? CircularProgressIndicator.adaptive(
-                    valueColor: AlwaysStoppedAnimation<Color>(textColor ?? ColorManager.white),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        textColor ?? ColorManager.white),
                   )
                 : Text(text,
                     style: TextStyle(
@@ -80,12 +85,15 @@ class TitleText extends StatelessWidget {
   final String text;
   final bool isBold;
   final Color? color;
+
   const TitleText(this.text, {super.key, this.isBold = true, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        style: isBold ? TextStyleManager.getTitleBoldStyle() : TextStyleManager.getTitleStyle());
+        style: isBold
+            ? TextStyleManager.getTitleBoldStyle()
+            : TextStyleManager.getTitleStyle());
   }
 }
 
@@ -102,8 +110,9 @@ class SubTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        style:
-            isBold ? TextStyleManager.getSubTitleBoldStyle() : TextStyleManager.getSubTitleStyle());
+        style: isBold
+            ? TextStyleManager.getSubTitleBoldStyle()
+            : TextStyleManager.getSubTitleStyle());
   }
 }
 
@@ -191,7 +200,8 @@ class NotificationWidget extends StatelessWidget {
                             style: TextStyleManager.getSubTitleBoldStyle())),
                     Text(
                         timeago.format(notification.dateTime!,
-                            locale: LocalizationManager.getCurrentLocale().languageCode),
+                            locale: LocalizationManager.getCurrentLocale()
+                                .languageCode),
                         style: TextStyleManager.getSubTitleStyle()),
                     SizedBox(width: 1.w),
                     const FittedBox(
@@ -215,6 +225,7 @@ class NotificationWidget extends StatelessWidget {
 
 class FeedBackWidget extends StatelessWidget {
   final AppFeedBack feedBack;
+
   const FeedBackWidget({super.key, required this.feedBack});
 
   @override
@@ -229,10 +240,12 @@ class FeedBackWidget extends StatelessWidget {
             Container(
               height: 12.h,
               width: double.infinity,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(25.sp), border: Border.all()),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.sp),
+                  border: Border.all()),
               child: Padding(
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 3.w, vertical: 1.h),
+                padding: EdgeInsetsDirectional.symmetric(
+                    horizontal: 3.w, vertical: 1.h),
                 child: Row(children: [
                   CircleAvatar(
                     radius: 20.sp,
@@ -268,8 +281,10 @@ class FeedBackWidget extends StatelessWidget {
               children: [
                 Text(
                   feedBack.userName,
-                  style:
-                      TextStyle(fontSize: 12.sp, color: Colors.green, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 12.sp,
+                      color: Colors.green,
+                      fontWeight: FontWeight.w500),
                 ),
                 SizedBox(width: 1.w),
                 RatingBar.builder(
@@ -296,5 +311,26 @@ class FeedBackWidget extends StatelessWidget {
 }
 
 ImageProvider getDefaultNetworkImageProvider(String url) {
-  return NetworkImage(url, headers: const {'Authorization': ApiManager.authToken});
+  return NetworkImage(url,
+      headers: const {'Authorization': ApiManager.authToken});
+}
+
+Widget navToProfile({required BuildContext context, double? radius}) {
+  return InkWell(
+    onTap: () {
+      context.push(
+        Routes.profile,
+        arguments: ConstantsManager.appUser,
+      );
+    },
+    child: CircleAvatar(
+      backgroundImage: ConstantsManager.appUser != null &&
+              ConstantsManager.appUser!.profilePictureUrl != null
+          ? NetworkImage(ConstantsManager.appUser!.profilePictureUrl!)
+          : const AssetImage("assets/images/icons/user.png")
+              as ImageProvider<Object>,
+      backgroundColor: ColorManager.golden,
+      radius: radius ?? 20.sp,
+    ),
+  );
 }

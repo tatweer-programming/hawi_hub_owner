@@ -1000,6 +1000,16 @@ class S {
     );
   }
 
+  /// `Email is not exists`
+  String get emailNotExists {
+    return Intl.message(
+      'Email is not exists',
+      name: 'emailNotExists',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Code`
   String get code {
     return Intl.message(
@@ -1445,6 +1455,16 @@ class S {
     return Intl.message(
       'Request Rejected',
       name: 'requestRejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please add what is required below from the file`
+  String get addRequiredPdf {
+    return Intl.message(
+      'Please add what is required below from the file',
+      name: 'addRequiredPdf',
       desc: '',
       args: [],
     );

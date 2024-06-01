@@ -26,8 +26,6 @@ class SendMessageSuccessState extends ChatState {
   SendMessageSuccessState(this.message);
 }
 
-class EndChatSuccessState extends ChatState {}
-
 class GetConnectionSuccessState extends ChatState {}
 
 //GetAllChats
@@ -76,8 +74,6 @@ class EndChatErrorState extends ChatState {
   const EndChatErrorState(this.error);
 }
 
-class StartRecordState extends ChatState {}
-
 class PickImageState extends ChatState {
   final String imagePath;
 
@@ -89,25 +85,3 @@ class RemovePickedImageState extends ChatState {}
 class GetChatSuccessfullyState extends ChatState {}
 
 class GetChatErrorState extends ChatState {}
-
-class RemoveRecordState extends ChatState {}
-
-class EndRecordState extends ChatState {}
-
-class PlayRecordUrlState extends ChatState {
-  final String voiceNoteUrl;
-  final bool isPlaying;
-
-  PlayRecordUrlState({required this.voiceNoteUrl, required this.isPlaying});
-}
-
-class PlayRecordFileState extends ChatState {}
-
-class CompleteRecordUrlState extends ChatState {
-  final String voiceNoteUrl;
-  final bool isPlaying;
-
-  CompleteRecordUrlState({required this.voiceNoteUrl, required this.isPlaying});
-}
-
-class CompleteRecordFileState extends ChatState {}

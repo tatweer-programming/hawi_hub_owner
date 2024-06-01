@@ -18,17 +18,9 @@ class AuthService {
   }) async {
     try {
       Response response = await DioHelper.postData(
-        data: {
-          'email': authOwner.email,
-          'username': authOwner.userName,
-          'password': authOwner.password,
-          if (authOwner.profilePictureUrl != null)
-            "profilePictureUrl": authOwner.profilePictureUrl,
-        },
+        data: authOwner.toJson(),
         path: EndPoints.register,
       );
-      //  //print(response.data.toString());
-      print(response.statusCode);
       if (response.statusCode == 200) {
         ConstantsManager.userId = response.data['id'];
         await CacheHelper.saveData(key: 'userId', value: response.data['id']);
@@ -36,7 +28,6 @@ class AuthService {
       }
       return Left(response.data.toString());
     } catch (e) {
-      print(e);
       return const Left("CHECK YOUR NETWORK");
     }
   }
@@ -46,9 +37,6 @@ class AuthService {
       required String password,
       required bool loginWithFBOrGG}) async {
     try {
-      print(email);
-      print(password);
-      print(loginWithFBOrGG);
       Response response = await DioHelper.postData(
         data: {
           "email": email,
@@ -209,22 +197,35 @@ class AuthService {
     }
   }
 
-  Future<Either<String, String>> uploadNationalId(File nationalId) async {
+  Future<Either<String, String>> verificationNationalId(File nationalId) async {
     try {
-      Response response = await DioHelper.postFormData(
-        "${EndPoints.verification}/${ConstantsManager.userId}",
-        FormData.fromMap(
-            {'proofOfIdentity': MultipartFile.fromFileSync(nationalId.path)}),
-      );
+      String nationalIdUrl = await _uploadNationalId(nationalId);
+      print(nationalIdUrl);
+      Response response = await DioHelper.postData(
+          path: "${EndPoints.verification}/${ConstantsManager.userId}",
+          data: {"proofOfIdentityUrl": nationalIdUrl});
       if (response.statusCode == 200) {
-        if (response.data['message'] ==
-            "Proof of identity has been added successfully") {
-          return const Right("Proof of identity has been added successfully");
-        }
+        return Right(response.data['message']);
       }
       return Left(response.data.toString());
     } catch (e) {
       return const Left("CHECK YOUR NETWORK");
+    }
+  }
+
+  Future<String> _uploadNationalId(File nationalId) async {
+    try {
+      Response response = await DioHelper.postFormData(
+        EndPoints.uploadProof,
+        FormData.fromMap(
+            {'ProofOfIdentity': MultipartFile.fromFileSync(nationalId.path)}),
+      );
+      if (response.statusCode == 200) {
+        return response.data['proofOfIdentityUrl'];
+      }
+      return response.data.toString();
+    } catch (e) {
+      return "CHECK YOUR NETWORK";
     }
   }
 

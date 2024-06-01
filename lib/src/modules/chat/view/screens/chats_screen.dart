@@ -6,6 +6,7 @@ import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/last_message.dart';
+import 'package:hawi_hub_owner/src/modules/chat/view/components.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chat_screen.dart';
 import 'package:sizer/sizer.dart';
 
@@ -103,63 +104,65 @@ Widget _appBar(
 }
 
 Widget _chatWidget(
-        {required LastMessage lastMessage, required VoidCallback onTap}) =>
-    Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 7.w,
-        vertical: 2.h,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: ColorManager.grey3,
-              radius: 22.sp,
-              backgroundImage: lastMessage.player.profilePictureUrl == null
-                  ? null
-                  : NetworkImage(lastMessage.player.profilePictureUrl!),
-            ),
-            SizedBox(
-              width: 4.w,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          lastMessage.player.userName,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontSize: 15.sp, fontWeight: FontWeight.w500),
-                        ),
+    {required LastMessage lastMessage, required VoidCallback onTap}) {
+  String formattedDate = utcToLocal(lastMessage.timestamp ?? "");
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 7.w,
+      vertical: 2.h,
+    ),
+    child: InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundColor: ColorManager.grey3,
+            radius: 22.sp,
+            backgroundImage: lastMessage.player.profilePictureUrl == null
+                ? null
+                : NetworkImage(lastMessage.player.profilePictureUrl!),
+          ),
+          SizedBox(
+            width: 4.w,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        lastMessage.player.userName,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
                       ),
-                      Text(
-                        lastMessage.timestamp ?? "",
-                        style: TextStyleManager.getCaptionStyle()
-                            .copyWith(fontSize: 10.sp),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  Text(
-                    lastMessage.messageContent ?? "",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyleManager.getRegularStyle(),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+                    ),
+                    Text(
+                      formattedDate,
+                      style: TextStyleManager.getCaptionStyle()
+                          .copyWith(fontSize: 10.sp),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Text(
+                  lastMessage.messageContent ?? "",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyleManager.getRegularStyle(),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
-    );
+    ),
+  );
+}

@@ -48,17 +48,7 @@ class AllRequestsPage extends StatelessWidget {
                         AssetImage("assets/images/icons/notification.webp"),
                         color: ColorManager.golden,
                       )),
-                  InkWell(
-                    radius: 360,
-                    onTap: () {
-                      context.push(Routes.profile);
-                    },
-                    child: const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://img.freepik.com/free-vector/isolated-young-handsome-man-set-different-poses-white-background-illustration_632498-649.jpg?t=st=1711503056~exp=1711506656~hmac=9aea7449b3ae3f763053d68d15a49e3c70fa1e73e98311d518de5f01c2c3d41c&w=740"),
-                      backgroundColor: ColorManager.golden,
-                    ),
-                  ),
+                  navToProfile(context:context)
                 ],
                 child: Padding(
                   padding: EdgeInsets.symmetric(

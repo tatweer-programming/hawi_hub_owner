@@ -6,6 +6,7 @@ class EndPoints {
   static const String changeImageProfile = '/Owner/ChangeDetails';
   static const String changePassword = '/Owner/ChangePassword';
   static const String verification = '/Owner/Verification';
+  static const String uploadProof = '/Owner/UploadProofOfIdentity';
 
   ///
   static const String getConnection = '/Hub/negotiate?negotiateVersion=1';

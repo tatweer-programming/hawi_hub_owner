@@ -183,3 +183,6 @@ class ResetCodeTimerState extends AuthState {
 
 // play sound
 class PlaySoundState extends AuthState {}
+
+// open pdfs
+class OpenPdfState extends AuthState {}
