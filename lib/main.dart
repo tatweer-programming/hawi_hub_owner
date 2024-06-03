@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hawi_hub_owner/firebase_options.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/local/shared_prefrences.dart';
@@ -28,7 +30,9 @@ Future<void> main() async {
   ConstantsManager.isFirstTime = await CacheHelper.getData(key: 'firstTime');
   await LocalizationManager.init();
   await NotificationServices.init();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
