@@ -1,0 +1,37 @@
+{
+  "project_info": {
+    "project_number": "176966884770",
+    "project_id": "hawihub",
+    "storage_bucket": "hawihub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176966884770:android:3c7dd6b7e0ea919b3de6fb",
+        "android_client_info": {
+          "package_name": "com.hawihub.owner.hawi_hub_owner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnuobzRANj7_yv7a_tAU2KKuTABCN9oj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176966884770-v3ne5and84r66ltkpj9p0qjnuitv627b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tatweer.hawihub"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
