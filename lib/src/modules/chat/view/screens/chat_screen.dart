@@ -1,15 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
-import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
-import 'package:intl/intl.dart';
+import 'package:hawi_hub_owner/src/modules/chat/view/components.dart';
 import 'package:sizer/sizer.dart';
-import 'package:voice_message_package/voice_message_package.dart';
-import 'dart:ui' as ui;
 import '../../../../core/utils/styles_manager.dart';
 import '../../../auth/view/widgets/widgets.dart';
 
@@ -26,12 +24,31 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController messageController = TextEditingController();
+    final ScrollController scrollController = ScrollController();
     String? imagePath;
     List<Message> messages = [];
     return BlocConsumer<ChatBloc, ChatState>(
       listener: (context, state) {
         if (state is GetChatMessagesSuccessState) {
           messages = state.messages;
+          chatBloc.add(StreamMessagesEvent());
+          if (messages.isNotEmpty) {
+            chatBloc.add(
+                ScrollingDownEvent(listScrollController: scrollController));
+          }
+        }
+        if (state is GetChatMessagesSuccessState) {
+          messages = state.messages;
+          chatBloc.add(StreamMessagesEvent());
+          if (messages.isNotEmpty) {
+            chatBloc.add(
+                ScrollingDownEvent(listScrollController: scrollController));
+          }
+        }
+        if (state is StreamMessagesSuccessState) {
+          messages.add(state.streamMessage);
+          chatBloc
+              .add(ScrollingDownEvent(listScrollController: scrollController));
         }
         if (state is PickImageState) {
           imagePath = state.imagePath;
@@ -39,7 +56,11 @@ class ChatScreen extends StatelessWidget {
           imagePath = null;
         }
         if (state is SendMessageSuccessState) {
+          state.message.attachmentUrl =
+              ApiManager.handleImageUrl(state.message.attachmentUrl!);
           messages.add(state.message);
+          chatBloc
+              .add(ScrollingDownEvent(listScrollController: scrollController));
           messageController.clear();
           imagePath = null;
         }
@@ -54,50 +75,43 @@ class ChatScreen extends StatelessWidget {
                   receiverName: chat!.lastMessage.player.userName,
                   imageProfile: chat!.lastMessage.player.profilePictureUrl),
               Expanded(
-                  child: StreamBuilder<Message>(
-                      stream: null,
-                      builder: (context, snapshot) {
-                        return ListView.separated(
-                          padding: EdgeInsetsDirectional.zero,
-                          itemBuilder: (context, index) {
-                            String formattedDate = '';
-                            if (messages[index].timeStamp != null) {
-                              formattedDate = DateFormat('mm:ss').format(
-                                  DateTime.parse(messages[index].timeStamp!));
-                            }
-                            bool? isOwner = messages[index].isOwner;
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 3.w,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: !isOwner!
-                                    ? CrossAxisAlignment.end
-                                    : CrossAxisAlignment.start,
-                                children: [
-                                  _messageWidget(
-                                      message: messages[index],
-                                      isSender: !isOwner),
-                                  SizedBox(
-                                    height: 0.5.h,
-                                  ),
-                                  Text(
-                                    formattedDate,
-                                    style: TextStyleManager.getCaptionStyle()
-                                        .copyWith(
-                                            fontSize: 10.sp,
-                                            color: ColorManager.black),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) => SizedBox(
-                            height: 2.h,
-                          ),
-                          itemCount: messages.length,
-                        );
-                      })),
+                  child: ListView.separated(
+                padding: EdgeInsetsDirectional.zero,
+                controller: scrollController,
+                itemBuilder: (context, index) {
+                  String formattedDate = '';
+                  if (messages[index].timeStamp != null) {
+                    formattedDate = utcToLocal(messages[index].timeStamp!);
+                  }
+                  bool? isOwner = messages[index].isOwner;
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 3.w,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: !isOwner!
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
+                      children: [
+                        _messageWidget(
+                            message: messages[index], isSender: !isOwner),
+                        SizedBox(
+                          height: 0.5.h,
+                        ),
+                        Text(
+                          formattedDate,
+                          style: TextStyleManager.getCaptionStyle().copyWith(
+                              fontSize: 10.sp, color: ColorManager.black),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => SizedBox(
+                  height: 2.h,
+                ),
+                itemCount: messages.length,
+              )),
               if (imagePath != null)
                 _messageInput(imagePath, () {
                   chatBloc.add(RemovePickedImageEvent());
@@ -106,8 +120,6 @@ class ChatScreen extends StatelessWidget {
                 (String? value) async {
                   if (value == 'image') {
                     chatBloc.add(PickImageEvent());
-                  } else if (value == 'voice') {
-                    // Add code to record and send voice note
                   }
                 },
                 () {
@@ -116,10 +128,11 @@ class ChatScreen extends StatelessWidget {
                       message: Message(
                         message: messageController.text,
                         conversationId: chat!.conversationId,
-                        connectionId: ConstantsManager.connectionId,
                         attachmentUrl: imagePath,
                         isOwner: false,
-                        timeStamp: DateTime.now().toString(),
+                        timeStamp: DateTime.now()
+                            .add(const Duration(hours: -3))
+                            .toString(),
                       ),
                     ));
                   }
@@ -208,12 +221,8 @@ Widget _appBar({
 Widget _messageWidget({required Message message, required bool isSender}) {
   if (message.message != null) {
     return _textWidget(isSender: isSender, message: message.message!);
-  }
-  // if (message.attachmentUrl != null) {
-  //   return _imageWidget(isSender: isSender, image: message.attachmentUrl!);
-  // }
-  if (message.voiceNoteUrl != null) {
-    return _voiceWidget(isSender: isSender, voice: message.voiceNoteUrl!);
+  } else if (message.attachmentUrl != null) {
+    return _imageWidget(isSender: isSender, image: message.attachmentUrl!);
   }
   return Container();
 }
@@ -272,49 +281,51 @@ Widget _imageWidget({required bool isSender, required String image}) {
   );
 }
 
-Widget _voiceWidget({
-  required bool isSender,
-  required String voice,
-}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Align(
-        alignment: isSender
-            ? AlignmentDirectional.topEnd
-            : AlignmentDirectional.topStart,
-        child: Directionality(
-          textDirection: isSender ? ui.TextDirection.rtl : ui.TextDirection.ltr,
-          child: VoiceMessageView(
-            controller: VoiceController(
-              audioSrc: voice,
-              maxDuration: const Duration(seconds: 200),
-              isFile: true,
-              onComplete: () {
-                /// do something on complete
-              },
-              onPause: () {
-                /// do something on pause
-              },
-              onPlaying: () {
-                /// do something on playing
-              },
-              onError: (err) {
-                /// do somethin on error
-              },
-            ),
-            innerPadding: 10.sp,
-            cornerRadius: 15.sp,
-            circlesColor: ColorManager.primary,
-            backgroundColor: ColorManager.grey3.withOpacity(0.4),
-            activeSliderColor: ColorManager.primary,
-          ),
-        ),
-      ),
-    ],
-  );
-}
+// Widget _voiceWidget({
+//   required bool isSender,
+//   required String voice,
+//   required bool isFile,
+// }) {
+//   print("voice" + voice);
+//   return Column(
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     mainAxisSize: MainAxisSize.min,
+//     children: [
+//       Align(
+//         alignment: isSender
+//             ? AlignmentDirectional.topEnd
+//             : AlignmentDirectional.topStart,
+//         child: Directionality(
+//           textDirection: isSender ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+//           child: VoiceMessageView(
+//             controller: VoiceController(
+//               audioSrc: voice,
+//               maxDuration: const Duration(seconds: 200),
+//               isFile: true,
+//               onComplete: () {
+//                 /// do something on complete
+//               },
+//               onPause: () {
+//                 /// do something on pause
+//               },
+//               onPlaying: () {
+//                 /// do something on playing
+//               },
+//               onError: (err) {
+//                 /// do somethin on error
+//               },
+//             ),
+//             innerPadding: 10.sp,
+//             cornerRadius: 15.sp,
+//             circlesColor: ColorManager.primary,
+//             backgroundColor: ColorManager.grey3.withOpacity(0.4),
+//             activeSliderColor: ColorManager.primary,
+//           ),
+//         ),
+//       ),
+//     ],
+//   );
+// }
 
 Widget _sendButton(ValueChanged<String?> onTap, VoidCallback onSend,
     TextEditingController messageController) {
@@ -329,10 +340,6 @@ Widget _sendButton(ValueChanged<String?> onTap, VoidCallback onSend,
               DropdownMenuItem<String>(
                 value: 'image',
                 child: Icon(Icons.image),
-              ),
-              DropdownMenuItem<String>(
-                value: 'voice',
-                child: Icon(Icons.mic),
               ),
             ],
             underline: Stack(

@@ -48,6 +48,8 @@ class SignupWithGoogleEvent extends AuthEvent {}
 
 class SignupWithFacebookEvent extends AuthEvent {}
 
+class OpenPdfEvent extends AuthEvent {}
+
 class GetProfileEvent extends AuthEvent {
   final int id;
 
@@ -77,8 +79,8 @@ class UploadNationalIdEvent extends AuthEvent {
   final File nationalId;
 
   UploadNationalIdEvent(this.nationalId);
-
 }
+
 class AcceptConfirmTermsEvent extends AuthEvent {
   final bool accept;
 

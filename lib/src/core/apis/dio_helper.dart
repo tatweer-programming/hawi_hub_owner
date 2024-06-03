@@ -10,6 +10,7 @@ class DioHelper {
       headers: {
         "Authorization": ApiManager.authToken,
         "Connection": "keep-alive",
+        'Content-Type': 'application/json',
       },
       contentType: "application/json",
       connectTimeout: const Duration(seconds: 20),
@@ -36,7 +37,11 @@ class DioHelper {
     return dio.post(
       path,
       queryParameters: query,
-      data: data,
+      data: data,options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      )
     );
   }
 

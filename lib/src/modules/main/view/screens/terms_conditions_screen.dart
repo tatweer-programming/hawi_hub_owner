@@ -33,7 +33,7 @@ class TermsConditionsScreen extends StatelessWidget {
                 child: Center(
                   child: SelectableText(
                       style:
-                      const TextStyle(fontWeight: FontWeightManager.bold),
+                      const TextStyle(fontWeight: FontWeightManager.medium),
                       textAlign: TextAlign.start,
                       S.of(context).termsAndConditions),
                 ),

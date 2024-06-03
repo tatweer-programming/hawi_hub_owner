@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addBooking": MessageLookupByLibrary.simpleMessage("اضافة حجز"),
         "addImages": MessageLookupByLibrary.simpleMessage("اضافة صور"),
         "addPlace": MessageLookupByLibrary.simpleMessage("إضافة مكان"),
+        "addRequiredPdf": MessageLookupByLibrary.simpleMessage(
+            "يرجي إلحاق المطلوب ادناه من الملف "),
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("اضافة ساعات العمل"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
@@ -71,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage(" الإيميل"),
         "emailAlreadyExist": MessageLookupByLibrary.simpleMessage(
             "البريد الإلكتروني موجود مسبقا."),
+        "emailNotExists":
+            MessageLookupByLibrary.simpleMessage("البريد الالكتروني غير موجود"),
         "endTime": MessageLookupByLibrary.simpleMessage("وقت الانتهاء"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
             "وقت الانتهاء يجب أن يكون بعد وقت البدء"),

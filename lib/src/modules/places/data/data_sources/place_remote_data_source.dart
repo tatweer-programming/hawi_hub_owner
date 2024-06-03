@@ -8,7 +8,6 @@ import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/data_sources/dummy_data.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
@@ -39,9 +38,9 @@ class PlaceRemoteDataSource {
       //
 
       // return Right(dummyPlaces);
-    } on FormatException catch (e) {
+    } on FormatException {
       //print(e);
-      return Right([]);
+      return const Right([]);
     } on Exception catch (e) {
       //print(e);
       return Left(e);
@@ -199,7 +198,7 @@ class PlaceRemoteDataSource {
 
   Future<Either<Exception, Unit>> _createChat() async {
     try {
-      var res = await DioHelper.postData(
+      await DioHelper.postData(
         path: EndPoints.addConversation,
         data: {
           "ownerId": ConstantsManager.userId,

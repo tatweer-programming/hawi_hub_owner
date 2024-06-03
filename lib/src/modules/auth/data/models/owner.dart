@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 
 class Owner {
@@ -28,13 +29,15 @@ class Owner {
   });
 
   factory Owner.fromJson(Map<String, dynamic> json) {
-    List<AppFeedBack> feedbacks = List.from(json['reviews']??[])
+    List<AppFeedBack> feedbacks = List.from(json['reviews'] ?? [])
         .map((feedback) => AppFeedBack.fromJson(feedback))
         .toList();
     return Owner(
-      profilePictureUrl: json['profilePicture'],
+      profilePictureUrl: json['profilePictureUrl'],
       id: json['id'],
-      nationalIdPicture: json['proofOfIdentity'],
+      nationalIdPicture: json['proofOfIdentityUrl'] != null
+          ? ApiManager.handleImageUrl(json['proofOfIdentityUrl'])
+          : null,
       userName: json['userName'],
       email: json['email'],
       approvalStatus: json['approvalStatus'],
@@ -48,9 +51,8 @@ class Owner {
     List<double> numbers =
         List.from(feedbacks!.map((feedBack) => feedBack.rating));
     if (numbers.isEmpty) {
-      return 0.0; // Or you can return null or throw an exception, depending on your requirements
+      return 0.0;
     }
-
     double sum = 0.0;
     for (double number in numbers) {
       sum += number;

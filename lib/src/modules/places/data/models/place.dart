@@ -47,10 +47,10 @@ class Place extends Equatable {
     List openTimesList = json["openTimes"];
     (openTimesList);
     List<Day> days = [];
-    openTimesList.forEach((element) {
+    for (var element in openTimesList) {
       //print(Day.fromJson(element));
       days.add(Day.fromJson(element));
-    });
+    }
     print(json);
     return Place(
       citId: json['cityId'],
@@ -72,7 +72,7 @@ class Place extends Equatable {
       totalGames: json['totalGames'] ?? 0,
       totalRatings: json['totalRatings'] ?? 0,
       rating: json['rating'] ?? 0,
-      feedbacks: [],
+      feedbacks: const [],
       workingHours: List<Day>.from(json["openTimes"].map((x) => Day.fromJson(x))),
       location: json['location'] == null ? null : PlaceLocation.fromString(json['location']),
       sport: json['categoryId'] ?? 0,

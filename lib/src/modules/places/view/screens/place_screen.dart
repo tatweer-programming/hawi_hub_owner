@@ -41,7 +41,9 @@ class PlaceScreen extends StatelessWidget {
               bloc: cubit,
               listener: (context, state) {
                 if (state is PlaceError) {
-                  errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+                  errorToast(
+                      msg: ExceptionManager(state.exception)
+                          .translatedMessage());
                 } else if (state is DeletePlaceSuccess) {
                   defaultToast(msg: S.of(context).placeDeleted);
                   context.pushAndRemove(Routes.home);
@@ -58,7 +60,8 @@ class PlaceScreen extends StatelessWidget {
                       children: [
                         CustomAppBar(
                             blendMode: BlendMode.exclusion,
-                            backgroundImage: "assets/images/app_bar_backgrounds/6.webp",
+                            backgroundImage:
+                                "assets/images/app_bar_backgrounds/6.webp",
                             height: 35.h,
                             child: const SizedBox()),
                         Align(
@@ -87,15 +90,20 @@ class PlaceScreen extends StatelessWidget {
                                         builder: (BuildContext context) {
                                           return Container(
                                             width: 88.w,
-                                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 5.0),
                                             decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(50),
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
                                                 color: Colors.grey,
                                                 image: DecorationImage(
                                                   fit: BoxFit.cover,
-                                                  image: NetworkImage(ApiManager.handleImageUrl(i),
+                                                  image: NetworkImage(
+                                                      ApiManager.handleImageUrl(
+                                                          i),
                                                       headers: {
-                                                        'Authorization': ApiManager.authToken
+                                                        'Authorization':
+                                                            ApiManager.authToken
                                                       }),
                                                 )),
                                           );
@@ -106,9 +114,11 @@ class PlaceScreen extends StatelessWidget {
                                   Align(
                                     alignment: AlignmentDirectional.topStart,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         IconButton(
                                           padding: EdgeInsets.zero,
@@ -119,7 +129,8 @@ class PlaceScreen extends StatelessWidget {
                                           },
                                           icon: const CircleAvatar(
                                               backgroundColor: Colors.white,
-                                              child: Icon(Icons.arrow_back_ios_new)),
+                                              child: Icon(
+                                                  Icons.arrow_back_ios_new)),
                                         ),
                                         SizedBox(
                                           height: 2.h,
@@ -133,15 +144,23 @@ class PlaceScreen extends StatelessWidget {
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return Column(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     ListTile(
-                                                      leading: const Icon(Icons.edit),
-                                                      title: Text(S.of(context).editPlace),
+                                                      leading: const Icon(
+                                                          Icons.edit),
+                                                      title: Text(S
+                                                          .of(context)
+                                                          .editPlace),
                                                       onTap: () {
-                                                        cubit.prepareEditForm(placeId);
-                                                        context.push(Routes.editPlace,
-                                                            arguments: {'id': placeId});
+                                                        cubit.prepareEditForm(
+                                                            placeId);
+                                                        context.push(
+                                                            Routes.editPlace,
+                                                            arguments: {
+                                                              'id': placeId
+                                                            });
                                                         // Navigator.pop(context); // Close bottom sheet
                                                         // Navigate to edit place screen
                                                         // Navigator.push(
@@ -153,44 +172,62 @@ class PlaceScreen extends StatelessWidget {
                                                       },
                                                     ),
                                                     ListTile(
-                                                      leading: const Icon(Icons.delete),
-                                                      title: Text(S.of(context).deletePlace),
+                                                      leading: const Icon(
+                                                          Icons.delete),
+                                                      title: Text(S
+                                                          .of(context)
+                                                          .deletePlace),
                                                       onTap: () {
-                                                        context.pop(); // Close bottom sheet
+                                                        context
+                                                            .pop(); // Close bottom sheet
                                                         showDialog(
                                                           context: context,
                                                           builder: (ctx) =>
-                                                              BlocBuilder<PlaceCubit, PlaceState>(
+                                                              BlocBuilder<
+                                                                  PlaceCubit,
+                                                                  PlaceState>(
                                                             bloc: cubit,
-                                                            builder: (context, state) {
+                                                            builder: (context,
+                                                                state) {
                                                               return AlertDialog(
-                                                                title: Text(
-                                                                    S.of(context).confirmDelete),
+                                                                title: Text(S
+                                                                    .of(context)
+                                                                    .confirmDelete),
                                                                 content: Text(S
                                                                     .of(context)
                                                                     .deletePlaceConfirmation),
                                                                 actions: [
                                                                   TextButton(
-                                                                    onPressed: () async {
+                                                                    onPressed:
+                                                                        () async {
                                                                       await cubit
-                                                                          .deletePlace(placeId);
+                                                                          .deletePlace(
+                                                                              placeId);
                                                                       // Close dialog
                                                                     },
-                                                                    child:
-                                                                        Text(S.of(context).cancel),
+                                                                    child: Text(S
+                                                                        .of(context)
+                                                                        .cancel),
                                                                   ),
                                                                   TextButton(
-                                                                    onPressed: () async {
+                                                                    onPressed:
+                                                                        () async {
                                                                       // Delete place and navigate back
                                                                       await cubit
-                                                                          .deletePlace(placeId);
-                                                                      ctx.pop();
+                                                                          .deletePlace(
+                                                                              placeId)
+                                                                          .then(
+                                                                        (value) {
+                                                                          ctx.pop();
+                                                                        },
+                                                                      );
                                                                     },
                                                                     child: state
                                                                             is DeletePlaceLoading
-                                                                        ? CircularProgressIndicator()
-                                                                        : Text(
-                                                                            S.of(context).delete),
+                                                                        ? const CircularProgressIndicator()
+                                                                        : Text(S
+                                                                            .of(context)
+                                                                            .delete),
                                                                   ),
                                                                 ],
                                                               );
@@ -258,7 +295,8 @@ class PlaceScreen extends StatelessWidget {
                         SizedBox(
                           height: 2.h,
                         ),
-                        if (place.location != null) _buildShowMapWidget(context),
+                        if (place.location != null)
+                          _buildShowMapWidget(context),
                         Divider(
                           height: 5.h,
                         ),
@@ -269,36 +307,50 @@ class PlaceScreen extends StatelessWidget {
                               Expanded(
                                   child: (place.rating != null)
                                       ? Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               place.rating.toString(),
-                                              style: TextStyleManager.getBlackCaptionTextStyle(),
+                                              style: TextStyleManager
+                                                  .getBlackCaptionTextStyle(),
                                             ),
                                             Expanded(
                                               child: place.rating != null
                                                   ? Center(
                                                       child: SizedBox(
                                                         height: 20.sp,
-                                                        child: RatingBar.builder(
+                                                        child:
+                                                            RatingBar.builder(
                                                           glow: true,
                                                           itemSize: 20.sp,
-                                                          direction: Axis.horizontal,
+                                                          direction:
+                                                              Axis.horizontal,
                                                           allowHalfRating: true,
-                                                          wrapAlignment: WrapAlignment.center,
-                                                          initialRating: place.rating!,
+                                                          wrapAlignment:
+                                                              WrapAlignment
+                                                                  .center,
+                                                          initialRating:
+                                                              place.rating!,
                                                           itemCount: 5,
-                                                          glowColor: ColorManager.golden,
+                                                          glowColor:
+                                                              ColorManager
+                                                                  .golden,
                                                           ignoreGestures: true,
-                                                          itemBuilder: (context, _) => const Icon(
+                                                          itemBuilder:
+                                                              (context, _) =>
+                                                                  const Icon(
                                                             Icons.star,
-                                                            color: ColorManager.golden,
+                                                            color: ColorManager
+                                                                .golden,
                                                           ),
-                                                          onRatingUpdate: (r) {},
+                                                          onRatingUpdate:
+                                                              (r) {},
                                                         ),
                                                       ),
                                                     )
-                                                  : Text(S.of(context).noRatings),
+                                                  : Text(
+                                                      S.of(context).noRatings),
                                             )
                                           ],
                                         )
@@ -314,7 +366,8 @@ class PlaceScreen extends StatelessWidget {
                                     width: 2.w,
                                   ),
                                   Text(S.of(context).totalGames,
-                                      style: TextStyleManager.getBlackCaptionTextStyle()),
+                                      style: TextStyleManager
+                                          .getBlackCaptionTextStyle()),
                                 ],
                               )),
                             ],
@@ -326,10 +379,12 @@ class PlaceScreen extends StatelessWidget {
                         Center(
                             child: TextButton(
                                 onPressed: () {
-                                  context.push(Routes.placeFeedbacks, arguments: {"id": place.id});
+                                  context.push(Routes.placeFeedbacks,
+                                      arguments: {"id": place.id});
                                 },
                                 child: Text(S.of(context).viewFeedbacks,
-                                    style: TextStyleManager.getGoldenRegularStyle()))),
+                                    style: TextStyleManager
+                                        .getGoldenRegularStyle()))),
 
                         // Padding(
                         //   padding: EdgeInsets.symmetric(vertical: 2.h),
@@ -358,7 +413,8 @@ class PlaceScreen extends StatelessWidget {
                         _buildSportWidget(
                             MainCubit.get()
                                 .sportsList
-                                .firstWhere((element) => element.id == place.sport,
+                                .firstWhere(
+                                    (element) => element.id == place.sport,
                                     orElse: () => Sport.unKnown())
                                 .name,
                             context),
@@ -379,48 +435,52 @@ class PlaceScreen extends StatelessWidget {
                         ),
                         SizedBox(
                           height: 3.h,
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Expanded(
-                              child: Center(
-                                child: Text(
-                                  S.of(context).price,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Center(
+                                    child: Text(
+                                      S.of(context).price,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            const VerticalDivider(),
-                            Expanded(
-                              child: Center(
-                                child: Text(
-                                  S.of(context).minimumBooking,
-                                ),
-                              ),
-                            )
-                          ]),
+                                const VerticalDivider(),
+                                Expanded(
+                                  child: Center(
+                                    child: Text(
+                                      S.of(context).minimumBooking,
+                                    ),
+                                  ),
+                                )
+                              ]),
                         ),
                         SizedBox(
                           height: 2.h,
                         ),
                         SizedBox(
                           height: 5.h,
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Expanded(
-                              child: OutLineContainer(
-                                child: Text(
-                                  "${place.price}  ${S.of(context).sar} ${S.of(context).perHour}",
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: OutLineContainer(
+                                    child: Text(
+                                      "${place.price}  ${S.of(context).sar} ${S.of(context).perHour}",
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 3.w,
-                            ),
-                            Expanded(
-                              child: OutLineContainer(
-                                child: Text(
-                                  "${place.minimumHours ?? S.of(context).noMinimumBooking}  ${S.of(context).hours}",
+                                SizedBox(
+                                  width: 3.w,
                                 ),
-                              ),
-                            )
-                          ]),
+                                Expanded(
+                                  child: OutLineContainer(
+                                    child: Text(
+                                      "${place.minimumHours ?? S.of(context).noMinimumBooking}  ${S.of(context).hours}",
+                                    ),
+                                  ),
+                                )
+                              ]),
                         ),
                         SizedBox(
                           height: 2.h,
@@ -519,7 +579,9 @@ class PlaceScreen extends StatelessWidget {
           onTap: () {
             // TODO navigate to sport Screen
           },
-          child: Center(child: Text(sport, style: TextStyleManager.getBlackCaptionTextStyle()))),
+          child: Center(
+              child: Text(sport,
+                  style: TextStyleManager.getBlackCaptionTextStyle()))),
     );
   }
 

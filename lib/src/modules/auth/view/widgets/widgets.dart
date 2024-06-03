@@ -241,7 +241,8 @@ Widget orImageBuilder() => Stack(
 
 String handleResponseTranslation(String state, BuildContext context) {
   if(state == "Account Created Successfully")return S.of(context).accountCreatedSuccessfully;
-  if(state == "Email is not exists.")return S.of(context).emailAlreadyExist;
+  if(state == "Email is not exists.")return S.of(context).emailNotExists;
+  if(state == "Email is already exists.")return S.of(context).emailAlreadyExist;
   if(state == "Username is already exists.")return S.of(context).usernameAlreadyExist;
   if(state == "Password reset successfully")return S.of(context).passwordResetSuccessfully;
   if(state == "Invalid email or password.")return S.of(context).invalidEmailOrPassword;

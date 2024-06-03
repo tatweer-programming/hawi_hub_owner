@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addBooking": MessageLookupByLibrary.simpleMessage("Add booking"),
         "addImages": MessageLookupByLibrary.simpleMessage("Add images"),
         "addPlace": MessageLookupByLibrary.simpleMessage("Add place"),
+        "addRequiredPdf": MessageLookupByLibrary.simpleMessage(
+            "Please add what is required below from the file"),
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("Add working hours"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
@@ -71,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage(" Email"),
         "emailAlreadyExist":
             MessageLookupByLibrary.simpleMessage("Email is already exists."),
+        "emailNotExists":
+            MessageLookupByLibrary.simpleMessage("Email is not exists"),
         "endTime": MessageLookupByLibrary.simpleMessage("End time"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
             "End time must be after start time"),

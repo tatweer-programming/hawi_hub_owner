@@ -5,6 +5,7 @@ import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/get_started_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/profile_screen.dart';
+import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/screens/questions_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/screens/terms_conditions_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/add_booking_screen.dart';
@@ -49,7 +50,7 @@ class AppRouter {
       // case Routes.profile:
       //   return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case Routes.createPlace:
-        return MaterialPageRoute(builder: (_) => CreatePlaceScreen());
+        return MaterialPageRoute(builder: (_) => const CreatePlaceScreen());
       case Routes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.pickLocation:

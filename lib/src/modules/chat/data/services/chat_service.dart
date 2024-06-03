@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
@@ -7,10 +10,9 @@ import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/connection.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
-import 'package:web_socket_channel/io.dart';
 
 class ChatService {
-  IOWebSocketChannel? channel;
+  WebSocket? socket;
 
   Future<Either<String, Unit>> connection() async {
     try {
@@ -22,6 +24,7 @@ class ChatService {
         Connection connection = Connection.fromJson(response.data);
         ConstantsManager.connectionToken = connection.token;
         ConstantsManager.connectionId = connection.id;
+        await _startConnection();
         await _addConnectionId();
         return const Right(unit);
       }
@@ -70,27 +73,41 @@ class ChatService {
 
   Future<Either<String, Unit>> sendMessage({required Message message}) async {
     try {
-      print(message.jsonBody());
-      channel!.sink.add(message.jsonBody());
+      if (message.attachmentUrl != null) {
+        message.attachmentUrl =
+            await uploadFile(message.attachmentUrl!, message.conversationId!);
+        message.message = null;
+      }
+      socket!.add(message.jsonBody());
       return const Right(unit);
     } catch (e) {
       return Left(e.toString());
     }
   }
 
-  Future<Either<String, Stream<Message>>> streamMessage() async {
+  Stream<Message> streamMessage() {
     try {
-      Stream<Message> message = const Stream.empty();
-      channel!.stream.listen((message) {
-        // if (message != '{"type":6}' || message != '{}') {
-          print("message    $message");
-          // message =
-          //     Stream<Message>.value(Message.fromJson(jsonDecode(message)));
-        // }
+      StreamController<Message> messageStreamController =
+          StreamController<Message>.broadcast();
+      socket!.listen((data) {
+        print("data  $data");
+        if (data != '{"type":6}' && data != '{}') {
+          String message =
+              data.toString().replaceAll(RegExp(r'[\x00-\x1F]+'), '');
+          final Map<String, dynamic> jsonData = jsonDecode(message);
+          print(jsonData);
+          messageStreamController.add(Message(
+            message: jsonData["arguments"][0]["playerMessage"],
+            attachmentUrl: jsonData["arguments"][0]["playerAttachmentUrl"],
+            isOwner: true,
+            timeStamp: DateTime.now().add(const Duration(hours: -3)).toString(),
+          ));
+        }
       });
-      return Right(message);
+      return messageStreamController.stream;
     } catch (e) {
-      return Left(e.toString());
+      print(e);
+      return const Stream.empty();
     }
   }
 
@@ -100,7 +117,6 @@ class ChatService {
       Response response = await DioHelper.getData(
         path: EndPoints.getConversation + conversationId.toString(),
       );
-      await _startConnection();
       if (response.statusCode == 200) {
         List<Message> messages = [];
         for (var item in response.data["messages"]) {
@@ -115,13 +131,28 @@ class ChatService {
     }
   }
 
-  Future<void> _startConnection() async {
-    channel = IOWebSocketChannel.connect(
-      ApiManager.webSocket + ConstantsManager.connectionToken!,
-      headers: {"Authorization": ApiManager.authToken},
-    );
+  Future<String> uploadFile(String filePath, int conversationId) async {
+    try {
+      FormData formData = FormData.fromMap({
+        "ConversationId": conversationId.toString(),
+        "ConversationAttachment": MultipartFile.fromFileSync(filePath),
+      });
+      Response response = await DioHelper.postFormData(
+          EndPoints.uploadConversationAttachment, formData);
+      if (response.statusCode == 200) {
+        return response.data['conversationImageUrl'];
+      }
+      return response.data.toString();
+    } catch (e) {
+      print(e);
+      return e.toString();
+    }
+  }
 
+  Future<void> _startConnection() async {
     const String messageWithTrailingChars = '{"protocol":"json","version":1}';
-    channel!.sink.add(messageWithTrailingChars);
+    socket = await WebSocket.connect(
+        "${ApiManager.webSocket}?id=${ConstantsManager.connectionToken!}");
+    socket!.add(messageWithTrailingChars);
   }
 }

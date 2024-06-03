@@ -49,7 +49,7 @@ class AuthRepository {
   }
 
   Future<Either<String, String>> uploadNationalId(File nationalId) async {
-    return _service.uploadNationalId(nationalId);
+    return _service.verificationNationalId(nationalId);
   }
 
   Future<Either<String, String>> changePassword({
