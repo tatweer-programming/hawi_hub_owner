@@ -80,4 +80,8 @@ class MainCubit extends Cubit<MainState> {
       emit(GetNotificationsSuccess(r));
     });
   }
+
+  void markNotificationAsRead(int i) {
+    NotificationServices().markAsRead(i);
+  }
 }

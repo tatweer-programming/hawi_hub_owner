@@ -36,4 +36,6 @@ class EndPoints {
   static const String uploadPlaceImages = '/Stadium/UploadStadiumImages';
   static const String saveConnectionId = "/Hub/AddOwnerConnectionId/";
   static const String markAsRead = "/Hub/MarkOwnerNotificationAsRead/";
+  static const String getPlaceBookings = "/Stadium/GetStadiumsReservations/";
+  static const String addOfflineReservation = "/Stadium/AddOfflineReservation";
 }

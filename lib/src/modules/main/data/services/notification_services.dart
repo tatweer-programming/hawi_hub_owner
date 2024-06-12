@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 
 import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -12,11 +14,16 @@ import 'package:http/http.dart' as http;
 
 class NotificationServices {
   static IOWebSocketChannel? channel;
-  static FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   static Future<void> init() async {
-    await _firebaseMessaging.requestPermission();
+     await _firebaseMessaging.requestPermission();
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+     print(message.data.toString());
+     defaultToast(msg: message.notification?.title ?? '');
+     print(message.notification?.title ,);
+   });
   }
 
   Future<Either<Exception, List<AppNotification>>> getNotifications() async {
@@ -34,18 +41,22 @@ class NotificationServices {
         return Right(notifications);
       }
       return const Right([]);
-    } catch (e) {
-      return Left(e as Exception);
+    }on Exception catch (e) {
+      return Left(e );
     }
   }
 
-  void sendNotification(AppNotification notification) async {
+  Future sendNotification(AppNotification notification) async {
     await http.post(Uri.parse(ConstantsManager.baseUrlNotification),
         body: notification.jsonBody(),
         headers: {
           "Authorization": "key=${ConstantsManager.firebaseMessagingAPI}",
           "Content-Type": "application/json"
-        });
+        }).then((value) {
+          print("Notification sent successfully ${value.body} \n ${
+          value.headers
+          }");
+    });
     await _saveNotification();
   }
 
@@ -53,6 +64,7 @@ class NotificationServices {
     try {
       var response = await DioHelper.postData(path: EndPoints.markAsRead + id.toString());
       if (response.statusCode == 200) {
+        print("Marked as read successfully");
         return true;
       }
       return false;
@@ -64,12 +76,15 @@ class NotificationServices {
 
   static Future<void> _firebaseMessagingBackgroundHandler(
     RemoteMessage message,
-  ) async {}
+  ) async {
+    print(message.data.toString());
+    print(message.notification?.title);
+  }
   Future<Either<Exception, Unit>> _saveNotification() async {
-    throw UnimplementedError();
+  return const Right(unit);
   }
 
   Future subscribeToTopic() async {
-    await _firebaseMessaging.subscribeToTopic(ConstantsManager.userId.toString());
+    await _firebaseMessaging.subscribeToTopic( "owner:${ConstantsManager.userId}");
   }
 }

@@ -13,4 +13,10 @@ class Booking {
       endTime: DateTime.parse(json['endTime']),
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime.toIso8601String(),
+    };
+  }
 }

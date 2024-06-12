@@ -6,6 +6,7 @@ import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
+import 'package:hawi_hub_owner/src/core/services/location_services.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
@@ -30,6 +31,7 @@ class HomePage extends StatelessWidget {
     PlaceCubit placeCubit = PlaceCubit.get()
       ..getPlaces()
       ..getBookingRequests();
+    LocationServices.determinePosition();
     return BlocConsumer<PlaceCubit, PlaceState>(
       listener: (context, state) {
         if (state is PlaceError) {
@@ -38,6 +40,7 @@ class HomePage extends StatelessWidget {
         }
       },
       builder: (context, state) {
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

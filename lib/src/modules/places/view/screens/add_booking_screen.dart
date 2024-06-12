@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/booking.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,23 +25,17 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = const TimeOfDay(hour: 0, minute: 0);
   TimeOfDay endTime = const TimeOfDay(hour: 0, minute: 0);
+  List<Booking> bookings = [];
 
-  String _formatTimeOfDay(TimeOfDay time) {
-    return DateFormat.Hm().format(DateTime(time.hour, time.minute));
+  @override
+  void initState() {
+      print("place id : ${widget.placeId}");
+    _fetchBookings();
+    super.initState();
   }
 
-  void _selectDate() async {
-    final pickedDate = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
-    );
-    if (pickedDate != null) {
-      setState(() {
-        selectedDate = pickedDate;
-      });
-    }
+  Future<void> _fetchBookings() async {
+   await  PlaceCubit.get().getPlaceBookings(placeId: widget.placeId);
   }
 
   Future<void> _selectStartTime() async {
@@ -72,43 +67,31 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
   }
 
   Future<void> _makeBooking() async {
-    //print(selectedDate);
-    // if (startTime == null) {
-    //   // Show error message
-    //   errorToast(msg: S.of(context).allFieldsIsRequired);
-    //   return;
-    // }
-
-    // Validate that end time is after start time
-    if (endTime.hour < startTime.hour ||
-        (endTime.hour == startTime.hour && endTime.minute <= startTime.minute)) {
-      errorToast(msg: S.of(context).endTimeMustBeAfterStartTime);
-      return;
+    DateTime start = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, startTime.hour, startTime.minute  );
+    DateTime end = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, endTime.hour, endTime.minute);
+    for (Booking booking in bookings) {
+      // Check if the new booking overlaps with any existing booking
+      if ((start.isBefore(booking.endTime) && end.isAfter(booking.startTime)) ||
+          (start.isAtSameMomentAs(booking.startTime) && end.isAfter(booking.startTime)) ||
+          (end.isAtSameMomentAs(booking.endTime) && start.isBefore(booking.endTime))) {
+        errorToast(msg: S.of(context).bookingConflict);
+        return;
+      }
     }
+    // Add the booking to the list (simulate the addition)
+    setState(() {
+       PlaceCubit.get().addOfflineReservation(placeId: widget.placeId , booking: Booking(startTime: start, endTime: end));
+    });
 
-    final bookingStartTime = DateTime(
-      selectedDate.year,
-      selectedDate.month,
-      selectedDate.day,
-      startTime.hour,
-      startTime.minute,
-    );
-    final bookingEndTime = DateTime(
-      selectedDate.year,
-      selectedDate.month,
-      selectedDate.day,
-      endTime.hour,
-      endTime.minute,
-    );
-    PlaceCubit.get().currentPlace!.isBookingAllowed(bookingStartTime, bookingEndTime)
-        ? await PlaceCubit.get().createBooking(bookingStartTime, bookingEndTime, widget.placeId)
-        : errorToast(msg: S.of(context).bookingNotAllowed);
+    defaultToast(msg: S.of(context).bookingCreated);
+    context.pop();
   }
 
   @override
   Widget build(BuildContext context) {
+      print("bookings: ${bookings.map((e) => "start: ${e.startTime}, end: ${e.endTime}").toString()}");
     return Scaffold(
-      body: Column(
+      body:  Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
@@ -124,9 +107,7 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
                     opacity: .15,
                     backgroundImage: "assets/images/app_bar_backgrounds/5.webp",
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 5.w,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: SizedBox(
                         height: 7.h,
                         child: Text(
@@ -136,47 +117,59 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
                       ),
                     ),
                   ),
+                 
                   BlocListener<PlaceCubit, PlaceState>(
                     bloc: PlaceCubit.get(),
                     listener: (context, state) {
+
+                      if (state is GetPlaceBookingsSuccess) {
+                        setState(() {
+                           debugPrint(state.bookings.map((e) => "start: ${e.startTime}, end: ${e.endTime}").toString());
+                          bookings = state.bookings;
+                        
+                        });
+                      }
                       if (state is PlaceError) {
                         errorToast(msg: ExceptionManager(state.exception).translatedMessage());
                       }
-                      if (state is CreateBookingSuccess) {
+                       if (state is AddOfflineReservationSuccess) {
                         defaultToast(msg: S.of(context).bookingCreated);
                         context.pop();
                       }
                     },
-                    child: Padding(
+                    child: BlocBuilder<  PlaceCubit, PlaceState>(
+  bloc: PlaceCubit.get(),
+  builder: (context, state) {
+    return state is GetPlaceBookingsLoading ? const Center(child: CircularProgressIndicator()) : Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      child: Column(children: [
-                        SizedBox(
-                          height: 50.h,
-                          child: Stack(
-                            children: [
-                              Card(
-                                color: ColorManager.white,
-                                elevation: 5,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      color: ColorManager.primary,
-                                      height: 10.h,
-                                      width: double.infinity,
-                                      child: Align(
-                                        alignment: AlignmentDirectional.bottomStart,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TitleText(
-                                            color: ColorManager.white,
-                                            DateFormat.yMMMMEEEEd().format(selectedDate),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 50.h,
+                            child: Stack(
+                              children: [
+                                Card(
+                                  color: ColorManager.white,
+                                  elevation: 5,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        color: ColorManager.primary,
+                                        height: 10.h,
+                                        width: double.infinity,
+                                        child: Align(
+                                          alignment: AlignmentDirectional.bottomStart,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: TitleText(
+                                              color: ColorManager.white,
+                                              DateFormat.yMMMMEEEEd().format(selectedDate),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Builder(builder: (context) {
-                                        return CalendarDatePicker(
+                                      Expanded(
+                                        child: CalendarDatePicker(
                                           initialCalendarMode: DatePickerMode.day,
                                           currentDate: selectedDate,
                                           firstDate: DateTime.now(),
@@ -187,82 +180,91 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
                                               selectedDate = value;
                                             });
                                           },
-                                          // currentDate: selectedDate,
-                                        );
-                                      }),
-                                    ),
-                                  ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              // Positioned.fill(child: InkWell(onTap: _selectDate))
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50.h,
-                          width: 90.w,
-                          child: Row(children: [
-                            SizedBox(
-                              width: 43.w,
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SubTitle(S.of(context).from),
-                                      FittedBox(
-                                        child: TimePickerDialog(
-                                          initialTime: startTime,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Positioned.fill(child: InkWell(onTap: _selectStartTime))
-                                ],
-                              ),
+                              ],
                             ),
-                            const Spacer(),
-                            SizedBox(
-                              width: 43.w,
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                          ),
+                          SizedBox(
+                            height: 50.h,
+                            width: 90.w,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 43.w,
+                                  child: Stack(
                                     children: [
-                                      SubTitle(S.of(context).to),
-                                      FittedBox(
-                                        child: TimePickerDialog(
-                                          initialTime: endTime,
-                                        ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          SubTitle(S.of(context).from),
+                                          FittedBox(
+                                            child: TimePickerDialog(
+                                              initialTime: startTime,
+                                            ),
+                                          ),
+                                        ],
                                       ),
+                                      Positioned.fill(child: InkWell(onTap: _selectStartTime))
                                     ],
                                   ),
-                                  Positioned.fill(child: InkWell(onTap: _selectEndTime))
-                                ],
-                              ),
-                            )
-                          ]),
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                      ]),
-                    ),
-                  )
+                                ),
+                                const Spacer(),
+                                SizedBox(
+                                  width: 43.w,
+                                  child: Stack(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          SubTitle(S.of(context).to),
+                                          FittedBox(
+                                            child: TimePickerDialog(
+                                              initialTime: endTime,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Positioned.fill(child: InkWell(onTap: _selectEndTime))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                        ],
+                      ),
+                    );
+  },
+),
+                  ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 2.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w),
-            child: DefaultButton(
-                text: S.of(context).save,
-                onPressed: () {
-                  _makeBooking();
-                }),
+          BlocBuilder<PlaceCubit, PlaceState>(
+            bloc: PlaceCubit.get(),
+            builder: (context, state) {
+              return state is GetPlaceBookingsLoading
+                  ? const SizedBox()
+                  : Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                child: DefaultButton(
+                  isLoading: state is AddOfflineReservationLoading,
+                    text: S.of(context).save,
+                    onPressed: () {
+                      _makeBooking();
+                    }),
+              );
+            },
           )
         ],
       ),

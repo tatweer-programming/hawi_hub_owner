@@ -510,6 +510,7 @@ class PlaceScreen extends StatelessWidget {
   }
 
   Widget _buildShowMapWidget(BuildContext context) {
+  print("location : ${PlaceCubit.get().currentPlace!.location}");
     return InkWell(
       onTap: () {
         context.push(Routes.placeLocation,

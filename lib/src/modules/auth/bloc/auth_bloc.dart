@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:hawi_hub_owner/src/core/local/shared_prefrences.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/auth_owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/repositories/auth_repository.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -36,7 +38,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         var result =
             await _repository.registerPlayer(authOwner: event.authOwner);
         result.fold((l) => emit(RegisterErrorState(l)),
-            (r) => emit(RegisterSuccessState(value: r)));
+            (r) async {
+           NotificationServices().subscribeToTopic();
+              emit(RegisterSuccessState(value: r));
+            });
+
       } else if (event is LoginPlayerEvent) {
         emit(LoginLoadingState());
         await _repository
@@ -44,7 +50,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 email: event.email,
                 password: event.password,
                 loginWithFBOrGG: false)
-            .then((value) {
+            .then((value) async {
+          NotificationServices().subscribeToTopic();
           if (value == "Account LogedIn Successfully") {
             emit(LoginSuccessState(value));
           } else {

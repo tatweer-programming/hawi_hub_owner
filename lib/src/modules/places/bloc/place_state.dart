@@ -228,3 +228,33 @@ class UploadAttachmentsLoading extends PlaceState {
   @override
   List<Object?> get props => [];
 }
+
+class GetPlaceBookingsLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+ class GetPlaceBookingsSuccess extends PlaceState {
+  final List<Booking> bookings;
+  GetPlaceBookingsSuccess(this.bookings);
+  @override
+  List<Object?> get props => [bookings];
+}
+
+class GetPlaceBookingsError extends PlaceError {
+  GetPlaceBookingsError(super.exception);
+  @override
+  List<Object?> get props => [];
+}
+class AddOfflineReservationLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+class AddOfflineReservationSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+class AddOfflineReservationError extends PlaceError {
+  AddOfflineReservationError(super.exception);
+  @override
+  List<Object?> get props => [];
+}

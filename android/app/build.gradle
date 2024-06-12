@@ -55,23 +55,23 @@ android {
     }
 
     signingConfigs {
-        debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'HawiHubOwner_Tatweer'
-            storeFile file('keystore.jks')
-            storePassword 'HawiHubOwner_Tatweer'
-        }
-        release {
-//            keyAlias 'androiddebugkey'
-//            keyPassword 'HawiHubOwner_Tatweer'
-//            storeFile file('keystore.jks')
-//            storePassword 'HawiHubOwner_Tatweer'
-        }
+//        debug {
+////            keyAlias 'androiddebugkey'
+////            keyPassword 'HawiHubOwner_Tatweer'
+////            storeFile file('keystore.jks')
+////            storePassword 'HawiHubOwner_Tatweer'
+//        }
+//        release {
+////            keyAlias 'androiddebugkey'
+////            keyPassword 'HawiHubOwner_Tatweer'
+////            storeFile file('keystore.jks')
+////            storePassword 'HawiHubOwner_Tatweer'
+//        }
     }
     buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
+//        debug {
+//            signingConfig signingConfigs.debug
+//        }
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.

@@ -5,6 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
@@ -14,6 +16,8 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_for
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../data/models/booking.dart';
 part 'place_state.dart';
 
 class PlaceCubit extends Cubit<PlaceState> {
@@ -87,7 +91,7 @@ class PlaceCubit extends Cubit<PlaceState> {
       }, (r) {
         //print("getPlaces");
         places = r;
-        //print(places.length);
+        print(places.map((e) => e.location).toList());
         isPlacesLoading = false;
         emit(GetPlacesSuccess(r));
       });
@@ -188,9 +192,12 @@ class PlaceCubit extends Cubit<PlaceState> {
     result.fold((l) {
       //print(l);
       emit(AcceptBookingRequestError(l));
-    }, (r) {
+    }, (r) async {
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(AcceptBookingRequestSuccess());
+      await NotificationServices().sendNotification(AppNotification(title: "تم قبول طلبك",
+          body: ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب" , id: requestId,
+          receiverId: bookingRequests.firstWhere((element) => element.placeId == requestId).userId));
     });
   }
 
@@ -199,9 +206,12 @@ class PlaceCubit extends Cubit<PlaceState> {
     var result = await dataSource.declineBookingRequest(requestId);
     result.fold((l) {
       emit(DeclineBookingRequestError(l));
-    }, (r) {
+    }, (r) async {
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(DeclineBookingRequestSuccess());
+     await NotificationServices().sendNotification(AppNotification(title: "تم رفض طلبك",
+          body: ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب" , id: requestId,
+          receiverId: bookingRequests.firstWhere((element) => element.placeId == requestId).userId));
     });
   }
 
@@ -221,7 +231,7 @@ class PlaceCubit extends Cubit<PlaceState> {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowMultiple: false,
-      allowedExtensions: ['pdfs'],
+      allowedExtensions: ['pdf'],
     );
 
     if (result != null) {
@@ -296,5 +306,31 @@ class PlaceCubit extends Cubit<PlaceState> {
     selectedSport = null;
     selectedCityId = null;
     imageFiles.clear();
+  }
+
+  getPlaceBookings({required int placeId}) async {
+    print("getting place bookings");
+    emit(GetPlaceBookingsLoading());
+    var result = await dataSource.getPlaceBookings(placeId: placeId);
+    result.fold((l) {
+      print("error getting place bookings ${l.toString()}");
+       emit(GetPlaceBookingsError(l));
+    }, (r) {
+      print("got place bookings ${r.toString()}");
+      emit(GetPlaceBookingsSuccess(r));
+    });
+  }
+  addOfflineReservation({required int placeId  , required Booking booking}) async {
+    emit(AddOfflineReservationLoading());
+    var result = await dataSource.addOfflineReservation( booking: booking, placeId: placeId);
+    result.fold((l) {
+      emit(AddOfflineReservationError(l));
+    }, (r) {
+      emit(AddOfflineReservationSuccess());
+    });
+  }
+  String _getPlaceNameFromRequestId(int requestId) {
+    int placeId = bookingRequests.firstWhere((element) => element.id == requestId).placeId;
+    return places.firstWhere((element) => element.id == placeId).name;
   }
 }

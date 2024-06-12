@@ -39,10 +39,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("All fields are required"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("Always open"),
         "booking": MessageLookupByLibrary.simpleMessage("Booking"),
+        "bookingConflict": MessageLookupByLibrary.simpleMessage(
+            "There is a conflict with another booking"),
         "bookingCreated": MessageLookupByLibrary.simpleMessage(
             "Booking Created Successfully"),
         "bookingNotAllowed": MessageLookupByLibrary.simpleMessage(
             "Booking outside working hours"),
+        "bookingSuccess":
+            MessageLookupByLibrary.simpleMessage("Booking Added Successfully"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("Booking time"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "change": MessageLookupByLibrary.simpleMessage("Change "),
@@ -107,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Keep me logged in"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "location": MessageLookupByLibrary.simpleMessage("Location"),
+        "locationSaved": MessageLookupByLibrary.simpleMessage("Location Saved"),
         "login": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "loginFirst":
             MessageLookupByLibrary.simpleMessage("You should login first"),
@@ -147,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Password reset successfully"),
         "peopleRate": MessageLookupByLibrary.simpleMessage("People Rate"),
         "perHour": MessageLookupByLibrary.simpleMessage("per hour"),
+        "pickLocation": MessageLookupByLibrary.simpleMessage("Pick Location"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("Request added successfully"),
         "placeDeleted":

@@ -8,6 +8,8 @@ import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/booking.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/booking_player.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
@@ -267,12 +269,68 @@ class PlaceRemoteDataSource {
       return Left(e);
     }
   }
+
+Future <Either<Exception, List<Booking>>>  getPlaceBookings({required int placeId}) async{
+  List<Booking> bookings = [
+    Booking(
+      startTime: DateTime(2024, 7, 1, 10, 0),
+      endTime: DateTime(2024, 7, 1, 12, 0),
+    ),
+    Booking(
+      startTime: DateTime(2024, 7, 2, 14, 0),
+      endTime: DateTime(2024, 7, 2, 16, 0),
+    ),
+    Booking(
+      startTime: DateTime(2024, 7, 3, 9, 0),
+      endTime: DateTime(2024, 7, 3, 10, 0),
+    ),
+    Booking(
+      startTime: DateTime(2024, 8, 1, 11, 0),
+      endTime: DateTime(2024, 8, 1, 13, 0),
+    ),
+    Booking(
+      startTime: DateTime(2024, 8, 5, 15, 0),
+      endTime: DateTime(2024, 8, 5, 17, 0),
+    ),
+  ];
+
+  try {
+
+     // var response = await DioHelper.getData(
+     //     path: EndPoints.getPlaceBookings + placeId.toString());
+     // if (response.statusCode == 200) {
+     //   bookings = (response.data as List)
+     //       .map((e) => Booking.fromJson(e))
+     //       .toList();
+     // }
+    startTimer(2.1);
+     return Right(bookings);
+   } on Exception catch (e) {
+     return Left(e);
+   }
+  }
+  Future<Either<Exception, Unit>> addOfflineReservation(
+      {required int placeId,
+      required Booking booking }) async {
+    try {
+      await DioHelper.postData(
+        path: EndPoints.addOfflineReservation + placeId.toString(),
+        data: booking.toJson(),
+      );
+      return const Right(unit);
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
+
 }
 
 Future<bool> startTimer(double seconds) async {
   int secondsInt = seconds.truncate();
   int milliseconds = (seconds - secondsInt).toInt() * 1000;
+  print("Timer started");
   await Future.delayed(
       Duration(seconds: secondsInt, milliseconds: milliseconds));
+  print("Timer ended");
   return true;
 }

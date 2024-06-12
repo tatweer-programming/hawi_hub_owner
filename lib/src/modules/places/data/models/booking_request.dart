@@ -6,7 +6,7 @@ class BookingRequest extends Equatable {
   final int userId;
   final String userName;
   final String userImage;
-
+   List ? players ;
   // request data
   int? id;
   final DateTime startTime;
@@ -29,6 +29,7 @@ class BookingRequest extends Equatable {
     required this.placeName,
     required this.address,
     required this.placeId,
+    this.players
   });
   factory BookingRequest.fromJson(Map<String, dynamic> json) {
     return BookingRequest(

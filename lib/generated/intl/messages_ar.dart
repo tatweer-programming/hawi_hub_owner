@@ -39,10 +39,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جميع الحقول مطلوبة"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("مفتوح دائما"),
         "booking": MessageLookupByLibrary.simpleMessage("الحجز"),
+        "bookingConflict":
+            MessageLookupByLibrary.simpleMessage("الملعب محجوز في هذا الوقت"),
         "bookingCreated":
             MessageLookupByLibrary.simpleMessage("تمت إضافة الحجز بنجاح"),
         "bookingNotAllowed":
             MessageLookupByLibrary.simpleMessage("الحجز خارج أوقات عمل المكان"),
+        "bookingSuccess":
+            MessageLookupByLibrary.simpleMessage("تم إضافة الملعب بنجاح"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "change": MessageLookupByLibrary.simpleMessage("تغير "),
@@ -108,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أبقِ تسجيل دخولي"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "locationSaved": MessageLookupByLibrary.simpleMessage("تم حفظ الموقع"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginFirst":
             MessageLookupByLibrary.simpleMessage("يجب تسجيل الدخول أولا"),
@@ -149,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم إعادة تعيين كلمة المرور بنجاح"),
         "peopleRate": MessageLookupByLibrary.simpleMessage("تقيم الأشخاص"),
         "perHour": MessageLookupByLibrary.simpleMessage(" لكل ساعة"),
+        "pickLocation": MessageLookupByLibrary.simpleMessage("حفظ الموقع"),
         "placeAdded":
             MessageLookupByLibrary.simpleMessage("تمت إرسال طلب الاضافة"),
         "placeDeleted":

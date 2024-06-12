@@ -1469,6 +1469,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Pick Location`
+  String get pickLocation {
+    return Intl.message(
+      'Pick Location',
+      name: 'pickLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location Saved`
+  String get locationSaved {
+    return Intl.message(
+      'Location Saved',
+      name: 'locationSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is a conflict with another booking`
+  String get bookingConflict {
+    return Intl.message(
+      'There is a conflict with another booking',
+      name: 'bookingConflict',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booking Added Successfully`
+  String get bookingSuccess {
+    return Intl.message(
+      'Booking Added Successfully',
+      name: 'bookingSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

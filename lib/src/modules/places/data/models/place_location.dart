@@ -9,14 +9,14 @@ class PlaceLocation {
 
   static PlaceLocation? fromString(String string) {
     List<String> parts = string.split(",");
+    double? lat = double.tryParse(parts[0]);
+    double? long = double.tryParse(parts[1]);
     if (parts.length == 2) {
-      double? latitude = double.tryParse(parts[0]);
-      double? longitude = double.tryParse(parts[1]);
-      if (latitude == null || longitude == null) {
-        return null;
+      if (lat != null && long != null) {
+        return PlaceLocation(latitude: lat, longitude: long);
       }
     }
-    return null;
+ return null;
   }
 
   String toStr() {
