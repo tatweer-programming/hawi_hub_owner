@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
-import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
@@ -102,8 +101,8 @@ class MorePage extends StatelessWidget {
                   _settingWidget(
                     onTap: () {
                       Share.share(
-                          '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
-                          );
+                        '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
+                      );
                     },
                     icon: "assets/images/icons/share_2.webp",
                     title: S.of(context).share,
@@ -113,6 +112,7 @@ class MorePage extends StatelessWidget {
                     listener: (context, state) {
                       if (state is LogoutSuccessState) {
                         bloc.add(PlaySoundEvent("audios/end.wav"));
+                        mainCubit.currentIndex = 0;
                         context.pushAndRemove(Routes.login);
                       }
                     },
@@ -217,7 +217,7 @@ Widget _appBar(
                       ),
                     ),
                   ),
-                  navToProfile(context:context,radius: 30.sp)
+                  navToProfile(context: context, radius: 30.sp)
                 ],
               ),
             ],
@@ -252,7 +252,7 @@ showLogoutDialog(BuildContext context, AuthBloc bloc) {
           )
         ],
         title: Text(
-          "Do you want to logout ?",
+          S.of(context).doYouWantToLogout,
           style: TextStyleManager.getRegularStyle(),
         ),
       );
@@ -273,7 +273,7 @@ _showDialogForLanguage(BuildContext context, MainCubit mainCubit) {
                       mainCubit.changeLanguage(0);
                       context.pop();
                     },
-                    child: const Text("Arabic"))),
+                    child: const Text("العربية"))),
             Expanded(
                 child: TextButton(
                     onPressed: () {

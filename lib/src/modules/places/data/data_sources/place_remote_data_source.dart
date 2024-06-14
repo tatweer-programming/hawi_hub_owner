@@ -9,7 +9,6 @@ import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/booking_player.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';

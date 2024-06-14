@@ -8,7 +8,7 @@ class EndPoints {
   static const String verification = '/Owner/Verification';
   static const String uploadProof = '/Owner/UploadProofOfIdentity';
 
-  ///
+  /// chat
   static const String getConnection = '/Hub/negotiate?negotiateVersion=1';
   static const String addConnectionId = '/Hub/AddOwnerConnectionId/';
   static const String addConversation = '/Hub/AddConversation';

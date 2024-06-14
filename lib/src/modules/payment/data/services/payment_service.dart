@@ -1,11 +1,15 @@
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
+import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:my_fatoorah/my_fatoorah.dart';
 
 import '../../../../core/utils/constance_manager.dart';
 
 class PaymentService {
-  Future<PaymentResponse> completePayment(
+  Future<PaymentResponse> pay(
       {required BuildContext context, required double totalPrice}) async {
     return await MyFatoorah.startPayment(
       context: context,
@@ -22,4 +26,5 @@ class PaymentService {
       ),
     );
   }
+
 }

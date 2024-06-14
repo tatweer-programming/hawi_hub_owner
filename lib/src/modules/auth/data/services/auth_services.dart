@@ -27,8 +27,8 @@ class AuthService {
         return Right(response.data['message']);
       }
       return Left(response.data.toString());
-    } catch (e) {
-      return const Left("CHECK YOUR NETWORK");
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 
@@ -53,8 +53,8 @@ class AuthService {
         }
       }
       return response.data.toString();
-    } catch (e) {
-      return "Email is not exists.";
+    } on DioException catch (e) {
+      return e.response.toString();
     }
   }
 
@@ -77,8 +77,8 @@ class AuthService {
         return Right(authPlayer);
       }
       return const Right(null);
-    } catch (e) {
-      return Left(e.toString());
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 
@@ -97,8 +97,8 @@ class AuthService {
         return Right(message);
       }
       return const Right("Something went wrong");
-    } catch (e) {
-      return Left(e.toString());
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 
@@ -119,8 +119,8 @@ class AuthService {
         return Right(authPlayer);
       }
       return const Right(null);
-    } catch (e) {
-      return Left(e.toString());
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 
@@ -136,8 +136,8 @@ class AuthService {
         return Right(message);
       }
       return const Right("Something went wrong");
-    } catch (e) {
-      return Left(e.toString());
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 
@@ -150,8 +150,8 @@ class AuthService {
         path: EndPoints.resetPass,
       );
       return response.data.toString();
-    } catch (e) {
-      return "CHECK YOUR NETWORK";
+    } on DioException catch (e) {
+      return e.response.toString();
     }
   }
 
@@ -174,8 +174,8 @@ class AuthService {
         }
       }
       return Left(response.data.toString());
-    } catch (e) {
-      return const Left("CHECK YOUR NETWORK");
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 
@@ -189,11 +189,10 @@ class AuthService {
       );
       if (response.statusCode == 200) {
         return "Profile image updated successfully";
-        // return (response.data['message']);
       }
       return (response.data.toString());
-    } catch (e) {
-      return e.toString();
+    } on DioException catch (e) {
+      return e.response.toString();
     }
   }
 
@@ -208,8 +207,8 @@ class AuthService {
         return Right(response.data['message']);
       }
       return Left(response.data.toString());
-    } catch (e) {
-      return const Left("CHECK YOUR NETWORK");
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 
@@ -249,20 +248,23 @@ class AuthService {
         return Right(response.data['message']);
       }
       return Left(response.data.toString());
-    } catch (e) {
-      return const Left("CHECK YOUR NETWORK");
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 
   Future<Either<String, Owner>> getProfile(int id) async {
     try {
       Response response = await DioHelper.getData(
-        path: "/Owner/$id",
+        path: "/${ConstantsManager.userId == id ? "Owner" : "Player"}/$id",
       );
       Owner owner = Owner.fromJson(response.data);
+      if(ConstantsManager.userId == id){
+        ConstantsManager.appUser = owner;
+      }
       return Right(owner);
-    } catch (e) {
-      return const Left("CHECK YOUR NETWORK");
+    } on DioException catch (e) {
+      return Left(e.response.toString());
     }
   }
 }

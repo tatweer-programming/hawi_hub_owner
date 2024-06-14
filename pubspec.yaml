@@ -58,7 +58,6 @@ dependencies:
   # CHATS PACKAGES
   voice_message_package: ^2.1.4
   audioplayers: any
-  record: ^4.4.4
   path_provider:
   permission_handler:
 
@@ -74,7 +73,6 @@ dependencies:
   location_picker_flutter_map:
   cupertino_stepper:
   file_picker: ^8.0.2
-  open_file:
   open_file_plus: ^3.4.1+1
   flutter_local_notifications:
   signalr_core:
@@ -82,6 +80,7 @@ dependencies:
   firebase_messaging:
   http:
   flutter_map:
+  geolocator: any
   open_street_map_search_and_pick: ^0.1.1
 
 dev_dependencies:
