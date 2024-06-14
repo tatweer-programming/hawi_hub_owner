@@ -1590,6 +1590,16 @@ class S {
     );
   }
 
+  /// `Wallet`
+  String get wallet {
+    return Intl.message(
+      'Wallet',
+      name: 'wallet',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Booking Added Successfully`
   String get bookingSuccess {
     return Intl.message(

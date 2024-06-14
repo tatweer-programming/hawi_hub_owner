@@ -153,5 +153,6 @@
   "passMustContainSpecialChar": "يجب أن تحتوي كلمة المرور على حرف مثل # * على الأقل",
   "passMustContainNumber": "يجب ان تحتوي كلمة المرور على الاقل رقما واحدا",
   "doYouWantToLogout": "هل تريد حقا تسجيل الخروج ؟",
+  "wallet": "المحفظة",
   "addRequiredPdf": "يرجي إلحاق المطلوب ادناه من الملف "
 }

@@ -153,5 +153,6 @@
   "passMustContainSpecialChar": "Password must contain at least one special character",
   "passMustContainNumber": "Password must contain at least one number",
   "doYouWantToLogout": "Do you want to logout ?",
+  "wallet": "Wallet",
   "bookingSuccess": "Booking Added Successfully"
 }

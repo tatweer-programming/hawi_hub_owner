@@ -7,6 +7,8 @@ class EndPoints {
   static const String changePassword = '/Owner/ChangePassword';
   static const String verification = '/Owner/Verification';
   static const String uploadProof = '/Owner/UploadProofOfIdentity';
+  /// payment
+  static const String getAccountBalance = 'v2/GetSupplierDashboard';
 
   /// chat
   static const String getConnection = '/Hub/negotiate?negotiateVersion=1';

@@ -240,6 +240,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewFeedbacks": MessageLookupByLibrary.simpleMessage("عرض التعليقات"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("عرض الملف الشخصي"),
+        "wallet": MessageLookupByLibrary.simpleMessage("المحفظة"),
         "workingHours": MessageLookupByLibrary.simpleMessage("ساعات العمل"),
         "wrongPassword":
             MessageLookupByLibrary.simpleMessage("كلمة المرور خاطئة."),

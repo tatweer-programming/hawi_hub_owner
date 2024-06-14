@@ -238,6 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
         "viewFeedbacks": MessageLookupByLibrary.simpleMessage("View Feedbacks"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),
+        "wallet": MessageLookupByLibrary.simpleMessage("Wallet"),
         "weekend": MessageLookupByLibrary.simpleMessage("Weekend"),
         "workingHours": MessageLookupByLibrary.simpleMessage("Working hours"),
         "wrongPassword":

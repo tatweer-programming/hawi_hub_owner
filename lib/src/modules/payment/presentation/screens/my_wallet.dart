@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
-import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
+import 'package:hawi_hub_owner/src/modules/auth/view/widgets/auth_app_bar.dart';
+import 'package:hawi_hub_owner/src/modules/payment/bloc/payment_cubit.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../core/utils/color_manager.dart';
-import '../../../main/view/widgets/custom_app_bar.dart';
 
 class MyWallet extends StatelessWidget {
   final Owner owner;
@@ -13,6 +14,11 @@ class MyWallet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PaymentCubit paymentCubit = PaymentCubit.get();
+    if (owner.supplierCode != null) {
+      paymentCubit.getAccountBalance(owner.supplierCode!);
+    }
+    double balance = 0;
     return Scaffold(
       body: Column(
         children: [
@@ -42,14 +48,24 @@ class MyWallet extends StatelessWidget {
                 Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: Text(
-                    "My Wallet",
-                    style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    S.of(context).myWallet,
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
                   height: 2.h,
                 ),
-                _walletWidget(owner.myWallet.toString()),
+                BlocConsumer<PaymentCubit, PaymentState>(
+                  listener: (context, state) {
+                    if (state is GetAccountBalanceSuccess) {
+                      balance = state.balance;
+                    }
+                  },
+                  builder: (context, state) {
+                    return _walletWidget("$balance ${S.of(context).sar}");
+                  },
+                ),
               ],
             ),
           ),
@@ -63,33 +79,7 @@ Widget _appBar(BuildContext context, Owner owner) {
   return Stack(
     alignment: AlignmentDirectional.bottomCenter,
     children: [
-      CustomAppBar(
-        blendMode: BlendMode.exclusion,
-        backgroundImage: "assets/images/app_bar_backgrounds/4.webp",
-        height: 32.h,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 5.w,
-            vertical: 2.h,
-          ),
-          child: Row(
-            children: [
-              backIcon(context),
-              SizedBox(
-                width: 20.w,
-              ),
-              Text(
-                "Wallet",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: ColorManager.white,
-                  fontSize: 32.sp,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      AuthAppBar(context: context, owner: owner, title: S.of(context).wallet),
       if (owner.profilePictureUrl != null)
         CircleAvatar(
           radius: 50.sp,
@@ -123,7 +113,7 @@ Widget _walletWidget(String wallet) {
             bottom: 1.h,
           ),
           child: Text(
-            "$wallet \$",
+            wallet,
             style: const TextStyle(
               color: ColorManager.white,
             ),

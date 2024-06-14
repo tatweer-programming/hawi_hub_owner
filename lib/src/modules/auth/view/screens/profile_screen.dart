@@ -26,7 +26,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthBloc bloc = AuthBloc.get(context);
-    bloc.add(GetProfileEvent(id));
     Owner? owner;
     return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
       if (state is GetProfileSuccessState) {
