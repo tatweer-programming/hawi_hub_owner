@@ -1,19 +1,15 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 
 import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
-import 'package:web_socket_channel/io.dart';
-
 import '../../../../core/utils/constance_manager.dart';
 import 'package:http/http.dart' as http;
 
 class NotificationServices {
-  static IOWebSocketChannel? channel;
   static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   static Future<void> init() async {
@@ -85,6 +81,7 @@ class NotificationServices {
   }
 
   Future subscribeToTopic() async {
+    print(ConstantsManager.userId);
     await _firebaseMessaging.subscribeToTopic( "owner:${ConstantsManager.userId}");
   }
 }

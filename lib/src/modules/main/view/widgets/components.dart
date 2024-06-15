@@ -172,19 +172,17 @@ class NotificationWidget extends StatelessWidget {
     return Dismissible(
       direction: DismissDirection.startToEnd,
       background: Row(
-
         children: [
           Icon(
             Icons.mark_chat_read,
             color: ColorManager.primary,
           ),
           Spacer(),
-
         ],
       ),
       key: UniqueKey(),
-      onDismissed:  (context) {
-          MainCubit.get().markNotificationAsRead(notification.id);
+      onDismissed: (context) {
+        MainCubit.get().markNotificationAsRead(notification.id);
       },
       child: Container(
         height: 10.h,
@@ -199,7 +197,8 @@ class NotificationWidget extends StatelessWidget {
             if (notification.image != null)
               CircleAvatar(
                 radius: 5.h,
-                backgroundImage: NetworkImage(ApiManager.handleImageUrl(notification.image!)),
+                backgroundImage: NetworkImage(
+                    ApiManager.handleImageUrl(notification.image!)),
                 backgroundColor: ColorManager.primary,
               ),
             Expanded(
@@ -339,7 +338,7 @@ Widget navToProfile({required BuildContext context, double? radius}) {
     onTap: () {
       context.push(
         Routes.profile,
-        arguments: ConstantsManager.appUser,
+        arguments: {'id': ConstantsManager.userId},
       );
     },
     child: CircleAvatar(

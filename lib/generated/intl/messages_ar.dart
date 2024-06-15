@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountCreatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم انشاء حسابك بنجاح"),
         "addBooking": MessageLookupByLibrary.simpleMessage("اضافة حجز"),
+        "addComment": MessageLookupByLibrary.simpleMessage("إضافة ملاحطة"),
         "addImages": MessageLookupByLibrary.simpleMessage("اضافة صور"),
         "addPlace": MessageLookupByLibrary.simpleMessage("إضافة مكان"),
         "addRequiredPdf": MessageLookupByLibrary.simpleMessage(
@@ -57,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("المدينة مطلوبة"),
+        "clubRate": MessageLookupByLibrary.simpleMessage("تقييم الملعب"),
         "code": MessageLookupByLibrary.simpleMessage("الرمز "),
         "commonQuestions":
             MessageLookupByLibrary.simpleMessage("الاسئلة الشائعة"),
@@ -73,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل تريد حذف أمكانك"),
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
+        "doYouWantToLogout":
+            MessageLookupByLibrary.simpleMessage("هل تريد حقا تسجيل الخروج ؟"),
         "editPlace": MessageLookupByLibrary.simpleMessage("تعديل المكان"),
         "email": MessageLookupByLibrary.simpleMessage(" الإيميل"),
         "emailAlreadyExist": MessageLookupByLibrary.simpleMessage(
@@ -145,6 +149,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إثبات ملكية المكان مطلوب"),
         "ownershipFile":
             MessageLookupByLibrary.simpleMessage("ملف إثبات الملكية"),
+        "passMustContainLowerCase": MessageLookupByLibrary.simpleMessage(
+            "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل"),
+        "passMustContainNumber": MessageLookupByLibrary.simpleMessage(
+            "يجب ان تحتوي كلمة المرور على الاقل رقما واحدا"),
+        "passMustContainSpecialChar": MessageLookupByLibrary.simpleMessage(
+            "يجب أن تحتوي كلمة المرور على حرف مثل # * على الأقل"),
+        "passMustContainUpperCase": MessageLookupByLibrary.simpleMessage(
+            "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordChangedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تغيير كلمة المرور بنجاح."),
@@ -163,6 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل أمكانك بنجاح"),
         "placeName": MessageLookupByLibrary.simpleMessage("اسم المكان"),
         "places": MessageLookupByLibrary.simpleMessage("الأماكن"),
+        "playerRate": MessageLookupByLibrary.simpleMessage("تقييم اللاعب"),
         "preferenceAndPrivacy":
             MessageLookupByLibrary.simpleMessage("التفضيل والخصوصية"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
@@ -187,6 +200,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "seeAll": MessageLookupByLibrary.simpleMessage("رؤية الكل"),
+        "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendCode": MessageLookupByLibrary.simpleMessage("إرسال الرمز"),
         "sendCodeAfter":
             MessageLookupByLibrary.simpleMessage("يمكنك الارسال بعد "),
@@ -226,6 +240,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewFeedbacks": MessageLookupByLibrary.simpleMessage("عرض التعليقات"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("عرض الملف الشخصي"),
+        "wallet": MessageLookupByLibrary.simpleMessage("المحفظة"),
         "workingHours": MessageLookupByLibrary.simpleMessage("ساعات العمل"),
         "wrongPassword":
             MessageLookupByLibrary.simpleMessage("كلمة المرور خاطئة."),

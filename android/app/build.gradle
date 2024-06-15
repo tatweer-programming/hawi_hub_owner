@@ -52,20 +52,21 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     signingConfigs {
 //        debug {
-////            keyAlias 'androiddebugkey'
-////            keyPassword 'HawiHubOwner_Tatweer'
-////            storeFile file('keystore.jks')
-////            storePassword 'HawiHubOwner_Tatweer'
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'HawiHubOwner_Tatweer'
+//            storeFile file('keystore.jks')
+//            storePassword 'HawiHubOwner_Tatweer'
 //        }
 //        release {
-////            keyAlias 'androiddebugkey'
-////            keyPassword 'HawiHubOwner_Tatweer'
-////            storeFile file('keystore.jks')
-////            storePassword 'HawiHubOwner_Tatweer'
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'HawiHubOwner_Tatweer'
+//            storeFile file('keystore.jks')
+//            storePassword 'HawiHubOwner_Tatweer'
 //        }
     }
     buildTypes {

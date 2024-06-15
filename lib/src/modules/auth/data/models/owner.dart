@@ -9,6 +9,7 @@ class Owner {
   final String userName;
   final double? rate;
   final String email;
+  final String? supplierCode;
   final String? profilePictureUrl;
   final double myWallet;
   final List<AppFeedBack> feedbacks;
@@ -23,6 +24,7 @@ class Owner {
     required this.profilePictureUrl,
     this.profilePictureFile,
     this.nationalIdPicture,
+    this.supplierCode,
     required this.myWallet,
     required this.feedbacks,
     required this.rate,
@@ -39,6 +41,7 @@ class Owner {
           ? ApiManager.handleImageUrl(json['proofOfIdentityUrl'])
           : null,
       userName: json['userName'],
+      // supplierCode: json['supplierCode'],
       email: json['email'],
       approvalStatus: json['approvalStatus'],
       myWallet: json['wallet'].toDouble(),

@@ -113,12 +113,7 @@ class RegisterScreen extends StatelessWidget {
                                   ? Icons.visibility_off
                                   : Icons.visibility)),
                           validator: (value) {
-                            if (value.isEmpty) {
-                              return S.of(context).enterPassword;
-                            } else if (value.length < 6) {
-                              return S.of(context).shortPassword;
-                            }
-                            return null;
+                            return validPassword(value, context);
                           },
                         ),
                         SizedBox(

@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountCreatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Account Created Successfully"),
         "addBooking": MessageLookupByLibrary.simpleMessage("Add booking"),
+        "addComment": MessageLookupByLibrary.simpleMessage("Add Comment"),
         "addImages": MessageLookupByLibrary.simpleMessage("Add images"),
         "addPlace": MessageLookupByLibrary.simpleMessage("Add place"),
         "addRequiredPdf": MessageLookupByLibrary.simpleMessage(
@@ -57,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "cityIsRequired":
             MessageLookupByLibrary.simpleMessage("City is required"),
+        "clubRate": MessageLookupByLibrary.simpleMessage("Club Rate"),
         "code": MessageLookupByLibrary.simpleMessage("Code"),
         "commonQuestions":
             MessageLookupByLibrary.simpleMessage("Common Questions"),
@@ -73,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure you want to delete this place?"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
+        "doYouWantToLogout":
+            MessageLookupByLibrary.simpleMessage("Do you want to logout ?"),
         "editPlace": MessageLookupByLibrary.simpleMessage("Edit place"),
         "email": MessageLookupByLibrary.simpleMessage(" Email"),
         "emailAlreadyExist":
@@ -143,6 +147,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "ownerShipIsRequired":
             MessageLookupByLibrary.simpleMessage("Ownership file is required"),
         "ownershipFile": MessageLookupByLibrary.simpleMessage("Ownership file"),
+        "passMustContainLowerCase": MessageLookupByLibrary.simpleMessage(
+            "Password must contain at least one lowercase letter"),
+        "passMustContainNumber": MessageLookupByLibrary.simpleMessage(
+            "Password must contain at least one number"),
+        "passMustContainSpecialChar": MessageLookupByLibrary.simpleMessage(
+            "Password must contain at least one special character"),
+        "passMustContainUpperCase": MessageLookupByLibrary.simpleMessage(
+            "Password must contain at least one uppercase letter"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordChangedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Password has been changed successfully"),
@@ -161,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Place edited successfully"),
         "placeName": MessageLookupByLibrary.simpleMessage("Place name"),
         "places": MessageLookupByLibrary.simpleMessage("Places"),
+        "playerRate": MessageLookupByLibrary.simpleMessage("Player Rate"),
         "preferenceAndPrivacy":
             MessageLookupByLibrary.simpleMessage("Terms And Conditions"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
@@ -186,6 +199,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
+        "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendCode": MessageLookupByLibrary.simpleMessage("Send Code"),
         "sendCodeAfter":
             MessageLookupByLibrary.simpleMessage("You can resend code after "),
@@ -224,6 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
         "viewFeedbacks": MessageLookupByLibrary.simpleMessage("View Feedbacks"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),
+        "wallet": MessageLookupByLibrary.simpleMessage("Wallet"),
         "weekend": MessageLookupByLibrary.simpleMessage("Weekend"),
         "workingHours": MessageLookupByLibrary.simpleMessage("Working hours"),
         "wrongPassword":

@@ -1410,6 +1410,46 @@ class S {
     );
   }
 
+  /// `Club Rate`
+  String get clubRate {
+    return Intl.message(
+      'Club Rate',
+      name: 'clubRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Player Rate`
+  String get playerRate {
+    return Intl.message(
+      'Player Rate',
+      name: 'playerRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Comment`
+  String get addComment {
+    return Intl.message(
+      'Add Comment',
+      name: 'addComment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get send {
+    return Intl.message(
+      'Send',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `hey! to share our app visit `
   String get shareApp {
     return Intl.message(
@@ -1495,6 +1535,66 @@ class S {
     return Intl.message(
       'There is a conflict with another booking',
       name: 'bookingConflict',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one lowercase letter`
+  String get passMustContainLowerCase {
+    return Intl.message(
+      'Password must contain at least one lowercase letter',
+      name: 'passMustContainLowerCase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one uppercase letter`
+  String get passMustContainUpperCase {
+    return Intl.message(
+      'Password must contain at least one uppercase letter',
+      name: 'passMustContainUpperCase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one special character`
+  String get passMustContainSpecialChar {
+    return Intl.message(
+      'Password must contain at least one special character',
+      name: 'passMustContainSpecialChar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one number`
+  String get passMustContainNumber {
+    return Intl.message(
+      'Password must contain at least one number',
+      name: 'passMustContainNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to logout ?`
+  String get doYouWantToLogout {
+    return Intl.message(
+      'Do you want to logout ?',
+      name: 'doYouWantToLogout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wallet`
+  String get wallet {
+    return Intl.message(
+      'Wallet',
+      name: 'wallet',
       desc: '',
       args: [],
     );

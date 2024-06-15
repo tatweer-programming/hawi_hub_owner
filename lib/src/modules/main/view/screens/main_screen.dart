@@ -16,7 +16,9 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthBloc.get(context).add(GetProfileEvent(ConstantsManager.userId!));
+    if (ConstantsManager.userId != null) {
+      AuthBloc.get(context).add(GetProfileEvent(ConstantsManager.userId!));
+    }
     MainCubit mainCubit = MainCubit.get()
       ..getBanner()
       ..getSports();
@@ -43,7 +45,8 @@ class MainScreen extends StatelessWidget {
           body: BlocListener<PlaceCubit, PlaceState>(
             listener: (context, state) {
               if (state is PlaceError) {
-                errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+                errorToast(
+                    msg: ExceptionManager(state.exception).translatedMessage());
               } else if (state is AcceptBookingRequestSuccess) {
                 defaultToast(msg: S.of(context).requestAccepted);
               } else if (state is DeclineBookingRequestSuccess) {

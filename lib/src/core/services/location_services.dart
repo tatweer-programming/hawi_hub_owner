@@ -40,7 +40,7 @@ class LocationServices {
     double lon,
   ) {
     const R = 6371.0; // Earth's radius in kilometers
-    const pi = 3.1415926535897932;
+    // const pi = 3.1415926535897932;
 
     // Convert latitude and longitude from degrees to radians
     double lat1Rad = radians(lat);

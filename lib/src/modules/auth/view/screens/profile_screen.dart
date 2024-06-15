@@ -10,95 +10,115 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/rates_screen.dart';
+import 'package:hawi_hub_owner/src/modules/auth/view/widgets/auth_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/place_holder.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../core/utils/color_manager.dart';
-import '../../../main/view/widgets/custom_app_bar.dart';
 import '../widgets/widgets.dart';
-import 'update_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final Owner owner;
+  final int id;
 
-  const ProfileScreen({super.key, required this.owner});
+  const ProfileScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
     AuthBloc bloc = AuthBloc.get(context);
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is UploadNationalIdSuccessState) {
-          context.pop();
-          bloc.add(GetProfileEvent(ConstantsManager.userId!));
-          context.pop();
-        } else if (state is UploadNationalIdErrorState) {
-          context.pop();
-          errorToast(msg: handleResponseTranslation(state.error, context));
-        }
-        if (state is UploadNationalIdLoadingState) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return const AlertDialog(
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
+    Owner? owner;
+    return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
+      if (state is GetProfileSuccessState) {
+        owner = state.owner;
+      }
+      if (state is UploadNationalIdSuccessState) {
+        context.pop();
+        bloc.add(GetProfileEvent(id));
+        context.pop();
+      } else if (state is UploadNationalIdErrorState) {
+        context.pop();
+        errorToast(msg: handleResponseTranslation(state.error, context));
+      }
+      if (state is UploadNationalIdLoadingState) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return const AlertDialog(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(child: CircularProgressIndicator()),
+                ],
+              ),
+            );
+          },
+        );
+      }
+    }, builder: (context, state) {
+      return FutureBuilder(
+        future: _fetchProfile(bloc, id),
+        builder: (context, snapshot) {
+          if (owner == null) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          } else {
+            return Scaffold(
+              body: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Center(child: CircularProgressIndicator()),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
+                          AuthAppBar(
+                            context: context,
+                            owner: owner!,
+                            title: S.of(context).profile,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: 5.w,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          Text(
+                            owner!.userName,
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          _emailConfirmed(
+                              bloc: bloc,
+                              id: id,
+                              owner: owner!,
+                              context: context,
+                              state: state),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              );
-            },
-          );
-        }
-      },
-      builder: (context, state) {
-        return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      _appBar(context: context, owner: owner),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.symmetric(
-                    horizontal: 5.w,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Text(
-                        owner.userName,
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      _emailConfirmed(
-                          bloc: bloc,
-                          owner: owner,
-                          context: context,
-                          state: state),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
+              ),
+            );
+          }
+        },
+      );
+    });
   }
+}
+
+Future<void> _fetchProfile(AuthBloc bloc, int id) async {
+  bloc.add(GetProfileEvent(id));
 }
 
 Widget _walletWidget(VoidCallback onTap, String wallet) {
@@ -125,78 +145,6 @@ Widget _walletWidget(VoidCallback onTap, String wallet) {
           ),
         ),
       ],
-    ),
-  );
-}
-
-Widget _appBar({
-  required BuildContext context,
-  required Owner owner,
-}) {
-  return Stack(
-    alignment: AlignmentDirectional.bottomCenter,
-    children: [
-      CustomAppBar(
-        blendMode: BlendMode.exclusion,
-        backgroundImage: "assets/images/app_bar_backgrounds/4.webp",
-        height: 32.h,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 5.w,
-            vertical: 2.h,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              backIcon(context),
-              SizedBox(
-                width: 20.w,
-              ),
-              Text(
-                S.of(context).profile,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: ColorManager.white,
-                  fontSize: 32.sp,
-                ),
-              ),
-              const Spacer(),
-              if (owner.approvalStatus == 2)
-                InkWell(
-                    onTap: () {
-                      context.pushWithTransition(EditProfileScreen(
-                        owner: owner,
-                      ));
-                    },
-                    child: _editIcon()),
-            ],
-          ),
-        ),
-      ),
-      if (owner.profilePictureUrl != null)
-        CircleAvatar(
-          radius: 50.sp,
-          backgroundColor: ColorManager.grey3,
-          backgroundImage: NetworkImage(owner.profilePictureUrl!),
-        ),
-      if (owner.profilePictureUrl == null)
-        CircleAvatar(
-          radius: 50.sp,
-          backgroundColor: ColorManager.grey3,
-          backgroundImage: const AssetImage("assets/images/icons/user.png"),
-        ),
-    ],
-  );
-}
-
-Widget _editIcon() {
-  return CircleAvatar(
-    radius: 12.sp,
-    backgroundColor: ColorManager.white,
-    child: Image.asset(
-      "assets/images/icons/edit.webp",
-      height: 3.h,
-      width: 4.w,
     ),
   );
 }
@@ -305,9 +253,10 @@ Widget _peopleRateBuilder(AppFeedBack feedBack, BuildContext context) {
 }
 
 Widget _emailConfirmed({
-  required Owner owner,
   required BuildContext context,
   required AuthState state,
+  required int id,
+  required Owner owner,
   required AuthBloc bloc,
 }) {
   if (owner.nationalIdPicture == null && owner.approvalStatus == 0) {
@@ -315,11 +264,7 @@ Widget _emailConfirmed({
   } else if (owner.approvalStatus == 0) {
     return _pending(context, S.of(context).identificationPending);
   } else if (owner.approvalStatus == 1) {
-    return _verified(
-      owner: owner,
-      context: context,
-      state: state,
-    );
+    return _verified(owner: owner, context: context, state: state, id: id);
   } else {
     return _rejectedAndTryAgain(context, S.of(context).rejectIdCard, bloc);
   }
@@ -459,6 +404,7 @@ Widget _verified({
   required Owner owner,
   required BuildContext context,
   required AuthState state,
+  required int id,
 }) {
   return Column(children: [
     SizedBox(
@@ -507,7 +453,7 @@ Widget _verified({
               SizedBox(
                 height: 2.h,
               ),
-              state is GetMyProfileLoadingState
+              state is GetProfileLoadingState
                   ? ShimmerWidget(
                       height: 13.h,
                       width: double.infinity,
@@ -539,7 +485,7 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    if (ConstantsManager.userId == owner.id)
+    if (ConstantsManager.userId == id)
       _walletWidget(() {}, owner.myWallet.toString()),
   ]);
 }

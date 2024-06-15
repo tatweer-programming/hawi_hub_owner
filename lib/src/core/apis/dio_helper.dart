@@ -21,7 +21,11 @@ class DioHelper {
   static Future<Response> getData({
     required String path,
     Map<String, dynamic>? query,
+    String? token,
   }) async {
+    dio.options.headers = {
+      'Authorization': token,
+    };
     return dio.get(
       path,
       queryParameters: query,

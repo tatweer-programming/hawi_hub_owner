@@ -8,9 +8,9 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
+import 'package:hawi_hub_owner/src/modules/payment/presentation/screens/my_wallet.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../../../generated/l10n.dart';
 import '../custom_app_bar.dart';
 
@@ -47,28 +47,16 @@ class MorePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
               child: Column(
                 children: [
-                  // _settingWidget(
-                  //   onTap: () {
-                  //     // context.pushWithTransition(
-                  //     //   MyWallet(
-                  //     //     player: Player(
-                  //     //       id: 1,
-                  //     //       userName: "Mohamed",
-                  //     //       bookings: 8,
-                  //     //       games: 5,
-                  //     //       email: "",
-                  //     //       profilePictureUrl:
-                  //     //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyXXkiqJLhMZE69a4dTnH4Qd6GyzyFmqcmHu8EAhx8DQ&s",
-                  //     //       myWallet: 900,
-                  //     //       feedbacks: [],
-                  //     //       rate: 5,
-                  //     //     ),
-                  //     //   ),
-                  //     // );
-                  //   },
-                  //   icon: "assets/images/icons/money.webp",
-                  //   title: "My Wallet",
-                  // ),
+                  _settingWidget(
+                    onTap: () {
+                      if (ConstantsManager.appUser != null) {
+                        context.pushWithTransition(
+                            MyWallet(owner: ConstantsManager.appUser!));
+                      }
+                    },
+                    icon: "assets/images/icons/money.webp",
+                    title: "My Wallet",
+                  ),
                   _settingWidget(
                     onTap: () {
                       context.push(Routes.termsAndCondition);
@@ -102,8 +90,8 @@ class MorePage extends StatelessWidget {
                   _settingWidget(
                     onTap: () {
                       Share.share(
-                          '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
-                          );
+                        '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
+                      );
                     },
                     icon: "assets/images/icons/share_2.webp",
                     title: S.of(context).share,
@@ -113,6 +101,7 @@ class MorePage extends StatelessWidget {
                     listener: (context, state) {
                       if (state is LogoutSuccessState) {
                         bloc.add(PlaySoundEvent("audios/end.wav"));
+                        mainCubit.currentIndex = 0;
                         context.pushAndRemove(Routes.login);
                       }
                     },
@@ -217,7 +206,7 @@ Widget _appBar(
                       ),
                     ),
                   ),
-                  navToProfile(context:context,radius: 30.sp)
+                  navToProfile(context: context, radius: 30.sp)
                 ],
               ),
             ],
@@ -252,7 +241,7 @@ showLogoutDialog(BuildContext context, AuthBloc bloc) {
           )
         ],
         title: Text(
-          "Do you want to logout ?",
+          S.of(context).doYouWantToLogout,
           style: TextStyleManager.getRegularStyle(),
         ),
       );
@@ -273,7 +262,7 @@ _showDialogForLanguage(BuildContext context, MainCubit mainCubit) {
                       mainCubit.changeLanguage(0);
                       context.pop();
                     },
-                    child: const Text("Arabic"))),
+                    child: const Text("العربية"))),
             Expanded(
                 child: TextButton(
                     onPressed: () {

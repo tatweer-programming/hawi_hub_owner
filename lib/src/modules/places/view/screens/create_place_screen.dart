@@ -16,8 +16,8 @@ import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 import 'package:sizer/sizer.dart';
-import 'package:open_file/open_file.dart' as op;
 
 class CreatePlaceScreen extends StatelessWidget {
   const CreatePlaceScreen({super.key});
@@ -370,7 +370,7 @@ class CreatePlaceScreen extends StatelessWidget {
                                                 null) {
                                               await cubit.selectOwnershipFile();
                                             } else {
-                                              await op.OpenFile.open(cubit
+                                              await OpenFile.open(cubit
                                                   .selectedOwnershipFile!.path);
                                             }
                                           })),

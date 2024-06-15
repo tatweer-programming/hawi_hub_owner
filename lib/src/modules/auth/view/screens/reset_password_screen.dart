@@ -83,12 +83,7 @@ class ResetPasswordScreen extends StatelessWidget {
                                     : Icons.visibility,
                               )),
                           validator: (value) {
-                            if (value.isEmpty) {
-                              return S.of(context).enterNewPassword;
-                            } else if (value.length < 6) {
-                              return S.of(context).shortPassword;
-                            }
-                            return null;
+                            return validPassword(value, context);
                           },
                         );
                       },
