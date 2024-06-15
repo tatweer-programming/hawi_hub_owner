@@ -83,6 +83,7 @@ dependencies:
   http:
   flutter_map:
   open_street_map_search_and_pick: ^0.1.1
+  app_links: ^6.1.1
 
 dev_dependencies:
   flutter_test:

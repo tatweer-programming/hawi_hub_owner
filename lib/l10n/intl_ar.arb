@@ -144,6 +144,6 @@
   "pickLocation": "حفظ الموقع",
   "locationSaved" : "تم حفظ الموقع",
   "bookingConflict" : "الملعب محجوز في هذا الوقت",
-  "bookingSuccess" : "تم إضافة الملعب بنجاح"
+  "bookingSuccess" : "تم إضافة الحجز بنجاح"
 
 }

@@ -16,7 +16,7 @@ class PlaceFeedbacksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     PlaceCubit placeCubit = PlaceCubit.get();
     Place currentPlace = placeCubit.places.firstWhere((element) => element.id == id);
-    if (currentPlace.feedbacks == null) {
+    if (currentPlace.feedbacks == null || currentPlace.feedbacks!.isEmpty) {
       placeCubit.getPlaceFeedbacks(id);
     }
     return Scaffold(

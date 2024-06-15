@@ -9,12 +9,12 @@ class DioHelper {
       baseUrl: ApiManager.baseUrl,
       headers: {
         "Authorization": ApiManager.authToken,
-        "Connection": "keep-alive",
+        // "Connection": "keep-alive",
         'Content-Type': 'application/json',
       },
       contentType: "application/json",
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 20),
+      // connectTimeout: const Duration(seconds: 20),
+      // receiveTimeout: const Duration(seconds: 20),
     ));
   }
 

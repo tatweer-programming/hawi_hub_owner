@@ -62,6 +62,7 @@ class GetStartedScreen extends StatelessWidget {
             SizedBox(
               height: 3.h,
             ),
+            // comment for test ai commit plugin
           ],
         ),
       ),
