@@ -47,7 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookingNotAllowed":
             MessageLookupByLibrary.simpleMessage("الحجز خارج أوقات عمل المكان"),
         "bookingSuccess":
-            MessageLookupByLibrary.simpleMessage("تم إضافة الحجز بنجاح"),
+            MessageLookupByLibrary.simpleMessage("تم إضافة الملعب بنجاح"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "change": MessageLookupByLibrary.simpleMessage("تغير "),
