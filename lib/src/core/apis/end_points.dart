@@ -7,6 +7,7 @@ class EndPoints {
   static const String changePassword = '/Owner/ChangePassword';
   static const String verification = '/Owner/Verification';
   static const String uploadProof = '/Owner/UploadProofOfIdentity';
+  static const String addPlayerFeedback = "/Owner/AddPlayerReview/";
   /// payment
   static const String getAccountBalance = 'v2/GetSupplierDashboard';
 
@@ -40,4 +41,5 @@ class EndPoints {
   static const String markAsRead = "/Hub/MarkOwnerNotificationAsRead/";
   static const String getPlaceBookings = "/Stadium/GetStadiumsReservations/";
   static const String addOfflineReservation = "/Stadium/AddOfflineReservation";
+
 }

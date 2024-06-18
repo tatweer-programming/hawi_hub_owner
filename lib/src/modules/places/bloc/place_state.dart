@@ -258,3 +258,16 @@ class AddOfflineReservationError extends PlaceError {
   @override
   List<Object?> get props => [];
 }
+class AddPlayerFeedbackLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+class AddPlayerFeedbackSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+class AddPlayerFeedbackError extends PlaceError {
+  AddPlayerFeedbackError(super.exception);
+  @override
+  List<Object?> get props => [];
+}

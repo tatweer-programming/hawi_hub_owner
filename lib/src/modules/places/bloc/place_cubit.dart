@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -329,8 +330,18 @@ class PlaceCubit extends Cubit<PlaceState> {
       emit(AddOfflineReservationSuccess());
     });
   }
+  Future addPlayerFeedback({required int placeId, required AppFeedBack feedback}) async {
+    emit(AddPlayerFeedbackLoading());
+    var result = await dataSource.addPlayerFeedback(placeId, review: feedback);
+    result.fold((l) {
+      emit(AddPlayerFeedbackError(l));
+    }, (r) {
+      emit(AddPlayerFeedbackSuccess());
+    });
+  }
   String _getPlaceNameFromRequestId(int requestId) {
     int placeId = bookingRequests.firstWhere((element) => element.id == requestId).placeId;
     return places.firstWhere((element) => element.id == placeId).name;
   }
+
 }

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 
@@ -17,7 +18,8 @@ class MainServices {
 
       if (response.statusCode == 200 && response.data.isNotEmpty) {
         for (var item in response.data) {
-          banners.add(item["bannerImageUrl"].toString().replaceAll("\\", "/"));
+          banners.add(
+              ApiManager.handleImageUrl(item["bannerImageUrl"].toString()));
         }
         return Right(banners);
       }
@@ -25,8 +27,7 @@ class MainServices {
       return Right(banners1);
     } on Exception {
       return Right(banners1);
-    }
-  }
+    }}
 
   Future<Either<Exception, List<Sport>>> getSports() async {
     try {
