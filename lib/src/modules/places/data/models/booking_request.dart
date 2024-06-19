@@ -1,23 +1,22 @@
 import 'package:equatable/equatable.dart';
 import 'package:hawi_hub_owner/src/core/utils/images_manager.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/booking_player.dart';
 // ignore: must_be_immutable
 class BookingRequest extends Equatable {
 // use data
   final int userId;
   final String userName;
   final String userImage;
-   List ? players ;
   // request data
   int? id;
   final DateTime startTime;
   final DateTime endTime;
   final double price;
-
   // place data
   final String placeName;
   final String address;
   final int placeId;
-  // final List<Player> players = [];
+   final List<BookingPlayer> ? players ;
   BookingRequest({
     required this.userId,
     required this.userName,
@@ -43,6 +42,7 @@ class BookingRequest extends Equatable {
       placeName: "",
       address: "",
       placeId: json['stadiumId'],
+      players: json['players'] == null ? null : List<BookingPlayer>.from(json['players'].map((x) => BookingPlayer.fromJson(x))),
     );
   }
   @override

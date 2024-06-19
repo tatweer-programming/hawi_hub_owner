@@ -53,7 +53,7 @@ class NotificationServices {
           value.headers
           }");
     });
-    await _saveNotification();
+    await _saveNotification( notification);
   }
 
   Future<bool> markAsRead(int id) async {
@@ -76,8 +76,18 @@ class NotificationServices {
     print(message.data.toString());
     print(message.notification?.title);
   }
-  Future<Either<Exception, Unit>> _saveNotification() async {
-  return const Right(unit);
+  Future<Either<Exception, Unit>> _saveNotification(AppNotification notification) async {
+  try{
+    var response = await DioHelper.postData(path: EndPoints.saveNotificationToPlayer, data: notification.toJson());
+    if (response.statusCode == 200) {
+      return const Right(unit);
+    }
+    return const Right(unit);
+  }
+      on Exception catch (e) {
+        return Left(e);
+      }
+
   }
 
   Future subscribeToTopic() async {

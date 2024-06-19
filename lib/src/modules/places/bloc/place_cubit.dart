@@ -194,11 +194,10 @@ class PlaceCubit extends Cubit<PlaceState> {
       //print(l);
       emit(AcceptBookingRequestError(l));
     }, (r) async {
+      List<int> ids = _getPlayersIdsFromRequest(requestId);
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(AcceptBookingRequestSuccess());
-      await NotificationServices().sendNotification(AppNotification(title: "تم قبول طلبك",
-          body: ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب" , id: requestId,
-          receiverId: bookingRequests.firstWhere((element) => element.placeId == requestId).userId));
+      _sendRequestNotifications(ids , true , requestId);
     });
   }
 
@@ -208,11 +207,11 @@ class PlaceCubit extends Cubit<PlaceState> {
     result.fold((l) {
       emit(DeclineBookingRequestError(l));
     }, (r) async {
+      List<int> ids = _getPlayersIdsFromRequest(requestId);
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(DeclineBookingRequestSuccess());
-     await NotificationServices().sendNotification(AppNotification(title: "تم رفض طلبك",
-          body: ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب" , id: requestId,
-          receiverId: bookingRequests.firstWhere((element) => element.placeId == requestId).userId));
+      _sendRequestNotifications(ids , false , requestId);
+
     });
   }
 
@@ -344,4 +343,29 @@ class PlaceCubit extends Cubit<PlaceState> {
     return places.firstWhere((element) => element.id == placeId).name;
   }
 
+  List<int> _getPlayersIdsFromRequest(int requestId) {
+     List<int> ids =[];
+     BookingRequest bookingRequest = bookingRequests.firstWhere((element) => element.id == requestId);
+      ids.add(bookingRequest.userId);
+      if (bookingRequest.players != null) {
+      ids.addAll(bookingRequest.players!.map((e) => e.id));
+      }
+     return ids;
+  }
+void _sendRequestNotifications( List<int> ids , bool isAccepted , int requestId) async {
+  if (isAccepted) {
+    for (int id in ids) {
+      await NotificationServices().sendNotification(AppNotification(title: "تم قبول طلبك",
+          body: ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب" , id: id,
+          receiverId: id));
+    }
+  }
+  else {
+    for (int id in ids) {
+      await NotificationServices().sendNotification(AppNotification(title: "تم رفض طلبك",
+          body: ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب" , id: id,
+          receiverId: id));
+    }
+  }
+  }
 }

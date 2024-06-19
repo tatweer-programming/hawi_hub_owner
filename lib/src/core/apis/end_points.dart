@@ -41,5 +41,6 @@ class EndPoints {
   static const String markAsRead = "/Hub/MarkOwnerNotificationAsRead/";
   static const String getPlaceBookings = "/Stadium/GetStadiumsReservations/";
   static const String addOfflineReservation = "/Stadium/AddOfflineReservation";
+  static const String saveNotificationToPlayer= "/Hub/AddPlayerNotification/";
 
 }

@@ -33,11 +33,9 @@ class AppNotification {
 
   Map<String, dynamic> toJson() {
     return {
-      'title': title,
-      'body': body,
-      'image': image,
-      'link': link,
-      'date_time': DateTime.now().toIso8601String(),
+      "title": title,
+      "message": body,
+      "imageUrl": image,
     };
   }
 
