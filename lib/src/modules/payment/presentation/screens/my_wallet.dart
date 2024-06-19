@@ -15,9 +15,9 @@ class MyWallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PaymentCubit paymentCubit = PaymentCubit.get();
-    if (owner.supplierCode != null) {
-      paymentCubit.getAccountBalance(owner.supplierCode!);
-    }
+    // if (owner.supplierCode != null) {
+    paymentCubit.getAccountBalance("1");
+    // }
     double balance = 0;
     return Scaffold(
       body: Column(

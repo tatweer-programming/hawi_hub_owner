@@ -10,6 +10,7 @@ class EndPoints {
   static const String addPlayerFeedback = "/Owner/AddPlayerReview/";
   /// payment
   static const String getAccountBalance = 'v2/GetSupplierDashboard';
+  static const String transferBalance = 'v2/TransferBalance';
 
   /// chat
   static const String getConnection = '/Hub/negotiate?negotiateVersion=1';

@@ -5,6 +5,7 @@ import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/forget_password_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/register_screen.dart';
+import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
@@ -20,6 +21,7 @@ class LoginScreen extends StatelessWidget {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     AuthBloc bloc = AuthBloc.get(context);
+    MainCubit mainCubit = MainCubit.get();
     bool visible = false;
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
@@ -42,7 +44,34 @@ class LoginScreen extends StatelessWidget {
             key: formKey,
             child: Column(
               children: [
-                authBackGround(50.h),
+                Stack(
+                  children: [
+                    authBackGround(50.h),
+                    BlocConsumer<MainCubit, MainState>(
+                      listener: (context, state) {
+                        if (state is ShowDialogState) {
+                          showDialogForLanguage(context, mainCubit);
+                        }
+                      },
+                      builder: (context, state) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 3.w, vertical: 3.5.h),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.language,
+                              color: ColorManager.black,
+                              size: 28.sp,
+                            ),
+                            onPressed: () {
+                              mainCubit.showDialog();
+                            },
+                          ),
+                        );
+                      },
+                    )
+                  ],
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                   child: Column(
@@ -110,7 +139,8 @@ class LoginScreen extends StatelessWidget {
                               },
                               child: Text(
                                 S.of(context).forgotPassword,
-                                style: const TextStyle(color: ColorManager.black),
+                                style:
+                                    const TextStyle(color: ColorManager.black),
                               ),
                             ),
                           ],

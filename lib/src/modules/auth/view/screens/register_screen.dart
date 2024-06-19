@@ -59,7 +59,7 @@ class RegisterScreen extends StatelessWidget {
               key: formKey,
               child: Column(
                 children: [
-                  authBackGround(40.h),
+                  authBackGround(50.h),
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),

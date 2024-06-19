@@ -15,10 +15,6 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   final PaymentService _paymentService = PaymentService();
 
-  void _paymentSuccess() {
-    emit(PaymentSuccess());
-  }
-
   Future<void> getAccountBalance(String supplierCode) async {
     final result = await _paymentService.getAccountBalance(supplierCode);
     result.fold(
@@ -27,6 +23,22 @@ class PaymentCubit extends Cubit<PaymentState> {
       },
       (r) {
         emit(GetAccountBalanceSuccess(r));
+      },
+    );
+  }
+
+  Future<void> transferBalance({
+    required String supplierCode,
+    required double amount,
+  }) async {
+    final result = await _paymentService.transferBalance(
+        amount: amount, supplierCode: supplierCode);
+    result.fold(
+      (l) {
+        emit(TransferBalanceError(l));
+      },
+      (r) {
+        emit(TransferBalanceSuccess(r));
       },
     );
   }

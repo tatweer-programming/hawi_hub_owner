@@ -121,34 +121,6 @@ Future<void> _fetchProfile(AuthBloc bloc, int id) async {
   bloc.add(GetProfileEvent(id));
 }
 
-Widget _walletWidget(VoidCallback onTap, String wallet) {
-  return Container(
-    height: 5.h,
-    width: double.infinity,
-    decoration: BoxDecoration(
-      color: const Color(0xff757575),
-      borderRadius: BorderRadius.circular(25.sp),
-    ),
-    child: Row(
-      children: [
-        Padding(
-          padding: EdgeInsetsDirectional.only(
-            start: 4.w,
-            top: 1.h,
-            bottom: 1.h,
-          ),
-          child: Text(
-            "$wallet \$",
-            style: const TextStyle(
-              color: ColorManager.white,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
 Widget _seeAll(VoidCallback onTap, BuildContext context) {
   return InkWell(
     onTap: onTap,
@@ -485,7 +457,5 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    if (ConstantsManager.userId == id)
-      _walletWidget(() {}, owner.myWallet.toString()),
   ]);
 }

@@ -36,7 +36,9 @@ class PaymentService {
       final response = await http.get(
         Uri.parse(ApiManager.myFatoorahBaseUrl + EndPoints.getAccountBalance)
             .replace(
-          queryParameters: {"SupplierCode": supplierCode},
+          queryParameters: {
+            "SupplierCode": supplierCode,
+          },
         ),
         headers: {
           'Authorization': ApiManager.myFatoorahToken,
@@ -45,6 +47,35 @@ class PaymentService {
       );
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return Right(jsonResponse["TotalBalance"]);
+    } on DioException catch (e) {
+      return Left(e.response.toString());
+    }
+  }
+
+  Future<Either<String, bool>> transferBalance({
+    required String supplierCode,
+    required double amount,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse(ApiManager.myFatoorahBaseUrl + EndPoints.transferBalance)
+            .replace(
+          queryParameters: {
+            "SupplierCode": supplierCode,
+            "TransferAmount	": amount,
+            "TransferType	": "push"
+          },
+        ),
+        headers: {
+          'Authorization': ApiManager.myFatoorahToken,
+          'Content-Type': 'application/json',
+        },
+      );
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      if (jsonResponse["IsSuccess"] == "true") {
+        return const Right(true);
+      }
+      return const Right(false);
     } on DioException catch (e) {
       return Left(e.response.toString());
     }

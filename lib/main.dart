@@ -16,6 +16,7 @@ import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
+import 'package:hawi_hub_owner/src/modules/payment/bloc/payment_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:sizer/sizer.dart';
 import "package:timeago/timeago.dart" as timeago;
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
           ),
           //   BlocProvider<GamesBloc>(create: (BuildContext context) => GamesBloc.get()),
           BlocProvider<PlaceCubit>(create: (BuildContext context) => PlaceCubit.get()),
+          BlocProvider<PaymentCubit>(create: (BuildContext context) => PaymentCubit.get()),
         ],
         child: Sizer(builder: (context, orientation, deviceType) {
           AppRouter appRouter = AppRouter();

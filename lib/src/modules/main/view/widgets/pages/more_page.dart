@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
@@ -24,7 +25,7 @@ class MorePage extends StatelessWidget {
     return BlocConsumer<MainCubit, MainState>(
       listener: (context, state) {
         if (state is ShowDialogState) {
-          _showDialogForLanguage(context, mainCubit);
+          showDialogForLanguage(context, mainCubit);
         }
       },
       builder: (context, state) {
@@ -247,30 +248,4 @@ showLogoutDialog(BuildContext context, AuthBloc bloc) {
       );
     },
   );
-}
-
-_showDialogForLanguage(BuildContext context, MainCubit mainCubit) {
-  showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-            title: Row(
-          children: [
-            Expanded(
-                child: TextButton(
-                    onPressed: () {
-                      mainCubit.changeLanguage(0);
-                      context.pop();
-                    },
-                    child: const Text("العربية"))),
-            Expanded(
-                child: TextButton(
-                    onPressed: () {
-                      mainCubit.changeLanguage(1);
-                      context.pop();
-                    },
-                    child: const Text("English"))),
-          ],
-        ));
-      });
 }

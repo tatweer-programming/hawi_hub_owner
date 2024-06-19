@@ -37,7 +37,7 @@ Widget authBackGround(double height) => Stack(
           alignment: AlignmentDirectional.topCenter,
           heightFactor: 0.9,
           child: ClipPath(
-            clipper: HalfCircleCurve(height / 3),
+            clipper: HalfCircleCurve(height / 4),
             child: Container(
               height: height,
               width: double.infinity,
