@@ -57,18 +57,21 @@ class LoginScreen extends StatelessWidget {
                         return Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 3.w, vertical: 3.5.h),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.language,
-                              color: ColorManager.black,
-                              size: 28.sp,
-                            ),
+                          child: FloatingActionButton(
+                            mini: true,
+                            backgroundColor: ColorManager.secondary,
                             onPressed: () {
                               mainCubit.showDialog();
                             },
+                            child: Icon(
+                              Icons.language,
+                              color: ColorManager.white,
+                              size: 23.sp,
+                            ),
                           ),
                         );
                       },
+
                     )
                   ],
                 ),

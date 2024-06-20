@@ -17,7 +17,7 @@ class NotificationServices {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
      print(message.data.toString());
-     defaultToast(msg: message.notification?.title ?? '');
+     defaultToast(msg: message.notification?.title ?? "");
      print(message.notification?.title ,);
    });
   }
@@ -92,6 +92,6 @@ class NotificationServices {
 
   Future subscribeToTopic() async {
     print(ConstantsManager.userId);
-    await _firebaseMessaging.subscribeToTopic( "owner:${ConstantsManager.userId}");
+    await _firebaseMessaging.subscribeToTopic( "owner_${ConstantsManager.userId}");
   }
 }

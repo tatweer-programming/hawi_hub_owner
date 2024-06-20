@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hawi_hub_owner/src/core/utils/images_manager.dart';
 
 class AppFeedBack extends Equatable {
   final int? id;
@@ -16,14 +17,17 @@ class AppFeedBack extends Equatable {
     this.userImageUrl,
     required this.rating,
   });
-  factory AppFeedBack.fromJson(Map<String, dynamic> json) {
+  factory AppFeedBack.fromJson(
+      Map<String, dynamic> json,
+      ) {
     return AppFeedBack(
       id: json['id'],
-      userId: json['user_id'],
+      userId: json['reviewerId'],
       comment: json['comment'],
-      userName: json['user_name'],
-      userImageUrl: json['user_image_url'],
-      rating: json['rating'],
+      userName: json['reviewerName'],
+      userImageUrl:
+      json['reviewerProfilePictureUrl'] ?? ImagesManager.defaultProfile,
+      rating: json['rate'],
     );
   }
 

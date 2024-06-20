@@ -41,7 +41,7 @@ class AppNotification {
 
   String jsonBody() {
     return jsonEncode({
-      "to": "/topics/player:$receiverId",
+      "to": "/topics/player_$receiverId",
       "notification": {
         "body": body,
         "click_action": "FLUTTER_NOTIFICATION_CLICK",

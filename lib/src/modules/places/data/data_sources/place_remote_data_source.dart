@@ -59,7 +59,17 @@ class PlaceRemoteDataSource {
       print(res);
       defaultToast(msg: "Place Created Successfully");
       return const Right(unit);
-    } on Exception catch (e) {
+    }on DioException catch (e) {
+      DioException dioException = e;
+      print(
+          "......................................................................الايرور هنا ....................................................");
+      print(dioException.error.toString() +
+          dioException.response.toString() +
+          dioException.message.toString() +
+
+          dioException.requestOptions.toString());
+      return Left(e);
+    }  on Exception catch (e) {
       DioException dioException = e as DioException;
       print(dioException.response);
       return Left(e);
@@ -220,7 +230,7 @@ class PlaceRemoteDataSource {
       var response = await DioHelper.getData(
           path: EndPoints.getPlaceFeedbacks + placeId.toString());
       if (response.statusCode == 200) {
-        appFeedBacks = (response.data as List)
+        appFeedBacks = (response.data["reviews"] as List)
             .map((e) => AppFeedBack.fromJson(e))
             .toList();
       }

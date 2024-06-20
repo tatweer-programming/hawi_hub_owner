@@ -35,7 +35,7 @@ class EndPoints {
   static const String getSports = '/Category';
   static const String getBanners = '/Banner';
   static const String getNotifications = '/Hub/OwnerNotifications/';
-  static const String getPlaceFeedbacks = '/Stadium/GetFeedbacks/';
+  static const String getPlaceFeedbacks = '/Stadium/GetStadiumReviews/';
   static const String uploadProofOfOwnership = '/Stadium/UploadStadiumProofOfOwnership';
   static const String uploadPlaceImages = '/Stadium/UploadStadiumImages';
   static const String saveConnectionId = "/Hub/AddOwnerConnectionId/";
