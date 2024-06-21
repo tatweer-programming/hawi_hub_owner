@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم انشاء حسابك بنجاح"),
         "addBooking": MessageLookupByLibrary.simpleMessage("اضافة حجز"),
         "addComment": MessageLookupByLibrary.simpleMessage("إضافة ملاحطة"),
+        "addFeedback": MessageLookupByLibrary.simpleMessage("إضافة تقييم"),
         "addImages": MessageLookupByLibrary.simpleMessage("اضافة صور"),
         "addPlace": MessageLookupByLibrary.simpleMessage("إضافة مكان"),
         "addRequiredPdf": MessageLookupByLibrary.simpleMessage(

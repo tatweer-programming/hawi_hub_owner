@@ -1610,6 +1610,16 @@ class S {
     );
   }
 
+  /// `Add Feedback`
+  String get addFeedback {
+    return Intl.message(
+      'Add Feedback',
+      name: 'addFeedback',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Booking Added Successfully`
   String get bookingSuccess {
     return Intl.message(

@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
+import 'package:hawi_hub_owner/src/modules/auth/view/screens/add_feedback_for_user.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/rates_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/auth_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/place_holder.dart';
@@ -237,7 +238,7 @@ Widget _emailConfirmed({
   } else if (owner.approvalStatus == 0) {
     return _pending(context, S.of(context).identificationPending);
   } else if (owner.approvalStatus == 1) {
-    return _verified(owner: owner, context: context, state: state, id: id);
+    return _verified(owner: owner, context: context, state: state, id: id, authBloc: bloc);
   } else {
     return _rejectedAndTryAgain(context, S.of(context).rejectIdCard, bloc);
   }
@@ -377,6 +378,7 @@ Widget _verified({
   required Owner owner,
   required BuildContext context,
   required AuthState state,
+  required AuthBloc authBloc,
   required int id,
 }) {
   return Column(children: [
@@ -447,6 +449,15 @@ Widget _verified({
         style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
       ),
     ),
+    SizedBox(
+      height: 2.h,
+    ),
+    if(ConstantsManager.appUser!.playerReservation.contains(owner.id))
+      defaultButton(onPressed: (){
+        context.pushWithTransition(AddFeedbackForUser(owner: owner,authBloc: authBloc));
+      }, text: S.of(context).addFeedback,
+          fontSize: 17.sp
+      ),
     SizedBox(
       height: 2.h,
     ),

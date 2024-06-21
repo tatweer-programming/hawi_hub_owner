@@ -33,9 +33,6 @@ class Owner {
   });
 
   factory Owner.fromJson(Map<String, dynamic> json) {
-    List<AppFeedBack> feedbacks = List.from(json['reviews'] ?? [])
-        .map((feedback) => AppFeedBack.fromJson(feedback))
-        .toList();
     return Owner(
       profilePictureUrl: json['profilePictureUrl'],
       id: json['id'],
@@ -47,7 +44,7 @@ class Owner {
       email: json['email'],
       approvalStatus: json['approvalStatus'],
       myWallet: json['wallet'].toDouble(),
-      feedbacks: feedbacks,
+      feedbacks: [],
       rate: json["rate"].toDouble(),
       playerReservation: List.from(json['playerReservation'] ?? []),
     );

@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
+import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
-import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
+import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/auth_app_bar.dart';
+import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../core/utils/styles_manager.dart';
 import '../../../auth/view/widgets/widgets.dart';
+import '../../data/models/owner.dart';
 
 class AddFeedbackForUser extends StatelessWidget {
   final Owner owner;
+  final AuthBloc authBloc;
 
-  const AddFeedbackForUser({
-    super.key,
-    required this.owner,
-  });
+  const AddFeedbackForUser(
+      {super.key, required this.owner, required this.authBloc});
 
   @override
   Widget build(BuildContext context) {
     TextEditingController addCommentController = TextEditingController();
+    double rating = 5;
+    PlaceCubit bloc = PlaceCubit.get();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -26,7 +33,7 @@ class AddFeedbackForUser extends StatelessWidget {
             AuthAppBar(
               context: context,
               owner: owner,
-              title: S.of(context).profile,
+              title: S.of(context).feedbacks,
             ),
             SizedBox(
               height: 3.h,
@@ -45,11 +52,19 @@ class AddFeedbackForUser extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  _rateBuilder(
-                    rate: S.of(context).playerRate,
-                    initialRating: 5,
-                    onRatingUpdate: (rating) {},
-                  ),
+                  BlocConsumer<PlaceCubit, PlaceState>(
+                      listener: (context, state) {
+                    if (state is AddRatingState) {
+                      rating = state.rating;
+                    }
+                  }, builder: (context, state) {
+                    return _rateBuilder(
+                      rate: S.of(context).playerRate,
+                      onRatingUpdate: (rating) {
+                        bloc.addRating(rating);
+                      },
+                    );
+                  }),
                   SizedBox(
                     height: 3.h,
                   ),
@@ -65,10 +80,30 @@ class AddFeedbackForUser extends StatelessWidget {
                   SizedBox(
                     height: 3.h,
                   ),
-                  defaultButton(
-                    onPressed: () {},
-                    text: S.of(context).send,
-                    fontSize: 18.sp,
+                  BlocConsumer<PlaceCubit, PlaceState>(
+                    listener: (context, state) {
+                      if (state is AddPlayerFeedbackSuccess) {
+                        authBloc.add(GetProfileEvent(
+                          owner.id,
+                        ));
+                        context.pop();
+                      }
+                    },
+                    builder: (context, state) {
+                      return defaultButton(
+                        onPressed: () {
+                          bloc.addPlayerFeedback(
+                              ownerId: ConstantsManager.userId!,
+                              feedback: AppFeedBack(
+                                  userId: owner.id,
+                                  comment: addCommentController.text,
+                                  rating: rating,
+                                  userName: ''));
+                        },
+                        text: S.of(context).send,
+                        fontSize: 18.sp,
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 3.h,
@@ -85,7 +120,6 @@ class AddFeedbackForUser extends StatelessWidget {
 
 Widget _rateBuilder({
   required String rate,
-  required double initialRating,
   required Function(double) onRatingUpdate,
 }) {
   return Column(
@@ -101,7 +135,7 @@ Widget _rateBuilder({
         height: 1.h,
       ),
       RatingBar.builder(
-        initialRating: initialRating,
+        initialRating: 5,
         minRating: 1,
         itemSize: 25.sp,
         direction: Axis.horizontal,

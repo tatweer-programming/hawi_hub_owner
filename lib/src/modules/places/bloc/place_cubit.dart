@@ -355,14 +355,17 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future addPlayerFeedback(
-      {required int placeId, required AppFeedBack feedback}) async {
+      {required AppFeedBack feedback,required int ownerId}) async {
     emit(AddPlayerFeedbackLoading());
-    var result = await dataSource.addPlayerFeedback(placeId, review: feedback);
+    var result = await dataSource.addPlayerFeedback(ownerId:ownerId,review: feedback);
     result.fold((l) {
       emit(AddPlayerFeedbackError(l));
     }, (r) {
       emit(AddPlayerFeedbackSuccess());
     });
+  }
+  void addRating(double rate) {
+    emit(AddRatingState(rate));
   }
 
   String _getPlaceNameFromRequestId(int requestId) {

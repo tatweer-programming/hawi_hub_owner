@@ -8,6 +8,7 @@ class EndPoints {
   static const String verification = '/Owner/Verification';
   static const String uploadProof = '/Owner/UploadProofOfIdentity';
   static const String addPlayerFeedback = "/Owner/AddPlayerReview/";
+  static const String getFeedbacks = '/Player/GetOwnerReviews/';
   /// payment
   static const String getAccountBalance = 'v2/GetSupplierDashboard';
   static const String transferBalance = 'v2/TransferBalance';

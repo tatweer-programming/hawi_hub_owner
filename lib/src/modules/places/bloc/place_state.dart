@@ -133,6 +133,12 @@ class AcceptBookingRequestLoading extends PlaceState {
   @override
   List<Object?> get props => [];
 }
+class AddRatingState extends PlaceState {
+  final double rating;
+  AddRatingState(this.rating);
+  @override
+  List<Object?> get props => [];
+}
 
 class AcceptBookingRequestSuccess extends PlaceState {
   @override

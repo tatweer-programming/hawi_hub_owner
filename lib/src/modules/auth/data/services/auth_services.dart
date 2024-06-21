@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 
 import '../../../../core/apis/dio_helper.dart';
 import '../../../../core/apis/end_points.dart';
@@ -263,6 +264,20 @@ class AuthService {
         ConstantsManager.appUser = owner;
       }
       return Right(owner);
+    } on DioException catch (e) {
+      return Left(e.response.toString());
+    }
+  }
+  Future<Either<String, List<AppFeedBack>>> geFeedBacks(int id) async {
+    try {
+      Response response = await DioHelper.getData(
+        path: "${EndPoints.getFeedbacks}$id",
+      );
+      List<AppFeedBack> feedBacks = [];
+      for (var category in response.data["reviews"]) {
+        feedBacks.add(AppFeedBack.fromJson(category));
+      }
+      return Right(feedBacks);
     } on DioException catch (e) {
       return Left(e.response.toString());
     }

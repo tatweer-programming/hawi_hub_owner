@@ -331,13 +331,12 @@ class PlaceRemoteDataSource {
       return Left(e);
     }
   }
-  Future<Either<Exception, Unit>> addPlayerFeedback(int ownerId,
-      {required AppFeedBack review}) async {
+  Future<Either<Exception, Unit>> addPlayerFeedback(
+      {required AppFeedBack review,required int ownerId}) async {
     try {
       await DioHelper.postData(
           data: review.toJson(userType: "player"),
-          path: EndPoints.addPlayerFeedback + ownerId.toString(),
-          query: {"id": ownerId});
+          path: EndPoints.addPlayerFeedback + ownerId.toString(),);
       return const Right(unit);
     } on Exception catch (e) {
       return Left(e);
