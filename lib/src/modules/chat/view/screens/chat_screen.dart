@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
+import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
@@ -25,18 +26,11 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController messageController = TextEditingController();
     final ScrollController scrollController = ScrollController();
+    chatBloc.add(GetConnectionEvent());
     String? imagePath;
     List<Message> messages = [];
     return BlocConsumer<ChatBloc, ChatState>(
       listener: (context, state) {
-        if (state is GetChatMessagesSuccessState) {
-          messages = state.messages;
-          chatBloc.add(StreamMessagesEvent());
-          if (messages.isNotEmpty) {
-            chatBloc.add(
-                ScrollingDownEvent(listScrollController: scrollController));
-          }
-        }
         if (state is GetChatMessagesSuccessState) {
           messages = state.messages;
           chatBloc.add(StreamMessagesEvent());
@@ -66,80 +60,90 @@ class ChatScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _appBar(
+        return PopScope(
+          canPop: true,
+          onPopInvoked: (didPop) async {
+            chatBloc.add(CloseConnectionEvent());
+          },
+          child: Scaffold(
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _appBar(
                   context: context,
                   receiverName: chat!.lastMessage.player.userName,
-                  imageProfile: chat!.lastMessage.player.profilePictureUrl),
-              Expanded(
-                  child: ListView.separated(
-                padding: EdgeInsetsDirectional.zero,
-                controller: scrollController,
-                itemBuilder: (context, index) {
-                  String formattedDate = '';
-                  if (messages[index].timeStamp != null) {
-                    formattedDate = utcToLocal(messages[index].timeStamp!);
-                  }
-                  bool? isOwner = messages[index].isOwner;
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 3.w,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: !isOwner!
-                          ? CrossAxisAlignment.end
-                          : CrossAxisAlignment.start,
-                      children: [
-                        _messageWidget(
-                            message: messages[index], isSender: !isOwner),
-                        SizedBox(
-                          height: 0.5.h,
-                        ),
-                        Text(
-                          formattedDate,
-                          style: TextStyleManager.getCaptionStyle().copyWith(
-                              fontSize: 10.sp, color: ColorManager.black),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(
-                  height: 2.h,
+                  imageProfile: chat!.lastMessage.player.profilePictureUrl,
+                  chatBloc: chatBloc,
                 ),
-                itemCount: messages.length,
-              )),
-              if (imagePath != null)
-                _messageInput(imagePath, () {
-                  chatBloc.add(RemovePickedImageEvent());
-                }),
-              _sendButton(
-                (String? value) async {
-                  if (value == 'image') {
-                    chatBloc.add(PickImageEvent());
-                  }
-                },
-                () {
-                  if (messageController.text.isNotEmpty || imagePath != null) {
-                    chatBloc.add(SendMessageEvent(
-                      message: Message(
-                        message: messageController.text,
-                        conversationId: chat!.conversationId,
-                        attachmentUrl: imagePath,
-                        isOwner: false,
-                        timeStamp: DateTime.now()
-                            .add(const Duration(hours: -3))
-                            .toString(),
+                SizedBox(height: 1.h),
+                Expanded(
+                    child: ListView.separated(
+                  padding: EdgeInsetsDirectional.zero,
+                  controller: scrollController,
+                  itemBuilder: (context, index) {
+                    String formattedDate = '';
+                    if (messages[index].timeStamp != null) {
+                      formattedDate = utcToLocal(messages[index].timeStamp!);
+                    }
+                    bool? isOwner = messages[index].isOwner;
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 3.w,
                       ),
-                    ));
-                  }
-                },
-                messageController,
-              ),
-            ],
+                      child: Column(
+                        crossAxisAlignment: !isOwner!
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                        children: [
+                          _messageWidget(
+                              message: messages[index], isSender: !isOwner),
+                          SizedBox(
+                            height: 0.5.h,
+                          ),
+                          Text(
+                            formattedDate,
+                            style: TextStyleManager.getCaptionStyle().copyWith(
+                                fontSize: 10.sp, color: ColorManager.black),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 2.h,
+                  ),
+                  itemCount: messages.length,
+                )),
+                if (imagePath != null)
+                  _messageInput(imagePath, () {
+                    chatBloc.add(RemovePickedImageEvent());
+                  }),
+                _sendButton(
+                  (String? value) async {
+                    if (value == 'image') {
+                      chatBloc.add(PickImageEvent());
+                    }
+                  },
+                  () {
+                    if (messageController.text.isNotEmpty ||
+                        imagePath != null) {
+                      chatBloc.add(SendMessageEvent(
+                        message: Message(
+                          message: messageController.text,
+                          conversationId: chat!.conversationId,
+                          attachmentUrl: imagePath,
+                          isOwner: false,
+                          timeStamp: DateTime.now()
+                              .add(const Duration(hours: -3))
+                              .toString(),
+                        ),
+                      ));
+                    }
+                  },
+                  messageController,
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -174,6 +178,7 @@ Widget _appBar({
   required BuildContext context,
   required String receiverName,
   required String? imageProfile,
+  required ChatBloc chatBloc,
 }) {
   return Container(
     height: 18.h,
@@ -189,7 +194,12 @@ Widget _appBar({
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          backIcon(context),
+          backIcon(
+              context: context,
+              onTap: () {
+                chatBloc.add(CloseConnectionEvent());
+                context.pop();
+              }),
           SizedBox(
             width: 5.w,
           ),

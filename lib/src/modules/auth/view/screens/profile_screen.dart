@@ -16,6 +16,7 @@ import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/shimmer_wi
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../core/utils/color_manager.dart';
+import '../widgets/people_rate_builder.dart';
 import '../widgets/widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -383,11 +384,11 @@ Widget _verified({
       height: 2.h,
     ),
     Text(
-      owner.rate!.remainder(1).toString(),
+      owner.rate.toStringAsFixed(1),
       style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
     ),
     RatingBar.builder(
-      initialRating: owner.rate!,
+      initialRating: owner.rate,
       minRating: 1,
       itemSize: 25.sp,
       direction: Axis.horizontal,
@@ -401,7 +402,7 @@ Widget _verified({
       onRatingUpdate: (rating) {},
     ),
     SizedBox(
-      height: 2.h,
+      height: 3.h,
     ),
     owner.feedbacks.isEmpty
         ? Container()
@@ -422,26 +423,18 @@ Widget _verified({
                   }, context)
                 ],
               ),
-              SizedBox(
-                height: 2.h,
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => PeopleRateBuilder(
+                  context: context,
+                  feedBack: owner.feedbacks[index],
+                ),
+                separatorBuilder: (context, index) => SizedBox(
+                  height: 2.h,
+                ),
+                itemCount: owner.feedbacks.take(2).length,
               ),
-              state is GetProfileLoadingState
-                  ? ShimmerWidget(
-                      height: 13.h,
-                      width: double.infinity,
-                      placeholder: ShimmerPlaceHolder(
-                        borderRadius: 15.sp,
-                      ),
-                    )
-                  : ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) =>
-                          _peopleRateBuilder(owner.feedbacks[index], context),
-                      separatorBuilder: (context, index) => SizedBox(
-                            height: 2.h,
-                          ),
-                      itemCount: owner.feedbacks.take(2).length),
             ],
           ),
     SizedBox(

@@ -28,6 +28,8 @@ class SendMessageSuccessState extends ChatState {
 
 class GetConnectionSuccessState extends ChatState {}
 
+class CloseConnectionSuccessState extends ChatState {}
+
 //GetAllChats
 class GetAllChatsSuccessState extends ChatState {
   final List<Chat> chats;

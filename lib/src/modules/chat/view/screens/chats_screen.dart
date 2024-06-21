@@ -83,7 +83,7 @@ Widget _appBar(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          backIcon(context),
+          backIcon(context: context),
           SizedBox(
             width: 8.w,
           ),

@@ -159,11 +159,12 @@ class HalfCircleCurve extends CustomClipper<Path> {
   }
 }
 
-Widget backIcon(BuildContext context) {
+Widget backIcon({required BuildContext context, Function()? onTap}) {
   return InkWell(
-    onTap: () {
-      context.pop();
-    },
+    onTap: onTap ??
+        () {
+          context.pop();
+        },
     child: CircleAvatar(
       radius: 12.sp,
       backgroundColor: ColorManager.white,
@@ -282,7 +283,7 @@ String? validPassword(String value, BuildContext context) {
     return S.of(context).shortPassword;
   } else if (!RegExp(r'[a-z]').hasMatch(value)) {
     return S.of(context).passMustContainLowerCase;
-  }else if ( !RegExp(r'[A-Z]').hasMatch(value)) {
+  } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
     return S.of(context).passMustContainUpperCase;
   } else if (!RegExp(r'[0-9]').hasMatch(value)) {
     return S.of(context).passMustContainNumber;

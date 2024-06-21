@@ -19,12 +19,14 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dar
 import 'package:image_picker/image_picker.dart';
 
 import '../data/models/booking.dart';
+
 part 'place_state.dart';
 
 class PlaceCubit extends Cubit<PlaceState> {
   PlaceCubit() : super(PlaceInitial());
 
   static PlaceCubit? cubit;
+
   static PlaceCubit get() {
     cubit ??= PlaceCubit();
     return cubit!;
@@ -82,6 +84,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   File? selectedOwnershipFile;
 
   PlaceEditForm? placeEditForm;
+
   void getPlaces() async {
     if (places.isEmpty) {
       emit(GetPlacesLoading());
@@ -104,7 +107,8 @@ class PlaceCubit extends Cubit<PlaceState> {
     List<String> imagesUrl = [];
     debugPrint("creating place");
     emit(UploadAttachmentsLoading());
-    var ownershipResult = await _uploadProofOfOwnership(file: selectedOwnershipFile!);
+    var ownershipResult =
+        await _uploadProofOfOwnership(file: selectedOwnershipFile!);
     ownershipResult.fold((l) {
       print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       emit(UploadAttachmentsError(l));
@@ -114,7 +118,8 @@ class PlaceCubit extends Cubit<PlaceState> {
     });
     var imageResult = await _uploadPlaceImages(files: imageFiles);
     imageResult.fold((l) {
-      print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+      print(
+          "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
       emit(UploadAttachmentsError(l));
     }, (r) {
       print(r);
@@ -139,7 +144,8 @@ class PlaceCubit extends Cubit<PlaceState> {
       emit(UploadAttachmentsLoading());
       var imageResult = await _uploadPlaceImages(files: newPlace.imageFiles);
       imageResult.fold((l) {
-        print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+        print(
+            "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
         emit(UploadAttachmentsError(l));
       }, (r) {
         List<String> imagesUrl = newPlace.images;
@@ -197,7 +203,7 @@ class PlaceCubit extends Cubit<PlaceState> {
       List<int> ids = _getPlayersIdsFromRequest(requestId);
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(AcceptBookingRequestSuccess());
-      _sendRequestNotifications(ids , true , requestId);
+      _sendRequestNotifications(ids, true, requestId);
     });
   }
 
@@ -210,8 +216,7 @@ class PlaceCubit extends Cubit<PlaceState> {
       List<int> ids = _getPlayersIdsFromRequest(requestId);
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(DeclineBookingRequestSuccess());
-      _sendRequestNotifications(ids , false , requestId);
-
+      _sendRequestNotifications(ids, false, requestId);
     });
   }
 
@@ -244,14 +249,16 @@ class PlaceCubit extends Cubit<PlaceState> {
 
   void prepareEditForm(int placeId) {
     clearSelectedData();
-    placeEditForm = places.firstWhere((element) => element.id == placeId).createEditForm();
+    placeEditForm =
+        places.firstWhere((element) => element.id == placeId).createEditForm();
   }
 
   Future addImagesToEditForm() async {
     ImagePicker imagePicker = ImagePicker();
     List<XFile>? images = await imagePicker.pickMultiImage();
     placeEditForm!.imageFiles.addAll(images.map((e) => File(e.path)).toList());
-    emit(AddImagesSuccess(placeEditForm!.imageFiles.map((e) => e.path).toList()));
+    emit(AddImagesSuccess(
+        placeEditForm!.imageFiles.map((e) => e.path).toList()));
   }
 
   void removeImageFromEditForm(String image) {
@@ -265,7 +272,8 @@ class PlaceCubit extends Cubit<PlaceState> {
     emit(RemoveImagesSuccess(image));
   }
 
-  createBooking(DateTime bookingStartTime, DateTime bookingEndTime, int placeId) async {
+  createBooking(
+      DateTime bookingStartTime, DateTime bookingEndTime, int placeId) async {
     emit(CreateBookingLoading());
     var result = await dataSource.createBooking(
       placeId: placeId,
@@ -290,16 +298,21 @@ class PlaceCubit extends Cubit<PlaceState> {
     });
   }
 
-  Future<Either<Exception, String>> _uploadProofOfOwnership({required File file}) async {
+  Future<Either<Exception, String>> _uploadProofOfOwnership(
+      {required File file}) async {
     return await dataSource.uploadProfFile(file: file);
   }
 
-  Future<Either<Exception, List<String>>> _uploadPlaceImages({required List<File> files}) async {
+  Future<Either<Exception, List<String>>> _uploadPlaceImages(
+      {required List<File> files}) async {
     return await dataSource.uploadPlaceImages(files: files);
   }
 
   void chooseSport(String newSport) {
-    selectedSport = MainCubit.get().sportsList.firstWhere((element) => element.name == newSport).id;
+    selectedSport = MainCubit.get()
+        .sportsList
+        .firstWhere((element) => element.name == newSport)
+        .id;
   }
 
   void clearSelectedData() {
@@ -314,22 +327,27 @@ class PlaceCubit extends Cubit<PlaceState> {
     var result = await dataSource.getPlaceBookings(placeId: placeId);
     result.fold((l) {
       print("error getting place bookings ${l.toString()}");
-       emit(GetPlaceBookingsError(l));
+      emit(GetPlaceBookingsError(l));
     }, (r) {
       print("got place bookings ${r.toString()}");
       emit(GetPlaceBookingsSuccess(r));
     });
   }
-  addOfflineReservation({required int placeId  , required Booking booking}) async {
+
+  addOfflineReservation(
+      {required int placeId, required Booking booking}) async {
     emit(AddOfflineReservationLoading());
-    var result = await dataSource.addOfflineReservation( booking: booking, placeId: placeId);
+    var result = await dataSource.addOfflineReservation(
+        booking: booking, placeId: placeId);
     result.fold((l) {
       emit(AddOfflineReservationError(l));
     }, (r) {
       emit(AddOfflineReservationSuccess());
     });
   }
-  Future addPlayerFeedback({required int placeId, required AppFeedBack feedback}) async {
+
+  Future addPlayerFeedback(
+      {required int placeId, required AppFeedBack feedback}) async {
     emit(AddPlayerFeedbackLoading());
     var result = await dataSource.addPlayerFeedback(placeId, review: feedback);
     result.fold((l) {
@@ -338,34 +356,45 @@ class PlaceCubit extends Cubit<PlaceState> {
       emit(AddPlayerFeedbackSuccess());
     });
   }
+
   String _getPlaceNameFromRequestId(int requestId) {
-    int placeId = bookingRequests.firstWhere((element) => element.id == requestId).placeId;
+    int placeId = bookingRequests
+        .firstWhere((element) => element.id == requestId)
+        .placeId;
     return places.firstWhere((element) => element.id == placeId).name;
   }
 
   List<int> _getPlayersIdsFromRequest(int requestId) {
-     List<int> ids =[];
-     BookingRequest bookingRequest = bookingRequests.firstWhere((element) => element.id == requestId);
-      ids.add(bookingRequest.userId);
-      if (bookingRequest.players != null) {
+    List<int> ids = [];
+    BookingRequest bookingRequest =
+        bookingRequests.firstWhere((element) => element.id == requestId);
+    ids.add(bookingRequest.userId);
+    if (bookingRequest.players != null) {
       ids.addAll(bookingRequest.players!.map((e) => e.id));
+    }
+    return ids;
+  }
+
+  void _sendRequestNotifications(
+      List<int> ids, bool isAccepted, int requestId) async {
+    if (isAccepted) {
+      for (int id in ids) {
+        await NotificationServices().sendNotification(AppNotification(
+            title: "تم قبول طلبك",
+            body:
+                ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب",
+            id: id,
+            receiverId: id));
       }
-     return ids;
-  }
-void _sendRequestNotifications( List<int> ids , bool isAccepted , int requestId) async {
-  if (isAccepted) {
-    for (int id in ids) {
-      await NotificationServices().sendNotification(AppNotification(title: "تم قبول طلبك",
-          body: ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب" , id: id,
-          receiverId: id));
+    } else {
+      for (int id in ids) {
+        await NotificationServices().sendNotification(AppNotification(
+            title: "تم رفض طلبك",
+            body:
+                ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب",
+            id: id,
+            receiverId: id));
+      }
     }
-  }
-  else {
-    for (int id in ids) {
-      await NotificationServices().sendNotification(AppNotification(title: "تم رفض طلبك",
-          body: ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب" , id: id,
-          receiverId: id));
-    }
-  }
   }
 }
