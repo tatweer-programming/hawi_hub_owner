@@ -155,4 +155,12 @@ class ChatService {
         "${ApiManager.webSocket}?id=${ConstantsManager.connectionToken!}");
     socket!.add(messageWithTrailingChars);
   }
+
+  Future<void> closeConnection() async {
+    if (socket != null) {
+      await socket!
+          .close(WebSocketStatus.normalClosure, 'Disconnected by client');
+      socket = null;
+    }
+  }
 }

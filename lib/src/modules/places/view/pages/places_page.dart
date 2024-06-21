@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
+import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/connectivity.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
@@ -45,6 +46,14 @@ class AllPlacesPage extends StatelessWidget {
                   opacity: .15,
                   backgroundImage: "assets/images/app_bar_backgrounds/1.webp",
                   actions: [
+                    IconButton(
+                        onPressed: () {
+                          context.pushWithTransition(const ChatsScreen());
+                        },
+                        icon: const ImageIcon(
+                          AssetImage("assets/images/icons/chat.png"),
+                          color: ColorManager.golden,
+                        )),
                     IconButton(
                         onPressed: () {
                           context.push(Routes.notifications);

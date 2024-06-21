@@ -35,7 +35,7 @@ class AuthAppBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                backIcon(context),
+                backIcon(context: context),
                 Text(
                   title,
                   style: TextStyle(

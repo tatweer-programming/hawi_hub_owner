@@ -1600,6 +1600,16 @@ class S {
     );
   }
 
+  /// `Rates`
+  String get rates {
+    return Intl.message(
+      'Rates',
+      name: 'rates',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Booking Added Successfully`
   String get bookingSuccess {
     return Intl.message(

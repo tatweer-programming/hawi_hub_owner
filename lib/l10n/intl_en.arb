@@ -154,5 +154,6 @@
   "passMustContainNumber": "Password must contain at least one number",
   "doYouWantToLogout": "Do you want to logout ?",
   "wallet": "Wallet",
+  "rates": "Rates",
   "bookingSuccess": "Booking Added Successfully"
 }
