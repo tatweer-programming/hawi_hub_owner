@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
@@ -235,8 +236,14 @@ class PlaceCubit extends Cubit<PlaceState> {
     );
 
     if (result != null) {
-      selectedOwnershipFile = File(result.files.single.path!);
-      emit(SelectOwnershipFileSuccess(selectedOwnershipFile!.path));
+      // if size > 5MB
+      if (result.files.single.size > 3 * 1024 * 1024) {
+      errorToast(msg: "File size should be less than 3MB");
+      }
+    else {
+        selectedOwnershipFile = File(result.files.single.path!);
+        emit(SelectOwnershipFileSuccess(selectedOwnershipFile!.path));
+      }
     } else {
       // User canceled the picker
     }
@@ -250,6 +257,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   Future addImagesToEditForm() async {
     ImagePicker imagePicker = ImagePicker();
     List<XFile>? images = await imagePicker.pickMultiImage();
+
     placeEditForm!.imageFiles.addAll(images.map((e) => File(e.path)).toList());
     emit(AddImagesSuccess(placeEditForm!.imageFiles.map((e) => e.path).toList()));
   }

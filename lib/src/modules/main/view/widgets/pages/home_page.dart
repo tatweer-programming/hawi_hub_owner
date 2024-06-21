@@ -201,7 +201,7 @@ class HomePage extends StatelessWidget {
                                         itemCount:
                                             placeCubit.bookingRequests.length <
                                                     3
-                                                ? placeCubit.places.length
+                                                ? placeCubit.bookingRequests.length
                                                 : 3);
                           }),
                     ),
