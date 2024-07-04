@@ -225,7 +225,7 @@ class RegisterScreen extends StatelessWidget {
                                   } else if (!acceptTerms) {
                                     errorToast(
                                         msg:
-                                            "You should agree to terms of service and privacy policy");
+                                            S.of(context).shouldAgreeTerns);
                                   }
                                 },
                                 fontSize: 17.sp,

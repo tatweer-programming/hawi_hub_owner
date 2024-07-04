@@ -134,6 +134,12 @@ class AcceptConfirmTermsState extends AuthState {
 
   AcceptConfirmTermsState(this.accept);
 }
+// accept confirm terms
+class KeepMeLoggedInState extends AuthState {
+  final bool keepMeLoggedIn;
+
+  KeepMeLoggedInState(this.keepMeLoggedIn);
+}
 
 // update profile
 class UpdateProfileLoadingState extends AuthState {}

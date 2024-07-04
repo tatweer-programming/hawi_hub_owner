@@ -156,5 +156,10 @@
   "wallet": "Wallet",
   "rates": "Rates",
   "addFeedback": "Add Feedback",
+  "shouldAgreeTerns": "You should agree to terms of service and privacy policy",
+  "letsGetPlaying": "Let's get playing!",
+  "getStarted": "Get your Squad to play together!",
+  "bookVenuesToPlay": "Book Venues to Play with Friends",
+  "readySteadyGo": "READY , SET , GO",
   "bookingSuccess": "Booking Added Successfully"
 }

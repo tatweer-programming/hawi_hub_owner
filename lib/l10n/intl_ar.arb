@@ -155,6 +155,11 @@
   "doYouWantToLogout": "هل تريد حقا تسجيل الخروج ؟",
   "wallet": "المحفظة",
   "rates": "التقييمات",
+  "shouldAgreeTerns": "يجب عليك الموافقة على شروط الخدمة وسياسة الخصوصية",
   "addFeedback": "إضافة تقييم",
+  "letsGetPlaying": "هيا بنا نلعب!",
+  "getStarted": "اجعل فريقك يلعب معًا!",
+  "bookVenuesToPlay": "حجز أماكن للعب مع الأصدقاء",
+  "readySteadyGo": "إستعد، تأهب، إذهب",
   "addRequiredPdf": "يرجي إلحاق المطلوب ادناه من الملف "
 }

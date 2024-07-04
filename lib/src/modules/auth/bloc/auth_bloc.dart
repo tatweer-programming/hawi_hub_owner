@@ -178,6 +178,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else {
           emit(AcceptConfirmTermsState(true));
         }
+      } else if (event is KeepMeLoggedInEvent) {
+        if (event.keepMeLoggedIn) {
+          emit(KeepMeLoggedInState(false));
+        } else {
+          emit(KeepMeLoggedInState(true));
+        }
       } else if (event is ChangePasswordVisibilityEvent) {
         if (event.visible) {
           emit(ChangePasswordVisibilityState(false));

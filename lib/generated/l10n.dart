@@ -1620,6 +1620,56 @@ class S {
     );
   }
 
+  /// `You should agree to terms of service and privacy policy`
+  String get shouldAgreeTerns {
+    return Intl.message(
+      'You should agree to terms of service and privacy policy',
+      name: 'shouldAgreeTerns',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Let's get playing!`
+  String get letsGetPlaying {
+    return Intl.message(
+      'Let\'s get playing!',
+      name: 'letsGetPlaying',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get your Squad to play together!`
+  String get getStarted {
+    return Intl.message(
+      'Get your Squad to play together!',
+      name: 'getStarted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Book Venues to Play with Friends`
+  String get bookVenuesToPlay {
+    return Intl.message(
+      'Book Venues to Play with Friends',
+      name: 'bookVenuesToPlay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `READY , SET , GO`
+  String get readySteadyGo {
+    return Intl.message(
+      'READY , SET , GO',
+      name: 'readySteadyGo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Booking Added Successfully`
   String get bookingSuccess {
     return Intl.message(
