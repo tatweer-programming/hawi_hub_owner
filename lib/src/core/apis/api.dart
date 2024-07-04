@@ -1,6 +1,6 @@
 class ApiManager {
-  static const String baseUrl = 'http://abdoo120-001-site1.ctempurl.com/api/';
-  static const String webSocket = "ws://abdoo120-001-site1.ctempurl.com/api/Hub?id";
+  static const String baseUrl = 'https://hawihub-001-site1.dtempurl.com/api/';
+  static const String webSocket = "ws://hawihub-001-site1.dtempurl.com/api/Hub";
   static const String authToken = "Basic MTExNzM2NDY6NjAtZGF5ZnJlZXRyaWFs";
   static const String myFatoorahBaseUrl = 'https://apitest.myfatoorah.com/';
   static const String myFatoorahToken =
