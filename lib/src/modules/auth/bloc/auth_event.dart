@@ -87,6 +87,12 @@ class AcceptConfirmTermsEvent extends AuthEvent {
   AcceptConfirmTermsEvent(this.accept);
 }
 
+class KeepMeLoggedInEvent extends AuthEvent {
+  final bool keepMeLoggedIn;
+
+  KeepMeLoggedInEvent(this.keepMeLoggedIn);
+}
+
 class ChangePasswordVisibilityEvent extends AuthEvent {
   final bool visible;
 

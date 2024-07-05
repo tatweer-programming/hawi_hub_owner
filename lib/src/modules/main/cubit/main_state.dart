@@ -49,7 +49,11 @@ class ChangeLocaleState extends MainState {
   @override
   List<Object> get props => [index];
 }
-class ShowDialogState extends MainState {
+class ChangeLocaleLoading extends MainState {
+
+  @override
+  List<Object> get props => [];
+}class ShowDialogState extends MainState {
 
   @override
   List<Object> get props => [];

@@ -49,7 +49,6 @@ class AuthService {
       if (response.statusCode == 200) {
         if (response.data != "Email is not exists.") {
           ConstantsManager.userId = response.data['id'];
-          await CacheHelper.saveData(key: 'userId', value: response.data['id']);
           return response.data['message'];
         }
       }

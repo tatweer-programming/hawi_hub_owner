@@ -50,6 +50,7 @@ class MainCubit extends Cubit<MainState> {
   }
 
   Future<void> changeLanguage(int index) async {
+    emit(ChangeLocaleLoading());
     await LocalizationManager.setLocale(index);
     emit(ChangeLocaleState(index));
   }
