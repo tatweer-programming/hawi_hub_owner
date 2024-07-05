@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/bottom_nav_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
+
 import '../../../../core/routing/routes.dart';
 
 class MainScreen extends StatelessWidget {
@@ -33,7 +34,6 @@ class MainScreen extends StatelessWidget {
               } else {
                 if (ConstantsManager.appUser!.approvalStatus == 0) {
                   errorToast(msg: S.of(context).shouldActivate);
-                  context.push(Routes.createPlace);
                 } else {
                   context.push(Routes.createPlace);
                 }

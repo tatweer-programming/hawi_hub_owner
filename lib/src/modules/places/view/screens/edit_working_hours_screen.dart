@@ -19,41 +19,56 @@ class EditWorkingHoursScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Day> workingHours = PlaceCubit.get().placeEditForm!.workingHours;
     TextEditingController sundayStartController = TextEditingController(
-        text: "${workingHours[0].startTime.hour}:${workingHours[0].startTime.minute}");
+        text:
+            "${workingHours[0].startTime.hour}:${workingHours[0].startTime.minute}");
     TextEditingController sundayEndController = TextEditingController(
-        text: "${workingHours[0].endTime.hour}:${workingHours[0].endTime.minute}");
+        text:
+            "${workingHours[0].endTime.hour}:${workingHours[0].endTime.minute}");
 
     TextEditingController mondayStartController = TextEditingController(
-        text: "${workingHours[1].startTime.hour}:${workingHours[1].startTime.minute}");
+        text:
+            "${workingHours[1].startTime.hour}:${workingHours[1].startTime.minute}");
     TextEditingController mondayEndController = TextEditingController(
-        text: "${workingHours[1].endTime.hour}:${workingHours[1].endTime.minute}");
+        text:
+            "${workingHours[1].endTime.hour}:${workingHours[1].endTime.minute}");
 
     TextEditingController tuesdayStartController = TextEditingController(
-        text: "${workingHours[2].startTime.hour}:${workingHours[2].startTime.minute}");
+        text:
+            "${workingHours[2].startTime.hour}:${workingHours[2].startTime.minute}");
     TextEditingController tuesdayEndController = TextEditingController(
-        text: "${workingHours[2].endTime.hour}:${workingHours[2].endTime.minute}");
+        text:
+            "${workingHours[2].endTime.hour}:${workingHours[2].endTime.minute}");
 
     TextEditingController wednesdayStartController = TextEditingController(
-        text: "${workingHours[3].startTime.hour}:${workingHours[3].startTime.minute}");
+        text:
+            "${workingHours[3].startTime.hour}:${workingHours[3].startTime.minute}");
     TextEditingController wednesdayEndController = TextEditingController(
-        text: "${workingHours[3].endTime.hour}:${workingHours[3].endTime.minute}");
+        text:
+            "${workingHours[3].endTime.hour}:${workingHours[3].endTime.minute}");
 
     TextEditingController thursdayStartController = TextEditingController(
-        text: "${workingHours[4].startTime.hour}:${workingHours[4].startTime.minute}");
+        text:
+            "${workingHours[4].startTime.hour}:${workingHours[4].startTime.minute}");
     TextEditingController thursdayEndController = TextEditingController(
-        text: "${workingHours[4].endTime.hour}:${workingHours[4].endTime.minute}");
+        text:
+            "${workingHours[4].endTime.hour}:${workingHours[4].endTime.minute}");
 
     TextEditingController fridayStartController = TextEditingController(
-        text: "${workingHours[5].startTime.hour}:${workingHours[5].startTime.minute}");
+        text:
+            "${workingHours[5].startTime.hour}:${workingHours[5].startTime.minute}");
     TextEditingController fridayEndController = TextEditingController(
-        text: "${workingHours[5].endTime.hour}:${workingHours[5].endTime.minute}");
+        text:
+            "${workingHours[5].endTime.hour}:${workingHours[5].endTime.minute}");
 
     TextEditingController saturdayStartController = TextEditingController(
-        text: "${workingHours[6].startTime.hour}:${workingHours[6].startTime.minute}");
+        text:
+            "${workingHours[6].startTime.hour}:${workingHours[6].startTime.minute}");
     TextEditingController saturdayEndController = TextEditingController(
-        text: "${workingHours[6].endTime.hour}:${workingHours[6].endTime.minute}");
+        text:
+            "${workingHours[6].endTime.hour}:${workingHours[6].endTime.minute}");
 
-    List<List<TextEditingController>> daysControllers = <List<TextEditingController>>[
+    List<List<TextEditingController>> daysControllers =
+        <List<TextEditingController>>[
       [sundayStartController, sundayEndController],
       [mondayStartController, mondayEndController],
       [tuesdayStartController, tuesdayEndController],
@@ -99,46 +114,51 @@ class EditWorkingHoursScreen extends StatelessWidget {
                         Expanded(
                             child: Text(
                           S.of(context).day,
-                          style: const TextStyle(fontWeight: FontWeightManager.bold),
+                          style: const TextStyle(
+                              fontWeight: FontWeightManager.bold),
                         )),
                         SizedBox(width: 2.w),
                         Expanded(
                             child: Text(
                           S.of(context).from,
-                          style: const TextStyle(fontWeight: FontWeightManager.bold),
+                          style: const TextStyle(
+                              fontWeight: FontWeightManager.bold),
                         )),
                         SizedBox(width: 2.w),
                         Expanded(
                             child: Text(
                           S.of(context).to,
-                          style: const TextStyle(fontWeight: FontWeightManager.bold),
+                          style: const TextStyle(
+                              fontWeight: FontWeightManager.bold),
                         )),
                         SizedBox(width: 2.w),
                         FittedBox(
                             child: Text(
                           S.of(context).weekend,
-                          style: const TextStyle(fontWeight: FontWeightManager.bold),
+                          style: const TextStyle(
+                              fontWeight: FontWeightManager.bold),
                         )),
                       ]),
                       Divider(
                         thickness: .3,
                         height: 3.h,
                       ),
-                      ...LocalizationManager.getDays()
-                          .map((e) => Column(
-                                children: [
-                                  DayWidget(
-                                      title: e,
-                                      startController:
-                                          daysControllers[LocalizationManager.getDays().indexOf(e)]
-                                              [0],
-                                      endController:
-                                          daysControllers[LocalizationManager.getDays().indexOf(e)]
-                                              [1]),
-                                  SizedBox(height: 2.h),
-                                ],
-                              ))
-
+                      ...LocalizationManager.getDays().map((e) => Column(
+                            children: [
+                              DayWidget(
+                                  dayOfWeek:
+                                      LocalizationManager.getDays().indexOf(e) +
+                                          1,
+                                  title: e,
+                                  startController: daysControllers[
+                                      LocalizationManager.getDays()
+                                          .indexOf(e)][0],
+                                  endController: daysControllers[
+                                      LocalizationManager.getDays()
+                                          .indexOf(e)][1]),
+                              SizedBox(height: 2.h),
+                            ],
+                          ))
                     ])),
               ],
             )),
@@ -163,8 +183,8 @@ class EditWorkingHoursScreen extends StatelessWidget {
     for (int i = 0; i < daysControllers.length; i++) {
       cubit.workingHours[i] = Day(
         dayOfWeek: cubit.workingHours[i].dayOfWeek,
-        startTime:
-            daysControllers[i][0].text.tryParseToTimeOfDay() ?? const TimeOfDay(hour: 0, minute: 0),
+        startTime: daysControllers[i][0].text.tryParseToTimeOfDay() ??
+            const TimeOfDay(hour: 0, minute: 0),
         endTime: daysControllers[i][1].text.tryParseToTimeOfDay() ??
             const TimeOfDay(hour: 23, minute: 59),
       );

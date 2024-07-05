@@ -20,7 +20,7 @@ class PlaceLocationScreen extends StatelessWidget {
         showZoomController: false,
         showLocationController: false,
         loadingWidget: const CircularProgressIndicator(),
-        showCurrentLocationPointer: true,
+        showCurrentLocationPointer: false,
         showContributorBadgeForOSM: false,
         initPosition: LatLong(location.latitude, location.longitude),
       ),

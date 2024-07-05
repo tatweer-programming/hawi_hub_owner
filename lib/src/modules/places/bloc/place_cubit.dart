@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -19,6 +20,7 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.da
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../core/utils/localization_manager.dart';
 import '../data/models/booking.dart';
 
 part 'place_state.dart';
@@ -222,10 +224,20 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future addImages() async {
-    ImagePicker imagePicker = ImagePicker();
-    List<XFile>? images = await imagePicker.pickMultiImage();
-    imageFiles.addAll(images.map((e) => File(e.path)).toList());
-    emit(AddImagesSuccess(imageFiles.map((e) => e.path).toList()));
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowMultiple: true,
+      allowedExtensions: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'wbmp', 'webp'],
+    );
+
+    if (result != null) {
+      if (result.files.isNotEmpty) {
+        imageFiles.addAll(result.files.map((e) => File(e.path!)));
+        emit(AddImagesSuccess(imageFiles.map((e) => e.path).toList()));
+      }
+    } else {
+      // User canceled the picker
+    }
   }
 
   void removeImage(String image) {
@@ -242,10 +254,12 @@ class PlaceCubit extends Cubit<PlaceState> {
 
     if (result != null) {
       // if size > 5MB
-      if (result.files.single.size > 3 * 1024 * 1024) {
-      errorToast(msg: "File size should be less than 3MB");
-      }
-    else {
+      if (result.files.single.size > 10 * 1024 * 1024) {
+        errorToast(
+            msg: LocalizationManager.getCurrentLocale().languageCode == "en"
+                ? "File size should be less than 10 MB"
+                : "يجب ان يكون حجم الملف اقل  من 10MB");
+      } else {
         selectedOwnershipFile = File(result.files.single.path!);
         emit(SelectOwnershipFileSuccess(selectedOwnershipFile!.path));
       }
@@ -263,7 +277,6 @@ class PlaceCubit extends Cubit<PlaceState> {
   Future addImagesToEditForm() async {
     ImagePicker imagePicker = ImagePicker();
     List<XFile>? images = await imagePicker.pickMultiImage();
-
     placeEditForm!.imageFiles.addAll(images.map((e) => File(e.path)).toList());
     emit(AddImagesSuccess(
         placeEditForm!.imageFiles.map((e) => e.path).toList()));
@@ -323,6 +336,11 @@ class PlaceCubit extends Cubit<PlaceState> {
         .id;
   }
 
+  void pickLocation(PlaceLocation location, {required String address}) {
+    placeLocation = location;
+    emit(PickLocationSuccess(address));
+  }
+
   void clearSelectedData() {
     selectedSport = null;
     selectedCityId = null;
@@ -355,15 +373,17 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future addPlayerFeedback(
-      {required AppFeedBack feedback,required int ownerId}) async {
+      {required AppFeedBack feedback, required int ownerId}) async {
     emit(AddPlayerFeedbackLoading());
-    var result = await dataSource.addPlayerFeedback(ownerId:ownerId,review: feedback);
+    var result =
+        await dataSource.addPlayerFeedback(ownerId: ownerId, review: feedback);
     result.fold((l) {
       emit(AddPlayerFeedbackError(l));
     }, (r) {
       emit(AddPlayerFeedbackSuccess());
     });
   }
+
   void addRating(double rate) {
     emit(AddRatingState(rate));
   }

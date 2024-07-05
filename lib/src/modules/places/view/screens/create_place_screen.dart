@@ -404,6 +404,9 @@ class CreatePlaceScreen extends StatelessWidget {
               } else if (state is CreatePlaceError) {
                 errorToast(
                     msg: ExceptionManager(state.exception).translatedMessage());
+              } else if (state is PickLocationSuccess) {
+                addressController.text = state.address;
+                defaultToast(msg: S.of(context).locationSaved);
               }
             },
             child: BlocBuilder<PlaceCubit, PlaceState>(

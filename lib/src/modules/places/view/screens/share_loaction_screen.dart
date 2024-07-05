@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
-import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
@@ -16,11 +15,13 @@ class PickLocationScreen extends StatelessWidget {
           buttonColor: ColorManager.primary,
           buttonText: S.of(context).pickLocation,
           onPicked: (pickedData) {
-            PlaceCubit.get().placeLocation = PlaceLocation(
-                latitude: pickedData.latLong.latitude,
-                longitude: pickedData.latLong.longitude);
-            defaultToast(msg: S.of(context).locationSaved);
             context.pop();
+            PlaceCubit.get().pickLocation(
+                PlaceLocation(
+                  latitude: pickedData.latLong.latitude,
+                  longitude: pickedData.latLong.longitude,
+                ),
+                address: pickedData.addressName);
           }),
     );
   }

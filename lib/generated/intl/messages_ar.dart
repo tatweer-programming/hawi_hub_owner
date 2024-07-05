@@ -244,6 +244,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewProfile": MessageLookupByLibrary.simpleMessage("عرض الملف الشخصي"),
         "wallet": MessageLookupByLibrary.simpleMessage("المحفظة"),
         "workingHours": MessageLookupByLibrary.simpleMessage("ساعات العمل"),
+        "workingHoursSaved":
+            MessageLookupByLibrary.simpleMessage("تم حفظ ساعات العمل"),
         "wrongPassword":
             MessageLookupByLibrary.simpleMessage("كلمة المرور خاطئة."),
         "yourPlaces": MessageLookupByLibrary.simpleMessage("أماكنك")

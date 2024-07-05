@@ -1629,6 +1629,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Working Hours Saved`
+  String get workingHoursSaved {
+    return Intl.message(
+      'Working Hours Saved',
+      name: 'workingHoursSaved',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

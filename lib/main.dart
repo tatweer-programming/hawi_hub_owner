@@ -35,16 +35,6 @@ Future<void> main() async {
   );
   await NotificationServices.init();
 
- //  AppNotification notification = AppNotification(
- //
- //    receiverId: 4,
- //    body: "hello",
- //      title: "hello",
- //
- //  );
- // startTimer(10).then( (value)async {
- //   await NotificationServices().sendNotification(notification);
- // });
   runApp(const MyApp());
 }
 
@@ -71,8 +61,10 @@ class MyApp extends StatelessWidget {
             )..add(GetConnectionEvent()),
           ),
           //   BlocProvider<GamesBloc>(create: (BuildContext context) => GamesBloc.get()),
-          BlocProvider<PlaceCubit>(create: (BuildContext context) => PlaceCubit.get()),
-          BlocProvider<PaymentCubit>(create: (BuildContext context) => PaymentCubit.get()),
+          BlocProvider<PlaceCubit>(
+              create: (BuildContext context) => PlaceCubit.get()),
+          BlocProvider<PaymentCubit>(
+              create: (BuildContext context) => PaymentCubit.get()),
         ],
         child: Sizer(builder: (context, orientation, deviceType) {
           AppRouter appRouter = AppRouter();

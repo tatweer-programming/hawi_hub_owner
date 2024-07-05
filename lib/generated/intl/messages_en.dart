@@ -243,6 +243,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wallet": MessageLookupByLibrary.simpleMessage("Wallet"),
         "weekend": MessageLookupByLibrary.simpleMessage("Weekend"),
         "workingHours": MessageLookupByLibrary.simpleMessage("Working hours"),
+        "workingHoursSaved":
+            MessageLookupByLibrary.simpleMessage("Working Hours Saved"),
         "wrongPassword":
             MessageLookupByLibrary.simpleMessage("Wrong password !"),
         "yourPlaces": MessageLookupByLibrary.simpleMessage("Your places")

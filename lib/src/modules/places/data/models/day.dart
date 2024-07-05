@@ -6,10 +6,16 @@ class Day extends Equatable {
   final TimeOfDay startTime;
   final TimeOfDay endTime;
 
-  const Day({required this.dayOfWeek, required this.startTime, required this.endTime});
+  const Day(
+      {required this.dayOfWeek,
+      required this.startTime,
+      required this.endTime});
 
   bool isWeekend() {
-    return startTime.hour == 0 && startTime.minute == 0 && endTime.hour == 0 && endTime.minute == 0;
+    return startTime.hour == 0 &&
+        startTime.minute == 0 &&
+        endTime.hour == 0 &&
+        endTime.minute == 0;
   }
 
   bool isAllDay() {
@@ -57,7 +63,12 @@ extension TimeOfDayExtension on String {
     final int? hour = int.tryParse(parts[0]);
     final int? minute = int.tryParse(parts[1]);
 
-    if (hour == null || minute == null || hour < 0 || hour >= 23 || minute < 0 || minute >= 59) {
+    if (hour == null ||
+        minute == null ||
+        hour < 0 ||
+        hour >= 23 ||
+        minute < 0 ||
+        minute >= 59) {
       return null;
     }
     return TimeOfDay(hour: hour, minute: minute);

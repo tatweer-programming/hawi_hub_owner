@@ -156,5 +156,7 @@
   "wallet": "Wallet",
   "rates": "Rates",
   "addFeedback": "Add Feedback",
-  "bookingSuccess": "Booking Added Successfully"
+  "bookingSuccess": "Booking Added Successfully",
+  "workingHoursSaved": "Working Hours Saved"
+
 }

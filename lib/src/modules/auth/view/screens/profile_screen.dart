@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -12,10 +13,9 @@ import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/add_feedback_for_user.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/rates_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/auth_app_bar.dart';
-import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/place_holder.dart';
-import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/shimmer_widget.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../../../core/utils/color_manager.dart';
 import '../widgets/people_rate_builder.dart';
 import '../widgets/widgets.dart';
@@ -238,7 +238,8 @@ Widget _emailConfirmed({
   } else if (owner.approvalStatus == 0) {
     return _pending(context, S.of(context).identificationPending);
   } else if (owner.approvalStatus == 1) {
-    return _verified(owner: owner, context: context, state: state, id: id, authBloc: bloc);
+    return _verified(
+        owner: owner, context: context, state: state, id: id, authBloc: bloc);
   } else {
     return _rejectedAndTryAgain(context, S.of(context).rejectIdCard, bloc);
   }
@@ -452,12 +453,14 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    if(ConstantsManager.appUser!.playerReservation.contains(owner.id))
-      defaultButton(onPressed: (){
-        context.pushWithTransition(AddFeedbackForUser(owner: owner,authBloc: authBloc));
-      }, text: S.of(context).addFeedback,
-          fontSize: 17.sp
-      ),
+    if (ConstantsManager.appUser!.playerReservation.contains(owner.id))
+      defaultButton(
+          onPressed: () {
+            context.pushWithTransition(
+                AddFeedbackForUser(owner: owner, authBloc: authBloc));
+          },
+          text: S.of(context).addFeedback,
+          fontSize: 17.sp),
     SizedBox(
       height: 2.h,
     ),

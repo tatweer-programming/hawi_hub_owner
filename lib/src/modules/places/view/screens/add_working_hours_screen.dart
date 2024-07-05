@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
+import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/font_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
@@ -18,28 +19,100 @@ class AddWorkingHours extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController sundayStartController = TextEditingController(text: "00:00");
-    TextEditingController sundayEndController = TextEditingController(text: "23:59");
+    PlaceCubit placeCubit = PlaceCubit.get();
+    TextEditingController sundayStartController = TextEditingController(
+        text: placeCubit.workingHours.first.startTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
+    TextEditingController sundayEndController = TextEditingController(
+        text: placeCubit.workingHours.last.startTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
 
-    TextEditingController mondayStartController = TextEditingController(text: "00:00");
-    TextEditingController mondayEndController = TextEditingController(text: "23:59");
+    TextEditingController mondayStartController = TextEditingController(
+        text: placeCubit.workingHours[1].startTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
+    TextEditingController mondayEndController = TextEditingController(
+        text: placeCubit.workingHours[1].endTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
 
-    TextEditingController tuesdayStartController = TextEditingController(text: "00:00");
-    TextEditingController tuesdayEndController = TextEditingController(text: "23:59");
+    TextEditingController tuesdayStartController = TextEditingController(
+        text: placeCubit.workingHours[2].startTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
+    TextEditingController tuesdayEndController = TextEditingController(
+        text: placeCubit.workingHours[2].endTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
 
-    TextEditingController wednesdayStartController = TextEditingController(text: "00:00");
-    TextEditingController wednesdayEndController = TextEditingController(text: "23:59");
+    TextEditingController wednesdayStartController = TextEditingController(
+        text: placeCubit.workingHours[3].startTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
+    TextEditingController wednesdayEndController = TextEditingController(
+        text: placeCubit.workingHours[3].endTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
 
-    TextEditingController thursdayStartController = TextEditingController(text: "00:00");
-    TextEditingController thursdayEndController = TextEditingController(text: "23:59");
+    TextEditingController thursdayStartController = TextEditingController(
+        text: placeCubit.workingHours[4].startTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
+    TextEditingController thursdayEndController = TextEditingController(
+        text: placeCubit.workingHours[4].endTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
 
-    TextEditingController fridayStartController = TextEditingController(text: "00:00");
-    TextEditingController fridayEndController = TextEditingController(text: "23:59");
+    TextEditingController fridayStartController = TextEditingController(
+        text: placeCubit.workingHours[5].startTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
+    TextEditingController fridayEndController = TextEditingController(
+        text: placeCubit.workingHours[5].endTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
 
-    TextEditingController saturdayStartController = TextEditingController(text: "00:00");
-    TextEditingController saturdayEndController = TextEditingController(text: "23:59");
+    TextEditingController saturdayStartController = TextEditingController(
+        text: placeCubit.workingHours[6].startTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
+    TextEditingController saturdayEndController = TextEditingController(
+        text: placeCubit.workingHours[6].endTime
+            .toStr()
+            .split(":")
+            .sublist(0, 2)
+            .join(":"));
 
-    List<List<TextEditingController>> daysControllers = <List<TextEditingController>>[
+    List<List<TextEditingController>> daysControllers =
+        <List<TextEditingController>>[
       [sundayStartController, sundayEndController],
       [mondayStartController, mondayEndController],
       [tuesdayStartController, tuesdayEndController],
@@ -89,44 +162,51 @@ class AddWorkingHours extends StatelessWidget {
                           Expanded(
                               child: Text(
                             S.of(context).day,
-                            style: const TextStyle(fontWeight: FontWeightManager.bold),
+                            style: const TextStyle(
+                                fontWeight: FontWeightManager.bold),
                           )),
                           SizedBox(width: 2.w),
                           Expanded(
                               child: Text(
                             S.of(context).from,
-                            style: const TextStyle(fontWeight: FontWeightManager.bold),
+                            style: const TextStyle(
+                                fontWeight: FontWeightManager.bold),
                           )),
                           SizedBox(width: 2.w),
                           Expanded(
                               child: Text(
                             S.of(context).to,
-                            style: const TextStyle(fontWeight: FontWeightManager.bold),
+                            style: const TextStyle(
+                                fontWeight: FontWeightManager.bold),
                           )),
                           SizedBox(width: 2.w),
                           FittedBox(
                               child: Text(
                             S.of(context).weekend,
-                            style: const TextStyle(fontWeight: FontWeightManager.bold),
+                            style: const TextStyle(
+                                fontWeight: FontWeightManager.bold),
                           )),
                         ]),
                         Divider(
                           thickness: .3,
                           height: 3.h,
                         ),
-                        ...LocalizationManager.getDays()
-                            .map((e) => Column(
-                                  children: [
-                                    DayWidget(
-                                        title: e,
-                                        startController: daysControllers[
-                                            LocalizationManager.getDays().indexOf(e)][0],
-                                        endController: daysControllers[
-                                            LocalizationManager.getDays().indexOf(e)][1]),
-                                    SizedBox(height: 2.h),
-                                  ],
-                                ))
-
+                        ...LocalizationManager.getDays().map((e) => Column(
+                              children: [
+                                DayWidget(
+                                    dayOfWeek: LocalizationManager.getDays()
+                                            .indexOf(e) +
+                                        1,
+                                    title: e,
+                                    startController: daysControllers[
+                                        LocalizationManager.getDays()
+                                            .indexOf(e)][0],
+                                    endController: daysControllers[
+                                        LocalizationManager.getDays()
+                                            .indexOf(e)][1]),
+                                SizedBox(height: 2.h),
+                              ],
+                            ))
                       ])),
                 ],
               ),
@@ -140,6 +220,7 @@ class AddWorkingHours extends StatelessWidget {
                 onPressed: () {
                   if (key.currentState!.validate()) {
                     _saveWorkingHours(daysControllers);
+                    defaultToast(msg: S.of(context).workingHoursSaved);
                     context.pop();
                   }
                 }),
@@ -178,20 +259,26 @@ class AddWorkingHours extends StatelessWidget {
     for (int i = 0; i < daysControllers.length; i++) {
       cubit.workingHours[i] = Day(
         dayOfWeek: cubit.workingHours[i].dayOfWeek,
-        startTime:
-            daysControllers[i][0].text.tryParseToTimeOfDay() ?? const TimeOfDay(hour: 0, minute: 0),
+        startTime: daysControllers[i][0].text.tryParseToTimeOfDay() ??
+            const TimeOfDay(hour: 0, minute: 0),
         endTime: daysControllers[i][1].text.tryParseToTimeOfDay() ??
             const TimeOfDay(hour: 23, minute: 59),
       );
     }
   }
 }
+
 class DayWidget extends StatefulWidget {
   final TextEditingController startController;
   final TextEditingController endController;
   final String title;
+  final int dayOfWeek;
   const DayWidget(
-      {super.key, required this.title, required this.startController, required this.endController});
+      {super.key,
+      required this.title,
+      required this.dayOfWeek,
+      required this.startController,
+      required this.endController});
 
   @override
   State<DayWidget> createState() => _DayWidgetState();
@@ -199,6 +286,13 @@ class DayWidget extends StatefulWidget {
 
 class _DayWidgetState extends State<DayWidget> {
   bool isWeekend = false;
+
+  @override
+  void initState() {
+    isWeekend = PlaceCubit.get().workingHours[widget.dayOfWeek - 1].isWeekend();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(children: [
@@ -211,7 +305,9 @@ class _DayWidgetState extends State<DayWidget> {
       Expanded(
         child: TextFormField(
           validator: (value) {
-            if (value!.split(":").length != 2 || value.contains(".") || value.contains("/")) {
+            if (value!.split(":").length != 2 ||
+                value.contains(".") ||
+                value.contains("/")) {
               return "";
             }
             return null;

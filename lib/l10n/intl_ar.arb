@@ -156,5 +156,6 @@
   "wallet": "المحفظة",
   "rates": "التقييمات",
   "addFeedback": "إضافة تقييم",
-  "addRequiredPdf": "يرجي إلحاق المطلوب ادناه من الملف "
+  "addRequiredPdf": "يرجي إلحاق المطلوب ادناه من الملف ",
+  "workingHoursSaved" : "تم حفظ ساعات العمل"
 }

@@ -133,6 +133,7 @@ class AcceptBookingRequestLoading extends PlaceState {
   @override
   List<Object?> get props => [];
 }
+
 class AddRatingState extends PlaceState {
   final double rating;
   AddRatingState(this.rating);
@@ -239,7 +240,8 @@ class GetPlaceBookingsLoading extends PlaceState {
   @override
   List<Object?> get props => [];
 }
- class GetPlaceBookingsSuccess extends PlaceState {
+
+class GetPlaceBookingsSuccess extends PlaceState {
   final List<Booking> bookings;
   GetPlaceBookingsSuccess(this.bookings);
   @override
@@ -251,29 +253,42 @@ class GetPlaceBookingsError extends PlaceError {
   @override
   List<Object?> get props => [];
 }
+
 class AddOfflineReservationLoading extends PlaceState {
   @override
   List<Object?> get props => [];
 }
+
 class AddOfflineReservationSuccess extends PlaceState {
   @override
   List<Object?> get props => [];
 }
+
 class AddOfflineReservationError extends PlaceError {
   AddOfflineReservationError(super.exception);
   @override
   List<Object?> get props => [];
 }
+
 class AddPlayerFeedbackLoading extends PlaceState {
   @override
   List<Object?> get props => [];
 }
+
 class AddPlayerFeedbackSuccess extends PlaceState {
   @override
   List<Object?> get props => [];
 }
+
 class AddPlayerFeedbackError extends PlaceError {
   AddPlayerFeedbackError(super.exception);
+  @override
+  List<Object?> get props => [];
+}
+
+class PickLocationSuccess extends PlaceState {
+  final String address;
+  PickLocationSuccess(this.address);
   @override
   List<Object?> get props => [];
 }
