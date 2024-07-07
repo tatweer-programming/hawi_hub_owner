@@ -44,7 +44,7 @@ class Day extends Equatable {
       };
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [dayOfWeek, startTime, endTime];
   bool isBookingAllowed(DateTime bookingStart, DateTime bookingEnd) {
     // تحقق مما إذا كان وقت الحجز يقع ضمن وقت عمل الملعب
     TimeOfDay startBooking = TimeOfDay.fromDateTime(bookingStart);
@@ -58,20 +58,14 @@ class Day extends Equatable {
 
 extension TimeOfDayExtension on String {
   TimeOfDay? tryParseToTimeOfDay() {
-    final List<String> parts = split(":");
-
-    final int? hour = int.tryParse(parts[0]);
-    final int? minute = int.tryParse(parts[1]);
-
-    if (hour == null ||
-        minute == null ||
-        hour < 0 ||
-        hour >= 23 ||
-        minute < 0 ||
-        minute >= 59) {
+    try {
+      final parts = split(':');
+      final hour = int.parse(parts[0]);
+      final minute = int.parse(parts[1]);
+      return TimeOfDay(hour: hour, minute: minute);
+    } catch (e) {
       return null;
     }
-    return TimeOfDay(hour: hour, minute: minute);
   }
 
   TimeOfDay parseToTimeOfDay() {

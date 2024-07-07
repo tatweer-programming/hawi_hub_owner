@@ -59,17 +59,16 @@ class PlaceRemoteDataSource {
       print(res);
       defaultToast(msg: "Place Created Successfully");
       return const Right(unit);
-    }on DioException catch (e) {
+    } on DioException catch (e) {
       DioException dioException = e;
       print(
           "......................................................................الايرور هنا ....................................................");
       print(dioException.error.toString() +
           dioException.response.toString() +
           dioException.message.toString() +
-
           dioException.requestOptions.toString());
       return Left(e);
-    }  on Exception catch (e) {
+    } on Exception catch (e) {
       DioException dioException = e as DioException;
       print(dioException.response);
       return Left(e);
@@ -322,21 +321,25 @@ class PlaceRemoteDataSource {
   Future<Either<Exception, Unit>> addOfflineReservation(
       {required int placeId, required Booking booking}) async {
     try {
+      print("request will be sent now");
       await DioHelper.postData(
         path: EndPoints.addOfflineReservation + placeId.toString(),
         data: booking.toJson(),
       );
       return const Right(unit);
     } on Exception catch (e) {
+      print("exception : $e");
       return Left(e);
     }
   }
+
   Future<Either<Exception, Unit>> addPlayerFeedback(
-      {required AppFeedBack review,required int ownerId}) async {
+      {required AppFeedBack review, required int ownerId}) async {
     try {
       await DioHelper.postData(
-          data: review.toJson(userType: "player"),
-          path: EndPoints.addPlayerFeedback + ownerId.toString(),);
+        data: review.toJson(userType: "player"),
+        path: EndPoints.addPlayerFeedback + ownerId.toString(),
+      );
       return const Right(unit);
     } on Exception catch (e) {
       return Left(e);

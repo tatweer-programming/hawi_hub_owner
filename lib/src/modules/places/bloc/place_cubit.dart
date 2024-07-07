@@ -362,6 +362,7 @@ class PlaceCubit extends Cubit<PlaceState> {
 
   addOfflineReservation(
       {required int placeId, required Booking booking}) async {
+    print("adding offline reservation ${booking.toJson()}");
     emit(AddOfflineReservationLoading());
     var result = await dataSource.addOfflineReservation(
         booking: booking, placeId: placeId);

@@ -9,16 +9,19 @@ class VerticalRequestsShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(
-              height: 2.h,
-            ),
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return const RequestItemShimmers();
-        });
+    return Padding(
+      padding: EdgeInsets.all(6.w),
+      child: ListView.separated(
+          separatorBuilder: (context, index) => SizedBox(
+                height: 2.h,
+              ),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return const RequestItemShimmers();
+          }),
+    );
   }
 //
 }

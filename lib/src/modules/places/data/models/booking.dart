@@ -9,14 +9,14 @@ class Booking {
 
   factory Booking.fromJson(Map<String, dynamic> json) {
     return Booking(
-      startTime: DateTime.parse(json['startTime']),
-      endTime: DateTime.parse(json['endTime']),
+      startTime: DateTime.parse(json['offlineReservationStartTime']),
+      endTime: DateTime.parse(json['offlineReservationEndTime']),
     );
   }
   Map<String, dynamic> toJson() {
     return {
-      'startTime': startTime.toIso8601String(),
-      'endTime': endTime.toIso8601String(),
+      'reservationStartTime': startTime.toIso8601String(),
+      'reservationEndTime': endTime.toIso8601String(),
     };
   }
 }

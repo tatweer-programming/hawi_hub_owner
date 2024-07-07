@@ -21,18 +21,17 @@ class AddWorkingHours extends StatelessWidget {
   Widget build(BuildContext context) {
     PlaceCubit placeCubit = PlaceCubit.get();
     TextEditingController sundayStartController = TextEditingController(
-        text: placeCubit.workingHours.first.startTime
+        text: placeCubit.workingHours[0].startTime
             .toStr()
             .split(":")
             .sublist(0, 2)
             .join(":"));
     TextEditingController sundayEndController = TextEditingController(
-        text: placeCubit.workingHours.last.startTime
+        text: placeCubit.workingHours[0].endTime
             .toStr()
             .split(":")
             .sublist(0, 2)
             .join(":"));
-
     TextEditingController mondayStartController = TextEditingController(
         text: placeCubit.workingHours[1].startTime
             .toStr()
@@ -121,6 +120,12 @@ class AddWorkingHours extends StatelessWidget {
       [fridayStartController, fridayEndController],
       [saturdayStartController, saturdayEndController],
     ];
+    // print("working hours : ${placeCubit.workingHours}");
+    for (int i = 0; i < daysControllers.length; i++) {
+      for (int j = 0; j < daysControllers[i].length; j++) {
+        print(daysControllers[i][j].text);
+      }
+    }
     GlobalKey<FormState> key = GlobalKey();
     return Scaffold(
       body: Column(
@@ -255,6 +260,11 @@ class AddWorkingHours extends StatelessWidget {
   // }
 
   void _saveWorkingHours(List<List<TextEditingController>> daysControllers) {
+    for (int i = 0; i < daysControllers.length; i++) {
+      for (int j = 0; j < daysControllers[i].length; j++) {
+        print(daysControllers[i][j].text);
+      }
+    }
     PlaceCubit cubit = PlaceCubit.get();
     for (int i = 0; i < daysControllers.length; i++) {
       cubit.workingHours[i] = Day(
@@ -265,6 +275,7 @@ class AddWorkingHours extends StatelessWidget {
             const TimeOfDay(hour: 23, minute: 59),
       );
     }
+    print(cubit.workingHours);
   }
 }
 
