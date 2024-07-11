@@ -88,8 +88,8 @@ class PlaceCubit extends Cubit<PlaceState> {
 
   PlaceEditForm? placeEditForm;
 
-  void getPlaces() async {
-    if (places.isEmpty) {
+  void getPlaces({bool refresh = false}) async {
+    if (places.isEmpty || refresh) {
       emit(GetPlacesLoading());
       var result = await dataSource.getPlaces();
       result.fold((l) {
@@ -181,8 +181,8 @@ class PlaceCubit extends Cubit<PlaceState> {
     });
   }
 
-  Future getBookingRequests() async {
-    if (bookingRequests.isEmpty) {
+  Future getBookingRequests({bool refresh = false}) async {
+    if (bookingRequests.isEmpty || refresh) {
       emit(GetBookingRequestsLoading());
       var result = await dataSource.getBookingRequests();
       result.fold((l) {
@@ -198,15 +198,18 @@ class PlaceCubit extends Cubit<PlaceState> {
 
   Future acceptBookingRequest(int requestId) async {
     emit(AcceptBookingRequestLoading(requestId));
-    var result = await dataSource.acceptBookingRequest(requestId);
+    var result =
+        await dataSource.acceptBookingRequest(bookingRequests.firstWhere(
+      (element) => element.id == requestId,
+    ));
     result.fold((l) {
       //print(l);
       emit(AcceptBookingRequestError(l));
     }, (r) async {
       List<int> ids = _getPlayersIdsFromRequest(requestId);
+      _sendRequestNotifications(ids, true, requestId);
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(AcceptBookingRequestSuccess());
-      _sendRequestNotifications(ids, true, requestId);
     });
   }
 
@@ -217,9 +220,10 @@ class PlaceCubit extends Cubit<PlaceState> {
       emit(DeclineBookingRequestError(l));
     }, (r) async {
       List<int> ids = _getPlayersIdsFromRequest(requestId);
+
+      _sendRequestNotifications(ids, false, requestId);
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(DeclineBookingRequestSuccess());
-      _sendRequestNotifications(ids, false, requestId);
     });
   }
 
@@ -405,6 +409,22 @@ class PlaceCubit extends Cubit<PlaceState> {
       ids.addAll(bookingRequest.players!.map((e) => e.id));
     }
     return ids;
+  }
+
+  int _getHostIdFromRequest(int requestId) {
+    List<int> ids = [];
+    BookingRequest bookingRequest =
+        bookingRequests.firstWhere((element) => element.id == requestId);
+
+    return bookingRequest.userId;
+  }
+
+  DateTime _getLastTimeFromRequest(int requestId) {
+    List<int> ids = [];
+    BookingRequest bookingRequest =
+        bookingRequests.firstWhere((element) => element.id == requestId);
+
+    return bookingRequest.startTime;
   }
 
   void _sendRequestNotifications(

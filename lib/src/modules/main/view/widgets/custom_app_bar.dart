@@ -53,7 +53,8 @@ class CustomAppBar extends StatelessWidget {
               children: [
                 if (actions != null)
                   Padding(
-                    padding: EdgeInsets.only(top: 2.h, right: 2.w, left: 2.w, bottom: 1.h),
+                    padding: EdgeInsets.only(
+                        top: 2.h, right: 2.w, left: 2.w, bottom: 1.h),
                     child: Align(
                       alignment: AlignmentDirectional.topEnd,
                       child: Row(
@@ -67,7 +68,7 @@ class CustomAppBar extends StatelessWidget {
                               .toList()),
                     ),
                   ),
-                SizedBox(height: 10.sp),
+                SizedBox(height: 5.sp),
                 child,
                 SizedBox(height: height * .3),
               ],

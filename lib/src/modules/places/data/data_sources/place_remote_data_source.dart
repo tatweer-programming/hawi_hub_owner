@@ -8,6 +8,7 @@ import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
+import 'package:hawi_hub_owner/src/modules/payment/data/services/payment_service.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
@@ -143,13 +144,19 @@ class PlaceRemoteDataSource {
     }
   }
 
-  Future<Either<Exception, Unit>> acceptBookingRequest(int requestId) async {
+  Future<Either<Exception, Unit>> acceptBookingRequest(
+      BookingRequest bookingRequest) async {
     try {
       await DioHelper.postData(
-        query: {"id": requestId},
-        path: EndPoints.acceptBookingRequest + requestId.toString(),
+        query: {"id": bookingRequest.id},
+        path: EndPoints.acceptBookingRequest + bookingRequest.id.toString(),
       );
-      await _createChat();
+      await _createChat(
+          lastTime: bookingRequest.startTime, playerId: bookingRequest.userId);
+      print({ConstantsManager.appUser!.supplierCode.toString()});
+      await PaymentService().transferBalance(
+        amount: bookingRequest.price.toDouble(),
+      );
       return const Right(unit);
     } on DioException catch (e) {
       DioException dioException = e;
@@ -160,7 +167,7 @@ class PlaceRemoteDataSource {
           dioException.message.toString() +
           dioException.requestOptions.toString());
       return Left(e);
-    } catch (e) {
+    } on Exception catch (e) {
       return Left(e as Exception);
     }
   }
@@ -206,14 +213,15 @@ class PlaceRemoteDataSource {
     }
   }
 
-  Future<Either<Exception, Unit>> _createChat() async {
+  Future<Either<Exception, Unit>> _createChat(
+      {required int playerId, required DateTime lastTime}) async {
     try {
       await DioHelper.postData(
         path: EndPoints.addConversation,
         data: {
           "ownerId": ConstantsManager.userId,
-          "playerId": 1,
-          "lastTimeToChat": "2025-05-27T16:37:05.049Z"
+          "playerId": playerId,
+          "lastTimeToChat": lastTime.toUtc().toIso8601String(),
         },
       );
       return const Right(unit);

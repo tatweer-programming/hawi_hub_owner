@@ -37,7 +37,8 @@ class RequestScreen extends StatelessWidget {
                       children: [
                         CustomAppBar(
                             blendMode: BlendMode.exclusion,
-                            backgroundImage: "assets/images/app_bar_backgrounds/4.webp",
+                            backgroundImage:
+                                "assets/images/app_bar_backgrounds/4.webp",
                             height: 35.h,
                             child: const SizedBox()),
                         Align(
@@ -45,7 +46,8 @@ class RequestScreen extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 10.h,
                             backgroundColor: ColorManager.grey1,
-                            backgroundImage: getDefaultNetworkImageProvider(request.userImage),
+                            backgroundImage: getDefaultNetworkImageProvider(
+                                request.userImage),
                           ),
                         ),
                         SafeArea(
@@ -76,9 +78,8 @@ class RequestScreen extends StatelessWidget {
                   Center(
                     child: InkWell(
                       onTap: () {
-                        context.push(Routes.profile , arguments: {
-                          "id" : request.userId
-                        });
+                        context.push(Routes.profile,
+                            arguments: {"id": request.userId});
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -104,19 +105,22 @@ class RequestScreen extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 6.w),
                       child: Column(children: [
-                        _buildRequestItem(S.of(context).userName, request.userName),
+                        _buildRequestItem(
+                            S.of(context).userName, request.userName),
                         _buildRequestItem(
                             S.of(context).placeName,
                             cubit.places
-                                .firstWhere((element) => element.id == request.placeId)
+                                .firstWhere(
+                                    (element) => element.id == request.placeId)
                                 .name),
                         _buildRequestItem(
                             S.of(context).address,
                             cubit.places
-                                .firstWhere((element) => element.id == request.placeId)
+                                .firstWhere(
+                                    (element) => element.id == request.placeId)
                                 .address),
-                        _buildRequestItem(
-                            S.of(context).price, "${request.price} ${S.of(context).sar}"),
+                        _buildRequestItem(S.of(context).price,
+                            "${request.price} ${S.of(context).sar}"),
                         _buildRequestItem(S.of(context).date,
                             "${request.startTime.toDateString}    ${request.startTime.toTimeString} : ${request.endTime.toTimeString}"),
                         _buildRequestItem(S.of(context).bookingTime,
@@ -137,7 +141,9 @@ class RequestScreen extends StatelessWidget {
                     defaultToast(msg: S.of(context).requestRejected);
                     Navigator.pop(context);
                   } else if (state is PlaceError) {
-                    errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+                    errorToast(
+                        msg: ExceptionManager(state.exception)
+                            .translatedMessage());
                   }
                 },
                 child: BlocBuilder<PlaceCubit, PlaceState>(
@@ -168,7 +174,8 @@ class RequestScreen extends StatelessWidget {
                                   cubit.declineBookingRequest(request.id!);
                                 },
                                 width: 30.w,
-                                isLoading: state is DeclineBookingRequestLoading,
+                                isLoading:
+                                    state is DeclineBookingRequestLoading,
                               ),
                             ),
                           ],
@@ -184,11 +191,16 @@ class RequestScreen extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(title, style: TextStyleManager.getSecondarySubTitleStyle()),
-            const Spacer(),
-            SubTitle(
-              value,
-              isBold: false,
+            Expanded(
+                flex: 1,
+                child: Text(title,
+                    style: TextStyleManager.getSecondarySubTitleStyle())),
+            Expanded(
+              flex: 2,
+              child: SubTitle(
+                value,
+                isBold: false,
+              ),
             ),
           ],
         ),

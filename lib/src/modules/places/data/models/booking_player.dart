@@ -1,3 +1,5 @@
+import 'package:hawi_hub_owner/src/core/utils/images_manager.dart';
+
 class BookingPlayer {
   final int id;
   final String name;
@@ -11,11 +13,9 @@ class BookingPlayer {
 
   factory BookingPlayer.fromJson(Map<String, dynamic> json) {
     return BookingPlayer(
-      id: json['id'],
-      name: json['name'],
-      image: json['image'],
+      id: json['playerId'],
+      name: json['userName'],
+      image: json['profilePictureUrl'] ?? ImagesManager.defaultProfile,
     );
   }
 }
-
-

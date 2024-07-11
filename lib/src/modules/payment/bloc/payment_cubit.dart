@@ -26,20 +26,4 @@ class PaymentCubit extends Cubit<PaymentState> {
       },
     );
   }
-
-  Future<void> transferBalance({
-    required String supplierCode,
-    required double amount,
-  }) async {
-    final result = await _paymentService.transferBalance(
-        amount: amount, supplierCode: supplierCode);
-    result.fold(
-      (l) {
-        emit(TransferBalanceError(l));
-      },
-      (r) {
-        emit(TransferBalanceSuccess(r));
-      },
-    );
-  }
 }
