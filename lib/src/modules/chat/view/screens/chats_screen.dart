@@ -105,7 +105,7 @@ Widget _appBar(
 
 Widget _chatWidget(
     {required LastMessage lastMessage, required VoidCallback onTap}) {
-  String formattedDate = utcToLocal(lastMessage.timestamp ?? "");
+  String formattedDate = utcToLocal(lastMessage.timestamp) ?? "";
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: 7.w,

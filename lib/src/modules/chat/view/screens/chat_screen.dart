@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
@@ -9,6 +10,7 @@ import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/components.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../../../core/utils/styles_manager.dart';
 import '../../../auth/view/widgets/widgets.dart';
 
@@ -83,7 +85,8 @@ class ChatScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     String formattedDate = '';
                     if (messages[index].timeStamp != null) {
-                      formattedDate = utcToLocal(messages[index].timeStamp!);
+                      formattedDate =
+                          utcToLocal(messages[index].timeStamp) ?? "";
                     }
                     bool? isOwner = messages[index].isOwner;
                     return Padding(
