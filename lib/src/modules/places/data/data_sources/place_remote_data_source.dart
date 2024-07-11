@@ -8,6 +8,8 @@ import 'package:hawi_hub_owner/src/core/apis/dio_helper.dart';
 import 'package:hawi_hub_owner/src/core/apis/end_points.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
+import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
 import 'package:hawi_hub_owner/src/modules/payment/data/services/payment_service.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
@@ -145,7 +147,8 @@ class PlaceRemoteDataSource {
   }
 
   Future<Either<Exception, Unit>> acceptBookingRequest(
-      BookingRequest bookingRequest) async {
+    BookingRequest bookingRequest,
+  ) async {
     try {
       await DioHelper.postData(
         query: {"id": bookingRequest.id},
@@ -157,6 +160,14 @@ class PlaceRemoteDataSource {
       await PaymentService().transferBalance(
         amount: bookingRequest.price.toDouble(),
       );
+      List<int> playersIds = [
+        bookingRequest.userId,
+      ];
+      if (bookingRequest.players != null) {
+        playersIds.addAll(bookingRequest.players!.map((e) => e.id).toList());
+      }
+      await _sendRequestNotifications(
+          playersIds, true, bookingRequest.userId, bookingRequest.placeName);
       return const Right(unit);
     } on DioException catch (e) {
       DioException dioException = e;
@@ -172,12 +183,22 @@ class PlaceRemoteDataSource {
     }
   }
 
-  Future<Either<Exception, Unit>> declineBookingRequest(int requestId) async {
+  Future<Either<Exception, Unit>> declineBookingRequest(
+    BookingRequest bookingRequest,
+  ) async {
     try {
       await DioHelper.postData(
-        query: {"id": requestId},
-        path: EndPoints.declineBookingRequest + requestId.toString(),
+        query: {"id": bookingRequest.id},
+        path: EndPoints.declineBookingRequest + bookingRequest.id.toString(),
       );
+      List<int> playersIds = [
+        bookingRequest.userId,
+      ];
+      if (bookingRequest.players != null) {
+        playersIds.addAll(bookingRequest.players!.map((e) => e.id).toList());
+      }
+      await _sendRequestNotifications(
+          playersIds, false, bookingRequest.userId, bookingRequest.placeName);
       return const Right(unit);
     } on DioException catch (e) {
       DioException dioException = e;
@@ -351,6 +372,27 @@ class PlaceRemoteDataSource {
       return const Right(unit);
     } on Exception catch (e) {
       return Left(e);
+    }
+  }
+
+  Future _sendRequestNotifications(
+      List<int> ids, bool isAccepted, int requestId, String placeName) async {
+    if (isAccepted) {
+      for (int id in ids) {
+        await NotificationServices().sendNotification(AppNotification(
+            title: "تم قبول طلبك",
+            body: ": $placeNameتم قبول طلب حجز الملعب ",
+            id: id,
+            receiverId: id));
+      }
+    } else {
+      for (int id in ids) {
+        await NotificationServices().sendNotification(AppNotification(
+            title: "تم رفض طلبك",
+            body: ": $placeNameتم رفض طلب حجز الملعب",
+            id: id,
+            receiverId: id));
+      }
     }
   }
 }

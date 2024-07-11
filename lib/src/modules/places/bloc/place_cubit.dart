@@ -8,8 +8,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
-import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
-import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
@@ -198,16 +196,15 @@ class PlaceCubit extends Cubit<PlaceState> {
 
   Future acceptBookingRequest(int requestId) async {
     emit(AcceptBookingRequestLoading(requestId));
-    var result =
-        await dataSource.acceptBookingRequest(bookingRequests.firstWhere(
-      (element) => element.id == requestId,
-    ));
+    var result = await dataSource.acceptBookingRequest(
+      bookingRequests.firstWhere(
+        (element) => element.id == requestId,
+      ),
+    );
     result.fold((l) {
       //print(l);
       emit(AcceptBookingRequestError(l));
     }, (r) async {
-      List<int> ids = _getPlayersIdsFromRequest(requestId);
-      _sendRequestNotifications(ids, true, requestId);
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(AcceptBookingRequestSuccess());
     });
@@ -215,13 +212,13 @@ class PlaceCubit extends Cubit<PlaceState> {
 
   Future declineBookingRequest(int requestId) async {
     emit(DeclineBookingRequestLoading(requestId));
-    var result = await dataSource.declineBookingRequest(requestId);
+    var result =
+        await dataSource.declineBookingRequest(bookingRequests.firstWhere(
+      (element) => element.id == requestId,
+    ));
     result.fold((l) {
       emit(DeclineBookingRequestError(l));
     }, (r) async {
-      List<int> ids = _getPlayersIdsFromRequest(requestId);
-
-      _sendRequestNotifications(ids, false, requestId);
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(DeclineBookingRequestSuccess());
     });
@@ -411,42 +408,42 @@ class PlaceCubit extends Cubit<PlaceState> {
     return ids;
   }
 
-  int _getHostIdFromRequest(int requestId) {
-    List<int> ids = [];
-    BookingRequest bookingRequest =
-        bookingRequests.firstWhere((element) => element.id == requestId);
+  // int _getHostIdFromRequest(int requestId) {
+  //   List<int> ids = [];
+  //   BookingRequest bookingRequest =
+  //       bookingRequests.firstWhere((element) => element.id == requestId);
+  //
+  //   return bookingRequest.userId;
+  // }
+  //
+  // DateTime _getLastTimeFromRequest(int requestId) {
+  //   List<int> ids = [];
+  //   BookingRequest bookingRequest =
+  //       bookingRequests.firstWhere((element) => element.id == requestId);
+  //
+  //   return bookingRequest.startTime;
+  // }
 
-    return bookingRequest.userId;
-  }
-
-  DateTime _getLastTimeFromRequest(int requestId) {
-    List<int> ids = [];
-    BookingRequest bookingRequest =
-        bookingRequests.firstWhere((element) => element.id == requestId);
-
-    return bookingRequest.startTime;
-  }
-
-  void _sendRequestNotifications(
-      List<int> ids, bool isAccepted, int requestId) async {
-    if (isAccepted) {
-      for (int id in ids) {
-        await NotificationServices().sendNotification(AppNotification(
-            title: "تم قبول طلبك",
-            body:
-                ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب",
-            id: id,
-            receiverId: id));
-      }
-    } else {
-      for (int id in ids) {
-        await NotificationServices().sendNotification(AppNotification(
-            title: "تم رفض طلبك",
-            body:
-                ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب",
-            id: id,
-            receiverId: id));
-      }
-    }
-  }
+  // void _sendRequestNotifications(
+  //     List<int> ids, bool isAccepted, int requestId) async {
+  //   if (isAccepted) {
+  //     for (int id in ids) {
+  //       await NotificationServices().sendNotification(AppNotification(
+  //           title: "تم قبول طلبك",
+  //           body:
+  //               ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب",
+  //           id: id,
+  //           receiverId: id));
+  //     }
+  //   } else {
+  //     for (int id in ids) {
+  //       await NotificationServices().sendNotification(AppNotification(
+  //           title: "تم رفض طلبك",
+  //           body:
+  //               ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب",
+  //           id: id,
+  //           receiverId: id));
+  //     }
+  //   }
+  // }
 }

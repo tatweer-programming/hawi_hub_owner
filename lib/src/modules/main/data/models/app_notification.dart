@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 
 class AppNotification {
-   final int id;
+  final int id;
   final String title;
   final int receiverId;
   final String body;
@@ -35,7 +35,8 @@ class AppNotification {
     return {
       "title": title,
       "message": body,
-      "imageUrl": image,
+      "imageUrl": image ??
+          "Files\\Admin\\Banneres\\bddf3436-b607-4c24-95e8-54f7ccf05d8a_1 (45).png",
     };
   }
 
