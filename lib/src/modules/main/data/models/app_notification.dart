@@ -39,15 +39,17 @@ class AppNotification {
     };
   }
 
-  String jsonBody() {
-    return jsonEncode({
-      "to": "/topics/player_$receiverId",
-      "notification": {
-        "body": body,
-        "click_action": "FLUTTER_NOTIFICATION_CLICK",
-        "title": title,
-        "image": image,
-      }
-    });
-  }
+   String jsonBody() {
+     return jsonEncode({
+       'message': {
+         'topic': "player_$receiverId",
+         'notification': {
+           "body": body,
+           "click_action": "FLUTTER_NOTIFICATION_CLICK",
+           "title": title,
+           "image": image,
+         },
+       }
+     });
+   }
 }

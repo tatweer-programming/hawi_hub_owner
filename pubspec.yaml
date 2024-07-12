@@ -54,6 +54,8 @@ dependencies:
   shimmer: ^3.0.0
   share_plus: any
   progressive_time_picker:
+  googleapis_auth:
+
 
   # CHATS PACKAGES
   voice_message_package: ^2.1.4
@@ -113,6 +115,7 @@ flutter:
     - assets/images/icons/
     - assets/images/app_bar_backgrounds/
     - assets/pdfs/
+    - assets/notification/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
