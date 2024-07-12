@@ -231,6 +231,7 @@ Future _clearUserData() async {
   ConstantsManager.appUser = null;
   ConstantsManager.connectionId = null;
   ConstantsManager.connectionToken = null;
+  await NotificationServices().unsubscribeFromTopic();
   MainCubit.get().currentIndex = 0;
   await CacheHelper.removeData(key: "userId");
 }

@@ -133,4 +133,9 @@ class NotificationServices {
     await _firebaseMessaging
         .subscribeToTopic("owner_${ConstantsManager.userId}");
   }
+
+  Future unsubscribeFromTopic() async {
+    await _firebaseMessaging
+        .unsubscribeFromTopic("player_${ConstantsManager.userId}");
+  }
 }
