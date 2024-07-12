@@ -45,7 +45,6 @@ class AppNotification {
          'topic': "player_$receiverId",
          'notification': {
            "body": body,
-           "click_action": "FLUTTER_NOTIFICATION_CLICK",
            "title": title,
            "image": image,
          },
