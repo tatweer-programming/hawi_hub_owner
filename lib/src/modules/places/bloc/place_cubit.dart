@@ -135,6 +135,7 @@ class PlaceCubit extends Cubit<PlaceState> {
         emit(CreatePlaceError(l));
       }, (r) {
         emit(CreatePlaceSuccess());
+        clearSelectedData();
         getPlaces();
       });
     }
@@ -162,9 +163,12 @@ class PlaceCubit extends Cubit<PlaceState> {
     result.fold((l) {
       emit(UpdatePlaceError(l));
     }, (r) {
+      places
+          .firstWhere((element) => element.id == placeId)
+          .updatePlace(newPlace);
       emit(UpdatePlaceSuccess());
+      clearSelectedData();
     });
-    clearSelectedData();
     getPlaces();
   }
 
@@ -345,6 +349,46 @@ class PlaceCubit extends Cubit<PlaceState> {
   void clearSelectedData() {
     selectedSport = null;
     selectedCityId = null;
+    placeLocation = null;
+    selectedOwnershipFile = null;
+    placeEditForm = null;
+    workingHours = [
+      const Day(
+        dayOfWeek: 0,
+        endTime: TimeOfDay(hour: 23, minute: 59),
+        startTime: TimeOfDay(hour: 00, minute: 00),
+      ),
+      const Day(
+        dayOfWeek: 1,
+        endTime: TimeOfDay(hour: 23, minute: 59),
+        startTime: TimeOfDay(hour: 00, minute: 00),
+      ),
+      const Day(
+        dayOfWeek: 2,
+        endTime: TimeOfDay(hour: 23, minute: 59),
+        startTime: TimeOfDay(hour: 00, minute: 00),
+      ),
+      const Day(
+        dayOfWeek: 3,
+        endTime: TimeOfDay(hour: 23, minute: 59),
+        startTime: TimeOfDay(hour: 00, minute: 00),
+      ),
+      const Day(
+        dayOfWeek: 4,
+        endTime: TimeOfDay(hour: 23, minute: 59),
+        startTime: TimeOfDay(hour: 00, minute: 00),
+      ),
+      const Day(
+        dayOfWeek: 5,
+        endTime: TimeOfDay(hour: 23, minute: 59),
+        startTime: TimeOfDay(hour: 00, minute: 00),
+      ),
+      const Day(
+        dayOfWeek: 6,
+        endTime: TimeOfDay(hour: 23, minute: 59),
+        startTime: TimeOfDay(hour: 00, minute: 00),
+      ),
+    ];
     imageFiles.clear();
   }
 

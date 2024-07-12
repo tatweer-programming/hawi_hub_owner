@@ -49,449 +49,465 @@ class PlaceScreen extends StatelessWidget {
                   context.pushAndRemove(Routes.home);
                 }
               },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // app bar
-                  SizedBox(
-                    height: 40.h,
-                    width: double.infinity,
-                    child: Stack(
-                      children: [
-                        CustomAppBar(
-                            blendMode: BlendMode.exclusion,
-                            backgroundImage:
-                                "assets/images/app_bar_backgrounds/6.webp",
-                            height: 35.h,
-                            child: const SizedBox()),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: SizedBox(
-                              width: 95.w,
-                              height: 30.h,
-                              child: Stack(
-                                children: [
-                                  CarouselSlider(
-                                    options: CarouselOptions(
-                                      enableInfiniteScroll: false,
-                                      reverse: false,
-                                      autoPlayCurve: Curves.fastOutSlowIn,
-                                      autoPlay: true,
-                                      pauseAutoPlayInFiniteScroll: true,
-                                      pauseAutoPlayOnTouch: true,
-                                      // aspectRatio: 90.w / 30.h,
-                                      viewportFraction: 0.99,
-                                      padEnds: false,
-                                      pauseAutoPlayOnManualNavigate: true,
-                                      height: 30.h,
-                                    ),
-                                    items: place.images.map((i) {
-                                      return Builder(
-                                        builder: (BuildContext context) {
-                                          return Container(
-                                            width: 88.w,
-                                            margin: const EdgeInsets.symmetric(
-                                                horizontal: 5.0),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                color: Colors.grey,
-                                                image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(
-                                                      ApiManager.handleImageUrl(
-                                                          i),
-                                                      headers: {
-                                                        'Authorization':
-                                                            ApiManager.authToken
-                                                      }),
-                                                )),
+              child: BlocBuilder<PlaceCubit, PlaceState>(
+                bloc: cubit,
+                builder: (context, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // app bar
+                      SizedBox(
+                        height: 40.h,
+                        width: double.infinity,
+                        child: Stack(
+                          children: [
+                            CustomAppBar(
+                                blendMode: BlendMode.exclusion,
+                                backgroundImage:
+                                    "assets/images/app_bar_backgrounds/6.webp",
+                                height: 35.h,
+                                child: const SizedBox()),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: SizedBox(
+                                  width: 95.w,
+                                  height: 30.h,
+                                  child: Stack(
+                                    children: [
+                                      CarouselSlider(
+                                        options: CarouselOptions(
+                                          enableInfiniteScroll: false,
+                                          reverse: false,
+                                          autoPlayCurve: Curves.fastOutSlowIn,
+                                          autoPlay: true,
+                                          pauseAutoPlayInFiniteScroll: true,
+                                          pauseAutoPlayOnTouch: true,
+                                          // aspectRatio: 90.w / 30.h,
+                                          viewportFraction: 0.99,
+                                          padEnds: false,
+                                          pauseAutoPlayOnManualNavigate: true,
+                                          height: 30.h,
+                                        ),
+                                        items: place.images.map((i) {
+                                          return Builder(
+                                            builder: (BuildContext context) {
+                                              return Container(
+                                                width: 88.w,
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5.0),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    color: Colors.grey,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(
+                                                          ApiManager
+                                                              .handleImageUrl(
+                                                                  i),
+                                                          headers: {
+                                                            'Authorization':
+                                                                ApiManager
+                                                                    .authToken
+                                                          }),
+                                                    )),
+                                              );
+                                            },
                                           );
-                                        },
-                                      );
-                                    }).toList(),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        IconButton(
-                                          padding: EdgeInsets.zero,
-                                          // focusColor: Colors.white,
-                                          color: ColorManager.primary,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          icon: const CircleAvatar(
-                                              backgroundColor: Colors.white,
-                                              child: Icon(
-                                                  Icons.arrow_back_ios_new)),
-                                        ),
-                                        SizedBox(
-                                          height: 2.h,
-                                        ),
-                                        IconButton(
-                                          padding: EdgeInsets.zero,
-                                          // focusColor: Colors.white,
-                                          color: ColorManager.primary,
-                                          onPressed: () {
-                                            showModalBottomSheet(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    ListTile(
-                                                      leading: const Icon(
-                                                          Icons.edit),
-                                                      title: Text(S
-                                                          .of(context)
-                                                          .editPlace),
-                                                      onTap: () {
-                                                        cubit.prepareEditForm(
-                                                            placeId);
-                                                        context.push(
-                                                            Routes.editPlace,
-                                                            arguments: {
-                                                              'id': placeId
-                                                            });
-                                                        // Navigator.pop(context); // Close bottom sheet
-                                                        // Navigate to edit place screen
-                                                        // Navigator.push(
-                                                        //   context,
-                                                        //   MaterialPageRoute(
-                                                        //     builder: (context) => EditPlaceScreen(placeId: placeId),
-                                                        //   ),
-                                                        // );
-                                                      },
-                                                    ),
-                                                    ListTile(
-                                                      leading: const Icon(
-                                                          Icons.delete),
-                                                      title: Text(S
-                                                          .of(context)
-                                                          .deletePlace),
-                                                      onTap: () {
-                                                        context
-                                                            .pop(); // Close bottom sheet
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (ctx) =>
-                                                              BlocBuilder<
-                                                                  PlaceCubit,
-                                                                  PlaceState>(
-                                                            bloc: cubit,
-                                                            builder: (context,
-                                                                state) {
-                                                              return AlertDialog(
-                                                                title: Text(S
-                                                                    .of(context)
-                                                                    .confirmDelete),
-                                                                content: Text(S
-                                                                    .of(context)
-                                                                    .deletePlaceConfirmation),
-                                                                actions: [
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      await cubit
-                                                                          .deletePlace(
-                                                                              placeId);
-                                                                      // Close dialog
-                                                                    },
-                                                                    child: Text(S
+                                        }).toList(),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional.topStart,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            IconButton(
+                                              padding: EdgeInsets.zero,
+                                              // focusColor: Colors.white,
+                                              color: ColorManager.primary,
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              icon: const CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Icon(Icons
+                                                      .arrow_back_ios_new)),
+                                            ),
+                                            SizedBox(
+                                              height: 2.h,
+                                            ),
+                                            IconButton(
+                                              padding: EdgeInsets.zero,
+                                              // focusColor: Colors.white,
+                                              color: ColorManager.primary,
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        ListTile(
+                                                          leading: const Icon(
+                                                              Icons.edit),
+                                                          title: Text(S
+                                                              .of(context)
+                                                              .editPlace),
+                                                          onTap: () {
+                                                            cubit
+                                                                .prepareEditForm(
+                                                                    placeId);
+                                                            context.push(
+                                                                Routes
+                                                                    .editPlace,
+                                                                arguments: {
+                                                                  'id': placeId
+                                                                });
+                                                            // Navigator.pop(context); // Close bottom sheet
+                                                            // Navigate to edit place screen
+                                                            // Navigator.push(
+                                                            //   context,
+                                                            //   MaterialPageRoute(
+                                                            //     builder: (context) => EditPlaceScreen(placeId: placeId),
+                                                            //   ),
+                                                            // );
+                                                          },
+                                                        ),
+                                                        ListTile(
+                                                          leading: const Icon(
+                                                              Icons.delete),
+                                                          title: Text(S
+                                                              .of(context)
+                                                              .deletePlace),
+                                                          onTap: () {
+                                                            context
+                                                                .pop(); // Close bottom sheet
+                                                            showDialog(
+                                                              context: context,
+                                                              builder: (ctx) =>
+                                                                  BlocBuilder<
+                                                                      PlaceCubit,
+                                                                      PlaceState>(
+                                                                bloc: cubit,
+                                                                builder:
+                                                                    (context,
+                                                                        state) {
+                                                                  return AlertDialog(
+                                                                    title: Text(S
                                                                         .of(context)
-                                                                        .cancel),
-                                                                  ),
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      // Delete place and navigate back
-                                                                      await cubit
-                                                                          .deletePlace(
-                                                                              placeId)
-                                                                          .then(
-                                                                        (value) {
-                                                                          ctx.pop();
+                                                                        .confirmDelete),
+                                                                    content: Text(S
+                                                                        .of(context)
+                                                                        .deletePlaceConfirmation),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          await cubit
+                                                                              .deletePlace(placeId);
+                                                                          // Close dialog
                                                                         },
-                                                                      );
-                                                                    },
-                                                                    child: state
-                                                                            is DeletePlaceLoading
-                                                                        ? const CircularProgressIndicator()
-                                                                        : Text(S
+                                                                        child: Text(S
                                                                             .of(context)
-                                                                            .delete),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                            },
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
+                                                                            .cancel),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          // Delete place and navigate back
+                                                                          await cubit
+                                                                              .deletePlace(placeId)
+                                                                              .then(
+                                                                            (value) {
+                                                                              ctx.pop();
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                        child: state
+                                                                                is DeletePlaceLoading
+                                                                            ? const CircularProgressIndicator()
+                                                                            : Text(S.of(context).delete),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
                                                 );
                                               },
-                                            );
-                                          },
-                                          icon: const CircleAvatar(
-                                              backgroundColor: Colors.white,
-                                              child: Icon(Icons.more_vert)),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(5.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TitleText(place.name),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Text(
-                          place.address,
-                          style: TextStyleManager.getRegularStyle(),
-                        ),
-                        SizedBox(
-                          width: 45.w,
-                          child: Divider(
-                            height: 5.h,
-                          ),
-                        ),
-                        SubTitle(S.of(context).workingHours),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        _buildWorkingHours(context),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        SubTitle(S.of(context).location),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Text(
-                          place.address,
-                          style: TextStyleManager.getCaptionStyle(),
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        if (place.location != null)
-                          _buildShowMapWidget(context),
-                        Divider(
-                          height: 5.h,
-                        ),
-                        SizedBox(
-                          height: 4.h,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: (place.rating != null)
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              place.rating.toString(),
-                                              style: TextStyleManager
-                                                  .getBlackCaptionTextStyle(),
+                                              icon: const CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Icon(Icons.more_vert)),
                                             ),
-                                            Expanded(
-                                              child: place.rating != null
-                                                  ? Center(
-                                                      child: SizedBox(
-                                                        height: 20.sp,
-                                                        child:
-                                                            RatingBar.builder(
-                                                          glow: true,
-                                                          itemSize: 20.sp,
-                                                          direction:
-                                                              Axis.horizontal,
-                                                          allowHalfRating: true,
-                                                          wrapAlignment:
-                                                              WrapAlignment
-                                                                  .center,
-                                                          initialRating:
-                                                              place.rating!,
-                                                          itemCount: 5,
-                                                          glowColor:
-                                                              ColorManager
-                                                                  .golden,
-                                                          ignoreGestures: true,
-                                                          itemBuilder:
-                                                              (context, _) =>
-                                                                  const Icon(
-                                                            Icons.star,
-                                                            color: ColorManager
-                                                                .golden,
-                                                          ),
-                                                          onRatingUpdate:
-                                                              (r) {},
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : Text(
-                                                      S.of(context).noRatings),
-                                            )
                                           ],
-                                        )
-                                      : Center(
-                                          child: Text(S.of(context).noRatings),
-                                        )),
-                              const VerticalDivider(),
-                              Expanded(
-                                  child: Row(
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TitleText(place.name),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Text(
+                              place.address,
+                              style: TextStyleManager.getRegularStyle(),
+                            ),
+                            SizedBox(
+                              width: 45.w,
+                              child: Divider(
+                                height: 5.h,
+                              ),
+                            ),
+                            SubTitle(S.of(context).workingHours),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            _buildWorkingHours(context),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            SubTitle(S.of(context).location),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Text(
+                              place.address,
+                              style: TextStyleManager.getCaptionStyle(),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            if (place.location != null)
+                              _buildShowMapWidget(context),
+                            Divider(
+                              height: 5.h,
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                              child: Row(
                                 children: [
-                                  Text(place.totalGames.toString()),
-                                  SizedBox(
-                                    width: 2.w,
-                                  ),
-                                  Text(S.of(context).totalGames,
-                                      style: TextStyleManager
-                                          .getBlackCaptionTextStyle()),
+                                  Expanded(
+                                      child: (place.rating != null)
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  place.rating.toString(),
+                                                  style: TextStyleManager
+                                                      .getBlackCaptionTextStyle(),
+                                                ),
+                                                Expanded(
+                                                  child: place.rating != null
+                                                      ? Center(
+                                                          child: SizedBox(
+                                                            height: 20.sp,
+                                                            child: RatingBar
+                                                                .builder(
+                                                              glow: true,
+                                                              itemSize: 20.sp,
+                                                              direction: Axis
+                                                                  .horizontal,
+                                                              allowHalfRating:
+                                                                  true,
+                                                              wrapAlignment:
+                                                                  WrapAlignment
+                                                                      .center,
+                                                              initialRating:
+                                                                  place.rating!,
+                                                              itemCount: 5,
+                                                              glowColor:
+                                                                  ColorManager
+                                                                      .golden,
+                                                              ignoreGestures:
+                                                                  true,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                          _) =>
+                                                                      const Icon(
+                                                                Icons.star,
+                                                                color:
+                                                                    ColorManager
+                                                                        .golden,
+                                                              ),
+                                                              onRatingUpdate:
+                                                                  (r) {},
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : Text(S
+                                                          .of(context)
+                                                          .noRatings),
+                                                )
+                                              ],
+                                            )
+                                          : Center(
+                                              child:
+                                                  Text(S.of(context).noRatings),
+                                            )),
+                                  const VerticalDivider(),
+                                  Expanded(
+                                      child: Row(
+                                    children: [
+                                      Text(place.totalGames.toString()),
+                                      SizedBox(
+                                        width: 2.w,
+                                      ),
+                                      Text(S.of(context).totalGames,
+                                          style: TextStyleManager
+                                              .getBlackCaptionTextStyle()),
+                                    ],
+                                  )),
                                 ],
-                              )),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Center(
-                            child: TextButton(
-                                onPressed: () {
-                                  context.push(Routes.placeFeedbacks,
-                                      arguments: {"id": place.id});
-                                },
-                                child: Text(S.of(context).viewFeedbacks,
-                                    style: TextStyleManager
-                                        .getGoldenRegularStyle()))),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Center(
+                                child: TextButton(
+                                    onPressed: () {
+                                      context.push(Routes.placeFeedbacks,
+                                          arguments: {"id": place.id});
+                                    },
+                                    child: Text(S.of(context).viewFeedbacks,
+                                        style: TextStyleManager
+                                            .getGoldenRegularStyle()))),
 
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(vertical: 2.h),
-                        //   child: SizedBox(
-                        //     height: 7.h,
-                        //     child: Row(
-                        //       children: [
-                        //         Expanded(child: _buildUserRatingWidget(context, true)),
-                        //         SizedBox(
-                        //           width: 3.w,
-                        //         ),
-                        //         // Expanded(
-                        //         //     child: OutLineContainer(
-                        //         //       child: Text(
-                        //         //         "${cubit.currentPlac} ${S.of(context).upcoming}",
-                        //         //       ),
-                        //         //     )),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
-                        SubTitle(S.of(context).sport),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        _buildSportWidget(
-                            MainCubit.get()
-                                .sportsList
-                                .firstWhere(
-                                    (element) => element.id == place.sport,
-                                    orElse: () => Sport.unKnown())
-                                .name,
-                            context),
-                        SizedBox(
-                          height: 3.h,
-                        ),
-                        SubTitle(S.of(context).details),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        _buildCaptionWidget(place.description ?? ""),
-                        Divider(
-                          height: 4.h,
-                        ),
-                        SubTitle(S.of(context).booking),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        SizedBox(
-                          height: 3.h,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      S.of(context).price,
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(vertical: 2.h),
+                            //   child: SizedBox(
+                            //     height: 7.h,
+                            //     child: Row(
+                            //       children: [
+                            //         Expanded(child: _buildUserRatingWidget(context, true)),
+                            //         SizedBox(
+                            //           width: 3.w,
+                            //         ),
+                            //         // Expanded(
+                            //         //     child: OutLineContainer(
+                            //         //       child: Text(
+                            //         //         "${cubit.currentPlac} ${S.of(context).upcoming}",
+                            //         //       ),
+                            //         //     )),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                            SubTitle(S.of(context).sport),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            _buildSportWidget(
+                                MainCubit.get()
+                                    .sportsList
+                                    .firstWhere(
+                                        (element) => element.id == place.sport,
+                                        orElse: () => Sport.unKnown())
+                                    .name,
+                                context),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            SubTitle(S.of(context).details),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            _buildCaptionWidget(place.description ?? ""),
+                            Divider(
+                              height: 4.h,
+                            ),
+                            SubTitle(S.of(context).booking),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          S.of(context).price,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                const VerticalDivider(),
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      S.of(context).minimumBooking,
+                                    const VerticalDivider(),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          S.of(context).minimumBooking,
+                                        ),
+                                      ),
+                                    )
+                                  ]),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: OutLineContainer(
+                                        child: Text(
+                                          "${place.price}  ${S.of(context).sar} ${S.of(context).perHour}",
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                )
-                              ]),
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        SizedBox(
-                          height: 5.h,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: OutLineContainer(
-                                    child: Text(
-                                      "${place.price}  ${S.of(context).sar} ${S.of(context).perHour}",
+                                    SizedBox(
+                                      width: 3.w,
                                     ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 3.w,
-                                ),
-                                Expanded(
-                                  child: OutLineContainer(
-                                    child: Text(
-                                      "${place.minimumHours ?? S.of(context).noMinimumBooking}  ${S.of(context).hours}",
-                                    ),
-                                  ),
-                                )
-                              ]),
+                                    Expanded(
+                                      child: OutLineContainer(
+                                        child: Text(
+                                          "${place.minimumHours ?? S.of(context).noMinimumBooking}  ${S.of(context).hours}",
+                                        ),
+                                      ),
+                                    )
+                                  ]),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                ],
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -510,7 +526,7 @@ class PlaceScreen extends StatelessWidget {
   }
 
   Widget _buildShowMapWidget(BuildContext context) {
-  print("location : ${PlaceCubit.get().currentPlace!.location}");
+    print("location : ${PlaceCubit.get().currentPlace!.location}");
     return InkWell(
       onTap: () {
         context.push(Routes.placeLocation,

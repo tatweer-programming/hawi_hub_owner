@@ -3,7 +3,7 @@ import 'package:hawi_hub_owner/src/core/utils/images_manager.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_player.dart';
 // ignore: must_be_immutable
 class BookingRequest extends Equatable {
-// use data
+// host data
   final int userId;
   final String userName;
   final String userImage;

@@ -3,6 +3,7 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
+
 // ignore: must_be_immutable
 class Place extends Equatable {
   int id;
@@ -58,7 +59,8 @@ class Place extends Equatable {
       name: json['name'] ?? "",
       description: json['description'] ?? "",
       address: json['address'] ?? "",
-      images: List<String>.from(json['images'].map((x) => x['stadiumImageUrl'])).toList(),
+      images: List<String>.from(json['images'].map((x) => x['stadiumImageUrl']))
+          .toList(),
       // images: const [
       //   "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=400",
       //   "https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&w=400",
@@ -73,8 +75,11 @@ class Place extends Equatable {
       totalRatings: json['totalRatings'] ?? 0,
       rating: json['rating'] ?? 0,
       feedbacks: const [],
-      workingHours: List<Day>.from(json["openTimes"].map((x) => Day.fromJson(x))),
-      location: json['location'] == null ? null : PlaceLocation.fromString(json['location']),
+      workingHours:
+          List<Day>.from(json["openTimes"].map((x) => Day.fromJson(x))),
+      location: json['location'] == null
+          ? null
+          : PlaceLocation.fromString(json['location']),
       sport: json['categoryId'] ?? 0,
       approvalStatus: json['approvalStatus'] ?? 0,
     );
@@ -108,6 +113,20 @@ class Place extends Equatable {
       imageFiles: [],
       cityId: citId,
     );
+  }
+
+  void updatePlace(PlaceEditForm newPlace) {
+    name = newPlace.name;
+    address = newPlace.address;
+    description = newPlace.description;
+    images = newPlace.images;
+    location = newPlace.location;
+    minimumHours = newPlace.minimumHours;
+    workingHours = newPlace.workingHours;
+    sport = newPlace.sport;
+    price = newPlace.price;
+    ownerId = newPlace.ownerId;
+    citId = newPlace.cityId;
   }
 
   bool isBookingAllowed(DateTime startTime, DateTime endTime) {

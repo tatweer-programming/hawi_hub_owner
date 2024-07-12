@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
+import 'package:hawi_hub_owner/src/core/utils/images_manager.dart';
 
 class AppNotification {
   final int id;
@@ -35,8 +36,7 @@ class AppNotification {
     return {
       "title": title,
       "message": body,
-      "imageUrl": image ??
-          "Files\\Admin\\Banneres\\bddf3436-b607-4c24-95e8-54f7ccf05d8a_1 (45).png",
+      "imageUrl": image ?? ImagesManager.defaultProfile,
     };
   }
 
@@ -47,7 +47,7 @@ class AppNotification {
         "body": body,
         "click_action": "FLUTTER_NOTIFICATION_CLICK",
         "title": title,
-        "image": image,
+        "image": image ?? ImagesManager.defaultProfile,
       }
     });
   }

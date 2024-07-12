@@ -12,8 +12,9 @@ import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:sizer/sizer.dart';
-import '../../../../core/utils/font_manager.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import '../../../../core/utils/font_manager.dart';
 
 class DefaultButton extends StatelessWidget {
   final String text;
@@ -329,7 +330,7 @@ class FeedBackWidget extends StatelessWidget {
 }
 
 ImageProvider getDefaultNetworkImageProvider(String url) {
-  return NetworkImage(url,
+  return NetworkImage(ApiManager.handleImageUrl(url),
       headers: const {'Authorization': ApiManager.authToken});
 }
 

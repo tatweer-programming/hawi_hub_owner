@@ -21,6 +21,7 @@ class RequestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(request.players?.map((e) => e.name).toList());
     PlaceCubit cubit = PlaceCubit.get();
     return Scaffold(
       body: Column(
@@ -192,11 +193,11 @@ class RequestScreen extends StatelessWidget {
         Row(
           children: [
             Expanded(
-                flex: 1,
+                //  flex: 1,
                 child: Text(title,
                     style: TextStyleManager.getSecondarySubTitleStyle())),
             Expanded(
-              flex: 2,
+              // flex: 2,
               child: SubTitle(
                 value,
                 isBold: false,

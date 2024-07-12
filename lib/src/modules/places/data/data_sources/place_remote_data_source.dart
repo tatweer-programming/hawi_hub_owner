@@ -166,7 +166,7 @@ class PlaceRemoteDataSource {
       if (bookingRequest.players != null) {
         playersIds.addAll(bookingRequest.players!.map((e) => e.id).toList());
       }
-      await _sendRequestNotifications(
+      _sendRequestNotifications(
           playersIds, true, bookingRequest.userId, bookingRequest.placeName);
       return const Right(unit);
     } on DioException catch (e) {

@@ -41,8 +41,8 @@ class BookingRequestWidget extends StatelessWidget {
                 const Spacer(),
                 InkWell(
                   onTap: () {
-                    context
-                        .push(Routes.bookingRequestDetails, arguments: {"id": bookingRequest.id});
+                    context.push(Routes.bookingRequestDetails,
+                        arguments: {"id": bookingRequest.id});
                   },
                   child: Text(S.of(context).viewDetails,
                       style: TextStyleManager.getGoldenRegularStyle()),
@@ -60,10 +60,12 @@ class BookingRequestWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(bookingRequest.userImage),
+                      backgroundImage: getDefaultNetworkImageProvider(
+                          bookingRequest.userImage),
                       radius: 10.w,
                       child: InkWell(onTap: () {
-                        context.push(Routes.profile, arguments: {"id": bookingRequest.userId});
+                        context.push(Routes.profile,
+                            arguments: {"id": bookingRequest.userId});
                       }),
                     ),
                     SizedBox(width: 4.w),
@@ -86,12 +88,14 @@ class BookingRequestWidget extends StatelessWidget {
                               child: DefaultButton(
                                 text: S.of(context).accept,
                                 onPressed: () async {
-                                  await cubit.acceptBookingRequest(bookingRequest.id!);
+                                  await cubit
+                                      .acceptBookingRequest(bookingRequest.id!);
                                 },
                                 height: 10.h,
                                 width: 30.w,
-                                isLoading: state is AcceptBookingRequestLoading &&
-                                    state.requestId == bookingRequest.id,
+                                isLoading:
+                                    state is AcceptBookingRequestLoading &&
+                                        state.requestId == bookingRequest.id,
                               ),
                             ),
                             SizedBox(width: 2.w),
@@ -102,11 +106,13 @@ class BookingRequestWidget extends StatelessWidget {
                                 text: S.of(context).decline,
                                 borderColor: ColorManager.black,
                                 onPressed: () async {
-                                  await cubit.declineBookingRequest(bookingRequest.id!);
+                                  await cubit.declineBookingRequest(
+                                      bookingRequest.id!);
                                 },
                                 width: 30.w,
-                                isLoading: state is DeclineBookingRequestLoading &&
-                                    state.requestId == bookingRequest.id,
+                                isLoading:
+                                    state is DeclineBookingRequestLoading &&
+                                        state.requestId == bookingRequest.id,
                               ),
                             ),
                           ],
@@ -133,56 +139,66 @@ class PlaceItem extends StatelessWidget {
         padding: EdgeInsets.all(10.sp),
         width: 90.w,
         height: 27.h,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.sp), border: Border.all()),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.sp), border: Border.all()),
         child: Stack(
           children: [
             Positioned.fill(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Container(
-                  width: double.infinity,
-                  height: 15.h,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.sp),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(ApiManager.handleImageUrl(place.images.first),
-                            headers: {'Authorization': ApiManager.authToken}),
-                      )),
-                ),
-                Expanded(
-                    child: Row(children: [
-                  Expanded(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              place.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyleManager.getSubTitleBoldStyle(),
-                            ),
-                          ),
-                          Text(S.of(context).viewDetails,
-                              style: TextStyleManager.getGoldenRegularStyle()),
-                          const Icon(
-                            Icons.arrow_forward,
-                            color: ColorManager.golden,
-                          )
-                        ],
-                      ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 15.h,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.sp),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                ApiManager.handleImageUrl(place.images.first),
+                                headers: {
+                                  'Authorization': ApiManager.authToken
+                                }),
+                          )),
+                    ),
+                    Expanded(
+                        child: Row(children: [
                       Expanded(
-                        child: Text(
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          place.address,
-                          style: TextStyleManager.getCaptionStyle(),
-                        ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      place.name,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyleManager
+                                          .getSubTitleBoldStyle(),
+                                    ),
+                                  ),
+                                  Text(S.of(context).viewDetails,
+                                      style: TextStyleManager
+                                          .getGoldenRegularStyle()),
+                                  const Icon(
+                                    Icons.arrow_forward,
+                                    color: ColorManager.golden,
+                                  )
+                                ],
+                              ),
+                              Expanded(
+                                child: Text(
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  place.address,
+                                  style: TextStyleManager.getCaptionStyle(),
+                                ),
+                              ),
+                            ]),
                       ),
-                    ]),
-                  ),
-                ]))
-              ]),
+                    ]))
+                  ]),
             ),
             if (place.approvalStatus == 0)
               Align(
@@ -232,8 +248,10 @@ Widget dropdownBuilder(
     ),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: ColorManager.secondary,
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(22)),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(22)),
+      enabledBorder:
+          OutlineInputBorder(borderRadius: BorderRadius.circular(22)),
+      focusedBorder:
+          OutlineInputBorder(borderRadius: BorderRadius.circular(22)),
       contentPadding: EdgeInsets.symmetric(horizontal: 1.w),
     ),
     onSelected: onChanged,

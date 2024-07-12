@@ -12,8 +12,8 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 import 'package:sizer/sizer.dart';
+
 import '../../../main/view/widgets/custom_app_bar.dart';
 
 class EditPlaceScreen extends StatelessWidget {
@@ -23,13 +23,14 @@ class EditPlaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlaceCubit cubit = PlaceCubit.get();
-    TextEditingController nameController = TextEditingController(text: cubit.placeEditForm!.name);
+    TextEditingController nameController =
+        TextEditingController(text: cubit.placeEditForm!.name);
     TextEditingController descriptionController =
         TextEditingController(text: cubit.placeEditForm!.description);
     TextEditingController addressController =
         TextEditingController(text: cubit.placeEditForm!.address);
-    TextEditingController minimumHoursController =
-        TextEditingController(text: cubit.placeEditForm!.minimumHours?.toString());
+    TextEditingController minimumHoursController = TextEditingController(
+        text: cubit.placeEditForm!.minimumHours?.toString());
     TextEditingController priceController = TextEditingController(
       text: cubit.placeEditForm!.price.toString(),
     );
@@ -100,7 +101,8 @@ class EditPlaceScreen extends StatelessWidget {
                                   onPressed: () {
                                     context.push(Routes.pickLocation);
                                   },
-                                  icon: const Icon(Icons.add_location_alt_outlined),
+                                  icon: const Icon(
+                                      Icons.add_location_alt_outlined),
                                 ),
                                 labelText: S.of(context).address,
                                 hintText: S.of(context).address,
@@ -131,16 +133,19 @@ class EditPlaceScreen extends StatelessWidget {
                                     TextField(
                                       readOnly: true,
                                       decoration: InputDecoration(
-                                        labelStyle:
-                                            Theme.of(context).inputDecorationTheme.labelStyle,
+                                        labelStyle: Theme.of(context)
+                                            .inputDecorationTheme
+                                            .labelStyle,
                                         labelText: S.of(context).workingHours,
                                       ),
                                     ),
                                     Positioned.fill(
                                         child: InkWell(
-                                            borderRadius: BorderRadius.circular(22),
+                                            borderRadius:
+                                                BorderRadius.circular(22),
                                             onTap: () {
-                                              context.push(Routes.addWorkingHours);
+                                              context
+                                                  .push(Routes.addWorkingHours);
                                             }))
                                   ],
                                 ),
@@ -152,7 +157,8 @@ class EditPlaceScreen extends StatelessWidget {
                             controller: priceController,
                             decoration: InputDecoration(
                               labelText: S.of(context).price,
-                              hintText: S.of(context).price + S.of(context).perHour,
+                              hintText:
+                                  S.of(context).price + S.of(context).perHour,
                             ),
                             keyboardType: TextInputType.number,
                             validator: (value) {
@@ -240,23 +246,32 @@ class EditPlaceScreen extends StatelessWidget {
                                                 width: 88.w,
                                                 decoration: BoxDecoration(
                                                     color: Colors.grey,
-                                                    borderRadius: BorderRadius.circular(15),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
                                                     image: DecorationImage(
                                                       fit: BoxFit.cover,
                                                       image: NetworkImage(
-                                                          ApiManager.handleImageUrl(i)),
+                                                          ApiManager
+                                                              .handleImageUrl(
+                                                                  i)),
                                                     )),
                                               );
                                             },
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional.topEnd,
+                                            alignment:
+                                                AlignmentDirectional.topEnd,
                                             child: IconButton(
                                               onPressed: () {
-                                                cubit.removeNetworkImageFromEditForm(i);
+                                                cubit
+                                                    .removeNetworkImageFromEditForm(
+                                                        i);
                                               },
                                               icon: CircleAvatar(
-                                                backgroundColor: ColorManager.black.withOpacity(.5),
+                                                backgroundColor: ColorManager
+                                                    .black
+                                                    .withOpacity(.5),
                                                 child: const Icon(
                                                   Icons.remove_circle_outline,
                                                   color: ColorManager.white,
@@ -276,7 +291,9 @@ class EditPlaceScreen extends StatelessWidget {
                                                 width: 88.w,
                                                 decoration: BoxDecoration(
                                                     color: Colors.grey,
-                                                    borderRadius: BorderRadius.circular(15),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
                                                     image: DecorationImage(
                                                       fit: BoxFit.cover,
                                                       image: FileImage(i),
@@ -285,13 +302,17 @@ class EditPlaceScreen extends StatelessWidget {
                                             },
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional.topEnd,
+                                            alignment:
+                                                AlignmentDirectional.topEnd,
                                             child: IconButton(
                                               onPressed: () {
-                                                cubit.removeImageFromEditForm(i.path);
+                                                cubit.removeImageFromEditForm(
+                                                    i.path);
                                               },
                                               icon: CircleAvatar(
-                                                backgroundColor: ColorManager.black.withOpacity(.5),
+                                                backgroundColor: ColorManager
+                                                    .black
+                                                    .withOpacity(.5),
                                                 child: const Icon(
                                                   Icons.remove_circle_outline,
                                                   color: ColorManager.white,
@@ -309,19 +330,23 @@ class EditPlaceScreen extends StatelessWidget {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(),
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
                                         child: Center(
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
                                               IconButton(
                                                 onPressed: () async {
-                                                  await cubit.addImagesToEditForm();
+                                                  await cubit
+                                                      .addImagesToEditForm();
                                                 },
-                                                icon:
-                                                    const Icon(Icons.add_photo_alternate_outlined),
+                                                icon: const Icon(Icons
+                                                    .add_photo_alternate_outlined),
                                               ),
                                               Text(S.of(context).addImages)
                                             ],
@@ -346,8 +371,13 @@ class EditPlaceScreen extends StatelessWidget {
               if (state is UpdatePlaceSuccess) {
                 defaultToast(msg: S.of(context).placeEditedSuccessfully);
                 context.pop();
-              } else if (state is CreatePlaceError) {
-                errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+              } else if (state is PlaceError) {
+                errorToast(
+                    msg: ExceptionManager(state.exception).translatedMessage());
+              } else if (state is PickLocationSuccess) {
+                addressController.text = state.address;
+                cubit.placeEditForm!.location = cubit.placeLocation;
+                defaultToast(msg: S.of(context).locationSaved);
               }
             },
             child: BlocBuilder<PlaceCubit, PlaceState>(
@@ -358,23 +388,27 @@ class EditPlaceScreen extends StatelessWidget {
                       isLoading: state is UpdatePlaceLoading,
                       text: S.of(context).editPlace,
                       onPressed: () async {
-                        if (formKey.currentState!.validate() && validateImages()) {
+                        if (formKey.currentState!.validate() &&
+                            validateImages()) {
                           PlaceEditForm placeEditForm = PlaceEditForm(
                             name: nameController.text,
                             description: descriptionController.text,
                             address: addressController.text,
-                            minimumHours: double.tryParse(minimumHoursController.text) ??
-                                cubit.placeEditForm?.minimumHours,
+                            minimumHours:
+                                double.tryParse(minimumHoursController.text) ??
+                                    cubit.placeEditForm?.minimumHours,
                             ownerId: cubit.currentPlace!.ownerId,
-                            sport: cubit.selectedSport ?? cubit.currentPlace!.sport,
+                            sport: cubit.selectedSport ??
+                                cubit.currentPlace!.sport,
                             price: double.parse(priceController.text),
-                            location: PlaceLocation(latitude: 2, longitude: 2),
+                            location: cubit.placeEditForm?.location,
                             workingHours: PlaceCubit.get().workingHours,
                             imageFiles: cubit.placeEditForm!.imageFiles,
                             images: cubit.placeEditForm!.images,
                             cityId: cubit.placeEditForm!.cityId,
                           );
-                          await PlaceCubit.get().updatePlace(placeId, newPlace: placeEditForm);
+                          await PlaceCubit.get()
+                              .updatePlace(placeId, newPlace: placeEditForm);
                         } else {
                           showRequiredFieldToast(context);
                         }
