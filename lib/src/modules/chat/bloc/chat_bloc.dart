@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
+import 'package:hawi_hub_owner/src/modules/chat/data/models/message_details.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/services/chat_service.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -34,6 +35,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         var response = await _service.connection();
         response.fold((l) {}, (r) {
           emit(GetConnectionSuccessState());
+          add(StreamMessagesEvent());
         });
       }else if (event is CloseConnectionEvent) {
         await _service.closeConnection();
@@ -69,7 +71,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         });
       } else if (event is StreamMessagesEvent) {
         var stream = _service.streamMessage();
-        await for (Message message in stream) {
+        await for (MessageDetails message in stream) {
           emit(StreamMessagesSuccessState(message));
         }
       }

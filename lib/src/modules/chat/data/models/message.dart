@@ -1,53 +1,27 @@
-import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:hawi_hub_owner/src/core/apis/api.dart';
+import 'package:hawi_hub_owner/src/modules/chat/data/models/message_details.dart';
 
-//ignore: must_be_immutable
 class Message extends Equatable {
-  final int? conversationId;
-  final String? connectionId;
-  final bool? isOwner;
-  String? message;
-  String? attachmentUrl;
-  final DateTime? timeStamp;
-  String? voiceNoteUrl;
+  final DateTime lastTimeToChat;
+  final List<MessageDetails> message;
 
-  Message({
-    this.voiceNoteUrl,
-    this.connectionId,
-    this.conversationId,
-    this.message,
-    this.timeStamp,
-    this.isOwner,
-    this.attachmentUrl,
+  const Message({
+    required this.lastTimeToChat,
+    required this.message,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
-      message: json["messageContent"],
-      attachmentUrl: json["messageAttachmentUrl"] != null
-          ? ApiManager.handleImageUrl(json["messageAttachmentUrl"])
-          : null,
-      timeStamp: DateTime.parse(json["timestamp"]),
-      isOwner: json["playerToOwner"],
+      lastTimeToChat: DateTime.parse(json["lastTimeToChat"]),
+      message: List<MessageDetails>.from(
+        json["messages"]
+            .map((message) => MessageDetails.fromJson(message))
+            .toList(),
+      ),
     );
   }
 
-  String jsonBody() {
-    print(toJson());
-    String argumentsJson = jsonEncode([toJson()]);
-    return '{"type":1, "target":"SendMessageToPlayer", "arguments":$argumentsJson}';
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "ConversationId": conversationId,
-      "Message": message,
-      "AttachmentUrl": attachmentUrl
-    };
-  }
-
   @override
-  List<Object?> get props => [message, attachmentUrl];
+  List<Object?> get props => [lastTimeToChat, message];
 }

@@ -15,6 +15,8 @@ import 'package:hawi_hub_owner/src/modules/main/data/services/notification_servi
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../main/cubit/main_cubit.dart';
+
 part 'auth_event.dart';
 
 part 'auth_state.dart';
@@ -227,6 +229,9 @@ Future<File> _loadPdfFromAssets() async {
 Future _clearUserData() async {
   ConstantsManager.userId = null;
   ConstantsManager.appUser = null;
+  ConstantsManager.connectionId = null;
+  ConstantsManager.connectionToken = null;
+  MainCubit.get().currentIndex = 0;
   await CacheHelper.removeData(key: "userId");
 }
 

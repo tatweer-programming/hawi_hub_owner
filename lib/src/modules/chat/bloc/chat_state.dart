@@ -7,7 +7,7 @@ abstract class ChatState {
 class ChatInitial extends ChatState {}
 
 class GetMessagesSuccessState extends ChatState {
-  final Stream<List<Message>> messages;
+  final Stream<List<MessageDetails>> messages;
 
   const GetMessagesSuccessState(this.messages);
 }
@@ -21,7 +21,7 @@ class SendMessageErrorState extends ChatState {
 }
 
 class SendMessageSuccessState extends ChatState {
-  final Message message;
+  final MessageDetails message;
 
   SendMessageSuccessState(this.message);
 }
@@ -47,7 +47,7 @@ class GetAllChatsErrorState extends ChatState {
 
 //GetChatMessages
 class GetChatMessagesSuccessState extends ChatState {
-  final List<Message> messages;
+  final Message messages;
   final int index;
 
   GetChatMessagesSuccessState({required this.messages, required this.index});
@@ -63,7 +63,7 @@ class GetChatMessagesErrorState extends ChatState {
 
 //stream messages
 class StreamMessagesSuccessState extends ChatState {
-  Message streamMessage;
+  MessageDetails streamMessage;
 
   StreamMessagesSuccessState(this.streamMessage);
 }

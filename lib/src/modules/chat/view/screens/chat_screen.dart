@@ -7,6 +7,7 @@ import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
+import 'package:hawi_hub_owner/src/modules/chat/data/models/message_details.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/components.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
@@ -29,12 +30,13 @@ class ChatScreen extends StatelessWidget {
     final ScrollController scrollController = ScrollController();
     chatBloc.add(GetConnectionEvent());
     String? imagePath;
-    List<Message> messages = [];
+    Message? message;
+    List<MessageDetails> messages = [];
     return BlocConsumer<ChatBloc, ChatState>(
       listener: (context, state) {
         if (state is GetChatMessagesSuccessState) {
-          messages = state.messages;
-          chatBloc.add(StreamMessagesEvent());
+          message = state.messages;
+          messages = message!.message;
           if (messages.isNotEmpty) {
             chatBloc.add(
                 ScrollingDownEvent(listScrollController: scrollController));
@@ -51,8 +53,10 @@ class ChatScreen extends StatelessWidget {
           imagePath = null;
         }
         if (state is SendMessageSuccessState) {
-          state.message.attachmentUrl =
-              ApiManager.handleImageUrl(state.message.attachmentUrl!);
+          if (state.message.attachmentUrl != null) {
+            state.message.attachmentUrl =
+                ApiManager.handleImageUrl(state.message.attachmentUrl!);
+          }
           messages.add(state.message);
           chatBloc
               .add(ScrollingDownEvent(listScrollController: scrollController));
@@ -120,28 +124,30 @@ class ChatScreen extends StatelessWidget {
                   _messageInput(imagePath, () {
                     chatBloc.add(RemovePickedImageEvent());
                   }),
-                _sendButton(
-                  (String? value) async {
-                    if (value == 'image') {
-                      chatBloc.add(PickImageEvent());
-                    }
-                  },
-                  () {
-                    if (messageController.text.isNotEmpty ||
-                        imagePath != null) {
-                      chatBloc.add(SendMessageEvent(
-                        message: Message(
-                          message: messageController.text,
-                          conversationId: chat!.conversationId,
-                          attachmentUrl: imagePath,
-                          isOwner: false,
-                          timeStamp: DateTime.now(),
-                        ),
-                      ));
-                    }
-                  },
-                  messageController,
-                ),
+                if (message != null &&
+                    message!.lastTimeToChat.compareTo(DateTime.now()) >= 0)
+                  _sendButton(
+                    onTap: (String? value) async {
+                      if (value == 'image') {
+                        chatBloc.add(PickImageEvent());
+                      }
+                    },
+                    onSend: () {
+                      if (messageController.text.isNotEmpty ||
+                          imagePath != null) {
+                        chatBloc.add(SendMessageEvent(
+                          message: MessageDetails(
+                            message: messageController.text,
+                            conversationId: chat!.conversationId,
+                            attachmentUrl: imagePath,
+                            isOwner: false,
+                            timeStamp: DateTime.now(),
+                          ),
+                        ));
+                      }
+                    },
+                    messageController: messageController,
+                  ),
               ],
             ),
           ),
@@ -228,7 +234,8 @@ Widget _appBar({
   );
 }
 
-Widget _messageWidget({required Message message, required bool isSender}) {
+Widget _messageWidget(
+    {required MessageDetails message, required bool isSender}) {
   if (message.message != null) {
     return _textWidget(isSender: isSender, message: message.message!);
   } else if (message.attachmentUrl != null) {
@@ -337,8 +344,10 @@ Widget _imageWidget({required bool isSender, required String image}) {
 //   );
 // }
 
-Widget _sendButton(ValueChanged<String?> onTap, VoidCallback onSend,
-    TextEditingController messageController) {
+Widget _sendButton(
+    {required ValueChanged<String?> onTap,
+    required VoidCallback onSend,
+    required TextEditingController messageController}) {
   return Padding(
     padding: EdgeInsetsDirectional.symmetric(horizontal: 8.w, vertical: 1.h),
     child: Row(
