@@ -390,7 +390,7 @@ class PlaceCubit extends Cubit<PlaceState> {
       List<int> ids, bool isAccepted, int requestId) async {
     if (isAccepted) {
       for (int id in ids) {
-        await NotificationServices().sendNotification(AppNotification(
+        NotificationServices().sendNotification(AppNotification(
             title: "تم قبول طلبك",
             body:
                 ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب",
@@ -399,7 +399,7 @@ class PlaceCubit extends Cubit<PlaceState> {
       }
     } else {
       for (int id in ids) {
-        await NotificationServices().sendNotification(AppNotification(
+        NotificationServices().sendNotification(AppNotification(
             title: "تم رفض طلبك",
             body:
                 ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب",

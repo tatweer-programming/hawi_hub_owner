@@ -68,18 +68,18 @@ class NotificationServices {
 
   Future sendNotification(AppNotification notification) async {
     try {
-      final String jsonCredentials =
-          await rootBundle.loadString('assets/notifications_key.json');
+      final String jsonCredentials = await rootBundle
+          .loadString('assets/notification/notifications_key.json');
       final ServiceAccountCredentials cred =
           ServiceAccountCredentials.fromJson(jsonCredentials);
       final client = await clientViaServiceAccount(
           cred, [NotificationManager.clientViaServiceAccount]);
-      final response = await client
-          .post(Uri.parse(NotificationManager.notificationUrl),
-              headers: {'content-type': 'application/json'},
-              body: jsonEncode(
-                notification.jsonBody(),
-              ))
+      await client
+          .post(
+        Uri.parse(NotificationManager.notificationUrl),
+        headers: {'content-type': 'application/json'},
+        body: notification.jsonBody(),
+      )
           .then(
         (value) async {
           await _saveNotification(notification);
