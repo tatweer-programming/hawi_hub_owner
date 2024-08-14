@@ -39,8 +39,8 @@ dependencies:
   dartz:
   flutter_bloc:
   bloc:
-  carousel_slider:
-  sizer:
+  carousel_slider: ^5.0.0
+  sizer: ^2.0.15
   dio:
   get_it: ^7.2.0
   image_picker:
