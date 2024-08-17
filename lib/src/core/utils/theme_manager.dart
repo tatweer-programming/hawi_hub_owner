@@ -34,66 +34,66 @@ final ThemeData customTheme = ThemeData(
     textTheme: ButtonTextTheme.normal,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      backgroundColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.disabled)) {
-          return const Color(0x1F000000);
-        } else if (states.contains(WidgetState.dragged) ||
-            states.contains(WidgetState.error) ||
-            states.contains(WidgetState.focused) ||
-            states.contains(WidgetState.hovered) ||
-            states.contains(WidgetState.pressed) ||
-            states.contains(WidgetState.scrolledUnder) ||
-            states.contains(WidgetState.selected)) {
-          return const Color(0xFF00DB55);
-        }
-        return null;
-      }),
-      elevation: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.disabled)) {
-          return 0;
-        } else if (states.contains(WidgetState.focused) ||
-            states.contains(WidgetState.hovered)) {
-          return 4;
-        } else if (states.contains(WidgetState.pressed)) {
-          return 8;
-        }
-        return 1;
-      }),
-      foregroundColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.disabled)) {
-          return const Color(0x61000000);
-        } else {
-          return const Color(0xFFFFFFFF);
-        }
-      }),
-      minimumSize: WidgetStateProperty.resolveWith((states) {
-        return const Size(64, 36);
-      }),
-      overlayColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.focused)) {
-          return const Color(0x3D000000);
-        } else if (states.contains(WidgetState.hovered) ||
-            states.contains(WidgetState.pressed)) {
-          return const Color(0x14000000);
-        }
-        return null;
-      }),
-      shadowColor: WidgetStateProperty.resolveWith((states) {
-        return const Color(0xFF000000);
-      }),
-      shape: WidgetStateProperty.resolveWith((states) {
-        return const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.elliptical(26, 26),
-            bottomRight: Radius.elliptical(26, 26),
-            topLeft: Radius.elliptical(26, 26),
-            topRight: Radius.elliptical(26, 26),
-          ),
-          side: BorderSide(color: Color(0xFF000000), width: 0),
-        );
-      }),
-    ),
+    // style: ButtonStyle(
+    //   backgroundColor: WidgetStateProperty.resolveWith((states) {
+    //     if (states.contains(WidgetState.disabled)) {
+    //       return const Color(0x1F000000);
+    //     } else if (states.contains(WidgetState.dragged) ||
+    //         states.contains(WidgetState.error) ||
+    //         states.contains(WidgetState.focused) ||
+    //         states.contains(WidgetState.hovered) ||
+    //         states.contains(WidgetState.pressed) ||
+    //         states.contains(WidgetState.scrolledUnder) ||
+    //         states.contains(WidgetState.selected)) {
+    //       return const Color(0xFF00DB55);
+    //     }
+    //     return null;
+    //   }),
+    //   elevation: WidgetStateProperty.resolveWith((states) {
+    //     if (states.contains(WidgetState.disabled)) {
+    //       return 0;
+    //     } else if (states.contains(WidgetState.focused) ||
+    //         states.contains(WidgetState.hovered)) {
+    //       return 4;
+    //     } else if (states.contains(WidgetState.pressed)) {
+    //       return 8;
+    //     }
+    //     return 1;
+    //   }),
+    //   foregroundColor: WidgetStateProperty.resolveWith((states) {
+    //     if (states.contains(WidgetState.disabled)) {
+    //       return const Color(0x61000000);
+    //     } else {
+    //       return const Color(0xFFFFFFFF);
+    //     }
+    //   }),
+    //   minimumSize: WidgetStateProperty.resolveWith((states) {
+    //     return const Size(64, 36);
+    //   }),
+    //   overlayColor: WidgetStateProperty.resolveWith((states) {
+    //     if (states.contains(WidgetState.focused)) {
+    //       return const Color(0x3D000000);
+    //     } else if (states.contains(WidgetState.hovered) ||
+    //         states.contains(WidgetState.pressed)) {
+    //       return const Color(0x14000000);
+    //     }
+    //     return null;
+    //   }),
+    //   shadowColor: WidgetStateProperty.resolveWith((states) {
+    //     return const Color(0xFF000000);
+    //   }),
+    //   shape: WidgetStateProperty.resolveWith((states) {
+    //     return const RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.only(
+    //         bottomLeft: Radius.elliptical(26, 26),
+    //         bottomRight: Radius.elliptical(26, 26),
+    //         topLeft: Radius.elliptical(26, 26),
+    //         topRight: Radius.elliptical(26, 26),
+    //       ),
+    //       side: BorderSide(color: Color(0xFF000000), width: 0),
+    //     );
+    //   }),
+    // ),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     foregroundColor: Color(0xFFFFFFFF),
@@ -291,7 +291,9 @@ final ThemeData customTheme = ThemeData(
       letterSpacing: 0.1,
       textBaseline: TextBaseline.alphabetic,
     ),
-  ), colorScheme: const ColorScheme(
+  ), colorScheme:  const ColorScheme(
+  onBackground:  Color(0xFFFFFFFF),
+  background:  Color(0xFFFFFFFF),
     brightness: Brightness.light,
     error: Color(0xFFB00020),
     errorContainer: Color(0xFFB00020),

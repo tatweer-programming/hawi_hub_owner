@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<PaymentCubit>(
               create: (BuildContext context) => PaymentCubit.get()),
         ],
+
         child: Sizer(builder: (context, orientation, deviceType) {
           AppRouter appRouter = AppRouter();
           return BlocBuilder<MainCubit, MainState>(

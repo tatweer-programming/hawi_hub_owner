@@ -150,24 +150,25 @@ class PlaceRemoteDataSource {
     BookingRequest bookingRequest,
   ) async {
     try {
-      await DioHelper.postData(
-        query: {"id": bookingRequest.id},
-        path: EndPoints.acceptBookingRequest + bookingRequest.id.toString(),
-      );
-      await _createChat(
-          lastTime: bookingRequest.startTime, playerId: bookingRequest.userId);
-      print({ConstantsManager.appUser!.supplierCode.toString()});
-      await PaymentService().transferBalance(
-        amount: bookingRequest.price.toDouble(),
-      );
       List<int> playersIds = [
         bookingRequest.userId,
       ];
       if (bookingRequest.players != null) {
         playersIds.addAll(bookingRequest.players!.map((e) => e.id).toList());
       }
-      _sendRequestNotifications(
-          playersIds, true, bookingRequest.userId, bookingRequest.placeName);
+      Future.wait([
+        DioHelper.postData(
+          query: {"id": bookingRequest.id},
+          path: EndPoints.acceptBookingRequest + bookingRequest.id.toString(),
+        ),
+        _createChat(
+        lastTime: bookingRequest.startTime, playerId: bookingRequest.userId),
+     PaymentService().transferBalance(
+    amount: bookingRequest.price.toDouble(),
+    ),
+    _sendRequestNotifications(
+    playersIds, true, bookingRequest.userId, bookingRequest.placeName)
+      ]);
       return const Right(unit);
     } on DioException catch (e) {
       DioException dioException = e;
@@ -187,18 +188,21 @@ class PlaceRemoteDataSource {
     BookingRequest bookingRequest,
   ) async {
     try {
-      await DioHelper.postData(
-        query: {"id": bookingRequest.id},
-        path: EndPoints.declineBookingRequest + bookingRequest.id.toString(),
-      );
+
       List<int> playersIds = [
         bookingRequest.userId,
       ];
       if (bookingRequest.players != null) {
         playersIds.addAll(bookingRequest.players!.map((e) => e.id).toList());
       }
-      await _sendRequestNotifications(
-          playersIds, false, bookingRequest.userId, bookingRequest.placeName);
+      Future.wait([   DioHelper.postData(
+      query: {"id": bookingRequest.id},
+      path: EndPoints.declineBookingRequest + bookingRequest.id.toString(),
+    ),
+
+        _sendRequestNotifications(
+            playersIds, false, bookingRequest.userId, bookingRequest.placeName)
+      ]);
       return const Right(unit);
     } on DioException catch (e) {
       DioException dioException = e;
@@ -378,21 +382,22 @@ class PlaceRemoteDataSource {
   Future _sendRequestNotifications(
       List<int> ids, bool isAccepted, int requestId, String placeName) async {
     if (isAccepted) {
-      for (int id in ids) {
-        await NotificationServices().sendNotification(AppNotification(
+
+      Future.wait(
+        ids.map((id) => NotificationServices().sendNotification(AppNotification(
             title: "تم قبول طلبك",
             body: ": $placeNameتم قبول طلب حجز الملعب ",
             id: id,
-            receiverId: id));
-      }
+            receiverId: id)))
+      );
     } else {
-      for (int id in ids) {
-        await NotificationServices().sendNotification(AppNotification(
+      Future.wait(
+        ids.map((id) => NotificationServices().sendNotification(AppNotification(
             title: "تم رفض طلبك",
-            body: ": $placeNameتم رفض طلب حجز الملعب",
+            body: ": $placeNameتم رفض طلب حجز الملعب ",
             id: id,
-            receiverId: id));
-      }
+            receiverId: id)))
+      );
     }
   }
 }
