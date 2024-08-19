@@ -14,6 +14,7 @@ import 'package:hawi_hub_owner/src/modules/payment/data/services/payment_service
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
@@ -131,7 +132,7 @@ class PlaceRemoteDataSource {
       List<BookingRequest> bookingRequests = [];
       var response = await DioHelper.getData(
           path: "${EndPoints.getBookingRequest}${ConstantsManager.userId}",
-          query: {"id": ConstantsManager.userId});
+          query: {"id": ConstantsManager.userId , "approvalStatus" : false});
       if (response.statusCode == 200) {
         List data = response.data as List;
         data.removeWhere((element) => element["approvalStatus"] != 0);
@@ -195,7 +196,7 @@ class PlaceRemoteDataSource {
       if (bookingRequest.players != null) {
         playersIds.addAll(bookingRequest.players!.map((e) => e.id).toList());
       }
-      Future.wait([   DioHelper.postData(
+      Future.wait([DioHelper.postData(
       query: {"id": bookingRequest.id},
       path: EndPoints.declineBookingRequest + bookingRequest.id.toString(),
     ),
@@ -398,6 +399,43 @@ class PlaceRemoteDataSource {
             id: id,
             receiverId: id)))
       );
+    }
+  }
+  Future<Either<Exception, List<BookingRequest>>> getOwnerBookingRequests() async {
+    try {
+      List<BookingRequest> bookingRequests = [];
+      var response = await DioHelper.getData(
+          path: "${EndPoints.getBookingRequest}${ConstantsManager.userId}",
+          query: {"id": ConstantsManager.userId , "approvalStatus" : true});
+      if (response.statusCode == 200) {
+        List data = response.data as List;
+        data.removeWhere((element) => element["approvalStatus"] != 0);
+        bookingRequests =
+            (data).map((e) => BookingRequest.fromJson(e)).toList();
+      }
+      return Right(bookingRequests);
+    } on DioException catch (e) {
+      return Left(e);
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
+  Future<Either<Exception, List<OfflineBooking>>> getOwnerOfflineBookingRequests() async {
+    try {
+      List<OfflineBooking> bookingRequests = [];
+      var response = await DioHelper.getData(
+          path: "${EndPoints.getOfflineBookings}${ConstantsManager.userId}",
+          query: {"id": ConstantsManager.userId });
+      if (response.statusCode == 200) {
+        List data = response.data as List;
+        bookingRequests =
+            (data).map((e) => OfflineBooking.fromJson(e)).toList();
+      }
+      return Right(bookingRequests);
+    } on DioException catch (e) {
+      return Left(e);
+    } on Exception catch (e) {
+      return Left(e);
     }
   }
 }

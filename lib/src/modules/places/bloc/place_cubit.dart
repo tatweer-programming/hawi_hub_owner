@@ -433,23 +433,8 @@ class PlaceCubit extends Cubit<PlaceState> {
   void addRating(double rate) {
     emit(AddRatingState(rate));
   }
+  Future  getOfflineReservations({required int placeId}) async {
 
-  String _getPlaceNameFromRequestId(int requestId) {
-    int placeId = bookingRequests
-        .firstWhere((element) => element.id == requestId)
-        .placeId;
-    return places.firstWhere((element) => element.id == placeId).name;
-  }
-
-  List<int> _getPlayersIdsFromRequest(int requestId) {
-    List<int> ids = [];
-    BookingRequest bookingRequest =
-        bookingRequests.firstWhere((element) => element.id == requestId);
-    ids.add(bookingRequest.userId);
-    if (bookingRequest.players != null) {
-      ids.addAll(bookingRequest.players!.map((e) => e.id));
-    }
-    return ids;
   }
 
   // int _getHostIdFromRequest(int requestId) {
