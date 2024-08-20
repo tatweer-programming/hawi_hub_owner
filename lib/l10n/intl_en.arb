@@ -162,6 +162,9 @@
   "bookVenuesToPlay": "Book Venues to Play with Friends",
   "readySteadyGo": "READY , SET , GO",
   "bookingSuccess": "Booking Added Successfully",
-  "workingHoursSaved": "Working Hours Saved"
-
+  "workingHoursSaved": "Working Hours Saved",
+  "futureBookings": "Upcoming Bookings",
+  "appBookings": "App Bookings",
+  "offlineBookings": "Offline Bookings",
+  "noBookings": "No Bookings yet"
 }

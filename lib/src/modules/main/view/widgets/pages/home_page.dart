@@ -39,7 +39,6 @@ class HomePage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,13 +57,21 @@ class HomePage extends StatelessWidget {
                     )),
                 IconButton(
                     onPressed: () {
+                      context.push(Routes.futureBookings);
+                    },
+                    icon: Icon(
+                      Icons.calendar_month,
+                      color: ColorManager.golden,
+                    )),
+                IconButton(
+                    onPressed: () {
                       context.push(Routes.notifications);
                     },
                     icon: const ImageIcon(
                       AssetImage("assets/images/icons/notification.webp"),
                       color: ColorManager.golden,
                     )),
-                navToProfile(context:context)
+                navToProfile(context: context),
               ],
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -207,11 +214,11 @@ class HomePage extends StatelessWidget {
                                             SizedBox(
                                               width: 4.w,
                                             ),
-                                        itemCount:
-                                            placeCubit.bookingRequests.length <
-                                                    3
-                                                ? placeCubit.bookingRequests.length
-                                                : 3);
+                                        itemCount: placeCubit
+                                                    .bookingRequests.length <
+                                                3
+                                            ? placeCubit.bookingRequests.length
+                                            : 3);
                           }),
                     ),
                     Row(

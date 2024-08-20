@@ -14,6 +14,7 @@ import 'package:hawi_hub_owner/src/modules/payment/data/services/payment_service
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
@@ -131,7 +132,7 @@ class PlaceRemoteDataSource {
       List<BookingRequest> bookingRequests = [];
       var response = await DioHelper.getData(
           path: "${EndPoints.getBookingRequest}${ConstantsManager.userId}",
-          query: {"id": ConstantsManager.userId});
+          query: {"id": ConstantsManager.userId, "approvalStatus": false});
       if (response.statusCode == 200) {
         List data = response.data as List;
         data.removeWhere((element) => element["approvalStatus"] != 0);
@@ -150,24 +151,26 @@ class PlaceRemoteDataSource {
     BookingRequest bookingRequest,
   ) async {
     try {
-      await DioHelper.postData(
-        query: {"id": bookingRequest.id},
-        path: EndPoints.acceptBookingRequest + bookingRequest.id.toString(),
-      );
-      await _createChat(
-          lastTime: bookingRequest.startTime, playerId: bookingRequest.userId);
-      print({ConstantsManager.appUser!.supplierCode.toString()});
-      await PaymentService().transferBalance(
-        amount: bookingRequest.price.toDouble(),
-      );
       List<int> playersIds = [
         bookingRequest.userId,
       ];
       if (bookingRequest.players != null) {
         playersIds.addAll(bookingRequest.players!.map((e) => e.id).toList());
       }
-      _sendRequestNotifications(
-          playersIds, true, bookingRequest.userId, bookingRequest.placeName);
+      Future.wait([
+        DioHelper.postData(
+          query: {"id": bookingRequest.id},
+          path: EndPoints.acceptBookingRequest + bookingRequest.id.toString(),
+        ),
+        _createChat(
+            lastTime: bookingRequest.startTime,
+            playerId: bookingRequest.userId),
+        PaymentService().transferBalance(
+          amount: bookingRequest.price.toDouble(),
+        ),
+        _sendRequestNotifications(
+            playersIds, true, bookingRequest.userId, bookingRequest.placeName)
+      ]);
       return const Right(unit);
     } on DioException catch (e) {
       DioException dioException = e;
@@ -187,18 +190,20 @@ class PlaceRemoteDataSource {
     BookingRequest bookingRequest,
   ) async {
     try {
-      await DioHelper.postData(
-        query: {"id": bookingRequest.id},
-        path: EndPoints.declineBookingRequest + bookingRequest.id.toString(),
-      );
       List<int> playersIds = [
         bookingRequest.userId,
       ];
       if (bookingRequest.players != null) {
         playersIds.addAll(bookingRequest.players!.map((e) => e.id).toList());
       }
-      await _sendRequestNotifications(
-          playersIds, false, bookingRequest.userId, bookingRequest.placeName);
+      Future.wait([
+        DioHelper.postData(
+          query: {"id": bookingRequest.id},
+          path: EndPoints.declineBookingRequest + bookingRequest.id.toString(),
+        ),
+        _sendRequestNotifications(
+            playersIds, false, bookingRequest.userId, bookingRequest.placeName)
+      ]);
       return const Right(unit);
     } on DioException catch (e) {
       DioException dioException = e;
@@ -378,21 +383,60 @@ class PlaceRemoteDataSource {
   Future _sendRequestNotifications(
       List<int> ids, bool isAccepted, int requestId, String placeName) async {
     if (isAccepted) {
-      for (int id in ids) {
-        await NotificationServices().sendNotification(AppNotification(
-            title: "تم قبول طلبك",
-            body: ": $placeNameتم قبول طلب حجز الملعب ",
-            id: id,
-            receiverId: id));
-      }
+      Future.wait(ids.map((id) => NotificationServices().sendNotification(
+          AppNotification(
+              title: "تم قبول طلبك",
+              body: ": $placeNameتم قبول طلب حجز الملعب ",
+              id: id,
+              receiverId: id))));
     } else {
-      for (int id in ids) {
-        await NotificationServices().sendNotification(AppNotification(
-            title: "تم رفض طلبك",
-            body: ": $placeNameتم رفض طلب حجز الملعب",
-            id: id,
-            receiverId: id));
+      Future.wait(ids.map((id) => NotificationServices().sendNotification(
+          AppNotification(
+              title: "تم رفض طلبك",
+              body: ": $placeNameتم رفض طلب حجز الملعب ",
+              id: id,
+              receiverId: id))));
+    }
+  }
+
+  Future<Either<Exception, List<BookingRequest>>> getOwnerBookings() async {
+    try {
+      List<BookingRequest> bookingRequests = [];
+      var response = await DioHelper.getData(
+          path: "${EndPoints.getBookingRequest}${ConstantsManager.userId}",
+          query: {"id": ConstantsManager.userId, "approvalStatus": true});
+      if (response.statusCode == 200) {
+        List data = response.data as List;
+        print(data.first['player']['userName']);
+        bookingRequests =
+            (data).map((e) => BookingRequest.fromJson(e)).toList();
       }
+      return Right(bookingRequests);
+    } on DioException catch (e) {
+      return Left(e);
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
+
+  Future<Either<Exception, List<OfflineBooking>>>
+      getOwnerOfflineBookings() async {
+    try {
+      List<OfflineBooking> bookingRequests = [];
+      var response = await DioHelper.getData(
+          path: "${EndPoints.getOfflineBookings}${ConstantsManager.userId}",
+          query: {"id": ConstantsManager.userId});
+      if (response.statusCode == 200) {
+        List data = response.data as List;
+        print(data);
+        bookingRequests =
+            (data).map((e) => OfflineBooking.fromJson(e)).toList();
+      }
+      return Right(bookingRequests);
+    } on DioException catch (e) {
+      return Left(e);
+    } on Exception catch (e) {
+      return Left(e);
     }
   }
 }

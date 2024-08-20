@@ -88,7 +88,7 @@ class TextStyleManager {
 
   static TextStyle getBlackContainerTextStyle() {
     return TextStyle(
-      fontSize: 12.sp,
+      fontSize: 12,
       color: ColorManager.white,
     );
   }
@@ -96,7 +96,7 @@ class TextStyleManager {
   static TextStyle getAppBarTextStyle() {
     return const TextStyle(
       color: Colors.white,
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
     );
   }

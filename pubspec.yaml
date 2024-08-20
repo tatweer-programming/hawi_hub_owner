@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.3 <4.0.0'
+  sdk: '>=3.4.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,55 +34,54 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
+  cupertino_icons:
   equatable:
   dartz:
   flutter_bloc:
   bloc:
-  carousel_slider: ^5.0.0
+  carousel_slider:
   sizer: ^2.0.15
   dio:
-  get_it: ^7.2.0
+  get_it:
   image_picker:
-  fluttertoast :
+  fluttertoast:
   shared_preferences:
   intl:
-  animated_splash_screen: ^1.3.0
+  animated_splash_screen:
   timeago:
   connectivity_plus:
   flutter_rating_bar:
-  shimmer: ^3.0.0
-  share_plus: any
+  shimmer:
+  share_plus:
   progressive_time_picker:
 
   # CHATS PACKAGES
-  voice_message_package: ^2.1.4
-  audioplayers: any
+  voice_message_package:
+  audioplayers:
   path_provider:
   permission_handler:
 
   # AUTH PACKAGES
-  flutter_facebook_auth: ^6.2.0
-  google_sign_in: ^6.2.1
+  flutter_facebook_auth:
+  google_sign_in:
 
   # PAYMENT PACKAGE
-  my_fatoorah: ^3.2.0
+  my_fatoorah:
 
   flutter_localizations:
     sdk: flutter
-  location_picker_flutter_map:
   cupertino_stepper:
-  file_picker: ^8.0.2
-  open_file_plus: ^3.4.1+1
+  file_picker:
+  open_file_plus:
   flutter_local_notifications:
   signalr_core:
   firebase_core:
-  firebase_messaging:
+  firebase_messaging: ^15.0.4
   http:
-  flutter_map:
-  geolocator: any
-  open_street_map_search_and_pick: ^0.1.1
-  app_links: ^6.1.1
+  app_links:
+  geolocator:
+  open_street_map_search_and_pick:
+  maps_launcher: ^2.2.1
 
 dev_dependencies:
   flutter_test:
@@ -93,7 +92,6 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

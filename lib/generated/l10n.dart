@@ -1689,6 +1689,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Upcoming Bookings`
+  String get futureBookings {
+    return Intl.message(
+      'Upcoming Bookings',
+      name: 'futureBookings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Bookings`
+  String get appBookings {
+    return Intl.message(
+      'App Bookings',
+      name: 'appBookings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offline Bookings`
+  String get offlineBookings {
+    return Intl.message(
+      'Offline Bookings',
+      name: 'offlineBookings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Bookings yet`
+  String get noBookings {
+    return Intl.message(
+      'No Bookings yet',
+      name: 'noBookings',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

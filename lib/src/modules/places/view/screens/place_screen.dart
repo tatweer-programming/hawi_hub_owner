@@ -15,6 +15,8 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/models/sport.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../main/view/widgets/components.dart';
@@ -29,6 +31,7 @@ class PlaceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("place id : $placeId");
     PlaceCubit cubit = PlaceCubit.get();
     Place place = cubit.places.firstWhere((element) => element.id == placeId);
     cubit.currentPlace = place;
@@ -528,9 +531,12 @@ class PlaceScreen extends StatelessWidget {
   Widget _buildShowMapWidget(BuildContext context) {
     print("location : ${PlaceCubit.get().currentPlace!.location}");
     return InkWell(
-      onTap: () {
-        context.push(Routes.placeLocation,
-            arguments: {"location": PlaceCubit.get().currentPlace!.location});
+      onTap: () async {
+        PlaceLocation location = PlaceCubit.get().currentPlace!.location!;
+        MapsLauncher.launchCoordinates(location.latitude, location.longitude)
+            .catchError((e) {
+          debugPrint(e.toString());
+        });
       },
       child: Container(
           height: 4.h,

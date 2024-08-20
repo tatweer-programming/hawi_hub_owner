@@ -49,4 +49,5 @@ class EndPoints {
   static const String getPlaceBookings = "/Stadium/GetStadiumsReservations/";
   static const String addOfflineReservation = "/Stadium/OfflineReservations/";
   static const String saveNotificationToPlayer = "/Hub/AddPlayerNotification/";
+  static const String getOfflineBookings = "/Stadium/GetOwnerStadiumsOfflineReservations/";
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
@@ -12,6 +13,7 @@ import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_creation_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
@@ -33,12 +35,24 @@ class PlaceCubit extends Cubit<PlaceState> {
     return cubit!;
   }
 
+  void changeUpcomingSelectedPage(int index) {
+    if (upcomingBookingPageIndex != index) {
+      upcomingBookingPageIndex = index;
+      emit(ChangeUpcomingPageState(index));
+    }
+  }
+
   Place? currentPlace;
   PlaceRemoteDataSource dataSource = PlaceRemoteDataSource();
   List<Place> places = [];
   List<BookingRequest> bookingRequests = [];
+  List<BookingRequest> futureBookings = [];
+  List<OfflineBooking> offlineBookings = [];
   bool isPlacesLoading = true;
   bool isBookingRequestsLoading = true;
+  bool isFutureBookingsLoading = true;
+  bool isOfflineBookingsLoading = true;
+  int upcomingBookingPageIndex = 0;
 
   /// adding place
   PlaceLocation? placeLocation;
@@ -79,6 +93,8 @@ class PlaceCubit extends Cubit<PlaceState> {
       startTime: TimeOfDay(hour: 00, minute: 00),
     ),
   ];
+  bool? workingHoursChanged;
+
   int? selectedCityId;
   int? selectedSport;
   List<File> imageFiles = [];
@@ -209,6 +225,8 @@ class PlaceCubit extends Cubit<PlaceState> {
       //print(l);
       emit(AcceptBookingRequestError(l));
     }, (r) async {
+      futureBookings.add(
+          bookingRequests.firstWhere((element) => element.id == requestId));
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(AcceptBookingRequestSuccess());
     });
@@ -346,10 +364,17 @@ class PlaceCubit extends Cubit<PlaceState> {
     emit(PickLocationSuccess(address));
   }
 
+  void saveWorkingHours(List<Day> workingHours) {
+    this.workingHours = workingHours;
+    workingHoursChanged = true;
+    emit(SaveWorkingHoursSuccess());
+  }
+
   void clearSelectedData() {
     selectedSport = null;
     selectedCityId = null;
     placeLocation = null;
+    workingHoursChanged = null;
     selectedOwnershipFile = null;
     placeEditForm = null;
     workingHours = [
@@ -414,6 +439,10 @@ class PlaceCubit extends Cubit<PlaceState> {
     result.fold((l) {
       emit(AddOfflineReservationError(l));
     }, (r) {
+      offlineBookings.add(OfflineBooking(
+          placeId: placeId,
+          startTime: booking.startTime,
+          endTime: booking.endTime));
       emit(AddOfflineReservationSuccess());
     });
   }
@@ -434,60 +463,78 @@ class PlaceCubit extends Cubit<PlaceState> {
     emit(AddRatingState(rate));
   }
 
-  String _getPlaceNameFromRequestId(int requestId) {
-    int placeId = bookingRequests
-        .firstWhere((element) => element.id == requestId)
-        .placeId;
-    return places.firstWhere((element) => element.id == placeId).name;
-  }
-
-  List<int> _getPlayersIdsFromRequest(int requestId) {
-    List<int> ids = [];
-    BookingRequest bookingRequest =
-        bookingRequests.firstWhere((element) => element.id == requestId);
-    ids.add(bookingRequest.userId);
-    if (bookingRequest.players != null) {
-      ids.addAll(bookingRequest.players!.map((e) => e.id));
+  Future getAppBookings({bool? isRefresh}) async {
+    if (futureBookings.isEmpty || isRefresh == true) {
+      isOfflineBookingsLoading = true;
+      emit(GetReservationsLoading());
+      var result = await dataSource.getOwnerBookings();
+      result.fold((l) {
+        isFutureBookingsLoading = false;
+        emit(GetReservationsError(l));
+      }, (r) {
+        isFutureBookingsLoading = false;
+        futureBookings = r..sort((a, b) => b.startTime.compareTo(a.startTime));
+        emit(GetReservationsSuccess());
+      });
     }
-    return ids;
   }
 
-  // int _getHostIdFromRequest(int requestId) {
-  //   List<int> ids = [];
-  //   BookingRequest bookingRequest =
-  //       bookingRequests.firstWhere((element) => element.id == requestId);
-  //
-  //   return bookingRequest.userId;
-  // }
-  //
-  // DateTime _getLastTimeFromRequest(int requestId) {
-  //   List<int> ids = [];
-  //   BookingRequest bookingRequest =
-  //       bookingRequests.firstWhere((element) => element.id == requestId);
-  //
-  //   return bookingRequest.startTime;
-  // }
+  Future getOfflineBookings({bool? isRefresh}) async {
+    if (offlineBookings.isEmpty || isRefresh == true) {
+      isOfflineBookingsLoading = true;
+      emit(GetOfflineReservationsLoading());
+      print("loading offline bookings");
+      var result = await dataSource.getOwnerOfflineBookings();
+      result.fold((l) {
+        print(" error loading offline bookings ${l.toString()}");
+        isOfflineBookingsLoading = false;
+        emit(GetOfflineReservationsError(l));
+      }, (r) {
+        print("got offline bookings ${r.toString()}");
 
-  // void _sendRequestNotifications(
-  //     List<int> ids, bool isAccepted, int requestId) async {
-  //   if (isAccepted) {
-  //     for (int id in ids) {
-  //       await NotificationServices().sendNotification(AppNotification(
-  //           title: "تم قبول طلبك",
-  //           body:
-  //               ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب",
-  //           id: id,
-  //           receiverId: id));
-  //     }
-  //   } else {
-  //     for (int id in ids) {
-  //       await NotificationServices().sendNotification(AppNotification(
-  //           title: "تم رفض طلبك",
-  //           body:
-  //               ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب",
-  //           id: id,
-  //           receiverId: id));
-  //     }
-  //   }
-  // }
+        offlineBookings = r..sort((a, b) => b.startTime.compareTo(a.startTime));
+        isOfflineBookingsLoading = false;
+        emit(GetOfflineReservationsSuccess());
+      });
+    }
+  }
 }
+
+// int _getHostIdFromRequest(int requestId) {
+//   List<int> ids = [];
+//   BookingRequest bookingRequest =
+//       bookingRequests.firstWhere((element) => element.id == requestId);
+//
+//   return bookingRequest.userId;
+// }
+//
+// DateTime _getLastTimeFromRequest(int requestId) {
+//   List<int> ids = [];
+//   BookingRequest bookingRequest =
+//       bookingRequests.firstWhere((element) => element.id == requestId);
+//
+//   return bookingRequest.startTime;
+// }
+
+// void _sendRequestNotifications(
+//     List<int> ids, bool isAccepted, int requestId) async {
+//   if (isAccepted) {
+//     for (int id in ids) {
+//       await NotificationServices().sendNotification(AppNotification(
+//           title: "تم قبول طلبك",
+//           body:
+//               ": ${_getPlaceNameFromRequestId(requestId)}تم قبول طلب حجز الملعب",
+//           id: id,
+//           receiverId: id));
+//     }
+//   } else {
+//     for (int id in ids) {
+//       await NotificationServices().sendNotification(AppNotification(
+//           title: "تم رفض طلبك",
+//           body:
+//               ": ${_getPlaceNameFromRequestId(requestId)}تم رفض طلب حجز الملعب",
+//           id: id,
+//           receiverId: id));
+//     }
+//   }
+// }

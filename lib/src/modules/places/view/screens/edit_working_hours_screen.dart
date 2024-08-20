@@ -179,15 +179,17 @@ class EditWorkingHoursScreen extends StatelessWidget {
   }
 
   void _saveWorkingHours(List<List<TextEditingController>> daysControllers) {
+    List<Day> days = [];
     PlaceCubit cubit = PlaceCubit.get();
     for (int i = 0; i < daysControllers.length; i++) {
-      cubit.workingHours[i] = Day(
-        dayOfWeek: cubit.workingHours[i].dayOfWeek,
+      days.add(Day(
+        dayOfWeek: i,
         startTime: daysControllers[i][0].text.tryParseToTimeOfDay() ??
             const TimeOfDay(hour: 0, minute: 0),
         endTime: daysControllers[i][1].text.tryParseToTimeOfDay() ??
             const TimeOfDay(hour: 23, minute: 59),
-      );
+      ));
     }
+    cubit.saveWorkingHours(days);
   }
 }

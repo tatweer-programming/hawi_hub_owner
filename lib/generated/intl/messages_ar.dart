@@ -40,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "allFieldsIsRequired":
             MessageLookupByLibrary.simpleMessage("جميع الحقول مطلوبة"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("مفتوح دائما"),
+        "appBookings":
+            MessageLookupByLibrary.simpleMessage("حجوزات من خلال التطبيق"),
         "bookVenuesToPlay":
             MessageLookupByLibrary.simpleMessage("حجز أماكن للعب مع الأصدقاء"),
         "booking": MessageLookupByLibrary.simpleMessage("الحجز"),
@@ -106,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة السر ؟"),
         "from": MessageLookupByLibrary.simpleMessage("من"),
+        "futureBookings":
+            MessageLookupByLibrary.simpleMessage("الحجوزات القادمة"),
         "getStarted":
             MessageLookupByLibrary.simpleMessage("اجعل فريقك يلعب معًا!"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
@@ -142,6 +146,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
         "noAccount": MessageLookupByLibrary.simpleMessage("لا تمتلك حساب ؟"),
         "noAlerts": MessageLookupByLibrary.simpleMessage("لا يوجد تنبيهات"),
+        "noBookings":
+            MessageLookupByLibrary.simpleMessage("لا يوجد حجوزات حتي الان"),
         "noComment": MessageLookupByLibrary.simpleMessage("لا تعليق"),
         "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
         "noFeedbacks": MessageLookupByLibrary.simpleMessage("لا يوجد تعليقات"),
@@ -151,6 +157,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noRatings": MessageLookupByLibrary.simpleMessage("لا يوجد تقييمات"),
         "noRequests": MessageLookupByLibrary.simpleMessage("لا يوجد طلبات"),
         "notifications": MessageLookupByLibrary.simpleMessage("التنبيهات"),
+        "offlineBookings":
+            MessageLookupByLibrary.simpleMessage("حجوزات من خارج التطبيق"),
         "ownerShipIsRequired":
             MessageLookupByLibrary.simpleMessage("إثبات ملكية المكان مطلوب"),
         "ownershipFile":

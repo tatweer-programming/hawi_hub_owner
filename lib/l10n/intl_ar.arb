@@ -162,5 +162,9 @@
   "bookVenuesToPlay": "حجز أماكن للعب مع الأصدقاء",
   "readySteadyGo": "إستعد، تأهب، إذهب",
   "addRequiredPdf": "يرجي إلحاق المطلوب ادناه من الملف ",
-  "workingHoursSaved" : "تم حفظ ساعات العمل"
+  "workingHoursSaved": "تم حفظ ساعات العمل",
+  "futureBookings": "الحجوزات القادمة",
+  "appBookings": "حجوزات من خلال التطبيق",
+  "offlineBookings": "حجوزات من خارج التطبيق",
+  "noBookings": "لا يوجد حجوزات حتي الان"
 }
