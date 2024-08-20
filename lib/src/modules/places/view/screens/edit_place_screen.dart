@@ -14,10 +14,12 @@ import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../core/utils/localization_manager.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
 
 class EditPlaceScreen extends StatelessWidget {
   final int placeId;
+
   const EditPlaceScreen({super.key, required this.placeId});
 
   @override
@@ -84,15 +86,28 @@ class EditPlaceScreen extends StatelessWidget {
                             },
                           ),
                           SizedBox(height: 1.5.h),
-                          TextFormField(
-                              // expands: true,
-                              maxLines: 10,
-                              minLines: 1,
-                              controller: descriptionController,
-                              decoration: InputDecoration(
-                                labelText: S.of(context).description,
-                                hintText: S.of(context).description,
-                              )),
+                          SizedBox(
+                            height: 25.h,
+                            child: TextFormField(
+                                // expands: true,
+                                textAlignVertical: TextAlignVertical.top,
+                                textAlign: TextAlign.start,
+                                keyboardType: TextInputType.multiline,
+                                textDirection:
+                                    LocalizationManager.getCurrentLocale()
+                                                .languageCode ==
+                                            'ar'
+                                        ? TextDirection.rtl
+                                        : TextDirection.ltr,
+                                expands: true,
+                                maxLines: null,
+                                minLines: null,
+                                controller: descriptionController,
+                                decoration: InputDecoration(
+                                  labelText: S.of(context).description,
+                                  hintText: S.of(context).description,
+                                )),
+                          ),
                           SizedBox(height: 1.5.h),
                           TextFormField(
                               controller: addressController,
@@ -130,22 +145,38 @@ class EditPlaceScreen extends StatelessWidget {
                               Expanded(
                                 child: Stack(
                                   children: [
-                                    TextField(
-                                      readOnly: true,
-                                      decoration: InputDecoration(
-                                        labelStyle: Theme.of(context)
-                                            .inputDecorationTheme
-                                            .labelStyle,
-                                        labelText: S.of(context).workingHours,
-                                      ),
+                                    BlocBuilder<PlaceCubit, PlaceState>(
+                                      bloc: cubit,
+                                      buildWhen: (previous, current) =>
+                                          cubit.workingHoursChanged == true,
+                                      builder: (context, state) {
+                                        return TextField(
+                                          readOnly: true,
+                                          decoration: InputDecoration(
+                                            suffixIcon: cubit
+                                                        .workingHoursChanged ==
+                                                    true
+                                                ? Icon(
+                                                    Icons.check_circle,
+                                                    color: ColorManager.primary,
+                                                  )
+                                                : null,
+                                            labelStyle: Theme.of(context)
+                                                .inputDecorationTheme
+                                                .labelStyle,
+                                            labelText:
+                                                S.of(context).workingHours,
+                                          ),
+                                        );
+                                      },
                                     ),
                                     Positioned.fill(
                                         child: InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(22),
                                             onTap: () {
-                                              context
-                                                  .push(Routes.addWorkingHours);
+                                              context.push(
+                                                  Routes.editWorkingHours);
                                             }))
                                   ],
                                 ),

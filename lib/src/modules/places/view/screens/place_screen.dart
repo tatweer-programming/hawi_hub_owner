@@ -31,6 +31,7 @@ class PlaceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("place id : $placeId");
     PlaceCubit cubit = PlaceCubit.get();
     Place place = cubit.places.firstWhere((element) => element.id == placeId);
     cubit.currentPlace = place;
@@ -530,11 +531,12 @@ class PlaceScreen extends StatelessWidget {
   Widget _buildShowMapWidget(BuildContext context) {
     print("location : ${PlaceCubit.get().currentPlace!.location}");
     return InkWell(
-      onTap: () async{
+      onTap: () async {
         PlaceLocation location = PlaceCubit.get().currentPlace!.location!;
-     MapsLauncher.launchCoordinates( location.latitude, location.longitude).catchError((e){
-       debugPrint(e.toString());
-     });
+        MapsLauncher.launchCoordinates(location.latitude, location.longitude)
+            .catchError((e) {
+          debugPrint(e.toString());
+        });
       },
       child: Container(
           height: 4.h,

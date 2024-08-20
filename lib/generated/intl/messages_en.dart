@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "allFieldsIsRequired":
             MessageLookupByLibrary.simpleMessage("All fields are required"),
         "alwaysOpen": MessageLookupByLibrary.simpleMessage("Always open"),
+        "appBookings": MessageLookupByLibrary.simpleMessage("App Bookings"),
         "bookVenuesToPlay": MessageLookupByLibrary.simpleMessage(
             "Book Venues to Play with Friends"),
         "booking": MessageLookupByLibrary.simpleMessage("Booking"),
@@ -105,6 +106,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot password ?"),
         "from": MessageLookupByLibrary.simpleMessage("From"),
+        "futureBookings":
+            MessageLookupByLibrary.simpleMessage("Upcoming Bookings"),
         "getStarted": MessageLookupByLibrary.simpleMessage(
             "Get your Squad to play together!"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
@@ -142,6 +145,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noAccount":
             MessageLookupByLibrary.simpleMessage("Don’t have an account ?"),
         "noAlerts": MessageLookupByLibrary.simpleMessage("No Alerts"),
+        "noBookings": MessageLookupByLibrary.simpleMessage("No Bookings yet"),
         "noComment": MessageLookupByLibrary.simpleMessage("No comment"),
         "noDetails": MessageLookupByLibrary.simpleMessage("No details"),
         "noFeedbacks": MessageLookupByLibrary.simpleMessage("No Feedbacks yet"),
@@ -151,6 +155,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noRatings": MessageLookupByLibrary.simpleMessage("No ratings yet"),
         "noRequests": MessageLookupByLibrary.simpleMessage("No requests found"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "offlineBookings":
+            MessageLookupByLibrary.simpleMessage("Offline Bookings"),
         "ownerShipIsRequired":
             MessageLookupByLibrary.simpleMessage("Ownership file is required"),
         "ownershipFile": MessageLookupByLibrary.simpleMessage("Ownership file"),

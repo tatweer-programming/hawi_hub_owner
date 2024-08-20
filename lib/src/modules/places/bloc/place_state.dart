@@ -10,29 +10,34 @@ final class PlaceInitial extends PlaceState {
 
 abstract class PlaceError extends PlaceState {
   final Exception exception;
+
   PlaceError(this.exception);
 }
 
 class CreatePlaceError extends PlaceError {
   CreatePlaceError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
 
 class UploadImagesError extends PlaceError {
   UploadImagesError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
 
 class UpdatePlaceError extends PlaceError {
   UpdatePlaceError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
 
 class DeletePlaceError extends PlaceError {
   DeletePlaceError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
@@ -46,6 +51,7 @@ class GetPlacesError extends PlaceError {
 
 class GetBookingRequestsError extends PlaceError {
   GetBookingRequestsError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
@@ -59,6 +65,7 @@ class AcceptBookingRequestError extends PlaceError {
 
 class DeclineBookingRequestError extends PlaceError {
   DeclineBookingRequestError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
@@ -70,7 +77,9 @@ class GetPlacesLoading extends PlaceState {
 
 class GetPlacesSuccess extends PlaceState {
   final List<Place> places;
+
   GetPlacesSuccess(this.places);
+
   @override
   List<Object?> get props => [places];
 }
@@ -122,21 +131,27 @@ class GetBookingRequestsLoading extends PlaceState {
 
 class GetBookingRequestsSuccess extends PlaceState {
   final List<BookingRequest> bookingRequests;
+
   GetBookingRequestsSuccess(this.bookingRequests);
+
   @override
   List<Object?> get props => [bookingRequests];
 }
 
 class AcceptBookingRequestLoading extends PlaceState {
   final int requestId;
+
   AcceptBookingRequestLoading(this.requestId);
+
   @override
   List<Object?> get props => [];
 }
 
 class AddRatingState extends PlaceState {
   final double rating;
+
   AddRatingState(this.rating);
+
   @override
   List<Object?> get props => [];
 }
@@ -148,7 +163,9 @@ class AcceptBookingRequestSuccess extends PlaceState {
 
 class DeclineBookingRequestLoading extends PlaceState {
   final int requestId;
+
   DeclineBookingRequestLoading(this.requestId);
+
   @override
   List<Object?> get props => [];
 }
@@ -160,28 +177,36 @@ class DeclineBookingRequestSuccess extends PlaceState {
 
 class AddImagesSuccess extends PlaceState {
   final List<String> paths;
+
   AddImagesSuccess(this.paths);
+
   @override
   List<Object?> get props => [paths];
 }
 
 class RemoveImagesSuccess extends PlaceState {
   final String path;
+
   RemoveImagesSuccess(this.path);
+
   @override
   List<Object?> get props => [path];
 }
 
 class SelectOwnershipFileSuccess extends PlaceState {
   final String path;
+
   SelectOwnershipFileSuccess(this.path);
+
   @override
   List<Object?> get props => [];
 }
 
 class ChangeWeekEndStatusSuccess extends PlaceState {
   final bool status;
+
   ChangeWeekEndStatusSuccess(this.status);
+
   @override
   List<Object?> get props => [status];
 }
@@ -198,19 +223,23 @@ class CreateBookingSuccess extends PlaceState {
 
 class CreateBookingError extends PlaceError {
   CreateBookingError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
 
 class GetPlaceReviewsError extends PlaceError {
   GetPlaceReviewsError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
 
 class GetPlaceReviewsSuccess extends PlaceState {
   final List<AppFeedBack> placeReviews;
+
   GetPlaceReviewsSuccess(this.placeReviews);
+
   @override
   List<Object?> get props => [placeReviews];
 }
@@ -222,6 +251,7 @@ class GetPlaceReviewsLoading extends PlaceState {
 
 class UploadAttachmentsError extends PlaceError {
   UploadAttachmentsError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
@@ -243,13 +273,16 @@ class GetPlaceBookingsLoading extends PlaceState {
 
 class GetPlaceBookingsSuccess extends PlaceState {
   final List<Booking> bookings;
+
   GetPlaceBookingsSuccess(this.bookings);
+
   @override
   List<Object?> get props => [bookings];
 }
 
 class GetPlaceBookingsError extends PlaceError {
   GetPlaceBookingsError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
@@ -266,6 +299,7 @@ class AddOfflineReservationSuccess extends PlaceState {
 
 class AddOfflineReservationError extends PlaceError {
   AddOfflineReservationError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
@@ -282,13 +316,68 @@ class AddPlayerFeedbackSuccess extends PlaceState {
 
 class AddPlayerFeedbackError extends PlaceError {
   AddPlayerFeedbackError(super.exception);
+
   @override
   List<Object?> get props => [];
 }
 
 class PickLocationSuccess extends PlaceState {
   final String address;
+
   PickLocationSuccess(this.address);
+
   @override
   List<Object?> get props => [];
+}
+
+class GetReservationsError extends PlaceError {
+  GetReservationsError(super.exception);
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetReservationsSuccess extends PlaceState {
+  GetReservationsSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetReservationsLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetOfflineReservationsError extends PlaceError {
+  GetOfflineReservationsError(super.exception);
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetOfflineReservationsSuccess extends PlaceState {
+  GetOfflineReservationsSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetOfflineReservationsLoading extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class SaveWorkingHoursSuccess extends PlaceState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ChangeUpcomingPageState extends PlaceState {
+  final int page;
+
+  ChangeUpcomingPageState(this.page);
+
+  @override
+  List<Object?> get props => [page];
 }

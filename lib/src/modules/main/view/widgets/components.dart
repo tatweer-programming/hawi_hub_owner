@@ -111,10 +111,15 @@ class SubTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        style: isBold
-            ? TextStyleManager.getSubTitleBoldStyle()
-            : TextStyleManager.getSubTitleStyle());
+    return Text(
+      text,
+      style: isBold
+          ? TextStyleManager.getSubTitleBoldStyle()
+          : TextStyleManager.getSubTitleStyle(),
+      softWrap: true,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 }
 

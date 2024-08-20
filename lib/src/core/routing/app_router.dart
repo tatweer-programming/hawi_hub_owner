@@ -10,6 +10,8 @@ import 'package:hawi_hub_owner/src/modules/places/view/screens/add_booking_scree
 import 'package:hawi_hub_owner/src/modules/places/view/screens/add_working_hours_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/create_place_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/edit_place_screen.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/edit_working_hours_screen.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/screens/future_bookings_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/place_location_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/place_reviews.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/request_screen.dart';
@@ -76,15 +78,18 @@ class AppRouter {
             builder: (_) => AddBookingScreen(
                   placeId: arguments['id'],
                 ));
-      case Routes.placeLocation:
-        Map<String, dynamic> arguments =
-            settings.arguments as Map<String, dynamic>;
-        return MaterialPageRoute(
-            builder: (_) => PlaceLocationScreen(
-                  location: arguments['location'],
-                ));
+      // case Routes.placeLocation:
+      //   Map<String, dynamic> arguments =
+      //       settings.arguments as Map<String, dynamic>;
+      //   return MaterialPageRoute(
+      //       builder: (_) => PlaceLocationScreen(
+      //             location: arguments['location'],
+      //           ));
       case Routes.addWorkingHours:
         return MaterialPageRoute(builder: (_) => const AddWorkingHours());
+      case Routes.editWorkingHours:
+        return MaterialPageRoute(
+            builder: (_) => const EditWorkingHoursScreen());
       case Routes.questions:
         return MaterialPageRoute(builder: (_) => const QuestionsScreen());
       case Routes.termsAndCondition:
@@ -96,6 +101,8 @@ class AppRouter {
             builder: (_) => PlaceFeedbacksScreen(
                   id: arguments['id'],
                 ));
+      case Routes.futureBookings:
+        return MaterialPageRoute(builder: (_) => const FutureBookingsScreen());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

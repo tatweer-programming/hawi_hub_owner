@@ -8,6 +8,7 @@ import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,6 +16,7 @@ import '../../../main/view/widgets/components.dart';
 
 class BookingRequestWidget extends StatelessWidget {
   final BookingRequest bookingRequest;
+
   const BookingRequestWidget({super.key, required this.bookingRequest});
 
   @override
@@ -127,6 +129,7 @@ class BookingRequestWidget extends StatelessWidget {
 
 class PlaceItem extends StatelessWidget {
   final Place place;
+
   const PlaceItem({super.key, required this.place});
 
   @override
@@ -262,4 +265,168 @@ Widget dropdownBuilder(
       },
     ).toList(),
   );
+}
+
+class BookingItem extends StatelessWidget {
+  final BookingRequest bookingRequest;
+
+  const BookingItem({super.key, required this.bookingRequest});
+
+  @override
+  Widget build(BuildContext context) {
+    PlaceCubit cubit = PlaceCubit.get();
+    return Container(
+      padding: const EdgeInsets.all(15),
+      height: 20.h,
+      width: 90.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: ColorManager.black, width: .6),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Column(
+              children: [
+                Expanded(
+                  child: FittedBox(
+                    child: CircleAvatar(
+                      backgroundImage: getDefaultNetworkImageProvider(
+                          bookingRequest.userImage),
+                      child: InkWell(onTap: () {
+                        context.push(Routes.profile,
+                            arguments: {"id": bookingRequest.userId});
+                      }),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 1.h),
+                SubTitle(
+                  bookingRequest.userName,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 4.w),
+          Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(Icons.location_on),
+                        SizedBox(width: 1.w),
+                        Expanded(
+                            child: TitleText(
+                          cubit.places
+                              .firstWhere((x) => x.id == bookingRequest.placeId)
+                              .name,
+                        ))
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(Icons.calendar_month),
+                        SizedBox(width: 1.w),
+                        Text(
+                          bookingRequest.startTime.toString().substring(0, 10),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(Icons.watch_later_outlined),
+                        SizedBox(width: 1.w),
+                        Text(
+                          bookingRequest.startTime
+                                  .toString()
+                                  .substring(11, 16) +
+                              " - " +
+                              bookingRequest.endTime
+                                  .toString()
+                                  .substring(11, 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ))
+        ],
+      ),
+    );
+  }
+}
+
+class OfflineBookingItem extends StatelessWidget {
+  final OfflineBooking offlineBooking;
+
+  const OfflineBookingItem({super.key, required this.offlineBooking});
+
+  @override
+  Widget build(BuildContext context) {
+    PlaceCubit cubit = PlaceCubit.get();
+    return Container(
+      padding: const EdgeInsets.all(15),
+      height: 15.h,
+      width: 90.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: ColorManager.black, width: .6),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                Icon(Icons.location_on),
+                SizedBox(width: 1.w),
+                Expanded(
+                    child: TitleText(
+                  cubit.places
+                      .firstWhere((x) => x.id == offlineBooking.placeId)
+                      .name,
+                ))
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Icon(Icons.calendar_month),
+                SizedBox(width: 1.w),
+                Text(
+                  offlineBooking.startTime.toString().substring(0, 10),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Icon(Icons.watch_later_outlined),
+                SizedBox(width: 1.w),
+                Text(
+                  offlineBooking.startTime.toString().substring(11, 16) +
+                      " - " +
+                      offlineBooking.endTime.toString().substring(11, 16),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

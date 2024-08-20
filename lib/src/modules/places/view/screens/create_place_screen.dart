@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
@@ -75,324 +76,362 @@ class CreatePlaceScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 2.h),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: Form(
-                        key: formKey,
-                        child: Column(children: [
-                          TextFormField(
-                            controller: nameController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).placeName,
-                              hintText: S.of(context).placeName,
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return S.of(context).requiredField;
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 1.5.h),
-                          TextFormField(
-                              // expands: true,
-                              maxLines: 10,
-                              minLines: 1,
-                              controller: descriptionController,
+                SingleChildScrollView(
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: Form(
+                          key: formKey,
+                          child: Column(children: [
+                            TextFormField(
+                              controller: nameController,
                               decoration: InputDecoration(
-                                labelText: S.of(context).description,
-                                hintText: S.of(context).description,
-                              )),
-                          SizedBox(height: 1.5.h),
-                          TextFormField(
-                              controller: addressController,
-                              decoration: InputDecoration(
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    context.push(Routes.pickLocation);
-                                  },
-                                  icon: const Icon(
-                                      Icons.add_location_alt_outlined),
-                                ),
-                                labelText: S.of(context).address,
-                                hintText: S.of(context).address,
+                                labelText: S.of(context).placeName,
+                                hintText: S.of(context).placeName,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return S.of(context).requiredField;
                                 }
                                 return null;
-                              }),
-                          SizedBox(height: 1.5.h),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: minimumHoursController,
+                              },
+                            ),
+                            SizedBox(height: 1.5.h),
+                            SizedBox(
+                              height: 25.h,
+                              child: TextFormField(
+                                  // expands: true,
+                                  textAlignVertical: TextAlignVertical.top,
+                                  textAlign: TextAlign.start,
+                                  keyboardType: TextInputType.multiline,
+                                  textDirection:
+                                      LocalizationManager.getCurrentLocale()
+                                                  .languageCode ==
+                                              'ar'
+                                          ? TextDirection.rtl
+                                          : TextDirection.ltr,
+                                  expands: true,
+                                  maxLines: null,
+                                  minLines: null,
+                                  controller: descriptionController,
                                   decoration: InputDecoration(
-                                    labelText: S.of(context).minimumHours,
-                                    hintText: S.of(context).minimumBooking,
+                                    labelText: S.of(context).description,
+                                    hintText: S.of(context).description,
+                                  )),
+                            ),
+                            SizedBox(height: 1.5.h),
+                            TextFormField(
+                                controller: addressController,
+                                decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      context.push(Routes.pickLocation);
+                                    },
+                                    icon: const Icon(
+                                        Icons.add_location_alt_outlined),
                                   ),
-                                  keyboardType: TextInputType.number,
+                                  labelText: S.of(context).address,
+                                  hintText: S.of(context).address,
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return S.of(context).requiredField;
+                                  }
+                                  return null;
+                                }),
+                            SizedBox(height: 1.5.h),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: minimumHoursController,
+                                    decoration: InputDecoration(
+                                      labelText: S.of(context).minimumHours,
+                                      hintText: S.of(context).minimumBooking,
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ),
+                                SizedBox(width: 2.w),
+                                Expanded(
+                                  child: Stack(
+                                    children: [
+                                      BlocBuilder<PlaceCubit, PlaceState>(
+                                        bloc: cubit,
+                                        buildWhen: (previous, current) =>
+                                            cubit.workingHoursChanged == true,
+                                        builder: (context, state) {
+                                          return TextField(
+                                            readOnly: true,
+                                            decoration: InputDecoration(
+                                              suffixIcon:
+                                                  cubit.workingHoursChanged ==
+                                                          true
+                                                      ? Icon(
+                                                          Icons.check_circle,
+                                                          color: ColorManager
+                                                              .primary,
+                                                        )
+                                                      : null,
+                                              labelStyle: Theme.of(context)
+                                                  .inputDecorationTheme
+                                                  .labelStyle,
+                                              labelText:
+                                                  S.of(context).workingHours,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      Positioned.fill(
+                                          child: InkWell(
+                                              borderRadius:
+                                                  BorderRadius.circular(22),
+                                              onTap: () {
+                                                context.push(
+                                                    Routes.addWorkingHours);
+                                              }))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(height: 1.5.h),
+                            TextFormField(
+                              controller: priceController,
+                              decoration: InputDecoration(
+                                labelText: S.of(context).price,
+                                hintText:
+                                    S.of(context).price + S.of(context).perHour,
+                              ),
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return S.of(context).requiredField;
+                                }
+                                if (double.tryParse(value) == null) {
+                                  return S.of(context).invalidValue;
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 1.5.h),
+                            Row(children: [
+                              Expanded(
+                                child: BlocBuilder<MainCubit, MainState>(
+                                  bloc: mainCubit,
+                                  builder: (context, state) {
+                                    return dropdownBuilder(
+                                        text: cubit.selectedSport == null
+                                            ? S.of(context).sport
+                                            : mainCubit.sportsList
+                                                .firstWhere((element) =>
+                                                    element.id ==
+                                                    cubit.selectedSport!)
+                                                .name,
+                                        onChanged: (sport) {
+                                          cubit.chooseSport(sport!);
+                                        },
+                                        items: mainCubit.sportsList
+                                            .map((e) => e.name)
+                                            .toList());
+                                  },
                                 ),
                               ),
                               SizedBox(width: 2.w),
                               Expanded(
-                                child: Stack(
+                                child: dropdownBuilder(
+                                    text: cubit.selectedCityId == null
+                                        ? S.of(context).city
+                                        : LocalizationManager.getSaudiCities[
+                                            cubit.selectedCityId! - 1],
+                                    onChanged: (city) {
+                                      cubit.selectedCityId = LocalizationManager
+                                              .getSaudiCities
+                                              .indexOf(city!) +
+                                          1;
+                                      //print(cubit.selectedCityId);
+                                    },
+                                    items: LocalizationManager.getSaudiCities),
+                              )
+                            ]),
+                            SizedBox(height: 5.h),
+                            Container(
+                              width: double.infinity,
+                              clipBehavior: Clip.antiAlias,
+                              height: 30.h,
+                              decoration: BoxDecoration(
+                                // border: cubit.imageFiles.isEmpty ? Border.all() : null,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: BlocBuilder<PlaceCubit, PlaceState>(
+                                bloc: cubit,
+                                builder: (context, state) {
+                                  return CarouselSlider(
+                                    options: CarouselOptions(
+                                      enableInfiniteScroll: false,
+                                      reverse: false,
+                                      enlargeCenterPage: true,
+                                      autoPlayCurve: Curves.fastOutSlowIn,
+                                      autoPlay: true,
+                                      pauseAutoPlayInFiniteScroll: true,
+                                      pauseAutoPlayOnTouch: true,
+                                      // aspectRatio: 90.w / 30.h,
+                                      viewportFraction: 0.90,
+                                      padEnds: false,
+                                      pauseAutoPlayOnManualNavigate: true,
+                                      height: 30.h,
+                                    ),
+                                    items: [
+                                      ...cubit.imageFiles.map((i) {
+                                        return Stack(
+                                          children: [
+                                            Builder(
+                                              builder: (BuildContext context) {
+                                                return Container(
+                                                  width: 88.w,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: FileImage(i),
+                                                      )),
+                                                );
+                                              },
+                                            ),
+                                            Align(
+                                              alignment:
+                                                  AlignmentDirectional.topEnd,
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  cubit.removeImage(i.path);
+                                                },
+                                                icon: CircleAvatar(
+                                                  backgroundColor: ColorManager
+                                                      .black
+                                                      .withOpacity(.5),
+                                                  child: const Icon(
+                                                    Icons.remove_circle_outline,
+                                                    color: ColorManager.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                      InkWell(
+                                        onTap: () async {
+                                          await cubit.addImages();
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    await cubit.addImages();
+                                                  },
+                                                  icon: const Icon(Icons
+                                                      .add_photo_alternate_outlined),
+                                                ),
+                                                Text(S.of(context).addImages)
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            BlocBuilder<PlaceCubit, PlaceState>(
+                              bloc: cubit,
+                              builder: (context, state) {
+                                return Stack(
                                   children: [
                                     TextField(
                                       readOnly: true,
                                       decoration: InputDecoration(
-                                        labelStyle: Theme.of(context)
-                                            .inputDecorationTheme
-                                            .labelStyle,
-                                        labelText: S.of(context).workingHours,
-                                      ),
-                                    ),
-                                    Positioned.fill(
-                                        child: InkWell(
-                                            borderRadius:
-                                                BorderRadius.circular(22),
-                                            onTap: () {
-                                              context
-                                                  .push(Routes.addWorkingHours);
-                                            }))
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: 1.5.h),
-                          TextFormField(
-                            controller: priceController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).price,
-                              hintText:
-                                  S.of(context).price + S.of(context).perHour,
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return S.of(context).requiredField;
-                              }
-                              if (double.tryParse(value) == null) {
-                                return S.of(context).invalidValue;
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 1.5.h),
-                          Row(children: [
-                            Expanded(
-                              child: BlocBuilder<MainCubit, MainState>(
-                                bloc: mainCubit,
-                                builder: (context, state) {
-                                  return dropdownBuilder(
-                                      text: cubit.selectedSport == null
-                                          ? S.of(context).sport
-                                          : mainCubit.sportsList
-                                              .firstWhere((element) =>
-                                                  element.id ==
-                                                  cubit.selectedSport!)
-                                              .name,
-                                      onChanged: (sport) {
-                                        cubit.chooseSport(sport!);
-                                      },
-                                      items: mainCubit.sportsList
-                                          .map((e) => e.name)
-                                          .toList());
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 2.w),
-                            Expanded(
-                              child: dropdownBuilder(
-                                  text: cubit.selectedCityId == null
-                                      ? S.of(context).city
-                                      : LocalizationManager.getSaudiCities[
-                                          cubit.selectedCityId! - 1],
-                                  onChanged: (city) {
-                                    cubit.selectedCityId = LocalizationManager
-                                            .getSaudiCities
-                                            .indexOf(city!) +
-                                        1;
-                                    //print(cubit.selectedCityId);
-                                  },
-                                  items: LocalizationManager.getSaudiCities),
-                            )
-                          ]),
-                          SizedBox(height: 5.h),
-                          Container(
-                            width: double.infinity,
-                            clipBehavior: Clip.antiAlias,
-                            height: 30.h,
-                            decoration: BoxDecoration(
-                              // border: cubit.imageFiles.isEmpty ? Border.all() : null,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: BlocBuilder<PlaceCubit, PlaceState>(
-                              bloc: cubit,
-                              builder: (context, state) {
-                                return CarouselSlider(
-                                  options: CarouselOptions(
-                                    enableInfiniteScroll: false,
-                                    reverse: false,
-                                    enlargeCenterPage: true,
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    autoPlay: true,
-                                    pauseAutoPlayInFiniteScroll: true,
-                                    pauseAutoPlayOnTouch: true,
-                                    // aspectRatio: 90.w / 30.h,
-                                    viewportFraction: 0.90,
-                                    padEnds: false,
-                                    pauseAutoPlayOnManualNavigate: true,
-                                    height: 30.h,
-                                  ),
-                                  items: [
-                                    ...cubit.imageFiles.map((i) {
-                                      return Stack(
-                                        children: [
-                                          Builder(
-                                            builder: (BuildContext context) {
-                                              return Container(
-                                                width: 88.w,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.grey,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: FileImage(i),
-                                                    )),
-                                              );
-                                            },
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional.topEnd,
-                                            child: IconButton(
-                                              onPressed: () {
-                                                cubit.removeImage(i.path);
-                                              },
-                                              icon: CircleAvatar(
-                                                backgroundColor: ColorManager
-                                                    .black
-                                                    .withOpacity(.5),
-                                                child: const Icon(
-                                                  Icons.remove_circle_outline,
-                                                  color: ColorManager.white,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      );
-                                    }),
-                                    InkWell(
-                                      onTap: () async {
-                                        await cubit.addImages();
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(),
+                                        border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () async {
-                                                  await cubit.addImages();
-                                                },
-                                                icon: const Icon(Icons
-                                                    .add_photo_alternate_outlined),
-                                              ),
-                                              Text(S.of(context).addImages)
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          BlocBuilder<PlaceCubit, PlaceState>(
-                            bloc: cubit,
-                            builder: (context, state) {
-                              return Stack(
-                                children: [
-                                  TextField(
-                                    readOnly: true,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(22),
-                                        borderSide: BorderSide(
-                                            color:
-                                                cubit.selectedOwnershipFile ==
-                                                        null
-                                                    ? ColorManager.black
-                                                    : ColorManager.primary),
-                                      ),
-                                      labelStyle: Theme.of(context)
-                                          .inputDecorationTheme
-                                          .labelStyle,
-                                      labelText: cubit.selectedOwnershipFile ==
-                                              null
-                                          ? S.of(context).ownershipFile
-                                          : cubit.selectedOwnershipFile!.path
-                                              .split('/')
-                                              .last,
-                                    ),
-                                  ),
-                                  Positioned.fill(
-                                      child: InkWell(
-                                          customBorder: Border.all(
+                                              BorderRadius.circular(22),
+                                          borderSide: BorderSide(
                                               color:
                                                   cubit.selectedOwnershipFile ==
                                                           null
                                                       ? ColorManager.black
                                                       : ColorManager.primary),
-                                          borderRadius:
-                                              BorderRadius.circular(22),
-                                          onTap: () async {
-                                            if (cubit.selectedOwnershipFile ==
-                                                null) {
-                                              await cubit.selectOwnershipFile();
-                                            } else {
-                                              await OpenFile.open(cubit
-                                                  .selectedOwnershipFile!.path);
-                                            }
-                                          })),
-                                  Align(
-                                      alignment: AlignmentDirectional.centerEnd,
-                                      child: IconButton(
-                                          onPressed: () async {
-                                            await cubit.selectOwnershipFile();
-                                          },
-                                          icon: Icon(
+                                        ),
+                                        labelStyle: Theme.of(context)
+                                            .inputDecorationTheme
+                                            .labelStyle,
+                                        labelText:
                                             cubit.selectedOwnershipFile == null
-                                                ? Icons.attachment
-                                                : Icons.edit,
-                                          )))
-                                ],
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                        ]))),
+                                                ? S.of(context).ownershipFile
+                                                : cubit
+                                                    .selectedOwnershipFile!.path
+                                                    .split('/')
+                                                    .last,
+                                      ),
+                                    ),
+                                    Positioned.fill(
+                                        child: InkWell(
+                                            customBorder: Border.all(
+                                                color:
+                                                    cubit.selectedOwnershipFile ==
+                                                            null
+                                                        ? ColorManager.black
+                                                        : ColorManager.primary),
+                                            borderRadius:
+                                                BorderRadius.circular(22),
+                                            onTap: () async {
+                                              if (cubit.selectedOwnershipFile ==
+                                                  null) {
+                                                await cubit
+                                                    .selectOwnershipFile();
+                                              } else {
+                                                await OpenFile.open(cubit
+                                                    .selectedOwnershipFile!
+                                                    .path);
+                                              }
+                                            })),
+                                    Align(
+                                        alignment:
+                                            AlignmentDirectional.centerEnd,
+                                        child: IconButton(
+                                            onPressed: () async {
+                                              await cubit.selectOwnershipFile();
+                                            },
+                                            icon: Icon(
+                                              cubit.selectedOwnershipFile ==
+                                                      null
+                                                  ? Icons.attachment
+                                                  : Icons.edit,
+                                            )))
+                                  ],
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                          ]))),
+                ),
               ],
             )),
           ),
