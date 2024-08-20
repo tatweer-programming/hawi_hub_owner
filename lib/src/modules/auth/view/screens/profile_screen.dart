@@ -443,16 +443,6 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    Align(
-      alignment: AlignmentDirectional.centerStart,
-      child: Text(
-        S.of(context).myWallet,
-        style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
-      ),
-    ),
-    SizedBox(
-      height: 2.h,
-    ),
     if (ConstantsManager.appUser!.playerReservation.contains(owner.id))
       defaultButton(
           onPressed: () {
