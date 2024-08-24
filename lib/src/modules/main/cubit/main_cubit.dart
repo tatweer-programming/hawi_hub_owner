@@ -55,10 +55,6 @@ class MainCubit extends Cubit<MainState> {
     emit(ChangeLocaleState(index));
   }
 
-  Future<void> showDialog() async {
-    emit(ShowDialogState());
-  }
-
   Future<void> getSports() async {
     emit(GetSportsLoading());
     var result = await mainServices.getSports();

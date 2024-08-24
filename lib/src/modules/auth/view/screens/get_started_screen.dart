@@ -38,7 +38,7 @@ class GetStartedScreen extends StatelessWidget {
                         mini: true,
                         backgroundColor: ColorManager.secondary,
                         onPressed: () {
-                          mainCubit.showDialog();
+                          showDialogForLanguage(context, mainCubit);
                         },
                         child: Icon(
                           Icons.language,
@@ -56,7 +56,9 @@ class GetStartedScreen extends StatelessWidget {
                 horizontal: 25.w,
               ),
               child: Text(
-                S.of(context).bookVenuesToPlay,
+                S
+                    .of(context)
+                    .bookVenuesToPlay,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
               ),
@@ -65,7 +67,9 @@ class GetStartedScreen extends StatelessWidget {
               height: 3.h,
             ),
             Text(
-              S.of(context).getStarted,
+              S
+                  .of(context)
+                  .getStarted,
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12.sp),
             ),
             SizedBox(
@@ -80,7 +84,9 @@ class GetStartedScreen extends StatelessWidget {
               height: 3.h,
             ),
             Text(
-              S.of(context).letsGetPlaying,
+              S
+                  .of(context)
+                  .letsGetPlaying,
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 11.sp),
             ),
             SizedBox(
@@ -94,7 +100,9 @@ class GetStartedScreen extends StatelessWidget {
                 );
               },
               fontSize: 17.sp,
-              text: S.of(context).readySteadyGo,
+              text: S
+                  .of(context)
+                  .readySteadyGo,
             ),
             SizedBox(
               height: 3.h,
