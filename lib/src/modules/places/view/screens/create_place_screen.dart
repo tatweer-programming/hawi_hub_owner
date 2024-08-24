@@ -46,6 +46,7 @@ class CreatePlaceScreen extends StatelessWidget {
     TextEditingController minimumHoursController = TextEditingController();
     TextEditingController priceController = TextEditingController();
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
     return Scaffold(
       body: Column(
         children: [
@@ -367,6 +368,10 @@ class CreatePlaceScreen extends StatelessWidget {
                                     TextField(
                                       readOnly: true,
                                       decoration: InputDecoration(
+                                        prefixIcon: Icon(
+                                          Icons.add,
+                                          color: ColorManager.transparent,
+                                        ),
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(22),
@@ -422,7 +427,39 @@ class CreatePlaceScreen extends StatelessWidget {
                                                       null
                                                   ? Icons.attachment
                                                   : Icons.edit,
-                                            )))
+                                            ))),
+                                    Align(
+                                      alignment:
+                                          AlignmentDirectional.centerStart,
+                                      child: Tooltip(
+                                        child: IconButton(
+                                          onPressed: () async {
+                                            tooltipKey.currentState!.activate();
+                                          },
+                                          icon: Tooltip(
+                                            child: Icon(
+                                              Icons.help,
+                                              fill: 1,
+                                            ),
+                                            key: tooltipKey,
+                                            triggerMode: TooltipTriggerMode.tap,
+                                            message:
+                                                S.of(context).ownershipTypes,
+                                            enableTapToDismiss: true,
+                                            preferBelow: false,
+                                            showDuration:
+                                                const Duration(seconds: 2),
+                                            waitDuration:
+                                                const Duration(seconds: 2),
+                                            exitDuration:
+                                                const Duration(seconds: 2),
+                                          ),
+                                          padding: EdgeInsets.zero,
+                                        ),
+                                        message: S.of(context).ownershipTypes,
+                                        triggerMode: TooltipTriggerMode.tap,
+                                      ),
+                                    )
                                   ],
                                 );
                               },

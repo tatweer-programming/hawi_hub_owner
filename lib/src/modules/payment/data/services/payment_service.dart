@@ -57,7 +57,7 @@ class PaymentService {
     try {
       final response = await http.post(
         body: {
-          "SupplierCode": ConstantsManager.appUser!.id.toString(),
+          "SupplierCode": ConstantsManager.appUser?.id.toString(),
           "TransferAmount": amount.toString(),
           "TransferType": "push",
           "InternalNotes": ""

@@ -370,13 +370,22 @@ class PlaceCubit extends Cubit<PlaceState> {
     emit(SaveWorkingHoursSuccess());
   }
 
-  void clearSelectedData() {
+  void clearAllData() async {
+    places.clear();
+    bookingRequests.clear();
+    futureBookings.clear();
+    offlineBookings.clear();
+    imageFiles.clear();
+    currentPlace = null;
     selectedSport = null;
     selectedCityId = null;
     placeLocation = null;
     workingHoursChanged = null;
     selectedOwnershipFile = null;
     placeEditForm = null;
+  }
+
+  void clearSelectedData() {
     workingHours = [
       const Day(
         dayOfWeek: 0,

@@ -163,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إثبات ملكية المكان مطلوب"),
         "ownershipFile":
             MessageLookupByLibrary.simpleMessage("ملف إثبات الملكية"),
+        "ownershipTypes": MessageLookupByLibrary.simpleMessage(
+            "يرجى رفع ملف إثبات الملكية أو عقد إيجار"),
         "passMustContainLowerCase": MessageLookupByLibrary.simpleMessage(
             "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل"),
         "passMustContainNumber": MessageLookupByLibrary.simpleMessage(

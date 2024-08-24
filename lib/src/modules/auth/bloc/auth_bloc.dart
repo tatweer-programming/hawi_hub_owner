@@ -12,6 +12,7 @@ import 'package:hawi_hub_owner/src/modules/auth/data/models/auth_owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/repositories/auth_repository.dart';
 import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
+import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -127,6 +128,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else if (event is LogoutEvent) {
         emit(LogoutLoadingState());
         _clearUserData();
+        PlaceCubit.get().clearAllData();
         emit(LogoutSuccessState());
       } else if (event is ChangePasswordEvent) {
         var result = await _repository.changePassword(

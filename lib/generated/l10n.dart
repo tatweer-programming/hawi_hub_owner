@@ -1729,6 +1729,16 @@ class S {
       args: [],
     );
   }
+
+  /// `you should upload ownership or rental contract`
+  String get ownershipTypes {
+    return Intl.message(
+      'you should upload ownership or rental contract',
+      name: 'ownershipTypes',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

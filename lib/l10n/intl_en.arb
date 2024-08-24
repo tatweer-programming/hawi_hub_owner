@@ -166,5 +166,6 @@
   "futureBookings": "Upcoming Bookings",
   "appBookings": "App Bookings",
   "offlineBookings": "Offline Bookings",
-  "noBookings": "No Bookings yet"
+  "noBookings": "No Bookings yet",
+  "ownershipTypes": "you should upload ownership or rental contract"
 }
