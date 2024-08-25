@@ -61,8 +61,6 @@ class FutureBookingsScreen extends StatelessWidget {
                 ),
               ),
               BlocBuilder<PlaceCubit, PlaceState>(
-                buildWhen: (previous, current) =>
-                    current is ChangeUpcomingPageState,
                 builder: (context, state) {
                   return Padding(
                     padding: EdgeInsets.all(5.w),
