@@ -35,7 +35,7 @@ class AuthRepository {
   Future<Either<String, String>> registerPlayer({
     required AuthOwner authOwner,
   }) async {
-    return _service.registerPlayer(
+    return _service.registerOwner(
       authOwner: authOwner,
     );
   }

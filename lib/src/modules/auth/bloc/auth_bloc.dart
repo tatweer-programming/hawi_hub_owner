@@ -141,7 +141,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else if (event is AddImageEvent) {
         await _captureAndSaveGalleryImage().then((imagePicked) {
           if (imagePicked != null) {
-            emit(AddImageSuccessState(imagePicked: imagePicked!));
+            emit(AddImageSuccessState(imagePicked: imagePicked));
           }
         });
       } else if (event is DeleteImageEvent) {

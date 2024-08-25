@@ -29,6 +29,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthBloc bloc = AuthBloc.get(context);
     Owner? owner;
+    bloc.add(GetProfileEvent(id));
     return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
       if (state is GetProfileSuccessState) {
         owner = state.owner;
@@ -58,69 +59,61 @@ class ProfileScreen extends StatelessWidget {
         );
       }
     }, builder: (context, state) {
-      return FutureBuilder(
-        future: _fetchProfile(bloc, id),
-        builder: (context, snapshot) {
-          if (owner == null) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          } else {
-            return Scaffold(
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Stack(
-                        children: [
-                          AuthAppBar(
-                            context: context,
-                            owner: owner!,
-                            title: S.of(context).profile,
-                          ),
-                        ],
+       if (owner == null) {
+        return const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        );
+      }
+      else {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      AuthAppBar(
+                        context: context,
+                        owner: owner!,
+                        title: S.of(context).profile,
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.symmetric(
-                        horizontal: 5.w,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Text(
-                            owner!.userName,
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          _emailConfirmed(
-                              bloc: bloc,
-                              id: id,
-                              owner: owner!,
-                              context: context,
-                              state: state),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
-        },
-      );
+                Padding(
+                  padding: EdgeInsetsDirectional.symmetric(
+                    horizontal: 5.w,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Text(
+                        owner!.userName,
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      _emailConfirmed(
+                          bloc: bloc,
+                          id: id,
+                          owner: owner!,
+                          context: context,
+                          state: state),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
     });
   }
-}
-
-Future<void> _fetchProfile(AuthBloc bloc, int id) async {
-  bloc.add(GetProfileEvent(id));
 }
 
 Widget _seeAll(VoidCallback onTap, BuildContext context) {
@@ -146,85 +139,6 @@ Widget _seeAll(VoidCallback onTap, BuildContext context) {
   );
 }
 
-Widget _peopleRateBuilder(AppFeedBack feedBack, BuildContext context) {
-  return Stack(
-    children: [
-      Column(
-        children: [
-          SizedBox(
-            height: 1.h,
-          ),
-          Container(
-            height: 12.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.sp),
-                border: Border.all()),
-            child: Padding(
-              padding: EdgeInsetsDirectional.symmetric(
-                  horizontal: 3.w, vertical: 1.h),
-              child: Row(children: [
-                CircleAvatar(
-                  radius: 20.sp,
-                  backgroundColor: ColorManager.grey3,
-                  backgroundImage: NetworkImage(feedBack.userImageUrl!),
-                ),
-                SizedBox(
-                  width: 4.w,
-                ),
-                Expanded(
-                  child: Text(feedBack.comment ?? S.of(context).noComment,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: ColorManager.black.withOpacity(0.5),
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-              ]),
-            ),
-          ),
-        ],
-      ),
-      Positioned(
-        left: 5.w,
-        top: -1.h,
-        child: Container(
-          padding: EdgeInsetsDirectional.symmetric(
-            vertical: 1.h,
-            horizontal: 2.w,
-          ),
-          color: Colors.white,
-          child: Row(
-            children: [
-              Text(
-                feedBack.userName,
-                style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.green,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(width: 1.w),
-              RatingBar.builder(
-                initialRating: feedBack.rating,
-                minRating: 1,
-                itemSize: 10.sp,
-                direction: Axis.horizontal,
-                ignoreGestures: true,
-                allowHalfRating: true,
-                itemPadding: EdgeInsets.zero,
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: ColorManager.golden,
-                ),
-                onRatingUpdate: (rating) {},
-              ),
-            ],
-          ),
-        ),
-      ),
-    ],
-  );
-}
 
 Widget _emailConfirmed({
   required BuildContext context,
@@ -254,9 +168,10 @@ Widget _notVerified(AuthBloc bloc) {
           imagePicked = state.imagePicked;
         }
       }
-      if (state is DeleteImageState) {
+      else if (state is DeleteImageState) {
         imagePicked = null;
       }
+      print("image is $imagePicked");
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

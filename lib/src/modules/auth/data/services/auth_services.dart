@@ -14,7 +14,7 @@ import '../../../../core/utils/constance_manager.dart';
 import '../models/auth_owner.dart';
 
 class AuthService {
-  Future<Either<String, String>> registerPlayer({
+  Future<Either<String, String>> registerOwner({
     required AuthOwner authOwner,
   }) async {
     try {
@@ -27,8 +27,10 @@ class AuthService {
         await CacheHelper.saveData(key: 'userId', value: response.data['id']);
         return Right(response.data['message']);
       }
+      print(response.data.toString());
       return Left(response.data.toString());
     } on DioException catch (e) {
+      print(e.response.toString());
       return Left(e.response.toString());
     }
   }
@@ -206,6 +208,7 @@ class AuthService {
       if (response.statusCode == 200) {
         return Right(response.data['message']);
       }
+      print("response.data.toString() ${response.data.toString()}");
       return Left(response.data.toString());
     } on DioException catch (e) {
       return Left(e.response.toString());
