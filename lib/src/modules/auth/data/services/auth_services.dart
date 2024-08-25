@@ -24,7 +24,6 @@ class AuthService {
       );
       if (response.statusCode == 200) {
         ConstantsManager.userId = response.data['id'];
-        await CacheHelper.saveData(key: 'userId', value: response.data['id']);
         return Right(response.data['message']);
       }
       print(response.data.toString());
@@ -57,6 +56,8 @@ class AuthService {
         path: EndPoints.verifyConfirmEmail + ConstantsManager.userId.toString(),
       );
       if (response.statusCode == 200) {
+        await CacheHelper.saveData(
+            key: 'userId', value: ConstantsManager.userId.toString());
         return Right(response.data['message']);
       }
       return Left(response.data.toString());
