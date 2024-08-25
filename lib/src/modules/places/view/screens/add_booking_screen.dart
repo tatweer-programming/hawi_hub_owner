@@ -15,6 +15,7 @@ import 'package:sizer/sizer.dart';
 
 class AddBookingScreen extends StatefulWidget {
   final int placeId;
+
   const AddBookingScreen({super.key, required this.placeId});
 
   @override
@@ -73,11 +74,7 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
         selectedDate.day, endTime.hour, endTime.minute);
     for (Booking booking in bookings) {
       // Check if the new booking overlaps with any existing booking
-      if ((start.isBefore(booking.endTime) && end.isAfter(booking.startTime)) ||
-          (start.isAtSameMomentAs(booking.startTime) &&
-              end.isAfter(booking.startTime)) ||
-          (end.isAtSameMomentAs(booking.endTime) &&
-              start.isBefore(booking.endTime))) {
+      if (booking.isConflicting(Booking(startTime: start, endTime: end))) {
         errorToast(msg: S.of(context).bookingConflict);
         return;
       }

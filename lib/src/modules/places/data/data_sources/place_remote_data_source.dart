@@ -314,37 +314,15 @@ class PlaceRemoteDataSource {
 
   Future<Either<Exception, List<Booking>>> getPlaceBookings(
       {required int placeId}) async {
-    List<Booking> bookings = [
-      Booking(
-        startTime: DateTime(2024, 7, 1, 10, 0),
-        endTime: DateTime(2024, 7, 1, 12, 0),
-      ),
-      Booking(
-        startTime: DateTime(2024, 7, 2, 14, 0),
-        endTime: DateTime(2024, 7, 2, 16, 0),
-      ),
-      Booking(
-        startTime: DateTime(2024, 7, 3, 9, 0),
-        endTime: DateTime(2024, 7, 3, 10, 0),
-      ),
-      Booking(
-        startTime: DateTime(2024, 8, 1, 11, 0),
-        endTime: DateTime(2024, 8, 1, 13, 0),
-      ),
-      Booking(
-        startTime: DateTime(2024, 8, 5, 15, 0),
-        endTime: DateTime(2024, 8, 5, 17, 0),
-      ),
-    ];
+    List<Booking> bookings = [];
 
     try {
-      // var response = await DioHelper.getData(
-      //     path: EndPoints.getPlaceBookings + placeId.toString());
-      // if (response.statusCode == 200) {
-      //   bookings = (response.data as List)
-      //       .map((e) => Booking.fromJson(e))
-      //       .toList();
-      // }
+      var response = await DioHelper.getData(
+          path: EndPoints.getPlaceBookings + placeId.toString());
+      if (response.statusCode == 200) {
+        bookings =
+            (response.data as List).map((e) => Booking.fromJson(e)).toList();
+      }
       startTimer(2.1);
       return Right(bookings);
     } on Exception catch (e) {
@@ -362,7 +340,8 @@ class PlaceRemoteDataSource {
       );
       return const Right(unit);
     } on Exception catch (e) {
-      print("exception : $e");
+      DioException dioException = e as DioException;
+      print("exception : ${dioException.response.toString()}");
       return Left(e);
     }
   }

@@ -1739,6 +1739,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Re-send code`
+  String get reSendCode {
+    return Intl.message(
+      'Re-send code',
+      name: 'reSendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email confirmed successfully`
+  String get emailConfirmedSuccessfully {
+    return Intl.message(
+      'Email confirmed successfully',
+      name: 'emailConfirmedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirmation code sent successfully to`
+  String get confirmationCodeSentSuccessfully {
+    return Intl.message(
+      'Confirmation code sent successfully to',
+      name: 'confirmationCodeSentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid reset code.`
+  String get invalidResetCode {
+    return Intl.message(
+      'Invalid reset code.',
+      name: 'invalidResetCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No owner was found with ID :`
+  String get noOwnerFound {
+    return Intl.message(
+      'No owner was found with ID :',
+      name: 'noOwnerFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

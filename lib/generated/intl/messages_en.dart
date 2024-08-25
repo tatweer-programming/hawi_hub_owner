@@ -70,6 +70,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm delete"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmationCodeSentSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Confirmation code sent successfully to"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "decline": MessageLookupByLibrary.simpleMessage("Decline"),
@@ -85,6 +88,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage(" Email"),
         "emailAlreadyExist":
             MessageLookupByLibrary.simpleMessage("Email is already exists."),
+        "emailConfirmedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Email confirmed successfully"),
         "emailNotExists":
             MessageLookupByLibrary.simpleMessage("Email is not exists"),
         "endTime": MessageLookupByLibrary.simpleMessage("End time"),
@@ -118,6 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Image is required"),
         "invalidEmailOrPassword":
             MessageLookupByLibrary.simpleMessage("Invalid email or password."),
+        "invalidResetCode":
+            MessageLookupByLibrary.simpleMessage("Invalid reset code."),
         "invalidValue": MessageLookupByLibrary.simpleMessage("Invalid Value"),
         "keepMeLoggedIn":
             MessageLookupByLibrary.simpleMessage("Keep me logged in"),
@@ -151,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noFeedbacks": MessageLookupByLibrary.simpleMessage("No Feedbacks yet"),
         "noMinimumBooking":
             MessageLookupByLibrary.simpleMessage("No minimum booking"),
+        "noOwnerFound": MessageLookupByLibrary.simpleMessage(
+            "No owner was found with ID :"),
         "noPlaces": MessageLookupByLibrary.simpleMessage("No places found"),
         "noRatings": MessageLookupByLibrary.simpleMessage("No ratings yet"),
         "noRequests": MessageLookupByLibrary.simpleMessage("No requests found"),
@@ -199,6 +208,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "questions": MessageLookupByLibrary.simpleMessage(
             "What is the Howie Hub application?\n\nIt is an application that connects stadium owners with tenants, facilitating the process of booking stadiums individually or collectively.\n\nWho can use the Howie Hub application?\n\nAnyone can download and use the app, but it specifically targets young people in Saudi Arabia.\n\nWhat services does the application provide?\n\nBook pitches individually:\nSelect the stadium you want.\nChoose the appropriate date and time.\nComplete the payment process.\nCreate group bookings and share them with friends:\nSelect the stadium you want.\nChoose the appropriate date and time.\nDetermine the number of players.\nCreate a booking link and share with your friends.\nCreate group bookings open to all app users:\nSelect the stadium you want.\nChoose the appropriate date and time.\nDetermine the number of players.\nCreate a booking link and share it with everyone.\nHow is payment made in the Howie Hub application?\n\nPayment is made by credit card or online payment card.\n\nWhat is the percentage of the company that owns the application of the reservation value?\n\nThe percentage of the reservation value of the company that owns the application varies depending on the type of reservation.\n\nHow can I add a playground to the app?\n\nIf you are a stadium owner, you can contact the company that owns the application through https://www.infohub.com/ to learn more about how to add your stadium to the application.\n\nHow can I contact the company that owns the application?\n\nYou can contact the company that owns the application through https://www.infohub.com/\n\nAre there any restrictions or specific conditions for using the application?\n\nThere are no restrictions or conditions for using the app, but you must respect all users on the app and refrain from any abusive or illegal behavior.\n\nAre there any behaviors prohibited on the application?\n\nYes, there are some behaviors that are prohibited on the application, such as:\n\nBullying or harassment.\nPosting hate speech or offensive content.\nSharing personal or sensitive information.\nUse the application for illegal purposes.\nWhat happens if I violate the terms of use?\n\nIf you violate the Terms of Use, your account may be permanently banned from the application.\n\nCan I cancel my account?\n\nYes, you can cancel your account at any time.\n\nCan I change my account information?\n\nYes, you can change your account information at any time.\n\nHow can I get help using the application?\n\nYou can review the help center in the application or contact the company that owns the application through https://www.infohub.com/\n\nIs the Howie Hub application safe?\n\nYes, Howie Hub is very secure. We use the latest security technologies to protect users\' data.\n\nIs my data shared with anyone else?\n\nNo, your data is not shared with anyone else unless you have expressly agreed to this.\n\nWhat is the privacy policy of the Howie Hub application?\n\nYou can review the Howie Hub privacy policy at https://www.infohub.com/\n\nIs there anything else I should know?\n\nWe advise you to read the terms of use and privacy policy carefully before using the application.\n\nThank you for using Howie Hub!\n\nnote:\nThis FAQ may be updated from time to time. Please check this page periodically to see the latest changes."),
         "rates": MessageLookupByLibrary.simpleMessage("Rates"),
+        "reSendCode": MessageLookupByLibrary.simpleMessage("Re-send code"),
         "readySteadyGo":
             MessageLookupByLibrary.simpleMessage("READY , SET , GO"),
         "receivedCode": MessageLookupByLibrary.simpleMessage("Received Code"),
