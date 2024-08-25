@@ -248,6 +248,20 @@ String handleResponseTranslation(String state, BuildContext context) {
   if (state == "Account Created Successfully") {
     return S.of(context).accountCreatedSuccessfully;
   }
+  if (state == "Email confirmed successfully") {
+    return S.of(context).emailConfirmedSuccessfully;
+  }
+  if (state.contains("Confirmation code sent successfully to")) {
+    RegExp emailPattern = RegExp(r'\S+@\S+\.\S+');
+    var email = emailPattern.firstMatch(state)?.group(0);
+    return S.of(context).emailConfirmedSuccessfully + email!;
+  }
+  if (state == "Invalid reset code.") {
+    return S.of(context).invalidResetCode;
+  }
+  if (state.contains("No owner was found with ID :")) {
+    return S.of(context).noOwnerFound;
+  }
   if (state == "Email is not exists.") return S.of(context).emailNotExists;
   if (state == "Email is already exists.") {
     return S.of(context).emailAlreadyExist;

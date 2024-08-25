@@ -52,8 +52,10 @@ class ChatScreen extends StatelessWidget {
           imagePath = null;
         }
         if (state is SendMessageSuccessState) {
+          if (state.message.attachmentUrl != null) {
           state.message.attachmentUrl =
               ApiManager.handleImageUrl(state.message.attachmentUrl!);
+          }
           messages.add(state.message);
           chatBloc
               .add(ScrollingDownEvent(listScrollController: scrollController));

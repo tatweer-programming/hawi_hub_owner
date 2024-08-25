@@ -32,6 +32,14 @@ class AuthRepository {
     return await _service.signupWithFacebook();
   }
 
+  Future<Either<String, String>> confirmEmail() async {
+    return await _service.confirmEmail();
+  }
+
+  Future<Either<String, String>> verifyConfirmEmail(String code) async {
+    return await _service.verifyConfirmEmail(code);
+  }
+
   Future<Either<String, String>> registerPlayer({
     required AuthOwner authOwner,
   }) async {

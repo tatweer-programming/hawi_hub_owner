@@ -84,6 +84,7 @@ dependencies:
   maps_launcher: ^2.2.1
 
 dev_dependencies:
+  analyzer: 6.4.0  # or another stable version
   flutter_test:
     sdk: flutter
 

@@ -69,10 +69,14 @@ class StartResendCodeTimerEvent extends AuthEvent {
   StartResendCodeTimerEvent(this.timeToResendCode);
 }
 
-class ResetCodeTimerEvent extends AuthEvent {
-  final int timeToResendCode;
+class ResetCodeTimerEvent extends AuthEvent {}
 
-  ResetCodeTimerEvent(this.timeToResendCode);
+class ConfirmEmailEvent extends AuthEvent {}
+
+class VerifyConfirmEmailEvent extends AuthEvent {
+  final String code;
+
+  VerifyConfirmEmailEvent(this.code);
 }
 
 class UploadNationalIdEvent extends AuthEvent {

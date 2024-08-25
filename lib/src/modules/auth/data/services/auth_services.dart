@@ -35,6 +35,37 @@ class AuthService {
     }
   }
 
+  Future<Either<String, String>> confirmEmail() async {
+    try {
+      Response response = await DioHelper.postData(
+        path: EndPoints.confirmEmail + ConstantsManager.userId.toString(),
+      );
+      if (response.statusCode == 200) {
+        return Right(response.data.toString());
+      }
+      return Left(response.data.toString());
+    } on DioException catch (e) {
+      print(e.response.toString());
+      return Left(e.response.toString());
+    }
+  }
+
+  Future<Either<String, String>> verifyConfirmEmail(String code) async {
+    try {
+      Response response = await DioHelper.postData(
+        data: {"confirmEmailCode": code},
+        path: EndPoints.verifyConfirmEmail + ConstantsManager.userId.toString(),
+      );
+      if (response.statusCode == 200) {
+        return Right(response.data['message']);
+      }
+      return Left(response.data.toString());
+    } on DioException catch (e) {
+      print(e.response.toString());
+      return Left(e.response.toString());
+    }
+  }
+
   Future<String> loginOwner(
       {required String email,
       required String password,
@@ -262,7 +293,7 @@ class AuthService {
         path: "/${ConstantsManager.userId == id ? "Owner" : "Player"}/$id",
       );
       Owner owner = Owner.fromJson(response.data);
-      if(ConstantsManager.userId == id){
+      if (ConstantsManager.userId == id) {
         ConstantsManager.appUser = owner;
       }
       return Right(owner);
@@ -270,6 +301,7 @@ class AuthService {
       return Left(e.response.toString());
     }
   }
+
   Future<Either<String, List<AppFeedBack>>> geFeedBacks(int id) async {
     try {
       Response response = await DioHelper.getData(

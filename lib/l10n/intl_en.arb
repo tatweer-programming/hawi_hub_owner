@@ -166,5 +166,10 @@
   "futureBookings": "Upcoming Bookings",
   "appBookings": "App Bookings",
   "offlineBookings": "Offline Bookings",
-  "noBookings": "No Bookings yet"
+  "noBookings": "No Bookings yet",
+  "reSendCode": "Re-send code",
+  "emailConfirmedSuccessfully": "Email confirmed successfully",
+  "confirmationCodeSentSuccessfully": "Confirmation code sent successfully to",
+  "invalidResetCode": "Invalid reset code.",
+  "noOwnerFound": "No owner was found with ID :"
 }

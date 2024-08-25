@@ -1,6 +1,8 @@
 class EndPoints {
   static const String login = '/Owner/Login';
   static const String register = '/Owner/Signup';
+  static const String confirmEmail = '/Owner/ConfirmEmail/';
+  static const String verifyConfirmEmail = '/Owner/VerifyConfirmEmail/';
   static const String verifyResetCode = '/Owner/VerifyResetCode';
   static const String resetPass = '/Owner/ResetPassword';
   static const String changeImageProfile = '/Owner/ChangeDetails';

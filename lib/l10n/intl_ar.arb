@@ -166,5 +166,10 @@
   "futureBookings": "الحجوزات القادمة",
   "appBookings": "حجوزات من خلال التطبيق",
   "offlineBookings": "حجوزات من خارج التطبيق",
-  "noBookings": "لا يوجد حجوزات حتي الان"
+  "noBookings": "لا يوجد حجوزات حتي الان",
+  "reSendCode": "اعادة ارسال الرمز",
+  "emailConfirmedSuccessfully": "تم تأكيد البريد الالكتروني بنجاح",
+  "confirmationCodeSentSuccessfully": "تم ارسال رمز التأكيد بنجاح",
+  "invalidResetCode": "رمز التأكيد غير صحيح",
+  "noOwnerFound": "لم يتم العثور على مالك"
 }

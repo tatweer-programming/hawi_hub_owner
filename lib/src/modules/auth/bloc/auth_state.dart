@@ -64,6 +64,37 @@ class VerifyCodeErrorState extends AuthState {
 
   VerifyCodeErrorState(this.error);
 }
+// verifyEmail
+
+class VerifyConfirmEmailLoadingState extends AuthState {}
+
+class VerifyConfirmEmailSuccessState extends AuthState {
+  final String value;
+
+  VerifyConfirmEmailSuccessState({required this.value});
+}
+
+class VerifyConfirmEmailErrorState extends AuthState {
+  final String error;
+
+  VerifyConfirmEmailErrorState(this.error);
+}
+
+// ConfirmEmail
+
+class ConfirmEmailLoadingState extends AuthState {}
+
+class ConfirmEmailSuccessState extends AuthState {
+  final String value;
+
+  ConfirmEmailSuccessState({required this.value});
+}
+
+class ConfirmEmailErrorState extends AuthState {
+  final String error;
+
+  ConfirmEmailErrorState(this.error);
+}
 
 // get  Profile
 class GetProfileLoadingState extends AuthState {}
@@ -134,6 +165,7 @@ class AcceptConfirmTermsState extends AuthState {
 
   AcceptConfirmTermsState(this.accept);
 }
+
 // accept confirm terms
 class KeepMeLoggedInState extends AuthState {
   final bool keepMeLoggedIn;

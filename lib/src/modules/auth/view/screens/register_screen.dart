@@ -33,9 +33,10 @@ class RegisterScreen extends StatelessWidget {
           visible = state.visible;
         }
         if (state is RegisterSuccessState) {
-          bloc.add(PlaySoundEvent("audios/start.wav"));
+          bloc.add(ConfirmEmailEvent());
+          context.push(Routes.confirmEmail, arguments: {"bloc": bloc});
+        } else if (state is ConfirmEmailSuccessState) {
           defaultToast(msg: handleResponseTranslation(state.value, context));
-          context.pushAndRemove(Routes.home);
         } else if (state is RegisterErrorState) {
           errorToast(msg: handleResponseTranslation(state.error, context));
         }
@@ -47,9 +48,10 @@ class RegisterScreen extends StatelessWidget {
           authOwner = state.authOwner;
           userNameController.text = authOwner!.userName;
           emailController.text = authOwner!.email;
-        }
-        else if (state is SignupWithGoogleErrorState || state is SignupWithFacebookErrorState) {
-          errorToast(msg: handleResponseTranslation("Something went wrong", context));
+        } else if (state is SignupWithGoogleErrorState ||
+            state is SignupWithFacebookErrorState) {
+          errorToast(
+              msg: handleResponseTranslation("Something went wrong", context));
         }
       },
       builder: (context, state) {
@@ -224,8 +226,7 @@ class RegisterScreen extends StatelessWidget {
                                     );
                                   } else if (!acceptTerms) {
                                     errorToast(
-                                        msg:
-                                            S.of(context).shouldAgreeTerns);
+                                        msg: S.of(context).shouldAgreeTerns);
                                   }
                                 },
                                 fontSize: 17.sp,
@@ -259,18 +260,16 @@ Widget _confirmTerms(
                 acceptTerms ? Icons.check_box : Icons.check_box_outline_blank)),
         Expanded(
             child: InkWell(
-              onTap: (){
-                context.push(Routes.termsAndCondition);
-              },
-              child: Padding(
-                padding: EdgeInsetsDirectional.symmetric(
-                  vertical: 1.5.h
-                ),
-                child: Text(
-                          S.of(context).agreeTerms,
-                          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
-                        ),
-              ),
-            ))
+          onTap: () {
+            context.push(Routes.termsAndCondition);
+          },
+          child: Padding(
+            padding: EdgeInsetsDirectional.symmetric(vertical: 1.5.h),
+            child: Text(
+              S.of(context).agreeTerms,
+              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+            ),
+          ),
+        ))
       ],
     );

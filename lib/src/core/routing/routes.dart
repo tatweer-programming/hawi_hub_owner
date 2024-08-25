@@ -24,4 +24,5 @@ class Routes {
   static const String addBooking = "/addBooking";
   static const String placeFeedbacks = "/placeFeedbacks";
   static const String futureBookings = "/futureBooking";
+  static const String confirmEmail = "/confirmEmail";
 }

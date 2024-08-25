@@ -38,6 +38,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             await _repository.registerPlayer(authOwner: event.authOwner);
         result.fold((l) => emit(RegisterErrorState(l)), (r) async {
           emit(RegisterSuccessState(value: r));
+        });
+      } else if (event is ConfirmEmailEvent) {
+        add(StartResendCodeTimerEvent(120));
+        emit(ConfirmEmailLoadingState());
+        var result = await _repository.confirmEmail();
+        result.fold((l) => emit(ConfirmEmailErrorState(l)), (r) async {
+          emit(ConfirmEmailSuccessState(value: r));
+        });
+      } else if (event is VerifyConfirmEmailEvent) {
+        emit(VerifyConfirmEmailLoadingState());
+        var result = await _repository.verifyConfirmEmail(event.code);
+        result.fold((l) => emit(VerifyConfirmEmailErrorState(l)), (r) async {
+          emit(VerifyConfirmEmailSuccessState(value: r));
           await NotificationServices().subscribeToTopic();
         });
       } else if (event is LoginPlayerEvent) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
+import 'package:hawi_hub_owner/src/modules/auth/view/screens/confirm_email_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/get_started_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/profile_screen.dart';
@@ -103,6 +104,11 @@ class AppRouter {
                 ));
       case Routes.futureBookings:
         return MaterialPageRoute(builder: (_) => const FutureBookingsScreen());
+      case Routes.confirmEmail:
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (_) => ConfirmEmailScreen(bloc: arguments['bloc']));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

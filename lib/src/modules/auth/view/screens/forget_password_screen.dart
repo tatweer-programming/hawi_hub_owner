@@ -33,6 +33,7 @@ class ForgetPasswordScreen extends StatelessWidget {
             defaultToast(
                 msg: handleResponseTranslation(state.message, context));
           } else if (state is ResetPasswordErrorState) {
+            bloc.add(ResetCodeTimerEvent());
             errorToast(msg: handleResponseTranslation(state.error, context));
           }
         },
