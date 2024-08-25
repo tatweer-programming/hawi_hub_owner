@@ -194,15 +194,13 @@ Widget _notVerified(AuthBloc bloc) {
                   style: TextStyleManager.getSubTitleStyle(),
                 ),
               ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    bloc.add(OpenPdfEvent());
-                  },
-                  child: Text(
-                    S.of(context).viewRequirements,
-                    style: TextStyleManager.getSubTitleStyle(),
-                  ),
+              TextButton(
+                onPressed: () {
+                  bloc.add(OpenPdfEvent());
+                },
+                child: Text(
+                  S.of(context).viewRequirements,
+                  style: TextStyleManager.getBlackCaptionTextStyle(),
                 ),
               )
             ],

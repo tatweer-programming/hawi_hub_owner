@@ -1780,6 +1780,16 @@ class S {
     );
   }
 
+  /// `View Requirements`
+  String get viewRequirements {
+    return Intl.message(
+      'View Requirements',
+      name: 'viewRequirements',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No owner was found with ID :`
   String get noOwnerFound {
     return Intl.message(
