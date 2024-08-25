@@ -407,7 +407,7 @@ class PlaceRemoteDataSource {
           query: {"id": ConstantsManager.userId, "approvalStatus": true});
       if (response.statusCode == 200) {
         List data = response.data as List;
-        print(data.first['player']['userName']);
+        // print(data.first['player']['userName']);
         bookingRequests =
             (data).map((e) => BookingRequest.fromJson(e)).toList();
       }
@@ -428,7 +428,6 @@ class PlaceRemoteDataSource {
           query: {"id": ConstantsManager.userId});
       if (response.statusCode == 200) {
         List data = response.data as List;
-        print(data);
         bookingRequests =
             (data).map((e) => OfflineBooking.fromJson(e)).toList();
       }

@@ -160,6 +160,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ownerShipIsRequired":
             MessageLookupByLibrary.simpleMessage("Ownership file is required"),
         "ownershipFile": MessageLookupByLibrary.simpleMessage("Ownership file"),
+        "ownershipTypes": MessageLookupByLibrary.simpleMessage(
+            "you should upload ownership or rental contract"),
         "passMustContainLowerCase": MessageLookupByLibrary.simpleMessage(
             "Password must contain at least one lowercase letter"),
         "passMustContainNumber": MessageLookupByLibrary.simpleMessage(

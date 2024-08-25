@@ -67,7 +67,7 @@ class MorePage extends StatelessWidget {
                   ),
                   _settingWidget(
                     onTap: () {
-                      mainCubit.showDialog();
+                      showDialogForLanguage(context, mainCubit);
                     },
                     icon: "assets/images/icons/lang.png",
                     title: S.of(context).language,

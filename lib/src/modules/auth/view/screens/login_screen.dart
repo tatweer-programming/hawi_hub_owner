@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                             mini: true,
                             backgroundColor: ColorManager.secondary,
                             onPressed: () {
-                              mainCubit.showDialog();
+                              showDialogForLanguage(context, mainCubit);
                             },
                             child: Icon(
                               Icons.language,
