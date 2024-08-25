@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
     AuthBloc bloc = AuthBloc.get(context);
     MainCubit mainCubit = MainCubit.get();
     bool visible = false;
-    bool keepMeLoggedIn = false;
+    bool keepMeLoggedIn = true;
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
         body: BlocConsumer<AuthBloc, AuthState>(

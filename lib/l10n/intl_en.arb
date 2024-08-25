@@ -168,10 +168,10 @@
   "offlineBookings": "Offline Bookings",
   "noBookings": "No Bookings yet",
   "ownershipTypes": "you should upload ownership or rental contract",
-  "noBookings": "No Bookings yet",
   "reSendCode": "Re-send code",
   "emailConfirmedSuccessfully": "Email confirmed successfully",
   "confirmationCodeSentSuccessfully": "Confirmation code sent successfully to",
   "invalidResetCode": "Invalid reset code.",
+  "viewRequirements": "View Requirements",
   "noOwnerFound": "No owner was found with ID :"
 }

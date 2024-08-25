@@ -194,11 +194,17 @@ Widget _notVerified(AuthBloc bloc) {
                   style: TextStyleManager.getSubTitleStyle(),
                 ),
               ),
-              IconButton(
+              Expanded(
+                child: TextButton(
                   onPressed: () {
                     bloc.add(OpenPdfEvent());
                   },
-                  icon: const Icon(Icons.picture_as_pdf))
+                  child: Text(
+                    S.of(context).viewRequirements,
+                    style: TextStyleManager.getSubTitleStyle(),
+                  ),
+                ),
+              )
             ],
           ),
           SizedBox(
