@@ -5,6 +5,7 @@ import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
+import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../generated/l10n.dart';
@@ -19,6 +20,7 @@ class ConfirmEmailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController codeController = TextEditingController();
     int timeToResendCode = 0;
+    bloc.add(ConfirmEmailEvent());
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
@@ -34,6 +36,9 @@ class ConfirmEmailScreen extends StatelessWidget {
                     defaultToast(
                         msg: handleResponseTranslation(state.value, context));
                     context.pushAndRemove(Routes.home);
+                    ChatBloc chatBloc = ChatBloc.get(context);
+                    chatBloc.add(GetConnectionEvent());
+                    chatBloc.add(CloseConnectionEvent());
                   } else if (state is VerifyConfirmEmailErrorState) {
                     errorToast(
                         msg: handleResponseTranslation(state.error, context));
@@ -69,8 +74,17 @@ class ConfirmEmailScreen extends StatelessWidget {
                         SizedBox(
                           height: 2.h,
                         ),
-                        timeToResendCode > 0
-                            ? Column(
+                        timeToResendCode <= 0
+                            ? state is ConfirmEmailLoadingState
+                                ? const CircularProgressIndicator()
+                                : defaultButton(
+                                    onPressed: () {
+                                      bloc.add(ConfirmEmailEvent());
+                                    },
+                                    text: S.of(context).reSendCode,
+                                    fontSize: 17.sp,
+                                  )
+                            : Column(
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -116,16 +130,7 @@ class ConfirmEmailScreen extends StatelessWidget {
                                           fontSize: 17.sp,
                                         )
                                 ],
-                              )
-                            : state is VerifyConfirmEmailLoadingState
-                                ? const CircularProgressIndicator()
-                                : defaultButton(
-                                    onPressed: () {
-                                      bloc.add(ConfirmEmailEvent());
-                                    },
-                                    text: S.of(context).reSendCode,
-                                    fontSize: 17.sp,
-                                  )
+                              ),
                       ],
                     ),
                   );

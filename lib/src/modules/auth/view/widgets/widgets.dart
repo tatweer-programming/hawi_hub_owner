@@ -254,7 +254,7 @@ String handleResponseTranslation(String state, BuildContext context) {
   if (state.contains("Confirmation code sent successfully to")) {
     RegExp emailPattern = RegExp(r'\S+@\S+\.\S+');
     var email = emailPattern.firstMatch(state)?.group(0);
-    return S.of(context).emailConfirmedSuccessfully + email!;
+    return S.of(context).confirmationCodeSentSuccessfully + email!;
   }
   if (state == "Invalid reset code.") {
     return S.of(context).invalidResetCode;

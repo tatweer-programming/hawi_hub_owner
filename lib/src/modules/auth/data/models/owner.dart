@@ -12,6 +12,7 @@ class Owner {
   final String? supplierCode;
   final String? profilePictureUrl;
   final double myWallet;
+  final bool emailConfirmed;
   final List<AppFeedBack> feedbacks;
   final List<int> playerReservation;
   File? profilePictureFile;
@@ -24,6 +25,7 @@ class Owner {
     required this.approvalStatus,
     required this.profilePictureUrl,
     required this.playerReservation,
+    required this.emailConfirmed,
     this.profilePictureFile,
     this.nationalIdPicture,
     this.supplierCode,
@@ -35,6 +37,7 @@ class Owner {
   factory Owner.fromJson(Map<String, dynamic> json) {
     return Owner(
       profilePictureUrl: json['profilePictureUrl'],
+      emailConfirmed: json['emailConfirmed'],
       id: json['id'],
       nationalIdPicture: json['proofOfIdentityUrl'] != null
           ? ApiManager.handleImageUrl(json['proofOfIdentityUrl'])

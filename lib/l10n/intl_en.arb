@@ -155,6 +155,7 @@
   "doYouWantToLogout": "Do you want to logout ?",
   "wallet": "Wallet",
   "rates": "Rates",
+  "noChatsFound": "No Chats Found",
   "addFeedback": "Add Feedback",
   "shouldAgreeTerns": "You should agree to terms of service and privacy policy",
   "letsGetPlaying": "Let's get playing!",
@@ -173,5 +174,6 @@
   "confirmationCodeSentSuccessfully": "Confirmation code sent successfully to",
   "invalidResetCode": "Invalid reset code.",
   "viewRequirements": "View Requirements",
+  "verifyEmail": "Verify Email",
   "noOwnerFound": "No owner was found with ID :"
 }

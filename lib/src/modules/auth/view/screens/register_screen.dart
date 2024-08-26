@@ -33,7 +33,6 @@ class RegisterScreen extends StatelessWidget {
           visible = state.visible;
         }
         if (state is RegisterSuccessState) {
-          bloc.add(ConfirmEmailEvent());
           context.push(Routes.confirmEmail, arguments: {"bloc": bloc});
         } else if (state is ConfirmEmailSuccessState) {
           defaultToast(msg: handleResponseTranslation(state.value, context));

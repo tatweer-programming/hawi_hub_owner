@@ -153,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Don’t have an account ?"),
         "noAlerts": MessageLookupByLibrary.simpleMessage("No Alerts"),
         "noBookings": MessageLookupByLibrary.simpleMessage("No Bookings yet"),
+        "noChatsFound": MessageLookupByLibrary.simpleMessage("No Chats Found"),
         "noComment": MessageLookupByLibrary.simpleMessage("No comment"),
         "noDetails": MessageLookupByLibrary.simpleMessage("No details"),
         "noFeedbacks": MessageLookupByLibrary.simpleMessage("No Feedbacks yet"),
@@ -264,6 +265,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage(" Username"),
         "usernameAlreadyExist":
             MessageLookupByLibrary.simpleMessage("Username is already exists."),
+        "verifyEmail": MessageLookupByLibrary.simpleMessage("Verify Email"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),
         "viewFeedbacks": MessageLookupByLibrary.simpleMessage("View Feedbacks"),

@@ -25,7 +25,6 @@ Future<void> main() async {
   timeago.setLocaleMessages("ar", timeago.ArMessages());
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-
   DioHelper.init();
   ConstantsManager.userId = await CacheHelper.getData(key: 'userId');
   ConstantsManager.isFirstTime = await CacheHelper.getData(key: 'firstTime');

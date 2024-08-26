@@ -21,8 +21,6 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  static AuthBloc instance = AuthBloc(AuthInitial());
-
   static AuthBloc get(BuildContext context) =>
       BlocProvider.of<AuthBloc>(context);
 
@@ -206,6 +204,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(ChangePasswordVisibilityState(true));
         }
       } else if (event is StartResendCodeTimerEvent) {
+        timeToResendCodeTimer?.cancel();
         _startResendCodeTimer(event.timeToResendCode);
       } else if (event is ResetCodeTimerEvent) {
         timeToResendCodeTimer?.cancel();

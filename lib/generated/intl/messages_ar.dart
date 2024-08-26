@@ -154,6 +154,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noAlerts": MessageLookupByLibrary.simpleMessage("لا يوجد تنبيهات"),
         "noBookings":
             MessageLookupByLibrary.simpleMessage("لا يوجد حجوزات حتي الان"),
+        "noChatsFound":
+            MessageLookupByLibrary.simpleMessage("لا يوجد لديك رسائل"),
         "noComment": MessageLookupByLibrary.simpleMessage("لا تعليق"),
         "noDetails": MessageLookupByLibrary.simpleMessage("لا يوجد تفاصيل"),
         "noFeedbacks": MessageLookupByLibrary.simpleMessage("لا يوجد تعليقات"),
@@ -266,6 +268,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage(" الإسم"),
         "usernameAlreadyExist":
             MessageLookupByLibrary.simpleMessage("الأسم موجود مسبقا."),
+        "verifyEmail":
+            MessageLookupByLibrary.simpleMessage("تحقق من بريدك الالكتروني"),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewFeedbacks": MessageLookupByLibrary.simpleMessage("عرض التعليقات"),
