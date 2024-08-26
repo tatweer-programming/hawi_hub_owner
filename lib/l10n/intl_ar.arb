@@ -172,5 +172,6 @@
   "confirmationCodeSentSuccessfully": "تم ارسال رمز التأكيد بنجاح",
   "invalidResetCode": "رمز التأكيد غير صحيح",
   "noOwnerFound": "لم يتم العثور على مالك",
+  "viewRequirements": "عرض المتطلبات",
   "ownershipTypes": "يرجى رفع ملف إثبات الملكية أو عقد إيجار"
 }

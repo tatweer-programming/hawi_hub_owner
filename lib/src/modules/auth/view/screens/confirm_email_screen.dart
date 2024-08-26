@@ -96,6 +96,9 @@ class ConfirmEmailScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 1.h,
+                                  ),
                                   state is VerifyConfirmEmailLoadingState
                                       ? const CircularProgressIndicator()
                                       : defaultButton(
