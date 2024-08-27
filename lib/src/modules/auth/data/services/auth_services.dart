@@ -57,7 +57,7 @@ class AuthService {
       );
       if (response.statusCode == 200) {
         await CacheHelper.saveData(
-            key: 'userId', value: ConstantsManager.userId.toString());
+            key: 'userId', value: ConstantsManager.userId);
         return Right(response.data['message']);
       }
       return Left(response.data.toString());

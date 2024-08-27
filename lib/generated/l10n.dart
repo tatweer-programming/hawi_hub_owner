@@ -1610,6 +1610,16 @@ class S {
     );
   }
 
+  /// `No Chats Found`
+  String get noChatsFound {
+    return Intl.message(
+      'No Chats Found',
+      name: 'noChatsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add Feedback`
   String get addFeedback {
     return Intl.message(
@@ -1785,6 +1795,16 @@ class S {
     return Intl.message(
       'View Requirements',
       name: 'viewRequirements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify Email`
+  String get verifyEmail {
+    return Intl.message(
+      'Verify Email',
+      name: 'verifyEmail',
       desc: '',
       args: [],
     );

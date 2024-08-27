@@ -13,6 +13,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/styles_manager.dart';
 import '../../../auth/view/widgets/widgets.dart';
+import '../../data/models/message_details.dart';
 
 class ChatScreen extends StatelessWidget {
   final ChatBloc chatBloc;
@@ -29,12 +30,14 @@ class ChatScreen extends StatelessWidget {
     TextEditingController messageController = TextEditingController();
     final ScrollController scrollController = ScrollController();
     chatBloc.add(GetConnectionEvent());
+    Message? message;
     String? imagePath;
-    List<Message> messages = [];
+    List<MessageDetails> messages = [];
     return BlocConsumer<ChatBloc, ChatState>(
       listener: (context, state) {
         if (state is GetChatMessagesSuccessState) {
-          messages = state.messages;
+          message = state.messages;
+          messages = message!.message;
           chatBloc.add(StreamMessagesEvent());
           if (messages.isNotEmpty) {
             chatBloc.add(
@@ -53,8 +56,8 @@ class ChatScreen extends StatelessWidget {
         }
         if (state is SendMessageSuccessState) {
           if (state.message.attachmentUrl != null) {
-          state.message.attachmentUrl =
-              ApiManager.handleImageUrl(state.message.attachmentUrl!);
+            state.message.attachmentUrl =
+                ApiManager.handleImageUrl(state.message.attachmentUrl!);
           }
           messages.add(state.message);
           chatBloc
@@ -66,7 +69,7 @@ class ChatScreen extends StatelessWidget {
       builder: (context, state) {
         return PopScope(
           canPop: true,
-          onPopInvoked: (didPop) async {
+          onPopInvokedWithResult: (didPop, res) async {
             chatBloc.add(CloseConnectionEvent());
           },
           child: Scaffold(
@@ -123,30 +126,30 @@ class ChatScreen extends StatelessWidget {
                   _messageInput(imagePath, () {
                     chatBloc.add(RemovePickedImageEvent());
                   }),
-                _sendButton(
-                  (String? value) async {
-                    if (value == 'image') {
-                      chatBloc.add(PickImageEvent());
-                    }
-                  },
-                  () {
-                    if (messageController.text.isNotEmpty ||
-                        imagePath != null) {
-                      chatBloc.add(SendMessageEvent(
-                        message: Message(
-                          message: messageController.text,
-                          conversationId: chat!.conversationId,
-                          attachmentUrl: imagePath,
-                          isOwner: false,
-                          timeStamp: DateTime.now()
-                              .add(const Duration(hours: -3))
-                              .toString(),
-                        ),
-                      ));
-                    }
-                  },
-                  messageController,
-                ),
+                if (message != null &&
+                    message!.lastTimeToChat.compareTo(DateTime.now()) >= 0)
+                  _sendButton(
+                    (String? value) async {
+                      if (value == 'image') {
+                        chatBloc.add(PickImageEvent());
+                      }
+                    },
+                    () {
+                      if (messageController.text.isNotEmpty ||
+                          imagePath != null) {
+                        chatBloc.add(SendMessageEvent(
+                          message: MessageDetails(
+                            message: messageController.text,
+                            conversationId: chat!.conversationId,
+                            attachmentUrl: imagePath,
+                            isOwner: false,
+                            timeStamp: DateTime.now().toString(),
+                          ),
+                        ));
+                      }
+                    },
+                    messageController,
+                  ),
               ],
             ),
           ),
@@ -233,7 +236,7 @@ Widget _appBar({
   );
 }
 
-Widget _messageWidget({required Message message, required bool isSender}) {
+Widget _messageWidget({required MessageDetails message, required bool isSender}) {
   if (message.message != null) {
     return _textWidget(isSender: isSender, message: message.message!);
   } else if (message.attachmentUrl != null) {

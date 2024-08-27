@@ -10,6 +10,7 @@ import 'package:hawi_hub_owner/src/modules/chat/view/components.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chat_screen.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../generated/l10n.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
 
@@ -20,49 +21,65 @@ class ChatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ChatBloc chatBloc = ChatBloc.get(context)..add(GetAllChatsEvent());
     List<Chat> chats = [];
-    return BlocConsumer<ChatBloc, ChatState>(
-      listener: (context, state) {
-        if (state is GetAllChatsSuccessState) {
-          chats = state.chats;
-        }
+    return RefreshIndicator(
+      onRefresh: () async {
+        chatBloc.add(GetAllChatsEvent());
       },
-      builder: (context, state) {
-        return RefreshIndicator(
-          onRefresh: () async {
-            chatBloc.add(GetAllChatsEvent());
-          },
-          child: Scaffold(
-            body: Column(
-              children: [
-                _appBar(context),
-                if (chats.isNotEmpty)
-                  Expanded(
-                    child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => _chatWidget(
-                              lastMessage: chats[index].lastMessage,
-                              onTap: () {
-                                context.pushWithTransition(ChatScreen(
-                                  chatBloc: chatBloc,
-                                  chat: chats[index],
-                                ));
-                                chatBloc.add(GetChatMessagesEvent(
-                                  conversationId: chats[index].conversationId,
-                                  index: index,
-                                ));
-                              },
-                            ),
-                        itemCount: chats.length),
-                  ),
-                SizedBox(
-                  height: 1.h,
-                ),
-              ],
+      child: Scaffold(
+        body: Column(
+          children: [
+            _appBar(context),
+            Expanded(
+              child: BlocConsumer<ChatBloc, ChatState>(
+                listener: (context, state) {
+                  if (state is GetAllChatsSuccessState) {
+                    chats = state.chats;
+                  }
+                },
+                builder: (context, state) {
+                  if (state is GetAllChatsSuccessState || chats.isNotEmpty) {
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, index) => _chatWidget(
+                                    lastMessage: chats[index].lastMessage,
+                                    onTap: () {
+                                      context.pushWithTransition(ChatScreen(
+                                        chatBloc: chatBloc,
+                                        chat: chats[index],
+                                      ));
+                                      chatBloc.add(GetChatMessagesEvent(
+                                        conversationId:
+                                            chats[index].conversationId,
+                                        index: index,
+                                      ));
+                                    },
+                                  ),
+                              itemCount: chats.length),
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                      ],
+                    );
+                  } else if (state is GetAllChatsLoadingState) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is GetAllChatsErrorState) {
+                    return Center(child: Text(S.of(context).somethingWentWrong,style: TextStyleManager.getSubTitleBoldStyle(),));
+                  } else {
+                    return Center(child: Text(S.of(context).noChatsFound,style: TextStyleManager.getSubTitleBoldStyle()));
+                  }
+                },
+              ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 }

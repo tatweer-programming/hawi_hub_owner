@@ -5,7 +5,7 @@ abstract class ChatEvent {
 }
 
 class SendMessageEvent extends ChatEvent {
-  final Message message;
+  final MessageDetails message;
 
   const SendMessageEvent({required this.message});
 }

@@ -5,6 +5,8 @@ import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/services/chat_service.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../data/models/message_details.dart';
+
 part 'chat_state.dart';
 
 part 'chat_event.dart';
@@ -30,7 +32,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         }
       } else if (event is RemovePickedImageEvent) {
         emit(RemovePickedImageState());
-      }  else if (event is GetConnectionEvent) {
+      } else if (event is GetConnectionEvent) {
         var response = await _service.connection();
         response.fold((l) {}, (r) {
           emit(GetConnectionSuccessState());
@@ -69,7 +71,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         });
       } else if (event is StreamMessagesEvent) {
         var stream = _service.streamMessage();
-        await for (Message message in stream) {
+        await for (MessageDetails message in stream) {
           emit(StreamMessagesSuccessState(message));
         }
       }

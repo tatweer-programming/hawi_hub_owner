@@ -16,6 +16,7 @@ import 'package:hawi_hub_owner/src/modules/auth/view/widgets/auth_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../core/routing/routes.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../widgets/people_rate_builder.dart';
 import '../widgets/widgets.dart';
@@ -41,8 +42,7 @@ class ProfileScreen extends StatelessWidget {
       } else if (state is UploadNationalIdErrorState) {
         context.pop();
         errorToast(msg: handleResponseTranslation(state.error, context));
-      }
-      if (state is UploadNationalIdLoadingState) {
+      } else if (state is UploadNationalIdLoadingState) {
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -59,12 +59,7 @@ class ProfileScreen extends StatelessWidget {
         );
       }
     }, builder: (context, state) {
-       if (owner == null) {
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        );
-      }
-      else {
+      if (owner != null) {
         return Scaffold(
           body: SingleChildScrollView(
             child: Column(
@@ -98,7 +93,7 @@ class ProfileScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      _emailConfirmed(
+                      _accountVerified(
                           bloc: bloc,
                           id: id,
                           owner: owner!,
@@ -111,7 +106,18 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         );
+      } else if (state is GetProfileErrorState) {
+        return Scaffold(
+          body: Center(
+              child: Text(
+            S.of(context).somethingWentWrong,
+            style: TextStyleManager.getTitleBoldStyle(),
+          )),
+        );
       }
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
     });
   }
 }
@@ -139,15 +145,16 @@ Widget _seeAll(VoidCallback onTap, BuildContext context) {
   );
 }
 
-
-Widget _emailConfirmed({
+Widget _accountVerified({
   required BuildContext context,
   required AuthState state,
   required int id,
   required Owner owner,
   required AuthBloc bloc,
 }) {
-  if (owner.nationalIdPicture == null && owner.approvalStatus == 0) {
+  if (!owner.emailConfirmed) {
+    return _emailNotConfirmed(context, bloc);
+  } else if (owner.nationalIdPicture == null && owner.approvalStatus == 0) {
     return _notVerified(bloc);
   } else if (owner.approvalStatus == 0) {
     return _pending(context, S.of(context).identificationPending);
@@ -167,8 +174,7 @@ Widget _notVerified(AuthBloc bloc) {
         if (state.imagePicked != null) {
           imagePicked = state.imagePicked;
         }
-      }
-      else if (state is DeleteImageState) {
+      } else if (state is DeleteImageState) {
         imagePicked = null;
       }
       print("image is $imagePicked");
@@ -275,6 +281,25 @@ Widget _pending(BuildContext context, String text) {
         text,
         style: TextStyleManager.getSecondarySubTitleStyle(),
       ),
+    ],
+  );
+}
+
+Widget _emailNotConfirmed(
+  BuildContext context,
+  AuthBloc bloc,
+) {
+  return Column(
+    children: [
+      SizedBox(
+        height: 10.h,
+      ),
+      defaultButton(
+          onPressed: () {
+            context.push(Routes.confirmEmail, arguments: {'bloc': bloc});
+          },
+          text: S.of(context).verifyEmail,
+          fontSize: 17.sp),
     ],
   );
 }
