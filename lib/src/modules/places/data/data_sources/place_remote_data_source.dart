@@ -163,8 +163,7 @@ class PlaceRemoteDataSource {
           path: EndPoints.acceptBookingRequest + bookingRequest.id.toString(),
         ),
         _createChat(
-            lastTime: bookingRequest.startTime,
-            playerId: bookingRequest.userId),
+            lastTime: bookingRequest.endTime, playerId: bookingRequest.userId),
         PaymentService().transferBalance(
           amount: bookingRequest.price.toDouble(),
         ),
@@ -323,7 +322,7 @@ class PlaceRemoteDataSource {
         bookings =
             (response.data as List).map((e) => Booking.fromJson(e)).toList();
       }
-      startTimer(2.1);
+
       return Right(bookings);
     } on Exception catch (e) {
       return Left(e);
@@ -417,14 +416,4 @@ class PlaceRemoteDataSource {
       return Left(e);
     }
   }
-}
-
-Future<bool> startTimer(double seconds) async {
-  int secondsInt = seconds.truncate();
-  int milliseconds = (seconds - secondsInt).toInt() * 1000;
-  print("Timer started");
-  await Future.delayed(
-      Duration(seconds: secondsInt, milliseconds: milliseconds));
-  print("Timer ended");
-  return true;
 }
