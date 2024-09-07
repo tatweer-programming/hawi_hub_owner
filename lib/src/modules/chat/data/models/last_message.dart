@@ -20,12 +20,13 @@ class LastMessage extends Equatable {
   });
 
   factory LastMessage.fromJson(Map<String, dynamic> json) {
+    print(json["timestamp"]);
     return LastMessage(
       messageId: json["messageId"],
       messageContent: json["messageContent"],
       messageAttachmentUrl: json["messageAttachmentUrl"],
       playerToOwner: json["playerToOwner"],
-      timestamp: DateTime.parse(json["timestamp"]??DateTime.now().toString()),
+      timestamp: DateTime.parse(json["timestamp"]??DateTime.now().toString()).toLocal().add(Duration(hours: 3)),
       player: Player.fromJson(json["player"]),
     );
   }
