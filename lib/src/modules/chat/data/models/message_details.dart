@@ -9,7 +9,7 @@ class MessageDetails extends Equatable {
   final bool? isOwner;
   String? message;
   String? attachmentUrl;
-  final String? timeStamp;
+  final DateTime? timeStamp;
   String? voiceNoteUrl;
 
   MessageDetails({
@@ -28,7 +28,7 @@ class MessageDetails extends Equatable {
       attachmentUrl: json["messageAttachmentUrl"] != null
           ? ApiManager.handleImageUrl(json["messageAttachmentUrl"])
           : null,
-      timeStamp: json["timestamp"],
+      timeStamp: DateTime.parse(json["timestamp"]??DateTime.now().toString()),
       isOwner: json["playerToOwner"],
     );
   }

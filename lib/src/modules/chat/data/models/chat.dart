@@ -19,7 +19,9 @@ class Chat extends Equatable {
       lastMessage: LastMessage.fromJson(json["lastMessage"]),
     );
   }
-
+  static void sortChatsByDate(List<Chat> chats) {
+    chats.sort((a, b) => b.lastMessage.timestamp!.compareTo(a.lastMessage.timestamp!));
+  }
   @override
   List<Object?> get props => [];
 }

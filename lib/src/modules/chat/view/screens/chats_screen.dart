@@ -6,8 +6,8 @@ import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/last_message.dart';
-import 'package:hawi_hub_owner/src/modules/chat/view/components.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chat_screen.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../generated/l10n.dart';
@@ -34,6 +34,7 @@ class ChatsScreen extends StatelessWidget {
                 listener: (context, state) {
                   if (state is GetAllChatsSuccessState) {
                     chats = state.chats;
+                    Chat.sortChatsByDate(chats);
                   }
                 },
                 builder: (context, state) {
@@ -122,7 +123,8 @@ Widget _appBar(
 
 Widget _chatWidget(
     {required LastMessage lastMessage, required VoidCallback onTap}) {
-  String formattedDate = utcToLocal(lastMessage.timestamp) ?? "";
+  String formattedDate = DateFormat('hh:mm a')
+      .format(lastMessage.timestamp!) ?? "";
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: 7.w,

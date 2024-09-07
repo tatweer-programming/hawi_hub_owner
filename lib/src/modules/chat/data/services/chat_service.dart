@@ -90,7 +90,7 @@ class ChatService {
       StreamController<MessageDetails> messageStreamController =
           StreamController<MessageDetails>.broadcast();
       socket!.listen((data) {
-        print("data  $data");
+        print("data from owner  $data");
         if (data != '{"type":6}' && data != '{}') {
           String message =
               data.toString().replaceAll(RegExp(r'[\x00-\x1F]+'), '');
@@ -99,7 +99,7 @@ class ChatService {
             message: jsonData["arguments"][0]["playerMessage"],
             attachmentUrl: jsonData["arguments"][0]["playerAttachmentUrl"],
             isOwner: true,
-            timeStamp: DateTime.now().toString(),
+            timeStamp: DateTime.now(),
           ));
         }
       });
@@ -144,6 +144,7 @@ class ChatService {
   }
 
   Future<void> _startConnection() async {
+    await closeConnection();
     const String messageWithTrailingChars = '{"protocol":"json","version":1}';
     socket = await WebSocket.connect(
         "${ApiManager.webSocket}?id=${ConstantsManager.connectionToken!}");

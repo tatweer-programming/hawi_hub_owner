@@ -36,6 +36,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         var response = await _service.connection();
         response.fold((l) {}, (r) {
           emit(GetConnectionSuccessState());
+          add(StreamMessagesEvent());
         });
       }else if (event is CloseConnectionEvent) {
         await _service.closeConnection();
@@ -44,6 +45,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(GetAllChatsLoadingState());
         var response = await _service.getAllChats();
         response.fold((l) {
+          print(l);
           emit(GetAllChatsErrorState(l));
         }, (chats) {
           emit(GetAllChatsSuccessState(chats));

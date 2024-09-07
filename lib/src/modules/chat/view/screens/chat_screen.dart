@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
@@ -8,9 +7,8 @@ import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/modules/chat/bloc/chat_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/data/models/message.dart';
-import 'package:hawi_hub_owner/src/modules/chat/view/components.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../core/utils/styles_manager.dart';
 import '../../../auth/view/widgets/widgets.dart';
 import '../../data/models/message_details.dart';
@@ -38,13 +36,13 @@ class ChatScreen extends StatelessWidget {
         if (state is GetChatMessagesSuccessState) {
           message = state.messages;
           messages = message!.message;
-          chatBloc.add(StreamMessagesEvent());
           if (messages.isNotEmpty) {
             chatBloc.add(
                 ScrollingDownEvent(listScrollController: scrollController));
           }
         }
         if (state is StreamMessagesSuccessState) {
+          print("object");
           messages.add(state.streamMessage);
           chatBloc
               .add(ScrollingDownEvent(listScrollController: scrollController));
@@ -90,8 +88,8 @@ class ChatScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     String formattedDate = '';
                     if (messages[index].timeStamp != null) {
-                      formattedDate =
-                          utcToLocal(messages[index].timeStamp) ?? "";
+                      formattedDate = DateFormat('hh:mm a')
+                          .format(messages[index].timeStamp!);
                     }
                     bool? isOwner = messages[index].isOwner;
                     return Padding(
@@ -127,7 +125,7 @@ class ChatScreen extends StatelessWidget {
                     chatBloc.add(RemovePickedImageEvent());
                   }),
                 if (message != null &&
-                    message!.lastTimeToChat.compareTo(DateTime.now()) >= 0)
+                    message!.lastTimeToChat.compareTo(DateTime.now().add(const Duration(hours: 1))) >= 0)
                   _sendButton(
                     (String? value) async {
                       if (value == 'image') {
@@ -143,7 +141,7 @@ class ChatScreen extends StatelessWidget {
                             conversationId: chat!.conversationId,
                             attachmentUrl: imagePath,
                             isOwner: false,
-                            timeStamp: DateTime.now().toString(),
+                            timeStamp: DateTime.now(),
                           ),
                         ));
                       }
@@ -236,7 +234,8 @@ Widget _appBar({
   );
 }
 
-Widget _messageWidget({required MessageDetails message, required bool isSender}) {
+Widget _messageWidget(
+    {required MessageDetails message, required bool isSender}) {
   if (message.message != null) {
     return _textWidget(isSender: isSender, message: message.message!);
   } else if (message.attachmentUrl != null) {
