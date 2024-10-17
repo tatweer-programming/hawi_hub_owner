@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 
 class PlaceCreationForm {
@@ -11,7 +12,6 @@ class PlaceCreationForm {
   int sportId;
   double price;
 
-  ///
   int ownerId;
   int? minimumHours;
 
@@ -23,26 +23,32 @@ class PlaceCreationForm {
   File ownershipFile;
   String? ownershipUrl;
   int cityId;
+  Gender gender;
+  bool isShared;
+  double deposit;
 
   void setAttachments(List<String> images, String ownershipUrl) {
     this.images = images;
     this.ownershipUrl = ownershipUrl;
   }
 
-  PlaceCreationForm({
-    required this.name,
-    required this.address,
-    required this.workingHours,
-    this.location,
-    this.description,
-    required this.sportId,
-    required this.price,
-    required this.ownerId,
-    this.minimumHours,
-    required this.imageFiles,
-    required this.ownershipFile,
-    required this.cityId,
-  });
+  PlaceCreationForm(
+      {required this.name,
+      required this.address,
+      required this.workingHours,
+      this.location,
+      this.description,
+      required this.sportId,
+      required this.price,
+      required this.ownerId,
+      this.minimumHours,
+      required this.imageFiles,
+      required this.ownershipFile,
+      required this.cityId,
+      this.gender = Gender.both,
+      this.isShared = true,
+      this.deposit = 1});
+
   Map<String, dynamic> toJson() {
     return {
       "cityId": cityId,
@@ -57,6 +63,9 @@ class PlaceCreationForm {
       "minHoursReservation": minimumHours,
       "proofOfOwnershipUrl": ownershipUrl,
       "imagesUrl": images,
+      "gender": gender.value,
+      "isShared": isShared,
+      "deposit": deposit
     };
   }
 }

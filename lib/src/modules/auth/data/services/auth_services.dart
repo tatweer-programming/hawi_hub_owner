@@ -58,7 +58,7 @@ class AuthService {
       if (response.statusCode == 200) {
         await CacheHelper.saveData(
             key: 'userId', value: ConstantsManager.userId);
-        return Right(response.data['message']);
+        return Right(response.data['message'] ?? "");
       }
       return Left(response.data.toString());
     } on DioException catch (e) {
@@ -213,7 +213,6 @@ class AuthService {
     }
   }
 
-  /// TODO
   Future<String> changeProfileImage(File newProfileImage) async {
     try {
       Response response = await DioHelper.putDataFormData(

@@ -82,6 +82,8 @@ dependencies:
   geolocator:
   open_street_map_search_and_pick:
   maps_launcher: ^2.2.1
+  expandable_text: ^2.3.0
+  skeletonizer: ^1.4.2
   
 dev_dependencies:
   analyzer:  # or another stable version

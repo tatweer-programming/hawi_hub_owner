@@ -7,6 +7,7 @@ import 'package:hawi_hub_owner/src/modules/auth/view/screens/login_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/profile_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/screens/questions_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/screens/terms_conditions_screen.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/screens/view_image_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/add_booking_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/add_working_hours_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/create_place_screen.dart';
@@ -109,6 +110,14 @@ class AppRouter {
             settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
             builder: (_) => ConfirmEmailScreen(bloc: arguments['bloc']));
+      case Routes.viewImages:
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (_) => FullScreenImageGallery(
+                  imageUrls: arguments['imageUrls'],
+                  initialIndex: arguments['index'],
+                ));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

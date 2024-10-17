@@ -11,6 +11,7 @@ import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/widgets/banners.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/connectivity.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
@@ -42,114 +43,15 @@ class HomePage extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(
-              height: 33.h,
-              opacity: .15,
-              backgroundImage: "assets/images/app_bar_backgrounds/1.webp",
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      context.pushWithTransition(const ChatsScreen());
-                    },
-                    icon: const ImageIcon(
-                      AssetImage("assets/images/icons/chat.png"),
-                      color: ColorManager.golden,
-                    )),
-                IconButton(
-                    onPressed: () {
-                      context.push(Routes.futureBookings);
-                    },
-                    icon: Icon(
-                      Icons.calendar_month,
-                      color: ColorManager.golden,
-                    )),
-                IconButton(
-                    onPressed: () {
-                      context.push(Routes.notifications);
-                    },
-                    icon: const ImageIcon(
-                      AssetImage("assets/images/icons/notification.webp"),
-                      color: ColorManager.golden,
-                    )),
-                navToProfile(context: context),
-              ],
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 5.w,
-                ),
-                child: SizedBox(
-                  height: 7.h,
-                  child: Text(
-                    S.of(context).home,
-                    style: TextStyleManager.getAppBarTextStyle(),
-                  ),
-                ),
-              ),
-            ),
+            const DefaultAppBar(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
               child: ConnectionWidget(
                   onRetry: retryConnecting,
                   child: Column(children: [
+                    const CustomCarousel(),
                     SizedBox(
-                      height: 20.h,
-                      width: 90.w,
-                      child: BlocConsumer<MainCubit, MainState>(
-                        listener: (context, state) {
-                          if (state is MainError) {
-                            errorToast(
-                                msg: ExceptionManager(state.exception)
-                                    .translatedMessage());
-                          }
-                        },
-                        builder: (context, state) {
-                          return BlocBuilder<MainCubit, MainState>(
-                            bloc: mainCubit,
-                            builder: (context, state) {
-                              return CarouselSlider(
-                                options: CarouselOptions(
-                                  enableInfiniteScroll: false,
-                                  reverse: false,
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  autoPlay: true,
-                                  pauseAutoPlayInFiniteScroll: true,
-                                  pauseAutoPlayOnTouch: true,
-                                  // aspectRatio: 90.w / 30.h,
-                                  viewportFraction: 0.87,
-                                  padEnds: false,
-                                  pauseAutoPlayOnManualNavigate: true,
-                                ),
-                                items: mainCubit.bannerList.isEmpty
-                                    ? [const BannersShimmer()]
-                                    : mainCubit.bannerList.map((i) {
-                                        return Builder(
-                                          builder: (BuildContext context) {
-                                            return Container(
-                                              width: 88.w,
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 5.0),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  color: ColorManager
-                                                      .shimmerBaseColor,
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: NetworkImage(i),
-                                                  )),
-                                            );
-                                          },
-                                        );
-                                      }).toList(),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 6.h,
+                      height: 2.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -246,7 +148,7 @@ class HomePage extends StatelessWidget {
                       height: 2.h,
                     ),
                     SizedBox(
-                      height: 27.h,
+                      height: 45.h,
                       child: BlocBuilder<PlaceCubit, PlaceState>(
                           bloc: placeCubit,
                           builder: (context, state) {

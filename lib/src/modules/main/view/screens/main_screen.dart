@@ -36,7 +36,7 @@ class MainScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               child: const Icon(Icons.add_home_outlined),
               onPressed: () {
-                if (ConstantsManager.userId == null) {
+                if (ConstantsManager.appUser == null) {
                   errorToast(msg: S.of(context).loginFirst);
                 } else {
                   if (ConstantsManager.appUser!.approvalStatus == 0) {

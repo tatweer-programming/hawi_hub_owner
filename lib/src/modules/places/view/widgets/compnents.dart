@@ -138,94 +138,78 @@ class PlaceItem extends StatelessWidget {
       onTap: () {
         context.push(Routes.place, arguments: {"id": place.id});
       },
-      child: Container(
-        padding: EdgeInsets.all(10.sp),
-        width: 90.w,
-        height: 27.h,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.sp), border: Border.all()),
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 15.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.sp),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                ApiManager.handleImageUrl(place.images.first),
-                                headers: {
-                                  'Authorization': ApiManager.authToken
-                                }),
-                          )),
-                    ),
-                    Expanded(
-                        child: Row(children: [
-                      Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      place.name,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyleManager
-                                          .getSubTitleBoldStyle(),
-                                    ),
-                                  ),
-                                  Text(S.of(context).viewDetails,
-                                      style: TextStyleManager
-                                          .getGoldenRegularStyle()),
-                                  const Icon(
-                                    Icons.arrow_forward,
-                                    color: ColorManager.golden,
-                                  )
-                                ],
-                              ),
-                              Expanded(
-                                child: Text(
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  place.address,
-                                  style: TextStyleManager.getCaptionStyle(),
-                                ),
-                              ),
-                            ]),
-                      ),
-                    ]))
-                  ]),
-            ),
-            if (place.approvalStatus == 0)
-              Align(
-                alignment: AlignmentDirectional.topStart,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: 40.h,
+        width: 70.w,
+        child: Card(
+          color: ColorManager.white,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: ColorManager.grey1),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Hero(
+                  tag: place.id,
+                  transitionOnUserGestures: true,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: ColorManager.golden,
-                    ),
-                    height: 3.h,
-                    constraints: BoxConstraints(minWidth: 20.w, maxWidth: 40.w),
-                    child: Center(
-                      child: Text(S.of(context).underReview,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyleManager.getBlackContainerTextStyle()),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                      image: DecorationImage(
+                        onError: (__, _) =>
+                            ColoredBox(color: ColorManager.grey1),
+                        image: NetworkImage(
+                            ApiManager.handleImageUrl(place.images.first)),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-              )
-          ],
+              ),
+              SizedBox(
+                height: .5.h,
+              ),
+              Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.all(2.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SubTitle(
+                          place.name,
+                        ),
+                        SizedBox(
+                          height: .5.h,
+                        ),
+                        Expanded(
+                          flex: 4,
+                          child: Text(
+                            place.address,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyleManager.getCaptionStyle(),
+                          ),
+                        ),
+                        SizedBox(
+                          height: .5.h,
+                        ),
+                        Text(
+                          "${place.price} ${S.of(context).sar}/hour",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: TextStyleManager.getCaptionStyle(),
+                        )
+                      ],
+                    ),
+                  ))
+            ],
+          ),
         ),
       ),
     );

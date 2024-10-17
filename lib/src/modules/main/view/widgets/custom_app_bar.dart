@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
+import 'package:hawi_hub_owner/src/core/routing/routes.dart';
+import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
+import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
+import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/color_manager.dart';
@@ -11,6 +17,7 @@ class CustomAppBar extends StatelessWidget {
   final double? opacity;
   final BlendMode? blendMode;
   final Color? color;
+
   const CustomAppBar({
     super.key,
     required this.child,
@@ -110,5 +117,57 @@ class CustomAppBarClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return true;
+  }
+}
+
+class DefaultAppBar extends StatelessWidget {
+  const DefaultAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final MainCubit mainCubit = MainCubit.get();
+    return SafeArea(
+      child: Row(
+        children: [
+          IconButton(
+              onPressed: () {
+                context.pushWithTransition(const ChatsScreen());
+              },
+              icon: const ImageIcon(
+                AssetImage("assets/images/icons/chat.png"),
+                color: ColorManager.golden,
+              )),
+          InkWell(
+            radius: 360,
+            onTap: () {
+              context.push(
+                Routes.profile,
+                arguments: {
+                  'id': ConstantsManager.userId,
+                  "userType": "Player"
+                },
+              );
+            },
+            child: CircleAvatar(
+              backgroundColor: ColorManager.grey3,
+              backgroundImage: ConstantsManager.appUser != null &&
+                      ConstantsManager.appUser!.profilePictureUrl != null
+                  ? NetworkImage(ConstantsManager.appUser!.profilePictureUrl!)
+                  : const AssetImage("assets/images/icons/user.png")
+                      as ImageProvider<Object>,
+            ),
+          ),
+          IconButton(
+              onPressed: () {
+                context.push(Routes.notifications);
+              },
+              icon: const ImageIcon(
+                AssetImage("assets/images/icons/notification.webp"),
+                color: ColorManager.golden,
+              )),
+          const Spacer(),
+        ],
+      ),
+    );
   }
 }

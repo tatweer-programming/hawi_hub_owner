@@ -11,6 +11,7 @@ import 'package:hawi_hub_owner/src/modules/main/view/widgets/pages/home_page.dar
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/pages/more_page.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/pages/all_requests_page.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/pages/places_page.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/pages/upcoming_reservations.dart';
 
 part 'main_state.dart';
 
@@ -25,6 +26,7 @@ class MainCubit extends Cubit<MainState> {
     const HomePage(),
     const AllPlacesPage(),
     const AllRequestsPage(),
+    UpcomingReservationsPage(),
     const MorePage(),
   ];
   int currentIndex = 0;

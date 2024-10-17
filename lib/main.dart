@@ -89,4 +89,17 @@ class MyApp extends StatelessWidget {
         }));
   }
 }
-//
+
+// Todo: edit app UI  //
+// Todo: dashboard permissions //
+// add admin, delete admin, edit admin , add user, delete reservation,
+
+// TODO: requirements files
+// TODO: contact between admin and owner
+// TODO: add user gender **
+// TODO: refund policy
+// TODO: add feedback between players
+// TODO: deposit
+// TODO: Leave game
+// TODO: dashboard reports
+// TODO: admin permissions

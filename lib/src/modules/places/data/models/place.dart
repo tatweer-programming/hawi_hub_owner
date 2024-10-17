@@ -4,6 +4,16 @@ import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 
+enum Gender {
+  male(0),
+  female(1),
+  both(2);
+
+  final int value;
+
+  const Gender(this.value);
+}
+
 // ignore: must_be_immutable
 class Place extends Equatable {
   int id;
@@ -21,9 +31,13 @@ class Place extends Equatable {
   int totalRatings;
   double? rating;
   List<AppFeedBack>? feedbacks;
-
+  bool isShared;
   int citId;
+  Gender availableGender;
+  int deposit;
+
   int approvalStatus;
+
   Place({
     required this.id,
     required this.name,
@@ -42,6 +56,9 @@ class Place extends Equatable {
     this.feedbacks,
     required this.citId,
     this.approvalStatus = 0,
+    this.isShared = true,
+    this.availableGender = Gender.both,
+    this.deposit = 0,
   });
 
   factory Place.fromJson(Map<String, dynamic> json) {
@@ -49,7 +66,6 @@ class Place extends Equatable {
     (openTimesList);
     List<Day> days = [];
     for (var element in openTimesList) {
-      //print(Day.fromJson(element));
       days.add(Day.fromJson(element));
     }
     print(json);
@@ -61,13 +77,6 @@ class Place extends Equatable {
       address: json['address'] ?? "",
       images: List<String>.from(json['images'].map((x) => x['stadiumImageUrl']))
           .toList(),
-      // images: const [
-      //   "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=400",
-      //   "https://images.pexels.com/photos/399187/pexels-photo-399187.jpeg?auto=compress&cs=tinysrgb&w=400",
-      //   "https://images.pexels.com/photos/61135/pexels-photo-61135.jpeg?auto=compress&cs=tinysrgb&w=400"
-      // ],
-      /*
-       */
       ownerId: json['ownerId'] ?? 0,
       minimumHours: json['minHoursReservation'] ?? 0,
       price: json['pricePerHour'] ?? 0,

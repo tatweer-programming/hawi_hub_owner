@@ -10,7 +10,7 @@ class EndPoints {
   static const String verification = '/Owner/Verification';
   static const String uploadProof = '/Owner/UploadProofOfIdentity';
   static const String addPlayerFeedback = "/Owner/AddPlayerReview/";
-  static const String getFeedbacks = '/Player/GetOwnerReviews/';
+  static const String getFeedbacks = '/Owner/GetReviews/';
 
   /// payment
   static const String getAccountBalance = 'v2/GetSupplierDashboard';
@@ -26,14 +26,13 @@ class EndPoints {
       '/Hub/UploadConversationAttachment';
 
   ///
-  static const String getPlaces = 'Owner/GetStadiums/';
+  static const String getPlaces = '/Owner/Stadiums/';
 
-  static const String createPlace = 'Stadium/Add';
+  static const String createPlace = '/Stadium/';
   static const String updatePlace = '/Stadium/Update/';
   static const String deletePlace = '/Stadium/Delete/';
 
-  static const String getBookingRequest =
-      '/Stadium/GetOwnerStadiumsReservations/';
+  static const String getBookingRequest = '/Owner/StadiumsReservations/';
   static const String getPlaceReservations = '/Stadium/GetReservations';
   static const String acceptBookingRequest = '/Owner/AcceptStadiumReservation/';
   static const String declineBookingRequest =
