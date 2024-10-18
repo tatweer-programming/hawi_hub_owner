@@ -54,6 +54,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookingSuccess":
             MessageLookupByLibrary.simpleMessage("تم إضافة الملعب بنجاح"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
+        "bookings": MessageLookupByLibrary.simpleMessage("حجوزات"),
+        "both": MessageLookupByLibrary.simpleMessage("كليهما"),
+        "canShare":
+            MessageLookupByLibrary.simpleMessage("هل يمكن إنشاء حجز جماعي ؟"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "change": MessageLookupByLibrary.simpleMessage("تغير "),
         "changePassword":
@@ -80,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deletePlace": MessageLookupByLibrary.simpleMessage("حذف المكان"),
         "deletePlaceConfirmation":
             MessageLookupByLibrary.simpleMessage("هل تريد حذف أمكانك"),
+        "deposit": MessageLookupByLibrary.simpleMessage("العربون"),
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
         "doYouWantToLogout":
@@ -108,12 +113,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterUsername":
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال الإسم"),
         "feedbacks": MessageLookupByLibrary.simpleMessage("التعليقات"),
+        "females": MessageLookupByLibrary.simpleMessage("إناث"),
         "fileUploaded": MessageLookupByLibrary.simpleMessage("تم رفع الملف "),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة السر ؟"),
         "from": MessageLookupByLibrary.simpleMessage("من"),
         "futureBookings":
             MessageLookupByLibrary.simpleMessage("الحجوزات القادمة"),
+        "genders": MessageLookupByLibrary.simpleMessage("النوع"),
         "getStarted":
             MessageLookupByLibrary.simpleMessage("اجعل فريقك يلعب معًا!"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
@@ -139,6 +146,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم تسجيل الدخول إلى الحساب بنجاح"),
         "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+        "males": MessageLookupByLibrary.simpleMessage("ذكور"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
         "minimumHours":
@@ -244,6 +252,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shouldAgreeTerns": MessageLookupByLibrary.simpleMessage(
             "يجب عليك الموافقة على شروط الخدمة وسياسة الخصوصية"),
         "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
+        "showMore": MessageLookupByLibrary.simpleMessage("عرض المزيد"),
         "signUp": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "somethingWentWrong":
             MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),

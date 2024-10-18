@@ -134,19 +134,20 @@ class PlaceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        context.push(Routes.place, arguments: {"id": place.id});
-      },
-      child: SizedBox(
-        height: 40.h,
-        width: 70.w,
-        child: Card(
-          color: ColorManager.white,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: ColorManager.grey1),
-            borderRadius: BorderRadius.circular(30),
-          ),
+    return SizedBox(
+      height: 40.h,
+      width: 70.w,
+      child: Card(
+        color: ColorManager.white,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: ColorManager.grey1),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: InkWell(
+          onTap: () {
+            context.push(Routes.place, arguments: {"id": place.id});
+          },
           child: Column(
             children: [
               Expanded(

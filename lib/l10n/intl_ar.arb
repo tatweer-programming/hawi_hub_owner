@@ -175,5 +175,13 @@
   "noOwnerFound": "لم يتم العثور على مالك",
   "viewRequirements": "عرض المتطلبات",
   "verifyEmail": "تحقق من بريدك الالكتروني",
-  "ownershipTypes": "يرجى رفع ملف إثبات الملكية أو عقد إيجار"
+  "ownershipTypes": "يرجى رفع ملف إثبات الملكية أو عقد إيجار",
+  "showMore": "عرض المزيد",
+  "bookings": "حجوزات",
+  "deposit": "العربون",
+  "males": "ذكور",
+  "females": "إناث",
+  "both": "كليهما",
+  "genders": "النوع",
+  "canShare": "هل يمكن إنشاء حجز جماعي ؟"
 }

@@ -330,6 +330,15 @@ class PickLocationSuccess extends PlaceState {
   List<Object?> get props => [];
 }
 
+class ChangeCanShareState extends PlaceState {
+  final bool canShare;
+
+  ChangeCanShareState(this.canShare);
+
+  @override
+  List<Object?> get props => [canShare];
+}
+
 class GetReservationsError extends PlaceError {
   GetReservationsError(super.exception);
 
@@ -357,10 +366,12 @@ class GetOfflineReservationsError extends PlaceError {
 }
 
 class GetOfflineReservationsSuccess extends PlaceState {
-  GetOfflineReservationsSuccess();
+  final List<OfflineBooking> offlineBookings;
+
+  GetOfflineReservationsSuccess(this.offlineBookings);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [offlineBookings];
 }
 
 class GetOfflineReservationsLoading extends PlaceState {

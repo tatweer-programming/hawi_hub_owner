@@ -8,6 +8,7 @@ import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/custom_app_bar.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/widgets/screen_backround.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking.dart';
 import 'package:intl/intl.dart';
@@ -96,29 +97,10 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomAppBar(
-                    actions: [
-                      SizedBox(
-                        height: 5.h,
-                      )
-                    ],
-                    height: 33.h,
-                    opacity: .15,
-                    backgroundImage: "assets/images/app_bar_backgrounds/5.webp",
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      child: SizedBox(
-                        height: 7.h,
-                        child: Text(
-                          S.of(context).addBooking,
-                          style: TextStyleManager.getAppBarTextStyle(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  BlocListener<PlaceCubit, PlaceState>(
+              child: ScreenBackground(
+                  screenImage: PlaceCubit.get().currentPlace!.images.first,
+                  screenTitle: S.of(context).addBooking,
+                  child: BlocListener<PlaceCubit, PlaceState>(
                     bloc: PlaceCubit.get(),
                     listener: (context, state) {
                       if (state is GetPlaceBookingsSuccess) {
@@ -150,6 +132,7 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 5.w),
                                 child: Column(
                                   children: [
+                                    SizedBox(height: 3.h),
                                     SizedBox(
                                       height: 50.h,
                                       child: Stack(
@@ -272,9 +255,7 @@ class _AddBookingScreenState extends State<AddBookingScreen> {
                               );
                       },
                     ),
-                  ),
-                ],
-              ),
+                  )),
             ),
           ),
           BlocBuilder<PlaceCubit, PlaceState>(

@@ -24,37 +24,27 @@ class CustomBottomNavigationBar extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon:
-              const ImageIcon(AssetImage('assets/images/icons/home.webp')),
-              label: S
-                  .of(context)
-                  .home,
+                  const ImageIcon(AssetImage('assets/images/icons/home.webp')),
+              label: S.of(context).home,
             ),
             BottomNavigationBarItem(
               icon:
-              const ImageIcon(AssetImage('assets/images/icons/book.webp')),
-              label: S
-                  .of(context)
-                  .places,
+                  const ImageIcon(AssetImage('assets/images/icons/book.webp')),
+              label: S.of(context).places,
             ),
             BottomNavigationBarItem(
               icon:
-              const ImageIcon(AssetImage('assets/images/icons/play.webp')),
-              label: S
-                  .of(context)
-                  .requests,
+                  const ImageIcon(AssetImage('assets/images/icons/play.webp')),
+              label: S.of(context).requests,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month),
-              label: S
-                  .of(context)
-                  .places,
+              label: S.of(context).bookings,
             ),
             BottomNavigationBarItem(
               icon:
-              const ImageIcon(AssetImage('assets/images/icons/more.webp')),
-              label: S
-                  .of(context)
-                  .more,
+                  const ImageIcon(AssetImage('assets/images/icons/more.webp')),
+              label: S.of(context).more,
             ),
           ],
           selectedItemColor: ColorManager.primary,

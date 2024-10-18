@@ -99,6 +99,8 @@ class PlaceCubit extends Cubit<PlaceState> {
 
   int? selectedCityId;
   int? selectedSport;
+  Gender selectedGender = Gender.both;
+  bool isShared = true;
   List<File> imageFiles = [];
   File? selectedOwnershipFile;
 
@@ -361,6 +363,31 @@ class PlaceCubit extends Cubit<PlaceState> {
         .id;
   }
 
+  void chooseGender(String gender) {
+    switch (gender) {
+      case "Males":
+        selectedGender = Gender.male;
+        break;
+      case "Females":
+        selectedGender = Gender.female;
+        break;
+      case "ذكور":
+        selectedGender = Gender.male;
+        break;
+      case "إناث":
+        selectedGender = Gender.female;
+        break;
+      default:
+        selectedGender = Gender.both;
+        break;
+    }
+  }
+
+  void changeIsShared(bool bool) {
+    isShared = bool;
+    emit(ChangeCanShareState(bool));
+  }
+
   void pickLocation(PlaceLocation location, {required String address}) {
     placeLocation = location;
     emit(PickLocationSuccess(address));
@@ -476,7 +503,6 @@ class PlaceCubit extends Cubit<PlaceState> {
 
   Future getAppBookings({bool? isRefresh}) async {
     if (futureBookings.isEmpty || isRefresh == true) {
-      isOfflineBookingsLoading = true;
       emit(GetReservationsLoading());
       var result = await dataSource.getOwnerBookings();
       result.fold((l) {
@@ -505,7 +531,7 @@ class PlaceCubit extends Cubit<PlaceState> {
 
         offlineBookings = r..sort((a, b) => b.startTime.compareTo(a.startTime));
         isOfflineBookingsLoading = false;
-        emit(GetOfflineReservationsSuccess());
+        emit(GetOfflineReservationsSuccess(r));
       });
     }
   }

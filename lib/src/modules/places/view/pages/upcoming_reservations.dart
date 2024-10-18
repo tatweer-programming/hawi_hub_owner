@@ -48,8 +48,8 @@ class UpcomingReservationsPage extends StatelessWidget {
   }
 
   final List<Widget> _pages = const [
-    UpComingOnlineBookingsPage(),
     UpcomingOfflineBookingsPage(),
+    UpComingOnlineBookingsPage(),
   ];
 }
 

@@ -53,6 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookingSuccess":
             MessageLookupByLibrary.simpleMessage("Booking Added Successfully"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("Booking time"),
+        "bookings": MessageLookupByLibrary.simpleMessage("Bookings"),
+        "both": MessageLookupByLibrary.simpleMessage("Both"),
+        "canShare": MessageLookupByLibrary.simpleMessage("Can create games ?"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "change": MessageLookupByLibrary.simpleMessage("Change "),
         "changePassword":
@@ -80,6 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deletePlace": MessageLookupByLibrary.simpleMessage("Delete place"),
         "deletePlaceConfirmation": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this place?"),
+        "deposit": MessageLookupByLibrary.simpleMessage("Deposit"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "doYouWantToLogout":
@@ -107,12 +111,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterUsername":
             MessageLookupByLibrary.simpleMessage("Please enter username"),
         "feedbacks": MessageLookupByLibrary.simpleMessage("Feedbacks"),
+        "females": MessageLookupByLibrary.simpleMessage("Females"),
         "fileUploaded": MessageLookupByLibrary.simpleMessage("File Uploaded"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot password ?"),
         "from": MessageLookupByLibrary.simpleMessage("From"),
         "futureBookings":
             MessageLookupByLibrary.simpleMessage("Upcoming Bookings"),
+        "genders": MessageLookupByLibrary.simpleMessage("Gender"),
         "getStarted": MessageLookupByLibrary.simpleMessage(
             "Get your Squad to play together!"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
@@ -139,6 +145,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSuccessfully":
             MessageLookupByLibrary.simpleMessage("Account LogeIn Successfully"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "males": MessageLookupByLibrary.simpleMessage("Males"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("Minimum booking"),
         "minimumHours":
@@ -242,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shouldAgreeTerns": MessageLookupByLibrary.simpleMessage(
             "You should agree to terms of service and privacy policy"),
         "showInMap": MessageLookupByLibrary.simpleMessage("Show in map"),
+        "showMore": MessageLookupByLibrary.simpleMessage("Show More"),
         "signUp": MessageLookupByLibrary.simpleMessage("SIGN UP"),
         "somethingWentWrong":
             MessageLookupByLibrary.simpleMessage("Something went wrong."),

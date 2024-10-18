@@ -119,6 +119,7 @@ class PlaceRemoteDataSource {
           }).then((value) {
         //print(value.statusCode.toString() + value.data.toString());
       });
+
       return const Right(unit);
     } on DioException catch (e) {
       return Left(e);

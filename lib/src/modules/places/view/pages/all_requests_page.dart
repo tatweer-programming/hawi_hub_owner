@@ -8,6 +8,7 @@ import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
+import 'package:hawi_hub_owner/src/modules/main/view/widgets/image_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/request_shimmers.dart';
@@ -27,74 +28,75 @@ class AllRequestsPage extends StatelessWidget {
         bloc: PlaceCubit.get(),
         listener: (context, state) {
           if (state is PlaceError) {
-            errorToast(msg: ExceptionManager(state.exception).translatedMessage());
+            errorToast(
+                msg: ExceptionManager(state.exception).translatedMessage());
           }
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: AlignmentDirectional.topCenter,
-              heightFactor: 0.85,
-              child: CustomAppBar(
-                height: 33.h,
-                opacity: .15,
-                backgroundImage: "assets/images/app_bar_backgrounds/1.webp",
-                actions: [
-                  IconButton(
-                      onPressed: () {
-                        context.pushWithTransition(const ChatsScreen());
-                      },
-                      icon: const ImageIcon(
-                        AssetImage("assets/images/icons/chat.png"),
-                        color: ColorManager.golden,
-                      )),
-                  IconButton(
-                      onPressed: () {
-                        context.push(Routes.notifications);
-                      },
-                      icon: const ImageIcon(
-                        AssetImage("assets/images/icons/notification.webp"),
-                        color: ColorManager.golden,
-                      )),
-                  navToProfile(context:context)
-                ],
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 5.w,
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              ImageAppBar(
+                title: S.of(context).requests,
+                imagePath: "assets/images/app_bar_backgrounds/stadium.jpeg",
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 40.h,
                   ),
-                  child: SizedBox(
-                    height: 7.h,
-                    child: Text(
-                      S.of(context).requests,
-                      style: TextStyleManager.getAppBarTextStyle(),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: ColorManager.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 2.h,
+                        ),
+                        BlocBuilder<PlaceCubit, PlaceState>(
+                            bloc: PlaceCubit.get(),
+                            builder: (context, state) {
+                              return (state is GetBookingRequestsLoading)
+                                  ? const VerticalRequestsShimmer()
+                                  : PlaceCubit.get().bookingRequests.isEmpty
+                                      ? Padding(
+                                          padding: EdgeInsets.only(top: 20.h),
+                                          child: Center(
+                                              child: SubTitle(
+                                                  S.of(context).noRequests)),
+                                        )
+                                      : Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 2.h, horizontal: 5.w),
+                                          child: ListView.separated(
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemBuilder: (context, index) =>
+                                                  BookingRequestWidget(
+                                                      bookingRequest: PlaceCubit
+                                                                  .get()
+                                                              .bookingRequests[
+                                                          index]),
+                                              separatorBuilder:
+                                                  (itemContext, index) =>
+                                                      const Divider(),
+                                              itemCount: PlaceCubit.get()
+                                                  .bookingRequests
+                                                  .length),
+                                        );
+                            })
+                      ],
                     ),
                   ),
-                ),
+                ],
               ),
-            ),
-            BlocBuilder<PlaceCubit, PlaceState>(
-                bloc: PlaceCubit.get(),
-                builder: (context, state) {
-                  return (state is GetBookingRequestsLoading)
-                      ? const VerticalRequestsShimmer()
-                      : PlaceCubit.get().bookingRequests.isEmpty
-                          ? Padding(
-                              padding: EdgeInsets.only(top: 20.h),
-                              child: Center(child: SubTitle(S.of(context).noRequests)),
-                            )
-                          : Padding(
-                              padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
-                              child: ListView.separated(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) => BookingRequestWidget(
-                                      bookingRequest: PlaceCubit.get().bookingRequests[index]),
-                                  separatorBuilder: (itemContext, index) => const Divider(),
-                                  itemCount: PlaceCubit.get().bookingRequests.length),
-                            );
-                })
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1819,6 +1819,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Show More`
+  String get showMore {
+    return Intl.message(
+      'Show More',
+      name: 'showMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bookings`
+  String get bookings {
+    return Intl.message(
+      'Bookings',
+      name: 'bookings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deposit`
+  String get deposit {
+    return Intl.message(
+      'Deposit',
+      name: 'deposit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Males`
+  String get males {
+    return Intl.message(
+      'Males',
+      name: 'males',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Females`
+  String get females {
+    return Intl.message(
+      'Females',
+      name: 'females',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Both`
+  String get both {
+    return Intl.message(
+      'Both',
+      name: 'both',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gender`
+  String get genders {
+    return Intl.message(
+      'Gender',
+      name: 'genders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can create games ?`
+  String get canShare {
+    return Intl.message(
+      'Can create games ?',
+      name: 'canShare',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

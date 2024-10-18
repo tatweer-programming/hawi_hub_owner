@@ -30,8 +30,7 @@ class UpcomingOfflineBookingsPage extends StatelessWidget {
           BlocBuilder<PlaceCubit, PlaceState>(
               bloc: placeCubit,
               builder: (context, state) {
-                return (state is GetOfflineReservationsLoading ||
-                        placeCubit.isOfflineBookingsLoading)
+                return (state is GetOfflineReservationsLoading)
                     ? const VerticalOfflineBookingsShimmer()
                     : placeCubit.offlineBookings.isEmpty
                         ? Padding(

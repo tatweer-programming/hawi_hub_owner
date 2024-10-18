@@ -30,7 +30,7 @@ class EndPoints {
 
   static const String createPlace = '/Stadium/';
   static const String updatePlace = '/Stadium/Update/';
-  static const String deletePlace = '/Stadium/Delete/';
+  static const String deletePlace = '/Stadium/';
 
   static const String getBookingRequest = '/Owner/StadiumsReservations/';
   static const String getPlaceReservations = '/Stadium/GetReservations';

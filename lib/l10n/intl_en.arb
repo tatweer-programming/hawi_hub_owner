@@ -175,5 +175,13 @@
   "invalidResetCode": "Invalid reset code.",
   "viewRequirements": "View Requirements",
   "verifyEmail": "Verify Email",
-  "noOwnerFound": "No owner was found with ID :"
+  "noOwnerFound": "No owner was found with ID :",
+  "showMore": "Show More",
+  "bookings": "Bookings",
+  "deposit": "Deposit",
+  "males": "Males",
+  "females": "Females",
+  "both": "Both",
+  "genders": "Gender",
+  "canShare": "Can create games ?"
 }
