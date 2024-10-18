@@ -99,7 +99,7 @@ class ChatService {
             message: jsonData["arguments"][0]["playerMessage"],
             attachmentUrl: jsonData["arguments"][0]["playerAttachmentUrl"],
             isOwner: true,
-            timeStamp: DateTime.now(),
+            timeStamp: DateTime.now().add(Duration(hours: 3)),
           ));
         }
       });

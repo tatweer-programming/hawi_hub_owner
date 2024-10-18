@@ -28,7 +28,7 @@ class MessageDetails extends Equatable {
       attachmentUrl: json["messageAttachmentUrl"] != null
           ? ApiManager.handleImageUrl(json["messageAttachmentUrl"])
           : null,
-      timeStamp: DateTime.parse(json["timestamp"]??DateTime.now().toString()),
+      timeStamp: DateTime.parse(json["timestamp"]??DateTime.now().toString()).toLocal().add(Duration(hours: 3)),
       isOwner: json["playerToOwner"],
     );
   }
