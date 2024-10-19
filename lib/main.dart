@@ -21,18 +21,25 @@ import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:sizer/sizer.dart';
 import "package:timeago/timeago.dart" as timeago;
 
+class AppManager {
+  static Future<void> init() async {
+    timeago.setLocaleMessages("ar", timeago.ArMessages());
+    WidgetsFlutterBinding.ensureInitialized();
+    await CacheHelper.init();
+    DioHelper.init();
+    ConstantsManager.userId = await CacheHelper.getData(key: 'userId');
+    ConstantsManager.isFirstTime = await CacheHelper.getData(key: 'firstTime');
+    await LocalizationManager.init();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await NotificationServices.init();
+  }
+}
+
 Future<void> main() async {
-  timeago.setLocaleMessages("ar", timeago.ArMessages());
-  WidgetsFlutterBinding.ensureInitialized();
-  await CacheHelper.init();
-  DioHelper.init();
-  ConstantsManager.userId = await CacheHelper.getData(key: 'userId');
-  ConstantsManager.isFirstTime = await CacheHelper.getData(key: 'firstTime');
-  await LocalizationManager.init();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await NotificationServices.init();
+  await AppManager
+      .init(); // حط الكلاس دا في فايل لوحده وضيف عليه الايفنت بتاع ال get user بمعرفتك و استدعيهم في ال splash
   runApp(const MyApp());
 }
 
