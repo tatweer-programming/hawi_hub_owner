@@ -6,7 +6,6 @@ import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
-import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/app_booking_shimmer.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/offline_booking_shimmers.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +14,7 @@ class UpcomingOfflineBookingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PlaceCubit placeCubit = PlaceCubit.get();
+    PlaceCubit placeCubit = PlaceCubit.get()..getOfflineBookings();
     return BlocListener<PlaceCubit, PlaceState>(
       bloc: PlaceCubit.get(),
       listener: (context, state) {

@@ -14,7 +14,6 @@ import 'package:hawi_hub_owner/src/modules/places/view/screens/create_place_scre
 import 'package:hawi_hub_owner/src/modules/places/view/screens/edit_place_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/edit_working_hours_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/future_bookings_screen.dart';
-import 'package:hawi_hub_owner/src/modules/places/view/screens/place_location_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/place_reviews.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/request_screen.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/screens/share_loaction_screen.dart';
@@ -103,8 +102,7 @@ class AppRouter {
             builder: (_) => PlaceFeedbacksScreen(
                   id: arguments['id'],
                 ));
-      case Routes.futureBookings:
-        return MaterialPageRoute(builder: (_) => const FutureBookingsScreen());
+
       case Routes.confirmEmail:
         Map<String, dynamic> arguments =
             settings.arguments as Map<String, dynamic>;

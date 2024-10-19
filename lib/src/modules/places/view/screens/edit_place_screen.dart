@@ -12,6 +12,7 @@ import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
+import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/localization_manager.dart';
@@ -36,7 +37,12 @@ class EditPlaceScreen extends StatelessWidget {
     TextEditingController priceController = TextEditingController(
       text: cubit.placeEditForm!.price.toString(),
     );
+    TextEditingController depositController = TextEditingController(
+      text: cubit.placeEditForm!.deposit.toString(),
+    );
+
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    debugPrint("deposit : ${cubit.placeEditForm!.deposit}");
     return Scaffold(
       body: Column(
         children: [
@@ -184,6 +190,56 @@ class EditPlaceScreen extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 1.5.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: depositController,
+                                  decoration: InputDecoration(
+                                      labelText: S.of(context).deposit,
+                                      hintText: S.of(context).deposit + " %",
+                                      suffix: Text(
+                                        "%",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return S.of(context).requiredField;
+                                    }
+                                    if (double.tryParse(value) == null ||
+                                        double.parse(value) <= 0) {
+                                      return S.of(context).invalidValue;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 2.w),
+                              Expanded(
+                                child: BlocBuilder<PlaceCubit, PlaceState>(
+                                  bloc: cubit,
+                                  builder: (context, state) {
+                                    List<String> genders = [
+                                      S.of(context).males,
+                                      S.of(context).females,
+                                      S.of(context).both
+                                    ];
+                                    return dropdownBuilder(
+                                        text: S.of(context).genders,
+                                        onChanged: (gender) {
+                                          cubit.chooseGender(gender!);
+                                          cubit.placeEditForm!.genders =
+                                              cubit.selectedGender;
+                                        },
+                                        items: genders);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 1.5.h),
                           TextFormField(
                             controller: priceController,
                             decoration: InputDecoration(
@@ -240,7 +296,31 @@ class EditPlaceScreen extends StatelessWidget {
                           //         items: LocalizationManager.getSaudiCities),
                           //   )
                           // ]),
-                          SizedBox(height: 5.h),
+                          SizedBox(height: 2.h),
+                          Row(
+                            children: [
+                              BlocBuilder<PlaceCubit, PlaceState>(
+                                bloc: cubit,
+                                builder: (context, state) {
+                                  return Checkbox(
+                                      value: cubit.placeEditForm!.isShared,
+                                      onChanged: (c) {
+                                        cubit.placeEditForm!.isShared = c!;
+                                        cubit.changeIsShared(c);
+                                      });
+                                },
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  S.of(context).canShare,
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 2.h),
                           Container(
                             width: double.infinity,
                             clipBehavior: Clip.antiAlias,
@@ -422,22 +502,24 @@ class EditPlaceScreen extends StatelessWidget {
                         if (formKey.currentState!.validate() &&
                             validateImages()) {
                           PlaceEditForm placeEditForm = PlaceEditForm(
-                            name: nameController.text,
-                            description: descriptionController.text,
-                            address: addressController.text,
-                            minimumHours:
-                                double.tryParse(minimumHoursController.text) ??
-                                    cubit.placeEditForm?.minimumHours,
-                            ownerId: cubit.currentPlace!.ownerId,
-                            sport: cubit.selectedSport ??
-                                cubit.currentPlace!.sport,
-                            price: double.parse(priceController.text),
-                            location: cubit.placeEditForm?.location,
-                            workingHours: PlaceCubit.get().workingHours,
-                            imageFiles: cubit.placeEditForm!.imageFiles,
-                            images: cubit.placeEditForm!.images,
-                            cityId: cubit.placeEditForm!.cityId,
-                          );
+                              name: nameController.text,
+                              description: descriptionController.text,
+                              address: addressController.text,
+                              minimumHours: double.tryParse(
+                                      minimumHoursController.text) ??
+                                  cubit.placeEditForm?.minimumHours,
+                              ownerId: cubit.currentPlace!.ownerId,
+                              sport: cubit.selectedSport ??
+                                  cubit.currentPlace!.sport,
+                              price: double.parse(priceController.text),
+                              location: cubit.placeEditForm?.location,
+                              workingHours: PlaceCubit.get().workingHours,
+                              imageFiles: cubit.placeEditForm!.imageFiles,
+                              images: cubit.placeEditForm!.images,
+                              deposit: double.parse(depositController.text),
+                              cityId: cubit.placeEditForm!.cityId,
+                              isShared: cubit.placeEditForm!.isShared,
+                              genders: cubit.placeEditForm!.genders);
                           await PlaceCubit.get()
                               .updatePlace(placeId, newPlace: placeEditForm);
                         } else {

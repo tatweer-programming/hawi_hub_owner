@@ -13,7 +13,6 @@ import 'package:hawi_hub_owner/src/modules/auth/data/models/owner.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/add_feedback_for_user.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/screens/rates_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/auth_app_bar.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/routing/routes.dart';

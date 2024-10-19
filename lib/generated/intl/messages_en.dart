@@ -55,6 +55,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookingTime": MessageLookupByLibrary.simpleMessage("Booking time"),
         "bookings": MessageLookupByLibrary.simpleMessage("Bookings"),
         "both": MessageLookupByLibrary.simpleMessage("Both"),
+        "bothMalesAndFemales":
+            MessageLookupByLibrary.simpleMessage("Males & Females"),
         "canShare": MessageLookupByLibrary.simpleMessage("Can create games ?"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "change": MessageLookupByLibrary.simpleMessage("Change "),

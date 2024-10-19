@@ -56,6 +56,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
         "bookings": MessageLookupByLibrary.simpleMessage("حجوزات"),
         "both": MessageLookupByLibrary.simpleMessage("كليهما"),
+        "bothMalesAndFemales":
+            MessageLookupByLibrary.simpleMessage(" ذكور وإناث"),
         "canShare":
             MessageLookupByLibrary.simpleMessage("هل يمكن إنشاء حجز جماعي ؟"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),

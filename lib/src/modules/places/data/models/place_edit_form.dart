@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
+import 'package:hawi_hub_owner/src/modules/places/data/models/place.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_location.dart';
 
 class PlaceEditForm {
@@ -22,23 +23,30 @@ class PlaceEditForm {
 
   ///
   int cityId;
-  PlaceEditForm({
-    required this.name,
-    required this.address,
-    required this.workingHours,
-    this.location,
-    this.description,
-    required this.sport,
-    required this.price,
-    required this.ownerId,
-    this.minimumHours,
-    required this.imageFiles,
-    required this.cityId,
-    required this.images,
-  });
+  double deposit;
+  bool isShared;
+  Gender genders;
+
+  PlaceEditForm(
+      {required this.name,
+      required this.address,
+      required this.workingHours,
+      this.location,
+      this.description,
+      required this.sport,
+      required this.price,
+      required this.ownerId,
+      this.minimumHours,
+      required this.imageFiles,
+      required this.cityId,
+      required this.images,
+      required this.deposit,
+      required this.isShared,
+      required this.genders});
 
   Map<String, dynamic> toJson() {
-    print("name: $name , \n address: $address , \n sport: $sport , \n price: $price ,"
+    print(
+        "name: $name , \n address: $address , \n sport: $sport , \n price: $price ,"
         " \n ownerId: $ownerId ,"
         " \n minimumHours: $minimumHours , \n imageFiles: $imageFiles , \n cityId: $cityId , \n images: $images");
     return {
@@ -53,6 +61,9 @@ class PlaceEditForm {
       "pricePerHour": price,
       "minHoursReservation": minimumHours,
       "imagesUrl": images, // images,
+      "deposit": deposit,
+      "isShared": isShared,
+      "genders": genders.value
     };
   }
 

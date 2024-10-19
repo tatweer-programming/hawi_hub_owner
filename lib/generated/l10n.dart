@@ -1899,6 +1899,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Males & Females`
+  String get bothMalesAndFemales {
+    return Intl.message(
+      'Males & Females',
+      name: 'bothMalesAndFemales',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

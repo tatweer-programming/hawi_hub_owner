@@ -21,7 +21,6 @@ import 'package:maps_launcher/maps_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 import '../../../main/view/widgets/components.dart';
-import '../../../main/view/widgets/custom_app_bar.dart';
 import '../../data/models/day.dart';
 import '../../data/models/place.dart';
 
@@ -38,347 +37,330 @@ class PlaceScreen extends StatelessWidget {
     cubit.currentPlace = place;
     return Scaffold(
         body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: BlocListener<PlaceCubit, PlaceState>(
-                  bloc: cubit,
-                  listener: (context, state) {
-                    if (state is PlaceError) {
-                      errorToast(
-                          msg: ExceptionManager(state.exception)
-                              .translatedMessage());
-                    } else if (state is DeletePlaceSuccess) {
-                      defaultToast(msg: S
-                          .of(context)
-                          .placeDeleted);
-                      context.pushAndRemove(Routes.home);
-                    }
-                  },
-                  child: BlocBuilder<PlaceCubit, PlaceState>(
-                    bloc: cubit,
-                    builder: (context, state) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // app bar
-                          ImageSliderWithIndicators(
-                            imageUrls: place.images
-                                .map((e) => ApiManager.handleImageUrl(e))
-                                .toList(),
-                            placeId: place.id,
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(5.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TitleText(place.name),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                Text(
-                                  place.address,
-                                  style: TextStyleManager.getRegularStyle(),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: BlocListener<PlaceCubit, PlaceState>(
+              bloc: cubit,
+              listener: (context, state) {
+                if (state is PlaceError) {
+                  errorToast(
+                      msg: ExceptionManager(state.exception)
+                          .translatedMessage());
+                } else if (state is DeletePlaceSuccess) {
+                  defaultToast(msg: S.of(context).placeDeleted);
+                  context.pushAndRemove(Routes.home);
+                }
+              },
+              child: BlocBuilder<PlaceCubit, PlaceState>(
+                bloc: cubit,
+                builder: (context, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // app bar
+                      ImageSliderWithIndicators(
+                        imageUrls: place.images
+                            .map((e) => ApiManager.handleImageUrl(e))
+                            .toList(),
+                        placeId: place.id,
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TitleText(place.name),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Text(
+                              place.address,
+                              style: TextStyleManager.getRegularStyle(),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
 
-                                ExpansionTile(
-                                  tilePadding: EdgeInsets.zero,
-                                  title: SubTitle(S
-                                      .of(context)
-                                      .workingHours),
-                                  childrenPadding: EdgeInsets.zero,
-                                  children: [
-                                    _buildWorkingHours(context),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                SubTitle(S
-                                    .of(context)
-                                    .location),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                Text(
-                                  place.address,
-                                  style: TextStyleManager.getCaptionStyle(),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                if (place.location != null)
-                                  _buildShowMapWidget(context),
-                                Divider(
-                                  height: 5.h,
-                                ),
-                                SizedBox(
-                                  height: 4.h,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          child: (place.rating != null)
-                                              ? Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                place.rating.toString(),
-                                                style: TextStyleManager
-                                                    .getBlackCaptionTextStyle(),
-                                              ),
-                                              Expanded(
-                                                child: place.rating != null
-                                                    ? Center(
-                                                  child: SizedBox(
-                                                    height: 20.sp,
-                                                    child: RatingBar
-                                                        .builder(
-                                                      glow: true,
-                                                      itemSize: 20.sp,
-                                                      direction: Axis
-                                                          .horizontal,
-                                                      allowHalfRating:
-                                                      true,
-                                                      wrapAlignment:
-                                                      WrapAlignment
-                                                          .center,
-                                                      initialRating:
-                                                      place.rating!,
-                                                      itemCount: 5,
-                                                      glowColor:
-                                                      ColorManager
-                                                          .golden,
-                                                      ignoreGestures:
-                                                      true,
-                                                      itemBuilder:
-                                                          (context,
-                                                          _) =>
-                                                      const Icon(
-                                                        Icons.star,
-                                                        color:
-                                                        ColorManager
-                                                            .golden,
-                                                      ),
-                                                      onRatingUpdate:
-                                                          (r) {},
-                                                    ),
-                                                  ),
-                                                )
-                                                    : Text(S
-                                                    .of(context)
-                                                    .noRatings),
-                                              )
-                                            ],
-                                          )
-                                              : Center(
-                                            child:
-                                            Text(S
-                                                .of(context)
-                                                .noRatings),
-                                          )),
-                                      const VerticalDivider(),
-                                      Expanded(
-                                          child: Row(
-                                            children: [
-                                              Text(place.totalGames.toString()),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              Text(S
-                                                  .of(context)
-                                                  .totalGames,
+                            ExpansionTile(
+                              tilePadding: EdgeInsets.zero,
+                              title: SubTitle(S.of(context).workingHours),
+                              childrenPadding: EdgeInsets.zero,
+                              children: [
+                                _buildWorkingHours(context),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            SubTitle(S.of(context).location),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Text(
+                              place.address,
+                              style: TextStyleManager.getCaptionStyle(),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            if (place.location != null)
+                              _buildShowMapWidget(context),
+                            Divider(
+                              height: 5.h,
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: (place.rating != null)
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  place.rating.toString(),
                                                   style: TextStyleManager
-                                                      .getBlackCaptionTextStyle()),
-                                            ],
-                                          )),
+                                                      .getBlackCaptionTextStyle(),
+                                                ),
+                                                Expanded(
+                                                  child: place.rating != null
+                                                      ? Center(
+                                                          child: SizedBox(
+                                                            height: 20.sp,
+                                                            child: RatingBar
+                                                                .builder(
+                                                              glow: true,
+                                                              itemSize: 20.sp,
+                                                              direction: Axis
+                                                                  .horizontal,
+                                                              allowHalfRating:
+                                                                  true,
+                                                              wrapAlignment:
+                                                                  WrapAlignment
+                                                                      .center,
+                                                              initialRating:
+                                                                  place.rating!,
+                                                              itemCount: 5,
+                                                              glowColor:
+                                                                  ColorManager
+                                                                      .golden,
+                                                              ignoreGestures:
+                                                                  true,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                          _) =>
+                                                                      const Icon(
+                                                                Icons.star,
+                                                                color:
+                                                                    ColorManager
+                                                                        .golden,
+                                                              ),
+                                                              onRatingUpdate:
+                                                                  (r) {},
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : Text(S
+                                                          .of(context)
+                                                          .noRatings),
+                                                )
+                                              ],
+                                            )
+                                          : Center(
+                                              child:
+                                                  Text(S.of(context).noRatings),
+                                            )),
+                                  const VerticalDivider(),
+                                  Expanded(
+                                      child: Row(
+                                    children: [
+                                      Text(place.totalGames.toString()),
+                                      SizedBox(
+                                        width: 2.w,
+                                      ),
+                                      Text(S.of(context).totalGames,
+                                          style: TextStyleManager
+                                              .getBlackCaptionTextStyle()),
                                     ],
+                                  )),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Center(
+                                child: TextButton(
+                                    onPressed: () {
+                                      context.push(Routes.placeFeedbacks,
+                                          arguments: {"id": place.id});
+                                    },
+                                    child: Text(S.of(context).viewFeedbacks,
+                                        style: TextStyleManager
+                                            .getGoldenRegularStyle()))),
+
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(vertical: 2.h),
+                            //   child: SizedBox(
+                            //     height: 7.h,
+                            //     child: Row(
+                            //       children: [
+                            //         Expanded(child: _buildUserRatingWidget(context, true)),
+                            //         SizedBox(
+                            //           width: 3.w,
+                            //         ),
+                            //         // Expanded(
+                            //         //     child: OutLineContainer(
+                            //         //       child: Text(
+                            //         //         "${cubit.currentPlac} ${S.of(context).upcoming}",
+                            //         //       ),
+                            //         //     )),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                            SubTitle(S.of(context).sport),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            _buildSportWidget(
+                                MainCubit.get()
+                                    .sportsList
+                                    .firstWhere(
+                                        (element) => element.id == place.sport,
+                                        orElse: () => Sport.unKnown())
+                                    .name,
+                                context),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            SubTitle(S.of(context).details),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            _buildCaptionWidget(
+                                place.description ?? '', context),
+                            Divider(
+                              height: 4.h,
+                            ),
+                            SubTitle(S.of(context).booking),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          S.of(context).price,
+                                        ),
+                                      ),
+                                    ),
+                                    const VerticalDivider(),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          S.of(context).minimumBooking,
+                                        ),
+                                      ),
+                                    )
+                                  ]),
+                            ),
+
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: OutLineContainer(
+                                        child: Text(
+                                          "${place.price}  ${S.of(context).sar} ${S.of(context).perHour}",
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 3.w,
+                                    ),
+                                    Expanded(
+                                      child: OutLineContainer(
+                                        child: Text(
+                                          "${place.minimumHours ?? S.of(context).noMinimumBooking}  ${S.of(context).hours}",
+                                        ),
+                                      ),
+                                    )
+                                  ]),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Center(
+                                    child: OutLineContainer(
+                                      child: Text(S.of(context).deposit +
+                                          ": ${place.deposit} %"),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 1.h,
+                                  width: 3.w,
                                 ),
-                                Center(
-                                    child: TextButton(
-                                        onPressed: () {
-                                          context.push(Routes.placeFeedbacks,
-                                              arguments: {"id": place.id});
-                                        },
-                                        child: Text(S
-                                            .of(context)
-                                            .viewFeedbacks,
-                                            style: TextStyleManager
-                                                .getGoldenRegularStyle()))),
-
-                                // Padding(
-                                //   padding: EdgeInsets.symmetric(vertical: 2.h),
-                                //   child: SizedBox(
-                                //     height: 7.h,
-                                //     child: Row(
-                                //       children: [
-                                //         Expanded(child: _buildUserRatingWidget(context, true)),
-                                //         SizedBox(
-                                //           width: 3.w,
-                                //         ),
-                                //         // Expanded(
-                                //         //     child: OutLineContainer(
-                                //         //       child: Text(
-                                //         //         "${cubit.currentPlac} ${S.of(context).upcoming}",
-                                //         //       ),
-                                //         //     )),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-                                SubTitle(S
-                                    .of(context)
-                                    .sport),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                _buildSportWidget(
-                                    MainCubit
-                                        .get()
-                                        .sportsList
-                                        .firstWhere(
-                                            (element) =>
-                                        element.id == place.sport,
-                                        orElse: () => Sport.unKnown())
-                                        .name,
-                                    context),
-                                SizedBox(
-                                  height: 3.h,
-                                ),
-                                SubTitle(S
-                                    .of(context)
-                                    .details),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                _buildCaptionWidget(
-                                    place.description ?? '', context),
-                                Divider(
-                                  height: 4.h,
-                                ),
-                                SubTitle(S
-                                    .of(context)
-                                    .booking),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                SizedBox(
-                                  height: 3.h,
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        Expanded(
-                                          child: Center(
-                                            child: Text(
-                                              S
-                                                  .of(context)
-                                                  .price,
-                                            ),
-                                          ),
-                                        ),
-                                        const VerticalDivider(),
-                                        Expanded(
-                                          child: Center(
-                                            child: Text(
-                                              S
-                                                  .of(context)
-                                                  .minimumBooking,
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        Expanded(
-                                          child: OutLineContainer(
-                                            child: Text(
-                                              "${place.price}  ${S
-                                                  .of(context)
-                                                  .sar} ${S
-                                                  .of(context)
-                                                  .perHour}",
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 3.w,
-                                        ),
-                                        Expanded(
-                                          child: OutLineContainer(
-                                            child: Text(
-                                              "${place.minimumHours ?? S
-                                                  .of(context)
-                                                  .noMinimumBooking}  ${S
-                                                  .of(context)
-                                                  .hours}",
-                                            ),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
+                                Expanded(
+                                  child: Center(
+                                    child: OutLineContainer(
+                                        child: Text(place.availableGender
+                                            .genderName(context))),
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
+                            // SizedBox(
+                            //   height: 2.h,
+                            // ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-              child: DefaultButton(
-                  text: S
-                      .of(context)
-                      .addBooking,
-                  onPressed: () {
-                    context.push(
-                        Routes.addBooking, arguments: {"id": place.id});
-                    // debug //print("Book Now");
-                  }),
-            ),
-          ],
-        ));
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+          child: DefaultButton(
+              text: S.of(context).addBooking,
+              onPressed: () {
+                context.push(Routes.addBooking, arguments: {"id": place.id});
+                // debug //print("Book Now");
+              }),
+        ),
+      ],
+    ));
   }
 
   Widget _buildShowMapWidget(BuildContext context) {
-    print("location : ${PlaceCubit
-        .get()
-        .currentPlace!
-        .location}");
+    print("location : ${PlaceCubit.get().currentPlace!.location}");
     return InkWell(
       onTap: () async {
-        PlaceLocation location = PlaceCubit
-            .get()
-            .currentPlace!
-            .location!;
+        PlaceLocation location = PlaceCubit.get().currentPlace!.location!;
         MapsLauncher.launchCoordinates(location.latitude, location.longitude)
             .catchError((e) {
           debugPrint(e.toString());
@@ -395,21 +377,19 @@ class PlaceScreen extends StatelessWidget {
           ),
           child: Center(
               child: Row(
-                children: [
-                  Icon(
-                    color: ColorManager.error,
-                    Icons.location_on,
-                  ),
-                  Expanded(
-                    child: Text(
-                      S
-                          .of(context)
-                          .showInMap,
-                      style: TextStyleManager.getSecondaryRegularStyle(),
-                    ),
-                  ),
-                ],
-              ))),
+            children: [
+              Icon(
+                color: ColorManager.error,
+                Icons.location_on,
+              ),
+              Expanded(
+                child: Text(
+                  S.of(context).showInMap,
+                  style: TextStyleManager.getSecondaryRegularStyle(),
+                ),
+              ),
+            ],
+          ))),
     );
   }
 
@@ -459,22 +439,16 @@ class PlaceScreen extends StatelessWidget {
   Widget _buildCaptionWidget(String caption, BuildContext context) {
     return ExpandableText(
       caption,
-      expandText: S
-          .of(context)
-          .showMore,
+      expandText: S.of(context).showMore,
       animation: true,
       collapseOnTextTap: true,
     );
   }
 
   Widget _buildWorkingHours(BuildContext context) {
-    Place place = PlaceCubit
-        .get()
-        .currentPlace!;
+    Place place = PlaceCubit.get().currentPlace!;
     if (_placeIsAlwaysOpen()) {
-      return OutLineContainer(child: Text(S
-          .of(context)
-          .alwaysOpen));
+      return OutLineContainer(child: Text(S.of(context).alwaysOpen));
     } else {
       return SizedBox(
         child: Column(children: [
@@ -548,16 +522,16 @@ class PlaceScreen extends StatelessWidget {
   }
 
   bool _placeIsAlwaysOpen() {
-    Place place = PlaceCubit
-        .get()
-        .currentPlace!;
+    Place place = PlaceCubit.get().currentPlace!;
     // check if place working hours list is all open from 00:00 to 24:00
     return place.workingHours!.where((element) => element.isAllDay()).length ==
         place.workingHours!.length;
   }
 
-  Widget _buildDay(Day day,
-      BuildContext context,) {
+  Widget _buildDay(
+    Day day,
+    BuildContext context,
+  ) {
     return OutLineContainer(
       child: Padding(
         padding: const EdgeInsets.all(3),
@@ -565,15 +539,10 @@ class PlaceScreen extends StatelessWidget {
             maxLines: 2,
             softWrap: true,
             day.isAllDay()
-                ? S
-                .of(context)
-                .alwaysOpen
+                ? S.of(context).alwaysOpen
                 : day.isWeekend()
-                ? "${LocalizationManager.getDays()[day.dayOfWeek]}: ${S
-                .of(context)
-                .weekend}"
-                : "${LocalizationManager.getDays()[day.dayOfWeek]}: ${day
-                .startTime.format(context)} - ${day.endTime.format(context)}",
+                    ? "${LocalizationManager.getDays()[day.dayOfWeek]}: ${S.of(context).weekend}"
+                    : "${LocalizationManager.getDays()[day.dayOfWeek]}: ${day.startTime.format(context)} - ${day.endTime.format(context)}",
             style: TextStyle(
               fontWeight: FontWeightManager.bold,
               fontSize: FontSizeManager.s10,
@@ -721,8 +690,7 @@ class _ImageSliderWithIndicatorsState extends State<ImageSliderWithIndicators> {
                         padding: EdgeInsets.zero,
                         onPressed: () {
                           Share.shareUri(Uri.parse(
-                              "${ApiManager.baseUrl}/place/?id=${widget
-                                  .placeId}"));
+                              "${ApiManager.baseUrl}/place/?id=${widget.placeId}"));
                         },
                         icon: Icon(Icons.share, color: ColorManager.white),
                       ),
@@ -737,9 +705,7 @@ class _ImageSliderWithIndicatorsState extends State<ImageSliderWithIndicators> {
                                 children: [
                                   ListTile(
                                     leading: const Icon(Icons.edit),
-                                    title: Text(S
-                                        .of(context)
-                                        .editPlace),
+                                    title: Text(S.of(context).editPlace),
                                     onTap: () {
                                       cubit.prepareEditForm(widget.placeId);
                                       context.push(Routes.editPlace,
@@ -748,61 +714,53 @@ class _ImageSliderWithIndicatorsState extends State<ImageSliderWithIndicators> {
                                   ),
                                   ListTile(
                                     leading: const Icon(Icons.delete),
-                                    title: Text(S
-                                        .of(context)
-                                        .deletePlace),
+                                    title: Text(S.of(context).deletePlace),
                                     onTap: () {
                                       context.pop(); // Close bottom sheet
                                       showDialog(
                                         context: context,
                                         builder: (ctx) =>
                                             BlocBuilder<PlaceCubit, PlaceState>(
-                                              bloc: cubit,
-                                              builder: (context, state) {
-                                                return AlertDialog(
-                                                  title: Text(
-                                                      S
-                                                          .of(context)
-                                                          .confirmDelete),
-                                                  content: Text(S
-                                                      .of(context)
-                                                      .deletePlaceConfirmation),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () async {
-                                                        await cubit.deletePlace(
-                                                            widget.placeId);
-                                                        // Close dialog
-                                                      },
-                                                      child: Text(
-                                                          S
-                                                              .of(context)
-                                                              .cancel),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () async {
-                                                        // Delete place and navigate back
-                                                        await cubit
-                                                            .deletePlace(
+                                          bloc: cubit,
+                                          builder: (context, state) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                  S.of(context).confirmDelete),
+                                              content: Text(S
+                                                  .of(context)
+                                                  .deletePlaceConfirmation),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    await cubit.deletePlace(
+                                                        widget.placeId);
+                                                    // Close dialog
+                                                  },
+                                                  child: Text(
+                                                      S.of(context).cancel),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    // Delete place and navigate back
+                                                    await cubit
+                                                        .deletePlace(
                                                             widget.placeId)
-                                                            .then(
-                                                              (value) {
-                                                            ctx.pop();
-                                                          },
-                                                        );
+                                                        .then(
+                                                      (value) {
+                                                        ctx.pop();
                                                       },
-                                                      child: state
-                                                      is DeletePlaceLoading
-                                                          ? const CircularProgressIndicator()
-                                                          : Text(
-                                                          S
-                                                              .of(context)
-                                                              .delete),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            ),
+                                                    );
+                                                  },
+                                                  child: state
+                                                          is DeletePlaceLoading
+                                                      ? const CircularProgressIndicator()
+                                                      : Text(
+                                                          S.of(context).delete),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
                                       );
                                     },
                                   ),

@@ -182,7 +182,7 @@ class PlaceRemoteDataSource {
           dioException.requestOptions.toString());
       return Left(e);
     } on Exception catch (e) {
-      return Left(e as Exception);
+      return Left(e);
     }
   }
 
@@ -383,7 +383,7 @@ class PlaceRemoteDataSource {
       List<BookingRequest> bookingRequests = [];
       var response = await DioHelper.getData(
           path: "${EndPoints.getBookingRequest}${ConstantsManager.userId}",
-          query: {"id": ConstantsManager.userId, "approvalStatus": true});
+          query: {"ownerId": ConstantsManager.userId, "approvalStatus": true});
       if (response.statusCode == 200) {
         List data = response.data as List;
         // print(data.first['player']['userName']);
@@ -404,7 +404,7 @@ class PlaceRemoteDataSource {
       List<OfflineBooking> bookingRequests = [];
       var response = await DioHelper.getData(
           path: "${EndPoints.getOfflineBookings}${ConstantsManager.userId}",
-          query: {"id": ConstantsManager.userId});
+          query: {"ownerId": ConstantsManager.userId});
       if (response.statusCode == 200) {
         List data = response.data as List;
         bookingRequests =

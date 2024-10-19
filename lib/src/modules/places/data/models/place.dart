@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/feedback.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/place_edit_form.dart';
@@ -12,6 +14,20 @@ enum Gender {
   final int value;
 
   const Gender(this.value);
+}
+
+extension gendersName on Gender {
+  String genderName(BuildContext context) {
+    switch (this) {
+      case Gender.male:
+        return S.of(context).males;
+        ;
+      case Gender.female:
+        return S.of(context).females;
+      case Gender.both:
+        return S.of(context).bothMalesAndFemales;
+    }
+  }
 }
 
 // ignore: must_be_immutable
@@ -34,7 +50,7 @@ class Place extends Equatable {
   bool isShared;
   int citId;
   Gender availableGender;
-  int deposit;
+  double deposit;
 
   int approvalStatus;
 
@@ -109,19 +125,21 @@ class Place extends Equatable {
     }
     print("images : $images");
     return PlaceEditForm(
-      name: name,
-      address: address,
-      description: description,
-      images: [...images],
-      location: location,
-      minimumHours: minimumHours,
-      workingHours: workingHours!,
-      sport: sport,
-      price: price,
-      ownerId: ownerId,
-      imageFiles: [],
-      cityId: citId,
-    );
+        name: name,
+        address: address,
+        description: description,
+        images: [...images],
+        location: location,
+        minimumHours: minimumHours,
+        workingHours: workingHours!,
+        sport: sport,
+        price: price,
+        ownerId: ownerId,
+        imageFiles: [],
+        cityId: citId,
+        deposit: deposit,
+        genders: availableGender,
+        isShared: isShared);
   }
 
   void updatePlace(PlaceEditForm newPlace) {
@@ -136,6 +154,9 @@ class Place extends Equatable {
     price = newPlace.price;
     ownerId = newPlace.ownerId;
     citId = newPlace.cityId;
+    deposit = newPlace.deposit;
+    availableGender = newPlace.genders;
+    isShared = newPlace.isShared;
   }
 
   bool isBookingAllowed(DateTime startTime, DateTime endTime) {

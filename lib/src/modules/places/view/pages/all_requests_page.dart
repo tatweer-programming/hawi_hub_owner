@@ -3,10 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
-import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
-import 'package:hawi_hub_owner/src/core/routing/routes.dart';
-import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
-import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/image_app_bar.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
@@ -15,7 +11,6 @@ import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/request_
 import 'package:sizer/sizer.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../main/view/widgets/connectivity.dart';
-import '../../../main/view/widgets/custom_app_bar.dart';
 
 class AllRequestsPage extends StatelessWidget {
   const AllRequestsPage({super.key});

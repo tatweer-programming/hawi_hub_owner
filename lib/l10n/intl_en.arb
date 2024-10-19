@@ -183,5 +183,6 @@
   "females": "Females",
   "both": "Both",
   "genders": "Gender",
-  "canShare": "Can create games ?"
+  "canShare": "Can create games ?",
+  "bothMalesAndFemales": "Males & Females"
 }

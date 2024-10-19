@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/place_holder.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/shimmers/shimmer_widget.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
-import 'package:hawi_hub_owner/src/modules/places/data/models/offline_booking.dart';
 import 'package:sizer/sizer.dart';
 
 class VerticalOfflineBookingsShimmer extends StatelessWidget {

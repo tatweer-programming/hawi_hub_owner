@@ -347,10 +347,12 @@ class GetReservationsError extends PlaceError {
 }
 
 class GetReservationsSuccess extends PlaceState {
-  GetReservationsSuccess();
+  final List<BookingRequest> upcomingBookings;
+
+  GetReservationsSuccess(this.upcomingBookings);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [upcomingBookings];
 }
 
 class GetReservationsLoading extends PlaceState {

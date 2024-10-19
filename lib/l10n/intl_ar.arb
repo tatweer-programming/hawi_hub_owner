@@ -183,5 +183,6 @@
   "females": "إناث",
   "both": "كليهما",
   "genders": "النوع",
-  "canShare": "هل يمكن إنشاء حجز جماعي ؟"
+  "canShare": "هل يمكن إنشاء حجز جماعي ؟",
+  "bothMalesAndFemales": " ذكور وإناث"
 }

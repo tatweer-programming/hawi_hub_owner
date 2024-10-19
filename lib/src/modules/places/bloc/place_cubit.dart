@@ -2,15 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
-import 'package:hawi_hub_owner/src/modules/main/data/models/app_notification.dart';
-import 'package:hawi_hub_owner/src/modules/main/data/services/notification_services.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/data_sources/place_remote_data_source.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/booking_request.dart';
 import 'package:hawi_hub_owner/src/modules/places/data/models/day.dart';
@@ -48,7 +45,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   PlaceRemoteDataSource dataSource = PlaceRemoteDataSource();
   List<Place> places = [];
   List<BookingRequest> bookingRequests = [];
-  List<BookingRequest> futureBookings = [];
+  List<BookingRequest> upcomingBookings = [];
   List<OfflineBooking> offlineBookings = [];
   bool isPlacesLoading = true;
   bool isBookingRequestsLoading = true;
@@ -229,7 +226,7 @@ class PlaceCubit extends Cubit<PlaceState> {
       //print(l);
       emit(AcceptBookingRequestError(l));
     }, (r) async {
-      futureBookings.add(
+      upcomingBookings.add(
           bookingRequests.firstWhere((element) => element.id == requestId));
       bookingRequests.removeWhere((element) => element.id == requestId);
       emit(AcceptBookingRequestSuccess());
@@ -402,7 +399,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   void clearAllData() async {
     places.clear();
     bookingRequests.clear();
-    futureBookings.clear();
+    upcomingBookings.clear();
     offlineBookings.clear();
     imageFiles.clear();
     currentPlace = null;
@@ -502,35 +499,37 @@ class PlaceCubit extends Cubit<PlaceState> {
   }
 
   Future getAppBookings({bool? isRefresh}) async {
-    if (futureBookings.isEmpty || isRefresh == true) {
+    if ((upcomingBookings.isEmpty && isFutureBookingsLoading) ||
+        isRefresh == true) {
       emit(GetReservationsLoading());
       var result = await dataSource.getOwnerBookings();
+      isFutureBookingsLoading = false;
       result.fold((l) {
-        isFutureBookingsLoading = false;
         emit(GetReservationsError(l));
       }, (r) {
-        isFutureBookingsLoading = false;
-        futureBookings = r..sort((a, b) => b.startTime.compareTo(a.startTime));
-        emit(GetReservationsSuccess());
+        upcomingBookings = r
+          ..sort((a, b) => b.startTime.compareTo(a.startTime));
+        emit(GetReservationsSuccess(r));
       });
     }
   }
 
   Future getOfflineBookings({bool? isRefresh}) async {
-    if (offlineBookings.isEmpty || isRefresh == true) {
+    if ((offlineBookings.isEmpty && isOfflineBookingsLoading) ||
+        isRefresh == true) {
       isOfflineBookingsLoading = true;
       emit(GetOfflineReservationsLoading());
       print("loading offline bookings");
       var result = await dataSource.getOwnerOfflineBookings();
+      isOfflineBookingsLoading = false;
       result.fold((l) {
         print(" error loading offline bookings ${l.toString()}");
-        isOfflineBookingsLoading = false;
         emit(GetOfflineReservationsError(l));
       }, (r) {
         print("got offline bookings ${r.toString()}");
 
         offlineBookings = r..sort((a, b) => b.startTime.compareTo(a.startTime));
-        isOfflineBookingsLoading = false;
+        print(offlineBookings);
         emit(GetOfflineReservationsSuccess(r));
       });
     }

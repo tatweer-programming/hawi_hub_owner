@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
 import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
-import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
-import 'package:hawi_hub_owner/src/core/utils/constance_manager.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
-import 'package:hawi_hub_owner/src/modules/main/view/widgets/connectivity.dart';
 import 'package:hawi_hub_owner/src/modules/places/bloc/place_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/compnents.dart';
 import 'package:hawi_hub_owner/src/modules/places/view/widgets/shimmers/app_booking_shimmer.dart';
@@ -19,8 +16,9 @@ class UpComingOnlineBookingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     PlaceCubit placeCubit = PlaceCubit.get();
     return BlocListener<PlaceCubit, PlaceState>(
-      bloc: PlaceCubit.get(),
+      bloc: PlaceCubit.get()..getAppBookings(),
       listener: (context, state) {
+        print(state);
         if (state is PlaceError) {
           errorToast(
               msg: ExceptionManager(state.exception).translatedMessage());
@@ -32,9 +30,11 @@ class UpComingOnlineBookingsPage extends StatelessWidget {
           BlocBuilder<PlaceCubit, PlaceState>(
               bloc: placeCubit,
               builder: (context, state) {
-                return (state is GetReservationsLoading)
+                debugPrint(state.toString());
+                return (state is GetReservationsLoading ||
+                        placeCubit.isFutureBookingsLoading)
                     ? const VerticalAppBookingsShimmer()
-                    : placeCubit.futureBookings.isEmpty
+                    : placeCubit.upcomingBookings.isEmpty
                         ? Padding(
                             padding: EdgeInsets.only(top: 20.h),
                             child: Center(
@@ -48,10 +48,11 @@ class UpComingOnlineBookingsPage extends StatelessWidget {
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) => BookingItem(
                                       bookingRequest:
-                                          placeCubit.futureBookings[index]),
+                                          placeCubit.upcomingBookings[index]),
                                   separatorBuilder: (itemContext, index) =>
                                       const Divider(),
-                                  itemCount: placeCubit.futureBookings.length),
+                                  itemCount:
+                                      placeCubit.upcomingBookings.length),
                             ],
                           );
               })

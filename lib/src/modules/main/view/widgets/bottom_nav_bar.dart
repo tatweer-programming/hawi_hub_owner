@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 
-import 'package:sizer/sizer.dart';
 
 import '../../../../core/utils/color_manager.dart';
 

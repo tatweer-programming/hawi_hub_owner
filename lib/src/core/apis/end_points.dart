@@ -33,7 +33,6 @@ class EndPoints {
   static const String deletePlace = '/Stadium/';
 
   static const String getBookingRequest = '/Owner/StadiumsReservations/';
-  static const String getPlaceReservations = '/Stadium/GetReservations';
   static const String acceptBookingRequest = '/Owner/AcceptStadiumReservation/';
   static const String declineBookingRequest =
       '/Owner/RejectStadiumReservation/';
@@ -41,7 +40,7 @@ class EndPoints {
   static const String getSports = '/Category';
   static const String getBanners = '/Banner';
   static const String getNotifications = '/Hub/OwnerNotifications/';
-  static const String getPlaceFeedbacks = '/Stadium/GetStadiumReviews/';
+  static const String getPlaceFeedbacks = '/Stadium/Reviews/';
   static const String uploadProofOfOwnership =
       '/Stadium/UploadStadiumProofOfOwnership';
   static const String uploadPlaceImages = '/Stadium/UploadStadiumImages';
@@ -51,5 +50,5 @@ class EndPoints {
   static const String addOfflineReservation = "/Stadium/OfflineReservations/";
   static const String saveNotificationToPlayer = "/Hub/AddPlayerNotification/";
   static const String getOfflineBookings =
-      "/Stadium/GetOwnerStadiumsOfflineReservations/";
+      "/Owner/StadiumsOfflineReservations/";
 }
