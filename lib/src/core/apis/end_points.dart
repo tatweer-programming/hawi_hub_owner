@@ -19,9 +19,24 @@ class EndPoints {
   /// chat
   static const String getConnection = '/Hub/negotiate?negotiateVersion=1';
   static const String addConnectionId = '/Hub/AddOwnerConnectionId/';
-  static const String addConversation = '/Hub/AddConversation';
-  static const String getOwnerConversations = '/Hub/OwnerConversations/';
-  static const String getConversation = '/Hub/Conversation/';
+
+  // static const String getOwnerConversations = '/Hub/OwnerConversations/';
+  // static const String getConversation = '/Hub/Conversation/';
+  static const String addConversationBetweenPlayerAndOwner =
+      '/Hub/ConversationBetweenPlayerAndOwner';
+  static const String addConversationBetweenAdminAndOwner =
+      '/Hub/ConversationBetweenAdminAndOwner';
+
+  static const String getOwnerConversationsWithPlayers =
+      '/Hub/OwnerConversationsWithPlayers/';
+  static const String getOwnerConversationsWithAdmins =
+      '/Hub/OwnerConversationsWithAdmins/';
+
+  static const String getConversationOwnerWithPlayer =
+      '/Hub/ConversationOwnerWithPlayer/';
+  static const String getConversationAdminWithOwner =
+      '/Hub/ConversationAdminWithOwner/';
+
   static const String uploadConversationAttachment =
       '/Hub/UploadConversationAttachment';
 

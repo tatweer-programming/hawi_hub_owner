@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../core/common_widgets/common_widgets.dart';
+import '../../../../core/error/remote_error.dart';
 import '../../../../core/local/shared_prefrences.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../bloc/auth_bloc.dart';
@@ -45,8 +46,9 @@ class LoginScreen extends StatelessWidget {
             await CacheHelper.removeData(key: "userId");
           }
         } else if (state is LoginErrorState) {
-          errorToast(msg: handleResponseTranslation(state.error, context));
-        }
+          errorToast(
+              msg: ExceptionManager(state.exception)
+                  .translatedMessage());        }
       },
       builder: (context, state) {
         return SingleChildScrollView(
@@ -126,7 +128,7 @@ class LoginScreen extends StatelessWidget {
                           : defaultButton(
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  bloc.add(LoginPlayerEvent(
+                                  bloc.add(LoginOwnerEvent(
                                       email: emailController.text,
                                       password: passwordController.text));
                                 }

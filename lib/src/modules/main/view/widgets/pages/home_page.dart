@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
               actions: [
                 IconButton(
                     onPressed: () {
-                      context.pushWithTransition(const ChatsScreen());
+                      context.pushWithTransition(const ChatsScreen(withPlayer: true,));
                     },
                     icon: const ImageIcon(
                       AssetImage("assets/images/icons/chat.png"),

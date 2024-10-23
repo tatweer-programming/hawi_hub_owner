@@ -30,8 +30,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "addFeedback": MessageLookupByLibrary.simpleMessage("Add Feedback"),
         "addImages": MessageLookupByLibrary.simpleMessage("Add images"),
         "addPlace": MessageLookupByLibrary.simpleMessage("Add place"),
-        "addRequiredPdf": MessageLookupByLibrary.simpleMessage(
-            "Please add what is required below from the file"),
+        "addRequiredPdfForChambersOfCommerce": MessageLookupByLibrary.simpleMessage(
+            "For chambers of commerce please add what is required below from the file"),
+        "addRequiredPdfForCharitableOrganizationsOrEndowments":
+            MessageLookupByLibrary.simpleMessage(
+                "For charitable organizations or endowments please add what is required below from the file"),
+        "addRequiredPdfForCivilAssociationsOrInstitutions":
+            MessageLookupByLibrary.simpleMessage(
+                "For civil associations or institutions  please add what is required below from the file"),
+        "addRequiredPdfForCompanies": MessageLookupByLibrary.simpleMessage(
+            "For companies please add what is required below from the file"),
+        "addRequiredPdfForIndividual": MessageLookupByLibrary.simpleMessage(
+            "For individual please add what is required below from the file"),
+        "addRequiredPdfForInstitution": MessageLookupByLibrary.simpleMessage(
+            "For institution please add what is required below from the file"),
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("Add working hours"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
@@ -68,11 +80,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Common Questions"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm delete"),
+        "confirmEmail": MessageLookupByLibrary.simpleMessage("Confirm Email"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "confirmationCodeSentSuccessfully":
             MessageLookupByLibrary.simpleMessage(
                 "Confirmation code sent successfully to"),
+        "conversations": MessageLookupByLibrary.simpleMessage("Conversations"),
+        "createAccount": MessageLookupByLibrary.simpleMessage("Create Account"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "decline": MessageLookupByLibrary.simpleMessage("Decline"),
@@ -107,12 +122,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterUsername":
             MessageLookupByLibrary.simpleMessage("Please enter username"),
         "feedbacks": MessageLookupByLibrary.simpleMessage("Feedbacks"),
+        "female": MessageLookupByLibrary.simpleMessage("Female"),
         "fileUploaded": MessageLookupByLibrary.simpleMessage("File Uploaded"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot password ?"),
         "from": MessageLookupByLibrary.simpleMessage("From"),
         "futureBookings":
             MessageLookupByLibrary.simpleMessage("Upcoming Bookings"),
+        "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getStarted": MessageLookupByLibrary.simpleMessage(
             "Get your Squad to play together!"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
@@ -139,11 +156,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSuccessfully":
             MessageLookupByLibrary.simpleMessage("Account LogeIn Successfully"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "male": MessageLookupByLibrary.simpleMessage("Male"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("Minimum booking"),
         "minimumHours":
             MessageLookupByLibrary.simpleMessage("Minimum hours for booking"),
         "minutes": MessageLookupByLibrary.simpleMessage("minutes"),
+        "mix": MessageLookupByLibrary.simpleMessage("Mix"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
         "mustVerifyAccount": MessageLookupByLibrary.simpleMessage(
             "You must verify your account first "),
@@ -203,6 +222,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Terms And Conditions"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "profileSetup": MessageLookupByLibrary.simpleMessage("Profile Setup"),
         "proofOfIdentityAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage(
                 "Proof of identity has been added successfully"),
@@ -250,6 +270,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sport is required"),
         "start": MessageLookupByLibrary.simpleMessage("Get Started"),
         "startTime": MessageLookupByLibrary.simpleMessage("Start time"),
+        "technicalSupport":
+            MessageLookupByLibrary.simpleMessage("Technical support"),
         "termsAndConditions": MessageLookupByLibrary.simpleMessage(
             "Howie Hub application terms and conditions\nintroduction:\n\nWelcome to the Howie Hub app! This application aims to connect stadium owners with tenants, facilitating the process of booking stadiums individually or collectively. Before using the application, please read these terms and conditions carefully.\n\n1. General information:\n\nApplication name: Howie Hub\nApplication type: Sports application\nThe application\'s target audience: youth in the Kingdom of Saudi Arabia\nServices provided by the application:\nBook pitches individually\nCreate group bookings and share them with friends\nCreate group bookings that are open to all app users\nApplication business model:\nThe user pays the full reservation price.\nThe company that owns the application receives a percentage of ......% of the reservation value after deducting the bank commissions for electronic payment service providers, which are ..........%.\nThe stadium owner gets the rest of the reservation value.\n2. Legal information:\n\nCountry of headquarters of the company that owns the application: Kingdom of Saudi Arabia\n\n3. Privacy Policy:\n\nData collection:\nNormal user:\nthe name\nthe age\nE-mail\nStadium owner:\nSome documents are required to authenticate the stadium owner’s account and documents to prove his ownership of the places before agreeing to display them in the application. All required documents are shown in the legal requirements screen. \ndata usage:\nThese data and documents are kept and the data is only shared with the competent legal authorities only when needed and in accordance with Saudi laws.\nData protection:\nAll legal measures are taken to protect user data.\n4. Terms of use:\nAcceptance of the Terms: Using the application means accepting these terms and conditions.\nthe accounts:\nCreate a free user account.\nVerifying the identity of stadium owners.\nReservations:\nUsers can book pitches individually or as a group.\nThe stadium owner can accept or reject reservations.\nThe reservation value is paid by the user.\nThe company that owns the application receives a percentage of the reservation value.\nThe stadium owner gets the rest of the reservation value.\nBehaviors:\nYou must respect all users on the application and refrain from any abusive or illegal behavior.\nthe responsibility:\nThe user is responsible for all his actions on the application.\nThe Company does not bear any responsibility for any damages resulting from the use of the application.\nthe changes:\nThe Company reserves the right to modify these terms and conditions at any time without prior notice.\nRegulating law:\nThese terms and conditions are subject to the laws of the Kingdom of Saudi Arabia.\n5. Dispute resolution:\nIf any dispute arises between the User and the Application, every effort will be made to resolve it amicably.\nIf the amicable solution fails, arbitration is resorted to at the Commercial Arbitration Center of the Kingdom of Saudi Arabia.\n6. Contact:\n\nYou can contact the company that owns the application through...\nnote:\nThese terms and conditions may be updated from time to time. Please check this page periodically to see the latest changes.\nThank you for using Howie Hub!"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
@@ -265,6 +287,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage(" Username"),
         "usernameAlreadyExist":
             MessageLookupByLibrary.simpleMessage("Username is already exists."),
+        "verifyAccount": MessageLookupByLibrary.simpleMessage("Verify Account"),
         "verifyEmail": MessageLookupByLibrary.simpleMessage("Verify Email"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View details"),

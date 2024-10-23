@@ -8,42 +8,42 @@ import '../services/auth_services.dart';
 class AuthRepository {
   final AuthService _service = AuthService();
 
-  Future<String> loginPlayer(
+  Future<Either<Exception,String>> login(
       {required String email,
       required String password,
       required bool loginWithFBOrGG}) async {
-    return await _service.loginOwner(
+    return await _service.login(
         email: email, password: password, loginWithFBOrGG: loginWithFBOrGG);
   }
 
-  Future<Either<String, String>> loginWithGoogle() async {
+  Future<Either<Exception, String>> loginWithGoogle() async {
     return await _service.loginWithGoogle();
   }
 
-  Future<Either<String, String>> loginWithFacebook() async {
+  Future<Either<Exception, String>> loginWithFacebook() async {
     return await _service.loginWithFacebook();
   }
 
-  Future<Either<String, AuthOwner?>> signupWithGoogle() async {
+  Future<Either<Exception, AuthOwner?>> signupWithGoogle() async {
     return await _service.signupWithGoogle();
   }
 
-  Future<Either<String, AuthOwner?>> signupWithFacebook() async {
+  Future<Either<Exception, AuthOwner?>> signupWithFacebook() async {
     return await _service.signupWithFacebook();
   }
 
-  Future<Either<String, String>> confirmEmail() async {
+  Future<Either<Exception, String>> confirmEmail() async {
     return await _service.confirmEmail();
   }
 
-  Future<Either<String, String>> verifyConfirmEmail(String code) async {
+  Future<Either<Exception, String>> verifyConfirmEmail(String code) async {
     return await _service.verifyConfirmEmail(code);
   }
 
-  Future<Either<String, String>> registerPlayer({
+  Future<Either<Exception, String>> register({
     required AuthOwner authOwner,
   }) async {
-    return _service.registerOwner(
+    return _service.register(
       authOwner: authOwner,
     );
   }
@@ -56,11 +56,11 @@ class AuthRepository {
     return _service.changeProfileImage(newProfileImage);
   }
 
-  Future<Either<String, String>> uploadNationalId(File nationalId) async {
+  Future<Either<Exception, String>> uploadNationalId(File nationalId) async {
     return _service.verificationNationalId(nationalId);
   }
 
-  Future<Either<String, String>> changePassword({
+  Future<Either<Exception, String>> changePassword({
     required String oldPassword,
     required String newPassword,
   }) async {
@@ -72,7 +72,7 @@ class AuthRepository {
   //   return _service.deleteProfileImage();
   // }
 
-  Future<Either<String, String>> verifyCode({
+  Future<Either<Exception, String>> verifyCode({
     required String email,
     required String code,
     required String password,
@@ -80,7 +80,7 @@ class AuthRepository {
     return _service.verifyCode(email: email, code: code, password: password);
   }
 
-  Future<Either<String, Owner>> getProfile(int id) async {
+  Future<Either<Exception, Owner>> getProfile(int id) async {
     return _service.getProfile(id);
   }
 }

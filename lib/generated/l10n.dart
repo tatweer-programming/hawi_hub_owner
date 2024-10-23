@@ -1500,11 +1500,61 @@ class S {
     );
   }
 
-  /// `Please add what is required below from the file`
-  String get addRequiredPdf {
+  /// `For individual please add what is required below from the file`
+  String get addRequiredPdfForIndividual {
     return Intl.message(
-      'Please add what is required below from the file',
-      name: 'addRequiredPdf',
+      'For individual please add what is required below from the file',
+      name: 'addRequiredPdfForIndividual',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For institution please add what is required below from the file`
+  String get addRequiredPdfForInstitution {
+    return Intl.message(
+      'For institution please add what is required below from the file',
+      name: 'addRequiredPdfForInstitution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For charitable organizations or endowments please add what is required below from the file`
+  String get addRequiredPdfForCharitableOrganizationsOrEndowments {
+    return Intl.message(
+      'For charitable organizations or endowments please add what is required below from the file',
+      name: 'addRequiredPdfForCharitableOrganizationsOrEndowments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For civil associations or institutions  please add what is required below from the file`
+  String get addRequiredPdfForCivilAssociationsOrInstitutions {
+    return Intl.message(
+      'For civil associations or institutions  please add what is required below from the file',
+      name: 'addRequiredPdfForCivilAssociationsOrInstitutions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For chambers of commerce please add what is required below from the file`
+  String get addRequiredPdfForChambersOfCommerce {
+    return Intl.message(
+      'For chambers of commerce please add what is required below from the file',
+      name: 'addRequiredPdfForChambersOfCommerce',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For companies please add what is required below from the file`
+  String get addRequiredPdfForCompanies {
+    return Intl.message(
+      'For companies please add what is required below from the file',
+      name: 'addRequiredPdfForCompanies',
       desc: '',
       args: [],
     );
@@ -1815,6 +1865,106 @@ class S {
     return Intl.message(
       'No owner was found with ID :',
       name: 'noOwnerFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gender`
+  String get gender {
+    return Intl.message(
+      'Gender',
+      name: 'gender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mix`
+  String get mix {
+    return Intl.message(
+      'Mix',
+      name: 'mix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Male`
+  String get male {
+    return Intl.message(
+      'Male',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Female`
+  String get female {
+    return Intl.message(
+      'Female',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Account`
+  String get createAccount {
+    return Intl.message(
+      'Create Account',
+      name: 'createAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Email`
+  String get confirmEmail {
+    return Intl.message(
+      'Confirm Email',
+      name: 'confirmEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify Account`
+  String get verifyAccount {
+    return Intl.message(
+      'Verify Account',
+      name: 'verifyAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile Setup`
+  String get profileSetup {
+    return Intl.message(
+      'Profile Setup',
+      name: 'profileSetup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Technical support`
+  String get technicalSupport {
+    return Intl.message(
+      'Technical support',
+      name: 'technicalSupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conversations`
+  String get conversations {
+    return Intl.message(
+      'Conversations',
+      name: 'conversations',
       desc: '',
       args: [],
     );

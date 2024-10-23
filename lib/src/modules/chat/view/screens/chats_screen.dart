@@ -15,15 +15,19 @@ import '../../../../core/utils/color_manager.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
 
 class ChatsScreen extends StatelessWidget {
-  const ChatsScreen({super.key});
 
+  final bool withPlayer;
+
+  const ChatsScreen({super.key, required this.withPlayer});
   @override
   Widget build(BuildContext context) {
-    ChatBloc chatBloc = ChatBloc.get(context)..add(GetAllChatsEvent());
+
+    ChatBloc chatBloc = context.read<ChatBloc>()
+      ..add(GetAllChatsEvent(withOwner: withPlayer));
     List<Chat> chats = [];
     return RefreshIndicator(
       onRefresh: () async {
-        chatBloc.add(GetAllChatsEvent());
+        chatBloc.add(GetAllChatsEvent(withOwner: withPlayer));
       },
       child: Scaffold(
         body: Column(
@@ -51,11 +55,13 @@ class ChatsScreen extends StatelessWidget {
                                       context.pushWithTransition(ChatScreen(
                                         chatBloc: chatBloc,
                                         chat: chats[index],
+                                        withOwner: withPlayer,
                                       ));
                                       chatBloc.add(GetChatMessagesEvent(
                                         conversationId:
                                             chats[index].conversationId,
                                         index: index,
+                                        withOwner: withPlayer,
                                       ));
                                     },
                                   ),

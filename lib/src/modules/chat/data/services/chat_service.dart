@@ -52,10 +52,13 @@ class ChatService {
     }
   }
 
-  Future<Either<String, List<Chat>>> getAllChats() async {
+  Future<Either<String, List<Chat>>> getAllChats(
+      {required bool withPlayer}) async {
     try {
       Response response = await DioHelper.getData(
-        path: EndPoints.getOwnerConversations +
+        path: (withPlayer
+                ? EndPoints.getOwnerConversationsWithPlayers
+                : EndPoints.getOwnerConversationsWithAdmins) +
             ConstantsManager.userId.toString(),
       );
       if (response.statusCode == 200) {
@@ -71,7 +74,8 @@ class ChatService {
     }
   }
 
-  Future<Either<String, Unit>> sendMessage({required MessageDetails message}) async {
+  Future<Either<String, Unit>> sendMessage(
+      {required MessageDetails message}) async {
     try {
       if (message.attachmentUrl != null) {
         message.attachmentUrl =
@@ -85,12 +89,11 @@ class ChatService {
     }
   }
 
-  Stream<MessageDetails> streamMessage() {
+  Stream<MessageDetails> streamMessage({required bool withPlayer}) {
     try {
       StreamController<MessageDetails> messageStreamController =
           StreamController<MessageDetails>.broadcast();
       socket!.listen((data) {
-        print("data from owner  $data");
         if (data != '{"type":6}' && data != '{}') {
           String message =
               data.toString().replaceAll(RegExp(r'[\x00-\x1F]+'), '');
@@ -110,10 +113,13 @@ class ChatService {
   }
 
   Future<Either<String, Message>> getChatMessages(
-      int conversationId) async {
+      int conversationId, bool withPlayer) async {
     try {
       Response response = await DioHelper.getData(
-        path: EndPoints.getConversation + conversationId.toString(),
+        path: (withPlayer
+                ? EndPoints.getOwnerConversationsWithPlayers
+                : EndPoints.getOwnerConversationsWithAdmins) +
+            conversationId.toString(),
       );
       if (response.statusCode == 200) {
         Message messages = Message.fromJson(response.data);

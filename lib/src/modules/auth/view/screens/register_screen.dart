@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/data/models/auth_owner.dart';
@@ -33,11 +34,13 @@ class RegisterScreen extends StatelessWidget {
           visible = state.visible;
         }
         if (state is RegisterSuccessState) {
+          bloc.add(ConfirmEmailEvent());
           context.push(Routes.confirmEmail, arguments: {"bloc": bloc});
         } else if (state is ConfirmEmailSuccessState) {
           defaultToast(msg: handleResponseTranslation(state.value, context));
         } else if (state is RegisterErrorState) {
-          errorToast(msg: handleResponseTranslation(state.error, context));
+          errorToast(
+              msg: ExceptionManager(state.exception).translatedMessage());
         }
         if (state is SignupWithGoogleSuccessState) {
           authOwner = state.authOwner;
@@ -214,7 +217,7 @@ class RegisterScreen extends StatelessWidget {
                                   if (formKey.currentState!.validate() &&
                                       acceptTerms) {
                                     bloc.add(
-                                      RegisterPlayerEvent(
+                                      RegisterOwnerEvent(
                                         authOwner: AuthOwner(
                                             password: passwordController.text,
                                             userName: userNameController.text,

@@ -16,10 +16,12 @@ import '../../data/models/message_details.dart';
 class ChatScreen extends StatelessWidget {
   final ChatBloc chatBloc;
   final Chat? chat;
+  final bool withOwner;
 
   const ChatScreen({
     super.key,
     required this.chat,
+    required this.withOwner,
     required this.chatBloc,
   });
 

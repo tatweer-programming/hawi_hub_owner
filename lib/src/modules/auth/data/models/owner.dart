@@ -52,4 +52,13 @@ class Owner {
       playerReservation: List.from(json['playerReservation'] ?? []),
     );
   }
+
+  bool isVerified() {
+    return approvalStatus == 1;
+  }
+
+  bool isEmailConfirmed() {
+    return emailConfirmed == true;
+  }
+
 }

@@ -21,6 +21,14 @@ class TextStyleManager {
     );
   }
 
+  static TextStyle getGreyTextStyle() {
+    return TextStyle(
+      color: ColorManager.grey2,
+      fontSize: FontSizeManager.s16,
+      fontWeight: FontWeightManager.regular,
+    );
+  }
+
   static TextStyle getButtonTextStyle() {
     return TextStyle(
       color: ColorManager.white,
