@@ -352,7 +352,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
 Future<File> _loadPdfFromAssets(String path) async {
   final byteData = await rootBundle.load(path);
-  final file = File('${(await getTemporaryDirectory()).path}/Requirements.pdf');
+  final file =
+      File('${(await getTemporaryDirectory()).path}/${path.split('/').last}');
   await file.writeAsBytes(byteData.buffer.asUint8List());
   return file;
 }

@@ -162,12 +162,10 @@
   "getStarted": "اجعل فريقك يلعب معًا!",
   "bookVenuesToPlay": "حجز أماكن للعب مع الأصدقاء",
   "readySteadyGo": "إستعد، تأهب، إذهب",
-  "addRequiredPdfForIndividual": "يرجي إلحاق المطلوب ادناه من الملف للحسابات الفردية ",
-  "addRequiredPdfForInstitution": "يرجي إلحاق المطلوب ادناه من الملف  للمؤسسات",
-  "addRequiredPdfForCharitableOrganizationsOrEndowments": "يرجي ألحاق المطلوب ادناه من الملف للجمعيات الخيرية أو الأوقاف",
-  "addRequiredPdfForCivilAssociationsOrInstitutions": "يرجي ألحاق المطلوب ادناه من الملف للجمعيات الأهلية أو المؤسسات",
-  "addRequiredPdfForChambersOfCommerce": "يرجي ألحاق المطلوب ادناه من الملف للغرف التجارية",
-  "addRequiredPdfForCompanies": "يرجي ألحاق المطلوب ادناه من الملف للشركات",
+  "addRequiredPdfForFreeLancers": "يرجي إلحاق المطلوب ادناه من الملف للحسابات العمل الحر ",
+  "addRequiredPdfForLegalOrganizations": "يرجي ألحاق المطلوب ادناه من الملف للشركات القانونية",
+  "addRequiredPdfForCompaniesInKSAForeign ": "يرجي ألحاق المطلوب ادناه من الملف للشركات المستثمرة في المملكة العربية السعودية من أصل أجنبي ",
+  "addRequiredPdfForLegalInstitutions": "يرجي ألحاق المطلوب ادناه من الملف للمؤسسات القانونية ",
   "workingHoursSaved": "تم حفظ ساعات العمل",
   "futureBookings": "الحجوزات القادمة",
   "appBookings": "حجوزات من خلال التطبيق",
@@ -190,5 +188,6 @@
   "verifyAccount": "إثبات الهوية",
   "profileSetup": "اعداد الملف الشخصي",
   "technicalSupport": "الدعم الفني",
+  "rate": "التقييم",
   "conversations": "المحادثات"
 }

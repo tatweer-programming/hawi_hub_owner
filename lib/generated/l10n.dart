@@ -780,10 +780,10 @@ class S {
     );
   }
 
-  /// `The ID card is being verified now`
+  /// `The file is being reviewed now`
   String get identificationPending {
     return Intl.message(
-      'The ID card is being verified now',
+      'The file is being reviewed now',
       name: 'identificationPending',
       desc: '',
       args: [],
@@ -1500,61 +1500,41 @@ class S {
     );
   }
 
-  /// `For individual please add what is required below from the file`
-  String get addRequiredPdfForIndividual {
+  /// `For freelancers please add what is required below from the file`
+  String get addRequiredPdfForFreeLancers {
     return Intl.message(
-      'For individual please add what is required below from the file',
-      name: 'addRequiredPdfForIndividual',
+      'For freelancers please add what is required below from the file',
+      name: 'addRequiredPdfForFreeLancers',
       desc: '',
       args: [],
     );
   }
 
-  /// `For institution please add what is required below from the file`
-  String get addRequiredPdfForInstitution {
+  /// `For companies investing in the Kingdom of Saudi Arabia of foreign origin please add what is required below from the file`
+  String get addRequiredPdfForCompaniesInKSAForeign {
     return Intl.message(
-      'For institution please add what is required below from the file',
-      name: 'addRequiredPdfForInstitution',
+      'For companies investing in the Kingdom of Saudi Arabia of foreign origin please add what is required below from the file',
+      name: 'addRequiredPdfForCompaniesInKSAForeign',
       desc: '',
       args: [],
     );
   }
 
-  /// `For charitable organizations or endowments please add what is required below from the file`
-  String get addRequiredPdfForCharitableOrganizationsOrEndowments {
+  /// `For legal organizations please add what is required below from the file`
+  String get addRequiredPdfForLegalOrganizations {
     return Intl.message(
-      'For charitable organizations or endowments please add what is required below from the file',
-      name: 'addRequiredPdfForCharitableOrganizationsOrEndowments',
+      'For legal organizations please add what is required below from the file',
+      name: 'addRequiredPdfForLegalOrganizations',
       desc: '',
       args: [],
     );
   }
 
-  /// `For civil associations or institutions  please add what is required below from the file`
-  String get addRequiredPdfForCivilAssociationsOrInstitutions {
+  /// `For legal institutions please add what is required below from the file`
+  String get addRequiredPdfForLegalInstitutions {
     return Intl.message(
-      'For civil associations or institutions  please add what is required below from the file',
-      name: 'addRequiredPdfForCivilAssociationsOrInstitutions',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `For chambers of commerce please add what is required below from the file`
-  String get addRequiredPdfForChambersOfCommerce {
-    return Intl.message(
-      'For chambers of commerce please add what is required below from the file',
-      name: 'addRequiredPdfForChambersOfCommerce',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `For companies please add what is required below from the file`
-  String get addRequiredPdfForCompanies {
-    return Intl.message(
-      'For companies please add what is required below from the file',
-      name: 'addRequiredPdfForCompanies',
+      'For legal institutions please add what is required below from the file',
+      name: 'addRequiredPdfForLegalInstitutions',
       desc: '',
       args: [],
     );
@@ -1955,6 +1935,16 @@ class S {
     return Intl.message(
       'Technical support',
       name: 'technicalSupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate`
+  String get rate {
+    return Intl.message(
+      'Rate',
+      name: 'rate',
       desc: '',
       args: [],
     );

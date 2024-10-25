@@ -186,41 +186,26 @@ Widget _notVerified(AuthBloc bloc) {
           _viewRequiredDocuments(
             bloc: bloc,
             context: context,
-            path: "assets/pdfs/Requirements.pdf",
-            text: S.of(context).addRequiredPdfForIndividual,
+            path: "assets/pdfs/Freelancers.pdf",
+            text: S.of(context).addRequiredPdfForFreeLancers,
           ),
           _viewRequiredDocuments(
             bloc: bloc,
             context: context,
-            path: "assets/pdfs/Requirements.pdf",
-            text: S.of(context).addRequiredPdfForCompanies,
+            path: "assets/pdfs/CompaniesInKSAForeign.pdf",
+            text: S.of(context).addRequiredPdfForCompaniesInKSAForeign,
           ),
           _viewRequiredDocuments(
             bloc: bloc,
             context: context,
-            path: "assets/pdfs/Requirements.pdf",
-            text: S.of(context).addRequiredPdfForInstitution,
+            path: "assets/pdfs/LegalInstitutions.pdf",
+            text: S.of(context).addRequiredPdfForLegalInstitutions,
           ),
           _viewRequiredDocuments(
             bloc: bloc,
             context: context,
-            path: "assets/pdfs/Requirements.pdf",
-            text: S
-                .of(context)
-                .addRequiredPdfForCharitableOrganizationsOrEndowments,
-          ),
-          _viewRequiredDocuments(
-            bloc: bloc,
-            context: context,
-            path: "assets/pdfs/Requirements.pdf",
-            text:
-                S.of(context).addRequiredPdfForCivilAssociationsOrInstitutions,
-          ),
-          _viewRequiredDocuments(
-            bloc: bloc,
-            context: context,
-            path: "assets/pdfs/Requirements.pdf",
-            text: S.of(context).addRequiredPdfForChambersOfCommerce,
+            path: "assets/pdfs/LegalOrganizations.pdf",
+            text: S.of(context).addRequiredPdfForLegalOrganizations,
           ),
           SizedBox(
             height: 3.h,
@@ -349,19 +334,25 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    RatingBar.builder(
-      initialRating: owner.rate,
-      minRating: 1,
-      itemSize: 25.sp,
-      direction: Axis.horizontal,
-      ignoreGestures: true,
-      allowHalfRating: true,
-      itemPadding: EdgeInsets.zero,
-      itemBuilder: (context, _) => const Icon(
-        Icons.star,
-        color: ColorManager.golden,
+    userInfoDisplay(
+      key: S.of(context).rate,
+      value: owner.rate.toStringAsFixed(1),
+      trailing: Expanded(
+        child: RatingBar.builder(
+          initialRating: owner.rate,
+          minRating: 1,
+          itemSize: 25.sp,
+          direction: Axis.horizontal,
+          ignoreGestures: true,
+          allowHalfRating: true,
+          itemPadding: EdgeInsets.zero,
+          itemBuilder: (context, _) => const Icon(
+            Icons.star,
+            color: ColorManager.golden,
+          ),
+          onRatingUpdate: (rating) {},
+        ),
       ),
-      onRatingUpdate: (rating) {},
     ),
     SizedBox(
       height: 3.h,
@@ -403,16 +394,10 @@ Widget _verified({
       height: 2.h,
     ),
     if (ConstantsManager.appUser!.playerReservation.contains(owner.id))
-      defaultButton(
-          onPressed: () {
-            context.pushWithTransition(
-                AddFeedbackForUser(owner: owner, authBloc: authBloc));
-          },
-          text: S.of(context).addFeedback,
-          fontSize: 17.sp),
-    SizedBox(
-      height: 2.h,
-    ),
+      _addFeedback(context, onPressed: () {
+        context.pushWithTransition(
+            AddFeedbackForUser(owner: owner, authBloc: authBloc));
+      })
   ]);
 }
 
@@ -444,6 +429,20 @@ Widget _viewRequiredDocuments(
             ),
           )
         ],
+      ),
+    ],
+  );
+}
+
+_addFeedback(BuildContext context, {required Function() onPressed}) {
+  return Column(
+    children: [
+      defaultButton(
+          onPressed: onPressed,
+          text: S.of(context).addFeedback,
+          fontSize: 17.sp),
+      SizedBox(
+        height: 2.h,
       ),
     ],
   );

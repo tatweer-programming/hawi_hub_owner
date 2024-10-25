@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
+import 'package:hawi_hub_owner/src/modules/chat/view/screens/chat_screen.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
@@ -53,14 +54,8 @@ class MorePage extends StatelessWidget {
                   },
                   child: userInfoDisplay(
                       value:
-                      "${(ConstantsManager.appUser == null
-                          ? 0
-                          : ConstantsManager.appUser!.myWallet)} ${S
-                          .of(context)
-                          .sar}",
-                      key: S
-                          .of(context)
-                          .myWallet,
+                          "${(ConstantsManager.appUser == null ? 0 : ConstantsManager.appUser!.myWallet)} ${S.of(context).sar}",
+                      key: S.of(context).myWallet,
                       trailing: const Icon(
                         Icons.arrow_forward_ios,
                         color: ColorManager.grey2,
@@ -73,9 +68,7 @@ class MorePage extends StatelessWidget {
                   context.push(Routes.termsAndCondition);
                 },
                 icon: "assets/images/icons/privacy.webp",
-                text: S
-                    .of(context)
-                    .preferenceAndPrivacy,
+                text: S.of(context).preferenceAndPrivacy,
               ),
 
               _newSettingWidget(
@@ -83,9 +76,7 @@ class MorePage extends StatelessWidget {
                     showDialogForLanguage(context, mainCubit);
                   },
                   icon: "assets/images/icons/lang.png",
-                  text: S
-                      .of(context)
-                      .language,
+                  text: S.of(context).language,
                   trailing: Container(
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
@@ -99,9 +90,8 @@ class MorePage extends StatelessWidget {
                           },
                           child: _languageText(
                               text: "عربي",
-                              isEnglish: LocalizationManager
-                                  .getCurrentLocale()
-                                  .languageCode ==
+                              isEnglish: LocalizationManager.getCurrentLocale()
+                                      .languageCode ==
                                   "ar"),
                         ),
                         InkWell(
@@ -111,10 +101,9 @@ class MorePage extends StatelessWidget {
                           child: _languageText(
                               text: "English",
                               isEnglish:
-                              !(LocalizationManager
-                                  .getCurrentLocale()
-                                  .languageCode ==
-                                  "ar")),
+                                  !(LocalizationManager.getCurrentLocale()
+                                          .languageCode ==
+                                      "ar")),
                         ),
                       ],
                     ),
@@ -124,9 +113,7 @@ class MorePage extends StatelessWidget {
                   context.push(Routes.questions);
                 },
                 icon: "assets/images/icons/question.webp",
-                text: S
-                    .of(context)
-                    .commonQuestions,
+                text: S.of(context).commonQuestions,
               ),
               _newSettingWidget(
                 onTap: () {
@@ -135,22 +122,16 @@ class MorePage extends StatelessWidget {
                   ));
                 },
                 icon: "assets/images/icons/chat.png",
-                text: S
-                    .of(context)
-                    .technicalSupport,
+                text: S.of(context).technicalSupport,
               ),
               _newSettingWidget(
                 onTap: () {
                   Share.share(
-                    '${S
-                        .of(context)
-                        .shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
+                    '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
                   );
                 },
                 icon: "assets/images/icons/share_2.webp",
-                text: S
-                    .of(context)
-                    .share,
+                text: S.of(context).share,
               ),
               BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
@@ -165,9 +146,7 @@ class MorePage extends StatelessWidget {
                       showLogoutDialog(context, bloc);
                     },
                     icon: "assets/images/icons/logout.webp",
-                    text: S
-                        .of(context)
-                        .logout,
+                    text: S.of(context).logout,
                   );
                 },
               ),
@@ -300,9 +279,7 @@ Widget _appBar(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    S
-                        .of(context)
-                        .profile,
+                    S.of(context).profile,
                     style: TextStyleManager.getRegularStyle(),
                   ),
                   SizedBox(
@@ -376,10 +353,10 @@ Widget _checkProfile(bool isCheck, String text) {
           ),
           Expanded(
               child: Container(
-                color: ColorManager.grey2,
-                width: double.infinity,
-                height: 0.2.h,
-              ))
+            color: ColorManager.grey2,
+            width: double.infinity,
+            height: 0.2.h,
+          ))
         ],
       ),
       Text(
@@ -509,9 +486,7 @@ showLogoutDialog(BuildContext context, AuthBloc bloc) {
               context.pop();
             },
             child: Text(
-              S
-                  .of(context)
-                  .cancel,
+              S.of(context).cancel,
             ),
           ),
           TextButton(
@@ -519,16 +494,12 @@ showLogoutDialog(BuildContext context, AuthBloc bloc) {
               bloc.add(LogoutEvent());
             },
             child: Text(
-              S
-                  .of(context)
-                  .logout,
+              S.of(context).logout,
             ),
           )
         ],
         title: Text(
-          S
-              .of(context)
-              .doYouWantToLogout,
+          S.of(context).doYouWantToLogout,
           style: TextStyleManager.getRegularStyle(),
         ),
       );
@@ -547,21 +518,22 @@ Widget _languageText({
       color: isEnglish ? ColorManager.primary : ColorManager.grey2,
       borderRadius: isEnglish
           ? BorderRadius.only(
-        topLeft: Radius.circular(10),
-        bottomLeft: Radius.circular(
-          10,
-        ),
-      )
+              topLeft: Radius.circular(10),
+              bottomLeft: Radius.circular(
+                10,
+              ),
+            )
           : BorderRadius.only(
-        bottomRight: Radius.circular(10),
-        topRight: Radius.circular(10),
-      ),
+              bottomRight: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
     ),
     child: Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 3.w,
         vertical: 0.9.h,
-      ),      child: Center(
+      ),
+      child: Center(
         child: Text(
           text,
           style: TextStyleManager.getRegularStyle()
@@ -710,9 +682,7 @@ _setupProfile(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          S
-              .of(context)
-              .profileSetup,
+          S.of(context).profileSetup,
           style: TextStyleManager.getTitleBoldStyle(),
         ),
         SizedBox(
@@ -724,9 +694,7 @@ _setupProfile(BuildContext context) {
             Expanded(
               child: _checkProfile(
                 ConstantsManager.appUser != null,
-                S
-                    .of(context)
-                    .createAccount,
+                S.of(context).createAccount,
               ),
             ),
             Expanded(
@@ -734,9 +702,7 @@ _setupProfile(BuildContext context) {
                 (ConstantsManager.appUser == null
                     ? false
                     : (ConstantsManager.appUser)!.isEmailConfirmed()),
-                S
-                    .of(context)
-                    .confirmEmail,
+                S.of(context).confirmEmail,
               ),
             ),
             Expanded(
@@ -744,9 +710,7 @@ _setupProfile(BuildContext context) {
                 (ConstantsManager.appUser == null
                     ? false
                     : (ConstantsManager.appUser)!.isVerified()),
-                S
-                    .of(context)
-                    .verifyAccount,
+                S.of(context).verifyAccount,
               ),
             ),
             Icon(

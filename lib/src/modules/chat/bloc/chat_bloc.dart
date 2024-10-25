@@ -42,7 +42,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(CloseConnectionSuccessState());
       }  else if (event is GetAllChatsEvent) {
         emit(GetAllChatsLoadingState());
-        var response = await _service.getAllChats(withPlayer: event.withOwner);
+        var response = await _service.getAllChats(withPlayer: event.withPlayer);
         response.fold((l) {
           print(l);
           emit(GetAllChatsErrorState(l));

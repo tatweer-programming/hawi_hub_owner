@@ -164,4 +164,21 @@ class ChatService {
       socket = null;
     }
   }
+
+//   Future<Either<Exception, Message>> createAdminChat() async {
+//     try {
+//       Response response = await DioHelper.postData(
+//         path: EndPoints.addConversationBetweenAdminAndOwner,
+//         data: {
+//           "adminId": -1,
+//           "ownerId": ConstantsManager.userId.toString(),
+//         },
+//       );
+//       if (response.statusCode == 200) {
+//         print(response.data);
+//       }
+//     } catch (e) {
+//       print(e);
+//     }
+//   }
 }

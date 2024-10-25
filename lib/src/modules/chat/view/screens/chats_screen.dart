@@ -15,19 +15,18 @@ import '../../../../core/utils/color_manager.dart';
 import '../../../main/view/widgets/custom_app_bar.dart';
 
 class ChatsScreen extends StatelessWidget {
-
   final bool withPlayer;
 
   const ChatsScreen({super.key, required this.withPlayer});
+
   @override
   Widget build(BuildContext context) {
-
     ChatBloc chatBloc = context.read<ChatBloc>()
-      ..add(GetAllChatsEvent(withOwner: withPlayer));
+      ..add(GetAllChatsEvent(withPlayer: withPlayer));
     List<Chat> chats = [];
     return RefreshIndicator(
       onRefresh: () async {
-        chatBloc.add(GetAllChatsEvent(withOwner: withPlayer));
+        chatBloc.add(GetAllChatsEvent(withPlayer: withPlayer));
       },
       child: Scaffold(
         body: Column(
@@ -55,7 +54,7 @@ class ChatsScreen extends StatelessWidget {
                                       context.pushWithTransition(ChatScreen(
                                         chatBloc: chatBloc,
                                         chat: chats[index],
-                                        withOwner: withPlayer,
+                                        withPlayer: withPlayer,
                                       ));
                                       chatBloc.add(GetChatMessagesEvent(
                                         conversationId:
@@ -77,9 +76,15 @@ class ChatsScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is GetAllChatsErrorState) {
-                    return Center(child: Text(S.of(context).somethingWentWrong,style: TextStyleManager.getSubTitleBoldStyle(),));
+                    return Center(
+                        child: Text(
+                      S.of(context).somethingWentWrong,
+                      style: TextStyleManager.getSubTitleBoldStyle(),
+                    ));
                   } else {
-                    return Center(child: Text(S.of(context).noChatsFound,style: TextStyleManager.getSubTitleBoldStyle()));
+                    return Center(
+                        child: Text(S.of(context).noChatsFound,
+                            style: TextStyleManager.getSubTitleBoldStyle()));
                   }
                 },
               ),
@@ -129,8 +134,8 @@ Widget _appBar(
 
 Widget _chatWidget(
     {required LastMessage lastMessage, required VoidCallback onTap}) {
-  String formattedDate = DateFormat('hh:mm a')
-      .format(lastMessage.timestamp!) ?? "";
+  String formattedDate =
+      DateFormat('hh:mm a').format(lastMessage.timestamp!) ?? "";
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: 7.w,

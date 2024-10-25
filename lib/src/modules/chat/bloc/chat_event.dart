@@ -25,9 +25,9 @@ class GetConnectionEvent extends ChatEvent {}
 class CloseConnectionEvent extends ChatEvent {}
 
 class GetAllChatsEvent extends ChatEvent {
-  final bool withOwner;
+  final bool withPlayer;
 
-  const GetAllChatsEvent({required this.withOwner});
+  const GetAllChatsEvent({required this.withPlayer});
 }
 
 class GetChatMessagesEvent extends ChatEvent {
