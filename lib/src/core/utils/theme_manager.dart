@@ -7,6 +7,9 @@ ThemeData getAppTheme() {
 }
 
 final ThemeData customTheme = ThemeData(
+  appBarTheme: const AppBarTheme(
+    backgroundColor: ColorManager.white,elevation: 0
+  ),
   scaffoldBackgroundColor: ColorManager.white,
   useMaterial3: false,
   applyElevationOverlayColor: false,

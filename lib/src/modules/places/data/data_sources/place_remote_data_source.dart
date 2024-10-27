@@ -243,7 +243,7 @@ class PlaceRemoteDataSource {
       {required int playerId, required DateTime lastTime}) async {
     try {
       await DioHelper.postData(
-        path: EndPoints.addConversation,
+        path: EndPoints.addConversationBetweenPlayerAndOwner,
         data: {
           "ownerId": ConstantsManager.userId,
           "playerId": playerId,

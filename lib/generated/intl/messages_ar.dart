@@ -30,8 +30,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "addFeedback": MessageLookupByLibrary.simpleMessage("إضافة تقييم"),
         "addImages": MessageLookupByLibrary.simpleMessage("اضافة صور"),
         "addPlace": MessageLookupByLibrary.simpleMessage("إضافة مكان"),
-        "addRequiredPdf": MessageLookupByLibrary.simpleMessage(
-            "يرجي إلحاق المطلوب ادناه من الملف "),
+        "addRequiredPdfForFreeLancers": MessageLookupByLibrary.simpleMessage(
+            "يرجي إلحاق المطلوب ادناه من الملف للحسابات العمل الحر "),
+        "addRequiredPdfForLegalInstitutions":
+            MessageLookupByLibrary.simpleMessage(
+                "يرجي ألحاق المطلوب ادناه من الملف للمؤسسات القانونية "),
+        "addRequiredPdfForLegalOrganizations":
+            MessageLookupByLibrary.simpleMessage(
+                "يرجي ألحاق المطلوب ادناه من الملف للشركات القانونية"),
         "addWorkingHours":
             MessageLookupByLibrary.simpleMessage("اضافة ساعات العمل"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
@@ -54,12 +60,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookingSuccess":
             MessageLookupByLibrary.simpleMessage("تم إضافة الملعب بنجاح"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
-        "bookings": MessageLookupByLibrary.simpleMessage("حجوزات"),
-        "both": MessageLookupByLibrary.simpleMessage("كليهما"),
-        "bothMalesAndFemales":
-            MessageLookupByLibrary.simpleMessage(" ذكور وإناث"),
-        "canShare":
-            MessageLookupByLibrary.simpleMessage("هل يمكن إنشاء حجز جماعي ؟"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "change": MessageLookupByLibrary.simpleMessage("تغير "),
         "changePassword":
@@ -75,10 +75,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاسئلة الشائعة"),
         "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
+        "confirmEmail":
+            MessageLookupByLibrary.simpleMessage("التحقق من البريد"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر"),
         "confirmationCodeSentSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم ارسال رمز التأكيد بنجاح"),
+        "conversations": MessageLookupByLibrary.simpleMessage("المحادثات"),
+        "createAccount": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "date": MessageLookupByLibrary.simpleMessage("الموعد"),
         "day": MessageLookupByLibrary.simpleMessage("اليوم"),
         "decline": MessageLookupByLibrary.simpleMessage("رفض"),
@@ -86,7 +90,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "deletePlace": MessageLookupByLibrary.simpleMessage("حذف المكان"),
         "deletePlaceConfirmation":
             MessageLookupByLibrary.simpleMessage("هل تريد حذف أمكانك"),
-        "deposit": MessageLookupByLibrary.simpleMessage("العربون"),
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
         "doYouWantToLogout":
@@ -115,14 +118,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterUsername":
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال الإسم"),
         "feedbacks": MessageLookupByLibrary.simpleMessage("التعليقات"),
-        "females": MessageLookupByLibrary.simpleMessage("إناث"),
+        "female": MessageLookupByLibrary.simpleMessage("انثى"),
         "fileUploaded": MessageLookupByLibrary.simpleMessage("تم رفع الملف "),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة السر ؟"),
         "from": MessageLookupByLibrary.simpleMessage("من"),
         "futureBookings":
             MessageLookupByLibrary.simpleMessage("الحجوزات القادمة"),
-        "genders": MessageLookupByLibrary.simpleMessage("النوع"),
+        "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
         "getStarted":
             MessageLookupByLibrary.simpleMessage("اجعل فريقك يلعب معًا!"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
@@ -148,12 +151,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم تسجيل الدخول إلى الحساب بنجاح"),
         "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
-        "males": MessageLookupByLibrary.simpleMessage("ذكور"),
+        "male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
         "minimumHours":
             MessageLookupByLibrary.simpleMessage("الحد الادنى لساعات الحجز"),
         "minutes": MessageLookupByLibrary.simpleMessage("دقائق"),
+        "mix": MessageLookupByLibrary.simpleMessage("مختلط"),
         "more": MessageLookupByLibrary.simpleMessage("المزيد"),
         "mustVerifyAccount": MessageLookupByLibrary.simpleMessage(
             "يجب عليك التحقق من حسابك أولا "),
@@ -216,10 +220,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("التفضيل والخصوصية"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "profileSetup":
+            MessageLookupByLibrary.simpleMessage("اعداد الملف الشخصي"),
         "proofOfIdentityAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم أضافة الملف بنجاح."),
         "questions": MessageLookupByLibrary.simpleMessage(
             "ما هو تطبيق هاوي هب؟\n\nهو تطبيق يربط أصحاب الملاعب مع المستأجرين، مما يسهل عملية حجز الملاعب بشكل فردي أو جماعي.\n\nمن يستطيع استخدام تطبيق هاوي هب؟\n\nيمكن لأي شخص تحميل التطبيق واستخدامه، لكنه يستهدف بشكل خاص الشباب في المملكة العربية السعودية.\n\nما هي الخدمات التي يقدمها التطبيق؟\n\nحجز الملاعب بشكل فردي:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nأكمل عملية الدفع.\nإنشاء حجوزات جماعية ومشاركتها مع الأصدقاء:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nحدد عدد اللاعبين.\nانشئ رابطًا للحجز وشارك أصدقائك.\nإنشاء حجوزات جماعية مفتوحة لجميع مستخدمي التطبيق:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nحدد عدد اللاعبين.\nانشئ رابطًا للحجز وشاركه مع الجميع.\nكيف يتم الدفع في تطبيق هاوي هب؟\n\nيتم الدفع من خلال بطاقة الائتمان أو بطاقة الدفع عبر الإنترنت.\n\nما هي نسبة الشركة المالكة للتطبيق من قيمة الحجز؟\n\nتختلف نسبة الشركة المالكة للتطبيق من قيمة الحجز حسب نوع الحجز.\n\nكيف يمكنني إضافة ملعب إلى التطبيق؟\n\nإذا كنت صاحب ملعب، يمكنك التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/ لمعرفة المزيد عن كيفية إضافة ملعبك إلى التطبيق.\n\nكيف يمكنني التواصل مع الشركة المالكة للتطبيق؟\n\nيمكنك التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/\n\nهل هناك أي قيود أو شروط محددة لاستخدام التطبيق؟\n\nلا يوجد أي قيود أو شروط لاستخدام التطبيق، لكن يجب عليك احترام جميع المستخدمين على التطبيق والامتناع عن أي سلوكيات مسيئة أو غير قانونية.\n\nهل هناك أي سلوكيات ممنوعة على التطبيق؟\n\nنعم، هناك بعض السلوكيات الممنوعة على التطبيق، مثل:\n\nالتنمر أو المضايقة.\nنشر خطاب الكراهية أو المحتوى المسيء.\nمشاركة المعلومات الشخصية أو الحساسة.\nاستخدام التطبيق لأغراض غير قانونية.\nماذا يحدث إذا انتهكت شروط الاستخدام؟\n\nإذا انتهكت شروط الاستخدام، فقد يتم حظر حسابك من التطبيق بشكل دائم.\n\nهل يمكنني إلغاء حسابي؟\n\nنعم، يمكنك إلغاء حسابك في أي وقت.\n\nهل يمكنني تغيير معلومات حسابي؟\n\nنعم، يمكنك تغيير معلومات حسابك في أي وقت.\n\nكيف يمكنني الحصول على مساعدة في استخدام التطبيق؟\n\nيمكنك مراجعة مركز المساعدة في التطبيق أو التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/\n\nهل تطبيق هاوي هب آمن؟\n\nنعم، تطبيق هاوي هب آمن للغاية. نستخدم أحدث تقنيات الأمان لحماية بيانات المستخدمين.\n\nهل يتم مشاركة بياناتي مع أي شخص آخر؟\n\nلا، لا يتم مشاركة بياناتك مع أي شخص آخر إلا إذا كنت قد وافقت على ذلك صراحةً.\n\nما هي سياسة الخصوصية الخاصة بتطبيق هاوي هب؟\n\nيمكنك مراجعة سياسة الخصوصية الخاصة بتطبيق هاوي هب في https://www.infohub.com/\n\nهل هناك أي شيء آخر يجب أن أعرفه؟\n\nننصحك بقراءة شروط الاستخدام وسياسة الخصوصية بعناية قبل استخدام التطبيق.\n\nشكرًا لك على استخدام تطبيق هاوي هب!\n\nملاحظة:\nقد يتم تحديث هذه الأسئلة الشائعة من وقت لآخر. يرجى مراجعة هذه الصفحة بشكل دوري للاطلاع على أحدث التغييرات."),
+        "rate": MessageLookupByLibrary.simpleMessage("التقييم"),
         "rates": MessageLookupByLibrary.simpleMessage("التقييمات"),
         "reSendCode": MessageLookupByLibrary.simpleMessage("اعادة ارسال الرمز"),
         "readySteadyGo":
@@ -254,7 +261,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "shouldAgreeTerns": MessageLookupByLibrary.simpleMessage(
             "يجب عليك الموافقة على شروط الخدمة وسياسة الخصوصية"),
         "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
-        "showMore": MessageLookupByLibrary.simpleMessage("عرض المزيد"),
         "signUp": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "somethingWentWrong":
             MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
@@ -263,6 +269,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الرياضة مطلوبة"),
         "start": MessageLookupByLibrary.simpleMessage("البدء"),
         "startTime": MessageLookupByLibrary.simpleMessage("وقت البدء"),
+        "technicalSupport": MessageLookupByLibrary.simpleMessage("الدعم الفني"),
         "termsAndConditions": MessageLookupByLibrary.simpleMessage(
             "شروط وأحكام تطبيق هاوي هب\nمقدمة:\n\nمرحبًا بك في تطبيق هاوي هب! يهدف هذا التطبيق إلى ربط أصحاب الملاعب مع المستأجرين، مما يسهل عملية حجز الملاعب بشكل فردي أو جماعي. قبل استخدام التطبيق، يرجى قراءة هذه الشروط والأحكام بعناية.\n\n1. معلومات عامة:\n\nاسم التطبيق: هاوي هب\nنوع التطبيق: تطبيق رياضي\nجمهور التطبيق المستهدف: فئة الشباب في المملكة العربية السعودية\nالخدمات التي يقدمها التطبيق:\nحجز الملاعب بشكل فردي\nإنشاء حجوزات جماعية ومشاركتها مع الأصدقاء\nإنشاء حجوزات جماعية مفتوحة لجميع مستخدمي التطبيق\nنموذج عمل التطبيق:\nيدفع المستخدم قيمة الحجز كاملة.\nتحصل الشركة المالكة للتطبيق على نسبة ...... % من قيمة الحجز بعد خصم العمولات البنكية الخاصة بمقدمي خدمة الدفع الالكتروني وهي ......... %.\nيحصل صاحب الملعب على باقي قيمة الحجز.\n2. معلومات قانونية:\n\nبلد مقر الشركة المالكة للتطبيق: المملكة العربية السعودية\n\n3. سياسة الخصوصية:\n\nجمع البيانات:\nالمستخدم العادي:\nالاسم\nالعمر\nالبريد الإلكتروني\nصاحب الملعب:\nيتم طلب بعض المستندات الخاصة بتوثيق حساب صاحب الملعب و مستندات لاثبات ملكيته للأماكن قبل الموافقة على عرضها في التطبيق وجميع المستندات المطلوبة موضحة في شاشة المتطلبات القانونية \nاستخدام البيانات:\nتحتفظ بهذه البيانات و المستندات ولا يتم مشاركة البيانات إلا مع الجهات القانونية المختصة فقط عند الحاجة وطبقًا للقوانين السعودية.\nحماية البيانات:\nيتم اتخاذ كافة سبل الحماية القانونية لحماية بيانات المستخدمين.\n4. شروط الاستخدام:\nقبول الشروط: استخدام التطبيق يعني قبول هذه الشروط والأحكام.\nالحسابات:\nإنشاء حساب مجاني للمستخدمين.\nالتحقق من هوية أصحاب الملاعب.\nالحجوزات:\nيمكن للمستخدمين حجز الملاعب بشكل فردي أو جماعي.\nيمكن لصاحب الملعب قبول أو رفض الحجوزات.\nيتم دفع قيمة الحجز من قبل المستخدم.\nتحصل الشركة المالكة للتطبيق على نسبة من قيمة الحجز.\nيحصل صاحب الملعب على باقي قيمة الحجز.\nالسلوكيات:\nيجب احترام جميع المستخدمين على التطبيق و الامتناع عن أي سلوكيات مسيئة أو غير قانونية.\nالمسؤولية:\nيتحمل المستخدم مسؤولية جميع تصرفاته على التطبيق.\nلا تتحمل الشركة أي مسؤولية عن أي أضرار ناتجة عن استخدام التطبيق.\nالتغييرات:\nتحتفظ الشركة بحق تعديل هذه الشروط والأحكام في أي وقت دون إشعار مسبق.\nالقانون المنظم:\nتخضع هذه الشروط والأحكام لقوانين المملكة العربية السعودية.\n5. حل النزاعات:\nفي حال نشوء أي نزاع بين المستخدم والتطبيق، سيتم بذل قصارى الجهد لحلّه وديًا.\nإذا فشل الحل الودي، يتم اللجوء إلى التحكيم في مركز التحكيم التجاري للمملكة العربية السعودية.\n6. الاتصال:\n\nيمكن التواصل مع الشركة المالكة للتطبيق من خلال ............\nملاحظة:\nقد يتم تحديث هذه الشروط والأحكام من وقت لآخر. يرجى مراجعة هذه الصفحة بشكل دوري للاطلاع على أحدث التغييرات.\nشكرًا لك على استخدام تطبيق هاوي هب!"),
         "to": MessageLookupByLibrary.simpleMessage("إلى"),
@@ -279,6 +286,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage(" الإسم"),
         "usernameAlreadyExist":
             MessageLookupByLibrary.simpleMessage("الأسم موجود مسبقا."),
+        "verifyAccount": MessageLookupByLibrary.simpleMessage("إثبات الهوية"),
         "verifyEmail":
             MessageLookupByLibrary.simpleMessage("تحقق من بريدك الالكتروني"),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),

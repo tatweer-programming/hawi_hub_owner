@@ -3,17 +3,17 @@ part of 'auth_bloc.dart';
 @immutable
 sealed class AuthEvent {}
 
-class RegisterPlayerEvent extends AuthEvent {
+class RegisterOwnerEvent extends AuthEvent {
   final AuthOwner authOwner;
 
-  RegisterPlayerEvent({required this.authOwner});
+  RegisterOwnerEvent({required this.authOwner});
 }
 
-class LoginPlayerEvent extends AuthEvent {
+class LoginOwnerEvent extends AuthEvent {
   final String email;
   final String password;
 
-  LoginPlayerEvent({required this.email, required this.password});
+  LoginOwnerEvent({required this.email, required this.password});
 }
 
 class AddImageEvent extends AuthEvent {}
@@ -48,7 +48,11 @@ class SignupWithGoogleEvent extends AuthEvent {}
 
 class SignupWithFacebookEvent extends AuthEvent {}
 
-class OpenPdfEvent extends AuthEvent {}
+class OpenPdfEvent extends AuthEvent {
+  final String path;
+
+  OpenPdfEvent(this.path);
+}
 
 class GetProfileEvent extends AuthEvent {
   final int id;

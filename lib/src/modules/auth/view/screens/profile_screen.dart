@@ -15,6 +15,7 @@ import 'package:hawi_hub_owner/src/modules/auth/view/screens/rates_screen.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/auth_app_bar.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../core/error/remote_error.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../widgets/people_rate_builder.dart';
@@ -40,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
         context.pop();
       } else if (state is UploadNationalIdErrorState) {
         context.pop();
-        errorToast(msg: handleResponseTranslation(state.error, context));
+        errorToast(msg: ExceptionManager(state.exception).translatedMessage());
       } else if (state is UploadNationalIdLoadingState) {
         showDialog(
           context: context,
@@ -60,37 +61,31 @@ class ProfileScreen extends StatelessWidget {
     }, builder: (context, state) {
       if (owner != null) {
         return Scaffold(
+          appBar: AppBar(),
           body: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      AuthAppBar(
-                        context: context,
-                        owner: owner!,
-                        title: S.of(context).profile,
-                      ),
-                    ],
-                  ),
-                ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   child: Stack(
+                //     children: [
+                //       AuthAppBar(
+                //         context: context,
+                //         owner: owner!,
+                //         title: S.of(context).profile,
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsetsDirectional.symmetric(
-                    horizontal: 5.w,
-                  ),
+                      horizontal: 5.w, vertical: 2.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Text(
-                        owner!.userName,
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      userInfoDisplay(
+                        value: owner != null ? owner!.userName : "",
+                        key: S.of(context).userName,
                       ),
                       _accountVerified(
                           bloc: bloc,
@@ -151,13 +146,13 @@ Widget _accountVerified({
   required Owner owner,
   required AuthBloc bloc,
 }) {
-  if (!owner.emailConfirmed) {
+  if (!owner.isEmailConfirmed()) {
     return _emailNotConfirmed(context, bloc);
-  } else if (owner.nationalIdPicture == null && owner.approvalStatus == 0) {
+  } else if (owner.nationalIdPicture == null && !(owner.isVerified())) {
     return _notVerified(bloc);
-  } else if (owner.approvalStatus == 0) {
+  } else if (!owner.isVerified()) {
     return _pending(context, S.of(context).identificationPending);
-  } else if (owner.approvalStatus == 1) {
+  } else if (owner.isVerified()) {
     return _verified(
         owner: owner, context: context, state: state, id: id, authBloc: bloc);
   } else {
@@ -176,39 +171,40 @@ Widget _notVerified(AuthBloc bloc) {
       } else if (state is DeleteImageState) {
         imagePicked = null;
       }
-      print("image is $imagePicked");
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 10.h,
+            height: 3.h,
           ),
           Text(
             S.of(context).mustVerifyAccount,
             style: TextStyleManager.getSecondarySubTitleStyle(),
           ),
-          SizedBox(
-            height: 2.h,
+          _viewRequiredDocuments(
+            bloc: bloc,
+            context: context,
+            path: "assets/pdfs/Freelancers.pdf",
+            text: S.of(context).addRequiredPdfForFreeLancers,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  S.of(context).addRequiredPdf,
-                  style: TextStyleManager.getSubTitleStyle(),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  bloc.add(OpenPdfEvent());
-                },
-                child: Text(
-                  S.of(context).viewRequirements,
-                  style: TextStyleManager.getBlackCaptionTextStyle(),
-                ),
-              )
-            ],
+          _viewRequiredDocuments(
+            bloc: bloc,
+            context: context,
+            path: "assets/pdfs/CompaniesInKSAForeign.pdf",
+            text: S.of(context).addRequiredPdfForCompaniesInKSAForeign,
+          ),
+          _viewRequiredDocuments(
+            bloc: bloc,
+            context: context,
+            path: "assets/pdfs/LegalInstitutions.pdf",
+            text: S.of(context).addRequiredPdfForLegalInstitutions,
+          ),
+          _viewRequiredDocuments(
+            bloc: bloc,
+            context: context,
+            path: "assets/pdfs/LegalOrganizations.pdf",
+            text: S.of(context).addRequiredPdfForLegalOrganizations,
           ),
           SizedBox(
             height: 3.h,
@@ -295,6 +291,7 @@ Widget _emailNotConfirmed(
       ),
       defaultButton(
           onPressed: () {
+            bloc.add(ConfirmEmailEvent());
             context.push(Routes.confirmEmail, arguments: {'bloc': bloc});
           },
           text: S.of(context).verifyEmail,
@@ -329,23 +326,32 @@ Widget _verified({
     SizedBox(
       height: 2.h,
     ),
-    Text(
-      owner.rate.toStringAsFixed(1),
-      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+    userInfoDisplay(
+      key: S.of(context).email,
+      value: owner.email,
     ),
-    RatingBar.builder(
-      initialRating: owner.rate,
-      minRating: 1,
-      itemSize: 25.sp,
-      direction: Axis.horizontal,
-      ignoreGestures: true,
-      allowHalfRating: true,
-      itemPadding: EdgeInsets.zero,
-      itemBuilder: (context, _) => const Icon(
-        Icons.star,
-        color: ColorManager.golden,
+    SizedBox(
+      height: 2.h,
+    ),
+    userInfoDisplay(
+      key: S.of(context).rate,
+      value: owner.rate.toStringAsFixed(1),
+      trailing: Expanded(
+        child: RatingBar.builder(
+          initialRating: owner.rate,
+          minRating: 1,
+          itemSize: 25.sp,
+          direction: Axis.horizontal,
+          ignoreGestures: true,
+          allowHalfRating: true,
+          itemPadding: EdgeInsets.zero,
+          itemBuilder: (context, _) => const Icon(
+            Icons.star,
+            color: ColorManager.golden,
+          ),
+          onRatingUpdate: (rating) {},
+        ),
       ),
-      onRatingUpdate: (rating) {},
     ),
     SizedBox(
       height: 3.h,
@@ -387,15 +393,56 @@ Widget _verified({
       height: 2.h,
     ),
     if (ConstantsManager.appUser!.playerReservation.contains(owner.id))
+      _addFeedback(context, onPressed: () {
+        context.pushWithTransition(
+            AddFeedbackForUser(owner: owner, authBloc: authBloc));
+      })
+  ]);
+}
+
+Widget _viewRequiredDocuments(
+    {required AuthBloc bloc,
+    required String path,
+    required String text,
+    required BuildContext context}) {
+  return Column(
+    children: [
+      SizedBox(
+        height: 2.h,
+      ),
+      Row(
+        children: [
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyleManager.getRegularStyle(),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              bloc.add(OpenPdfEvent(path));
+            },
+            child: Text(
+              S.of(context).viewRequirements,
+              style: TextStyleManager.getBlackCaptionTextStyle(),
+            ),
+          )
+        ],
+      ),
+    ],
+  );
+}
+
+_addFeedback(BuildContext context, {required Function() onPressed}) {
+  return Column(
+    children: [
       defaultButton(
-          onPressed: () {
-            context.pushWithTransition(
-                AddFeedbackForUser(owner: owner, authBloc: authBloc));
-          },
+          onPressed: onPressed,
           text: S.of(context).addFeedback,
           fontSize: 17.sp),
-    SizedBox(
-      height: 2.h,
-    ),
-  ]);
+      SizedBox(
+        height: 2.h,
+      ),
+    ],
+  );
 }

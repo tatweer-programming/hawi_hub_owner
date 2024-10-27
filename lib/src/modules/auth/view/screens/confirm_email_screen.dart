@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
+import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
@@ -20,7 +21,6 @@ class ConfirmEmailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController codeController = TextEditingController();
     int timeToResendCode = 0;
-    bloc.add(ConfirmEmailEvent());
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
@@ -41,10 +41,12 @@ class ConfirmEmailScreen extends StatelessWidget {
                     chatBloc.add(CloseConnectionEvent());
                   } else if (state is VerifyConfirmEmailErrorState) {
                     errorToast(
-                        msg: handleResponseTranslation(state.error, context));
+                        msg: ExceptionManager(state.exception)
+                            .translatedMessage());
                   } else if (state is ConfirmEmailErrorState) {
                     errorToast(
-                        msg: handleResponseTranslation(state.error, context));
+                        msg: ExceptionManager(state.exception)
+                            .translatedMessage());
                   } else if (state is ConfirmEmailSuccessState) {
                     defaultToast(
                         msg: handleResponseTranslation(state.value, context));
@@ -70,7 +72,7 @@ class ConfirmEmailScreen extends StatelessWidget {
                                 return S.of(context).enterCode;
                               }
                               return null;
-                            }),
+                            },),
                         SizedBox(
                           height: 2.h,
                         ),

@@ -780,10 +780,10 @@ class S {
     );
   }
 
-  /// `The ID card is being verified now`
+  /// `The file is being reviewed now`
   String get identificationPending {
     return Intl.message(
-      'The ID card is being verified now',
+      'The file is being reviewed now',
       name: 'identificationPending',
       desc: '',
       args: [],
@@ -1500,11 +1500,41 @@ class S {
     );
   }
 
-  /// `Please add what is required below from the file`
-  String get addRequiredPdf {
+  /// `For freelancers please add what is required below from the file`
+  String get addRequiredPdfForFreeLancers {
     return Intl.message(
-      'Please add what is required below from the file',
-      name: 'addRequiredPdf',
+      'For freelancers please add what is required below from the file',
+      name: 'addRequiredPdfForFreeLancers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For companies investing in the Kingdom of Saudi Arabia of foreign origin please add what is required below from the file`
+  String get addRequiredPdfForCompaniesInKSAForeign {
+    return Intl.message(
+      'For companies investing in the Kingdom of Saudi Arabia of foreign origin please add what is required below from the file',
+      name: 'addRequiredPdfForCompaniesInKSAForeign',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For legal organizations please add what is required below from the file`
+  String get addRequiredPdfForLegalOrganizations {
+    return Intl.message(
+      'For legal organizations please add what is required below from the file',
+      name: 'addRequiredPdfForLegalOrganizations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For legal institutions please add what is required below from the file`
+  String get addRequiredPdfForLegalInstitutions {
+    return Intl.message(
+      'For legal institutions please add what is required below from the file',
+      name: 'addRequiredPdfForLegalInstitutions',
       desc: '',
       args: [],
     );
@@ -1905,6 +1935,116 @@ class S {
     return Intl.message(
       'Males & Females',
       name: 'bothMalesAndFemales',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gender`
+  String get gender {
+    return Intl.message(
+      'Gender',
+      name: 'gender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mix`
+  String get mix {
+    return Intl.message(
+      'Mix',
+      name: 'mix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Male`
+  String get male {
+    return Intl.message(
+      'Male',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Female`
+  String get female {
+    return Intl.message(
+      'Female',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Account`
+  String get createAccount {
+    return Intl.message(
+      'Create Account',
+      name: 'createAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Email`
+  String get confirmEmail {
+    return Intl.message(
+      'Confirm Email',
+      name: 'confirmEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify Account`
+  String get verifyAccount {
+    return Intl.message(
+      'Verify Account',
+      name: 'verifyAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile Setup`
+  String get profileSetup {
+    return Intl.message(
+      'Profile Setup',
+      name: 'profileSetup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Technical support`
+  String get technicalSupport {
+    return Intl.message(
+      'Technical support',
+      name: 'technicalSupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate`
+  String get rate {
+    return Intl.message(
+      'Rate',
+      name: 'rate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conversations`
+  String get conversations {
+    return Intl.message(
+      'Conversations',
+      name: 'conversations',
       desc: '',
       args: [],
     );

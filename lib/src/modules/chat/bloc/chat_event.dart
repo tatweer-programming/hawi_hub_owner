@@ -12,21 +12,33 @@ class SendMessageEvent extends ChatEvent {
 
 class PickImageEvent extends ChatEvent {}
 
-class StreamMessagesEvent extends ChatEvent {}
 
+class StreamMessagesEvent extends ChatEvent {
+  final bool withOwner;
+
+  const StreamMessagesEvent({required this.withOwner});
+}
 class RemovePickedImageEvent extends ChatEvent {}
 
 class GetConnectionEvent extends ChatEvent {}
 
 class CloseConnectionEvent extends ChatEvent {}
 
-class GetAllChatsEvent extends ChatEvent {}
+class GetAllChatsEvent extends ChatEvent {
+  final bool withPlayer;
+
+  const GetAllChatsEvent({required this.withPlayer});
+}
 
 class GetChatMessagesEvent extends ChatEvent {
   final int conversationId;
   final int index;
+  final bool withOwner;
 
-  GetChatMessagesEvent({required this.conversationId, required this.index});
+  GetChatMessagesEvent(
+      {required this.withOwner,
+        required this.conversationId,
+        required this.index});
 }
 
 class ScrollingDownEvent extends ChatEvent {

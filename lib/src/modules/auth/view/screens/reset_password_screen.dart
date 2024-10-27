@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hawi_hub_owner/src/core/common_widgets/common_widgets.dart';
+import 'package:hawi_hub_owner/src/core/error/remote_error.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/routing/routes.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
@@ -102,8 +103,8 @@ class ResetPasswordScreen extends StatelessWidget {
                           });
                         } else if (state is VerifyCodeErrorState) {
                           errorToast(
-                              msg: handleResponseTranslation(
-                                  state.error, context));
+                              msg: ExceptionManager(state.exception)
+                                  .translatedMessage());
                         }
                       },
                       builder: (context, state) {

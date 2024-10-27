@@ -15,9 +15,9 @@ class RegisterSuccessState extends AuthState {
 }
 
 class RegisterErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  RegisterErrorState(this.error);
+  RegisterErrorState(this.exception);
 }
 // Signup google
 
@@ -30,9 +30,9 @@ class SignupWithGoogleSuccessState extends AuthState {
 }
 
 class SignupWithGoogleErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  SignupWithGoogleErrorState(this.error);
+  SignupWithGoogleErrorState(this.exception);
 } // Signup facebook
 
 class SignupWithFacebookLoadingState extends AuthState {}
@@ -44,9 +44,9 @@ class SignupWithFacebookSuccessState extends AuthState {
 }
 
 class SignupWithFacebookErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  SignupWithFacebookErrorState(this.error);
+  SignupWithFacebookErrorState(this.exception);
 }
 
 // verifyCode
@@ -60,9 +60,9 @@ class VerifyCodeSuccessState extends AuthState {
 }
 
 class VerifyCodeErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  VerifyCodeErrorState(this.error);
+  VerifyCodeErrorState(this.exception);
 }
 // verifyEmail
 
@@ -75,9 +75,9 @@ class VerifyConfirmEmailSuccessState extends AuthState {
 }
 
 class VerifyConfirmEmailErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  VerifyConfirmEmailErrorState(this.error);
+  VerifyConfirmEmailErrorState(this.exception);
 }
 
 // ConfirmEmail
@@ -91,9 +91,9 @@ class ConfirmEmailSuccessState extends AuthState {
 }
 
 class ConfirmEmailErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  ConfirmEmailErrorState(this.error);
+  ConfirmEmailErrorState(this.exception);
 }
 
 // get  Profile
@@ -106,9 +106,9 @@ class GetProfileSuccessState extends AuthState {
 }
 
 class GetProfileErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  GetProfileErrorState(this.error);
+  GetProfileErrorState(this.exception);
 }
 
 // login player
@@ -121,16 +121,16 @@ class LoginSuccessState extends AuthState {
 }
 
 class LoginErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  LoginErrorState(this.error);
+  LoginErrorState(this.exception);
 }
 // Change pass
 
 class ChangePasswordErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  ChangePasswordErrorState(this.error);
+  ChangePasswordErrorState(this.exception);
 }
 
 class ChangePasswordSuccessState extends AuthState {
@@ -154,9 +154,9 @@ class ResetPasswordSuccessState extends AuthState {
 }
 
 class ResetPasswordErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  ResetPasswordErrorState(this.error);
+  ResetPasswordErrorState(this.exception);
 }
 
 // accept confirm terms
@@ -202,9 +202,9 @@ class UploadNationalIdSuccessState extends AuthState {
 class UploadNationalIdLoadingState extends AuthState {}
 
 class UploadNationalIdErrorState extends AuthState {
-  final String error;
+  final Exception exception;
 
-  UploadNationalIdErrorState(this.error);
+  UploadNationalIdErrorState(this.exception);
 }
 
 // delete image
