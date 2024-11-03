@@ -81,7 +81,7 @@ class ChatScreen extends StatelessWidget {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _appBar(U
+                _appBar(
                   context: context,
                   receiverName: chat!.lastMessage.player == null
                       ? S.of(context).technicalSupport
