@@ -64,7 +64,7 @@ class ChatService {
       if (response.statusCode == 200) {
         List<Chat> chats = [];
         for (var item in response.data) {
-          chats.add(Chat.fromJson(item));
+          chats.add(Chat.fromJson(item, withPlayer));
         }
         return Right(chats);
       }
@@ -75,14 +75,14 @@ class ChatService {
   }
 
   Future<Either<String, Unit>> sendMessage(
-      {required MessageDetails message}) async {
+      {required MessageDetails message, required bool withPlayer}) async {
     try {
       if (message.attachmentUrl != null) {
         message.attachmentUrl =
             await uploadFile(message.attachmentUrl!, message.conversationId!);
         message.message = null;
       }
-      socket!.add(message.jsonBody());
+      socket!.add(message.jsonBody(withPlayer));
       return const Right(unit);
     } catch (e) {
       return Left(e.toString());
@@ -98,11 +98,19 @@ class ChatService {
           String message =
               data.toString().replaceAll(RegExp(r'[\x00-\x1F]+'), '');
           final Map<String, dynamic> jsonData = jsonDecode(message);
+          if (withPlayer) {
+            messageStreamController.add(MessageDetails(
+              message: jsonData["arguments"][0]["playerMessage"],
+              attachmentUrl: jsonData["arguments"][0]["playerAttachmentUrl"],
+              isOwner: false,
+              timeStamp: DateTime.now().toUtc(),
+            ));
+          }
           messageStreamController.add(MessageDetails(
-            message: jsonData["arguments"][0]["playerMessage"],
-            attachmentUrl: jsonData["arguments"][0]["playerAttachmentUrl"],
-            isOwner: true,
-            timeStamp: DateTime.now().add(Duration(hours: 3)),
+            message: jsonData["arguments"][0]["adminMessage"],
+            attachmentUrl: jsonData["arguments"][0]["adminAttachmentUrl"],
+            isOwner: false,
+            timeStamp: DateTime.now().toUtc(),
           ));
         }
       });
@@ -117,12 +125,12 @@ class ChatService {
     try {
       Response response = await DioHelper.getData(
         path: (withPlayer
-                ? EndPoints.getOwnerConversationsWithPlayers
-                : EndPoints.getOwnerConversationsWithAdmins) +
+                ? EndPoints.getConversationOwnerWithPlayer
+                : EndPoints.getConversationAdminWithOwner) +
             conversationId.toString(),
       );
       if (response.statusCode == 200) {
-        Message messages = Message.fromJson(response.data);
+        Message messages = Message.fromJson(response.data, withPlayer);
         return Right(messages);
       }
       return Left(response.data.toString());
@@ -144,7 +152,6 @@ class ChatService {
       }
       return response.data.toString();
     } catch (e) {
-      print(e);
       return e.toString();
     }
   }

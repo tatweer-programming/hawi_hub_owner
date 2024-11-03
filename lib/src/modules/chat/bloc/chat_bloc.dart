@@ -51,19 +51,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         });
       } else if (event is GetChatMessagesEvent) {
         emit(GetChatMessagesLoadingState());
-        var response = await _service.getChatMessages(event.conversationId, event.withOwner);
+        var response = await _service.getChatMessages(event.conversationId, event.withPlayer);
         response.fold((l) {
           emit(GetChatMessagesErrorState(l));
         }, (messages) {
           emit(GetChatMessagesSuccessState(
             messages: messages,
-            index: event.index,
           ));
         });
       } else if (event is SendMessageEvent) {
         emit(GetChatMessagesLoadingState());
         var response = await _service.sendMessage(
           message: event.message,
+          withPlayer: event.withPlayer,
         );
         response.fold((l) {
           emit(SendMessageErrorState(l));

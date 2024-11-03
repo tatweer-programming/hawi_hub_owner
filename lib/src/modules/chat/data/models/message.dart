@@ -12,12 +12,12 @@ class Message extends Equatable {
     required this.message,
   });
 
-  factory Message.fromJson(Map<String, dynamic> json) {
+  factory Message.fromJson(Map<String, dynamic> json, bool withPlayer) {
     return Message(
-      lastTimeToChat: DateTime.parse(json["lastTimeToChat"]).toLocal().add(Duration(hours: 3)),
+      lastTimeToChat: DateTime.parse(json["lastTimeToChat"]).toLocal(),
       message: List<MessageDetails>.from(
         json["messages"]
-            .map((message) => MessageDetails.fromJson(message))
+            .map((message) => MessageDetails.fromJson(message,withPlayer))
             .toList(),
       ),
     );

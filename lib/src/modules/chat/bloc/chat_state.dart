@@ -48,9 +48,8 @@ class GetAllChatsErrorState extends ChatState {
 //GetChatMessages
 class GetChatMessagesSuccessState extends ChatState {
   final Message messages;
-  final int index;
 
-  GetChatMessagesSuccessState({required this.messages, required this.index});
+  GetChatMessagesSuccessState({required this.messages,});
 }
 
 class GetChatMessagesLoadingState extends ChatState {}

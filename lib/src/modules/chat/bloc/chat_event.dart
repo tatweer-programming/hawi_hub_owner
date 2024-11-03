@@ -6,8 +6,9 @@ abstract class ChatEvent {
 
 class SendMessageEvent extends ChatEvent {
   final MessageDetails message;
+  final bool withPlayer;
 
-  const SendMessageEvent({required this.message});
+  const SendMessageEvent({required this.message,required this.withPlayer});
 }
 
 class PickImageEvent extends ChatEvent {}
@@ -32,13 +33,11 @@ class GetAllChatsEvent extends ChatEvent {
 
 class GetChatMessagesEvent extends ChatEvent {
   final int conversationId;
-  final int index;
-  final bool withOwner;
+  final bool withPlayer;
 
   GetChatMessagesEvent(
-      {required this.withOwner,
-        required this.conversationId,
-        required this.index});
+      {required this.withPlayer,
+        required this.conversationId,});
 }
 
 class ScrollingDownEvent extends ChatEvent {

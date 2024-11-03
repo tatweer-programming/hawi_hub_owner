@@ -9,6 +9,7 @@ import 'package:hawi_hub_owner/src/core/utils/localization_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/styles_manager.dart';
 import 'package:hawi_hub_owner/src/modules/auth/bloc/auth_bloc.dart';
 import 'package:hawi_hub_owner/src/modules/auth/view/widgets/widgets.dart';
+import 'package:hawi_hub_owner/src/modules/chat/data/models/chat.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chat_screen.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
@@ -17,6 +18,7 @@ import 'package:hawi_hub_owner/src/modules/payment/presentation/screens/my_walle
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../../../generated/l10n.dart';
+import '../../../../chat/bloc/chat_bloc.dart';
 import '../custom_app_bar.dart';
 
 class MorePage extends StatelessWidget {
@@ -24,212 +26,222 @@ class MorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthBloc bloc = AuthBloc.get(context);
+    AuthBloc bloc = context.read<AuthBloc>();
+    ChatBloc chatBloc = context.read<ChatBloc>();
     MainCubit mainCubit = MainCubit.get();
-    return BlocConsumer<MainCubit, MainState>(
+    List<Chat> chats = [];
+    chatBloc.add(const GetAllChatsEvent(withPlayer: false));
+    return BlocListener<ChatBloc, ChatState>(
       listener: (context, state) {
-        if (state is ShowDialogState) {
-          showDialogForLanguage(context, mainCubit);
+        if (state is GetAllChatsSuccessState) {
+          chats = state.chats;
+          Chat.sortChatsByDate(chats);
         }
       },
-      builder: (context, state) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
-            child: Column(children: [
-              _appBar(context),
-              Padding(
-                padding: EdgeInsetsDirectional.only(
-                  start: 3.w,
-                  end: 3.w,
-                  top: 5.h,
-                  bottom: 3.h,
+      child: BlocBuilder<MainCubit, MainState>(
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+              child: Column(children: [
+                _appBar(context),
+                Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    start: 3.w,
+                    end: 3.w,
+                    top: 5.h,
+                    bottom: 3.h,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      if (ConstantsManager.appUser != null) {
+                        context.pushWithTransition(
+                            MyWallet(owner: ConstantsManager.appUser!));
+                      }
+                    },
+                    child: userInfoDisplay(
+                        value:
+                            "${(ConstantsManager.appUser == null ? 0 : ConstantsManager.appUser!.myWallet)} ${S.of(context).sar}",
+                        key: S.of(context).myWallet,
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: ColorManager.grey2,
+                        )),
+                  ),
                 ),
-                child: InkWell(
+                _setupProfile(context),
+                _newSettingWidget(
                   onTap: () {
-                    if (ConstantsManager.appUser != null) {
-                      context.pushWithTransition(
-                          MyWallet(owner: ConstantsManager.appUser!));
+                    context.push(Routes.termsAndCondition);
+                  },
+                  icon: "assets/images/icons/privacy.webp",
+                  text: S.of(context).preferenceAndPrivacy,
+                ),
+
+                _newSettingWidget(
+                    onTap: () {
+                      showDialogForLanguage(context, mainCubit);
+                    },
+                    icon: "assets/images/icons/lang.png",
+                    text: S.of(context).language,
+                    trailing: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          color: ColorManager.grey2,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              mainCubit.changeLanguage(0);
+                            },
+                            child: _languageText(
+                                text: "عربي",
+                                isEnglish:
+                                    LocalizationManager.getCurrentLocale()
+                                            .languageCode ==
+                                        "ar"),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              mainCubit.changeLanguage(1);
+                            },
+                            child: _languageText(
+                                text: "English",
+                                isEnglish:
+                                    !(LocalizationManager.getCurrentLocale()
+                                            .languageCode ==
+                                        "ar")),
+                          ),
+                        ],
+                      ),
+                    )),
+                _newSettingWidget(
+                  onTap: () {
+                    context.push(Routes.questions);
+                  },
+                  icon: "assets/images/icons/question.webp",
+                  text: S.of(context).commonQuestions,
+                ),
+                _newSettingWidget(
+                  onTap: () {
+                    print(chats);
+                    context.pushWithTransition(ChatScreen(
+                      chatBloc: chatBloc,
+                      chat: chats[0],
+                      withPlayer: false,
+                    ));
+                  },
+                  icon: "assets/images/icons/chat.png",
+                  text: S.of(context).technicalSupport,
+                ),
+                _newSettingWidget(
+                  onTap: () {
+                    Share.share(
+                      '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
+                    );
+                  },
+                  icon: "assets/images/icons/share_2.webp",
+                  text: S.of(context).share,
+                ),
+                BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is LogoutSuccessState) {
+                      bloc.add(PlaySoundEvent("audios/end.wav"));
+                      context.pushAndRemove(Routes.login);
                     }
                   },
-                  child: userInfoDisplay(
-                      value:
-                          "${(ConstantsManager.appUser == null ? 0 : ConstantsManager.appUser!.myWallet)} ${S.of(context).sar}",
-                      key: S.of(context).myWallet,
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: ColorManager.grey2,
-                      )),
-                ),
-              ),
-              _setupProfile(context),
-              _newSettingWidget(
-                onTap: () {
-                  context.push(Routes.termsAndCondition);
-                },
-                icon: "assets/images/icons/privacy.webp",
-                text: S.of(context).preferenceAndPrivacy,
-              ),
-
-              _newSettingWidget(
-                  onTap: () {
-                    showDialogForLanguage(context, mainCubit);
+                  builder: (context, state) {
+                    return _newSettingWidget(
+                      onTap: () {
+                        showLogoutDialog(context, bloc);
+                      },
+                      icon: "assets/images/icons/logout.webp",
+                      text: S.of(context).logout,
+                    );
                   },
-                  icon: "assets/images/icons/lang.png",
-                  text: S.of(context).language,
-                  trailing: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                        color: ColorManager.grey2,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            mainCubit.changeLanguage(0);
-                          },
-                          child: _languageText(
-                              text: "عربي",
-                              isEnglish: LocalizationManager.getCurrentLocale()
-                                      .languageCode ==
-                                  "ar"),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            mainCubit.changeLanguage(1);
-                          },
-                          child: _languageText(
-                              text: "English",
-                              isEnglish:
-                                  !(LocalizationManager.getCurrentLocale()
-                                          .languageCode ==
-                                      "ar")),
-                        ),
-                      ],
-                    ),
-                  )),
-              _newSettingWidget(
-                onTap: () {
-                  context.push(Routes.questions);
-                },
-                icon: "assets/images/icons/question.webp",
-                text: S.of(context).commonQuestions,
-              ),
-              _newSettingWidget(
-                onTap: () {
-                  context.pushWithTransition(const ChatsScreen(
-                    withPlayer: false,
-                  ));
-                },
-                icon: "assets/images/icons/chat.png",
-                text: S.of(context).technicalSupport,
-              ),
-              _newSettingWidget(
-                onTap: () {
-                  Share.share(
-                    '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
-                  );
-                },
-                icon: "assets/images/icons/share_2.webp",
-                text: S.of(context).share,
-              ),
-              BlocConsumer<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  if (state is LogoutSuccessState) {
-                    bloc.add(PlaySoundEvent("audios/end.wav"));
-                    context.pushAndRemove(Routes.login);
-                  }
-                },
-                builder: (context, state) {
-                  return _newSettingWidget(
-                    onTap: () {
-                      showLogoutDialog(context, bloc);
-                    },
-                    icon: "assets/images/icons/logout.webp",
-                    text: S.of(context).logout,
-                  );
-                },
-              ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-              //   child: Column(
-              //     children: [
-              //       _settingWidget(
-              //         onTap: () {
-              //           if (ConstantsManager.appUser != null) {
-              //             context.pushWithTransition(
-              //                 MyWallet(owner: ConstantsManager.appUser!));
-              //           }
-              //         },
-              //         icon: "assets/images/icons/money.webp",
-              //         title: "My Wallet",
-              //       ),
-              //       _settingWidget(
-              //         onTap: () {
-              //           context.push(Routes.termsAndCondition);
-              //         },
-              //         icon: "assets/images/icons/privacy.webp",
-              //         title: S.of(context).preferenceAndPrivacy,
-              //       ),
-              //       _settingWidget(
-              //         onTap: () {
-              //           showDialogForLanguage(context, mainCubit);
-              //         },
-              //         icon: "assets/images/icons/lang.png",
-              //         title: S.of(context).language,
-              //       ),
-              //       Padding(
-              //         padding: EdgeInsets.symmetric(vertical: 1.h),
-              //         child: Container(
-              //           width: double.infinity,
-              //           height: 0.2.h,
-              //           color: ColorManager.grey3,
-              //         ),
-              //       ),
-              //       _settingWidget(
-              //         onTap: () {
-              //           context.push(Routes.questions);
-              //         },
-              //         color: ColorManager.grey1,
-              //         icon: "assets/images/icons/question.webp",
-              //         title: S.of(context).commonQuestions,
-              //       ),
-              //       _settingWidget(
-              //         onTap: () {
-              //           Share.share(
-              //             '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
-              //           );
-              //         },
-              //         icon: "assets/images/icons/share_2.webp",
-              //         title: S.of(context).share,
-              //         color: ColorManager.grey1,
-              //       ),
-              //       BlocConsumer<AuthBloc, AuthState>(
-              //         listener: (context, state) {
-              //           if (state is LogoutSuccessState) {
-              //             bloc.add(PlaySoundEvent("audios/end.wav"));
-              //             mainCubit.currentIndex = 0;
-              //             context.pushAndRemove(Routes.login);
-              //           }
-              //         },
-              //         builder: (context, state) {
-              //           return _settingWidget(
-              //             onTap: () {
-              //               showLogoutDialog(context, bloc);
-              //             },
-              //             icon: "assets/images/icons/logout.webp",
-              //             title: S.of(context).logout,
-              //             color: ColorManager.grey1,
-              //           );
-              //         },
-              //       ),
-              //     ],
-              //   ),
-              // ),
-            ]),
-          ),
-        );
-      },
+                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                //   child: Column(
+                //     children: [
+                //       _settingWidget(
+                //         onTap: () {
+                //           if (ConstantsManager.appUser != null) {
+                //             context.pushWithTransition(
+                //                 MyWallet(owner: ConstantsManager.appUser!));
+                //           }
+                //         },
+                //         icon: "assets/images/icons/money.webp",
+                //         title: "My Wallet",
+                //       ),
+                //       _settingWidget(
+                //         onTap: () {
+                //           context.push(Routes.termsAndCondition);
+                //         },
+                //         icon: "assets/images/icons/privacy.webp",
+                //         title: S.of(context).preferenceAndPrivacy,
+                //       ),
+                //       _settingWidget(
+                //         onTap: () {
+                //           showDialogForLanguage(context, mainCubit);
+                //         },
+                //         icon: "assets/images/icons/lang.png",
+                //         title: S.of(context).language,
+                //       ),
+                //       Padding(
+                //         padding: EdgeInsets.symmetric(vertical: 1.h),
+                //         child: Container(
+                //           width: double.infinity,
+                //           height: 0.2.h,
+                //           color: ColorManager.grey3,
+                //         ),
+                //       ),
+                //       _settingWidget(
+                //         onTap: () {
+                //           context.push(Routes.questions);
+                //         },
+                //         color: ColorManager.grey1,
+                //         icon: "assets/images/icons/question.webp",
+                //         title: S.of(context).commonQuestions,
+                //       ),
+                //       _settingWidget(
+                //         onTap: () {
+                //           Share.share(
+                //             '${S.of(context).shareApp}:https://play.google.com/store/apps/details?id=com.instagram.android',
+                //           );
+                //         },
+                //         icon: "assets/images/icons/share_2.webp",
+                //         title: S.of(context).share,
+                //         color: ColorManager.grey1,
+                //       ),
+                //       BlocConsumer<AuthBloc, AuthState>(
+                //         listener: (context, state) {
+                //           if (state is LogoutSuccessState) {
+                //             bloc.add(PlaySoundEvent("audios/end.wav"));
+                //             mainCubit.currentIndex = 0;
+                //             context.pushAndRemove(Routes.login);
+                //           }
+                //         },
+                //         builder: (context, state) {
+                //           return _settingWidget(
+                //             onTap: () {
+                //               showLogoutDialog(context, bloc);
+                //             },
+                //             icon: "assets/images/icons/logout.webp",
+                //             title: S.of(context).logout,
+                //             color: ColorManager.grey1,
+                //           );
+                //         },
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ]),
+            ),
+          );
+        },
+      ),
     );
   }
 }

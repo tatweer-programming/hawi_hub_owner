@@ -59,8 +59,7 @@ class ChatsScreen extends StatelessWidget {
                                       chatBloc.add(GetChatMessagesEvent(
                                         conversationId:
                                             chats[index].conversationId,
-                                        index: index,
-                                        withOwner: withPlayer,
+                                        withPlayer: withPlayer,
                                       ));
                                     },
                                   ),
@@ -148,9 +147,10 @@ Widget _chatWidget(
           CircleAvatar(
             backgroundColor: ColorManager.grey3,
             radius: 22.sp,
-            backgroundImage: lastMessage.player.profilePictureUrl == null
+            backgroundImage: lastMessage.player == null ||
+                    lastMessage.player!.profilePictureUrl == null
                 ? null
-                : NetworkImage(lastMessage.player.profilePictureUrl!),
+                : NetworkImage(lastMessage.player!.profilePictureUrl!),
           ),
           SizedBox(
             width: 4.w,
@@ -165,7 +165,9 @@ Widget _chatWidget(
                   children: [
                     Expanded(
                       child: Text(
-                        lastMessage.player.userName,
+                        lastMessage.player == null
+                            ? ""
+                            : lastMessage.player!.userName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(

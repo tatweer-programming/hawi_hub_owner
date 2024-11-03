@@ -1,14 +1,13 @@
 import 'package:equatable/equatable.dart';
 import '../../../auth/data/models/player.dart';
 
-
 class LastMessage extends Equatable {
   final int? messageId;
   final String? messageContent;
   final String? messageAttachmentUrl;
   final bool? playerToOwner;
   final DateTime? timestamp;
-  final Player player;
+  final Player? player;
 
   const LastMessage({
     required this.messageId,
@@ -19,20 +18,19 @@ class LastMessage extends Equatable {
     required this.player,
   });
 
-  factory LastMessage.fromJson(Map<String, dynamic> json) {
-    print(json["timestamp"]);
+  factory LastMessage.fromJson(Map<String, dynamic> json, bool withPlayer) {
     return LastMessage(
       messageId: json["messageId"],
       messageContent: json["messageContent"],
       messageAttachmentUrl: json["messageAttachmentUrl"],
-      playerToOwner: json["playerToOwner"],
-      timestamp: DateTime.parse(json["timestamp"]??DateTime.now().toString()).toLocal().add(Duration(hours: 3)),
-      player: Player.fromJson(json["player"]),
+      playerToOwner: withPlayer ? json["playerToOwner"] : json["adminToOwner"],
+      timestamp: DateTime.parse(json["timestamp"]??DateTime.now().toLocal().toString()),
+      player: withPlayer ? Player.fromJson(json["player"]) : null,
     );
   }
 
   @override
   List<Object?> get props => [
-    messageId,
-  ];
+        messageId,
+      ];
 }

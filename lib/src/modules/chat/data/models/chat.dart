@@ -12,11 +12,11 @@ class Chat extends Equatable {
     required this.lastMessage,
   });
 
-  factory Chat.fromJson(Map<String, dynamic> json) {
+  factory Chat.fromJson(Map<String, dynamic> json,bool withPlayer) {
     return Chat(
       conversationId: json["conversationId"],
       ownerId: json["ownerId"],
-      lastMessage: LastMessage.fromJson(json["lastMessage"]),
+      lastMessage: LastMessage.fromJson(json["lastMessage"],withPlayer),
     );
   }
   static void sortChatsByDate(List<Chat> chats) {

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hawi_hub_owner/generated/l10n.dart';
 import 'package:hawi_hub_owner/src/core/apis/api.dart';
 import 'package:hawi_hub_owner/src/core/routing/navigation_manager.dart';
 import 'package:hawi_hub_owner/src/core/utils/color_manager.dart';
@@ -30,6 +31,10 @@ class ChatScreen extends StatelessWidget {
     TextEditingController messageController = TextEditingController();
     final ScrollController scrollController = ScrollController();
     chatBloc.add(GetConnectionEvent());
+    chatBloc.add(GetChatMessagesEvent(
+      conversationId: chat!.conversationId,
+      withPlayer: withPlayer,
+    ));
     Message? message;
     String? imagePath;
     List<MessageDetails> messages = [];
@@ -37,6 +42,7 @@ class ChatScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is GetChatMessagesSuccessState) {
           message = state.messages;
+          print(message!.lastTimeToChat);
           messages = message!.message;
           if (messages.isNotEmpty) {
             chatBloc.add(
@@ -44,7 +50,6 @@ class ChatScreen extends StatelessWidget {
           }
         }
         if (state is StreamMessagesSuccessState) {
-          print("object");
           messages.add(state.streamMessage);
           chatBloc
               .add(ScrollingDownEvent(listScrollController: scrollController));
@@ -76,10 +81,12 @@ class ChatScreen extends StatelessWidget {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _appBar(
+                _appBar(U
                   context: context,
-                  receiverName: chat!.lastMessage.player.userName,
-                  imageProfile: chat!.lastMessage.player.profilePictureUrl,
+                  receiverName: chat!.lastMessage.player == null
+                      ? S.of(context).technicalSupport
+                      : chat!.lastMessage.player!.userName,
+                  imageProfile: chat!.lastMessage.player?.profilePictureUrl,
                   chatBloc: chatBloc,
                 ),
                 SizedBox(height: 1.h),
@@ -99,12 +106,12 @@ class ChatScreen extends StatelessWidget {
                         horizontal: 3.w,
                       ),
                       child: Column(
-                        crossAxisAlignment: !isOwner!
-                            ? CrossAxisAlignment.end
-                            : CrossAxisAlignment.start,
+                        crossAxisAlignment: isOwner!
+                            ? CrossAxisAlignment.start
+                            : CrossAxisAlignment.end,
                         children: [
                           _messageWidget(
-                              message: messages[index], isSender: !isOwner),
+                              message: messages[index], isSender: isOwner),
                           SizedBox(
                             height: 0.5.h,
                           ),
@@ -127,7 +134,8 @@ class ChatScreen extends StatelessWidget {
                     chatBloc.add(RemovePickedImageEvent());
                   }),
                 if (message != null &&
-                    message!.lastTimeToChat.compareTo(DateTime.now().add(const Duration(hours: 3))) >= 0)
+                    message!.lastTimeToChat.compareTo(DateTime.now().toUtc()) >=
+                        0)
                   _sendButton(
                     (String? value) async {
                       if (value == 'image') {
@@ -145,6 +153,7 @@ class ChatScreen extends StatelessWidget {
                             isOwner: false,
                             timeStamp: DateTime.now().add(Duration(hours: 3)),
                           ),
+                          withPlayer: withPlayer,
                         ));
                       }
                     },
@@ -249,15 +258,15 @@ Widget _messageWidget(
 Widget _textWidget({required bool isSender, required String message}) {
   return Align(
     alignment:
-        isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+        isSender ? AlignmentDirectional.topStart : AlignmentDirectional.topEnd,
     child: Container(
       decoration: BoxDecoration(
         color: ColorManager.grey3.withOpacity(0.4),
         borderRadius: BorderRadiusDirectional.only(
           topStart: Radius.circular(15.sp),
           topEnd: Radius.circular(15.sp),
-          bottomEnd: isSender ? Radius.zero : Radius.circular(15.sp),
-          bottomStart: isSender ? Radius.circular(15.sp) : Radius.zero,
+          bottomEnd: isSender ? Radius.circular(15.sp) : Radius.zero,
+          bottomStart: isSender ? Radius.zero : Radius.circular(15.sp),
         ),
       ),
       padding: EdgeInsetsDirectional.only(
@@ -279,7 +288,7 @@ Widget _textWidget({required bool isSender, required String message}) {
 Widget _imageWidget({required bool isSender, required String image}) {
   return Align(
     alignment:
-        isSender ? AlignmentDirectional.topEnd : AlignmentDirectional.topStart,
+        isSender ? AlignmentDirectional.topStart : AlignmentDirectional.topEnd,
     child: Container(
       height: 20.h,
       width: 60.w,
@@ -292,8 +301,8 @@ Widget _imageWidget({required bool isSender, required String image}) {
         borderRadius: BorderRadiusDirectional.only(
           topStart: Radius.circular(15.sp),
           topEnd: Radius.circular(15.sp),
-          bottomEnd: isSender ? Radius.zero : Radius.circular(15.sp),
-          bottomStart: isSender ? Radius.circular(15.sp) : Radius.zero,
+          bottomEnd: isSender ? Radius.circular(15.sp) : Radius.zero,
+          bottomStart: isSender ? Radius.zero : Radius.circular(15.sp),
         ),
       ),
     ),

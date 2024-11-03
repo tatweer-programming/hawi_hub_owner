@@ -124,13 +124,14 @@ class DefaultAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MainCubit mainCubit = MainCubit.get();
     return SafeArea(
       child: Row(
         children: [
           IconButton(
               onPressed: () {
-                context.pushWithTransition(const ChatsScreen());
+                context.pushWithTransition(ChatsScreen(
+                  withPlayer: true,
+                ));
               },
               icon: const ImageIcon(
                 AssetImage("assets/images/icons/chat.png"),

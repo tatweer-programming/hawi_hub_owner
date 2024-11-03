@@ -22,21 +22,24 @@ class MessageDetails extends Equatable {
     this.attachmentUrl,
   });
 
-  factory MessageDetails.fromJson(Map<String, dynamic> json) {
+  factory MessageDetails.fromJson(Map<String, dynamic> json,bool withPlayer) {
     return MessageDetails(
       message: json["messageContent"],
       attachmentUrl: json["messageAttachmentUrl"] != null
           ? ApiManager.handleImageUrl(json["messageAttachmentUrl"])
           : null,
-      timeStamp: DateTime.parse(json["timestamp"]??DateTime.now().toString()).toLocal().add(Duration(hours: 3)),
-      isOwner: json["playerToOwner"],
+      timeStamp: DateTime.parse(json["timestamp"]).toLocal(),
+      isOwner: withPlayer ?json["playerToOwner"]:json["adminToOwner"],
     );
   }
 
-  String jsonBody() {
+  String jsonBody(bool withPlayer) {
     print(toJson());
     String argumentsJson = jsonEncode([toJson()]);
-    return '{"type":1, "target":"SendMessageToPlayer", "arguments":$argumentsJson}';
+    if(withPlayer){
+      return '{"type":1, "target":"SendMessageFromOwnerToPlayer", "arguments":$argumentsJson}';
+    }
+    return '{"type":1, "target":"SendMessageFromOwnerToAdmin", "arguments":$argumentsJson}';
   }
 
   Map<String, dynamic> toJson() {

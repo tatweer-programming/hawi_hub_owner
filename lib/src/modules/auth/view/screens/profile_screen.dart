@@ -240,7 +240,7 @@ Widget _notVerified(AuthBloc bloc) {
                             color: ColorManager.primary,
                           )),
                     ),
-                  )
+                  ),
               ],
             ),
           ),
