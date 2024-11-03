@@ -45,6 +45,7 @@ class PaymentService {
         },
       );
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      ConstantsManager.appUser!.myWallet = jsonResponse["TotalBalance"];
       return Right(jsonResponse["TotalBalance"]);
     } on DioException catch (e) {
       return Left(e.response.toString());

@@ -30,6 +30,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "addFeedback": MessageLookupByLibrary.simpleMessage("إضافة تقييم"),
         "addImages": MessageLookupByLibrary.simpleMessage("اضافة صور"),
         "addPlace": MessageLookupByLibrary.simpleMessage("إضافة مكان"),
+        "addRequiredPdfForCompaniesInKSAForeign":
+            MessageLookupByLibrary.simpleMessage(
+                "يرجي ألحاق المطلوب ادناه من الملف للشركات المستثمرة في المملكة العربية السعودية من أصل أجنبي "),
         "addRequiredPdfForFreeLancers": MessageLookupByLibrary.simpleMessage(
             "يرجي إلحاق المطلوب ادناه من الملف للحسابات العمل الحر "),
         "addRequiredPdfForLegalInstitutions":
@@ -60,6 +63,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "bookingSuccess":
             MessageLookupByLibrary.simpleMessage("تم إضافة الملعب بنجاح"),
         "bookingTime": MessageLookupByLibrary.simpleMessage("وقت الحجز"),
+        "bookings": MessageLookupByLibrary.simpleMessage("حجوزات"),
+        "both": MessageLookupByLibrary.simpleMessage("كليهما"),
+        "bothMalesAndFemales":
+            MessageLookupByLibrary.simpleMessage(" ذكور وإناث"),
+        "canShare":
+            MessageLookupByLibrary.simpleMessage("هل يمكن إنشاء حجز جماعي ؟"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "change": MessageLookupByLibrary.simpleMessage("تغير "),
         "changePassword":
@@ -90,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deletePlace": MessageLookupByLibrary.simpleMessage("حذف المكان"),
         "deletePlaceConfirmation":
             MessageLookupByLibrary.simpleMessage("هل تريد حذف أمكانك"),
+        "deposit": MessageLookupByLibrary.simpleMessage("العربون"),
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
         "doYouWantToLogout":
@@ -104,7 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("البريد الالكتروني غير موجود"),
         "endTime": MessageLookupByLibrary.simpleMessage("وقت الانتهاء"),
         "endTimeMustBeAfterStartTime": MessageLookupByLibrary.simpleMessage(
-            "وقت الانتهاء يجب أن يكون بعد وقت البدء"),
+            "وقت الانتهاء يجب عليك أن يكون بعد وقت البدء"),
         "enterCode":
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال الرمز "),
         "enterConfirmPassword": MessageLookupByLibrary.simpleMessage(
@@ -119,6 +129,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال الإسم"),
         "feedbacks": MessageLookupByLibrary.simpleMessage("التعليقات"),
         "female": MessageLookupByLibrary.simpleMessage("انثى"),
+        "females": MessageLookupByLibrary.simpleMessage("إناث"),
         "fileUploaded": MessageLookupByLibrary.simpleMessage("تم رفع الملف "),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة السر ؟"),
@@ -126,14 +137,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "futureBookings":
             MessageLookupByLibrary.simpleMessage("الحجوزات القادمة"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
+        "genders": MessageLookupByLibrary.simpleMessage("النوع"),
         "getStarted":
             MessageLookupByLibrary.simpleMessage("اجعل فريقك يلعب معًا!"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "hours": MessageLookupByLibrary.simpleMessage("ساعات"),
         "identificationPending":
             MessageLookupByLibrary.simpleMessage("يتم مراجعة الملف الان"),
-        "imageIsRequired":
-            MessageLookupByLibrary.simpleMessage("يجب اختيار صورة علي الاقل"),
+        "imageIsRequired": MessageLookupByLibrary.simpleMessage(
+            "يجب عليك اختيار صورة علي الاقل"),
         "invalidEmailOrPassword": MessageLookupByLibrary.simpleMessage(
             "البريد الإلكتروني أو كلمة السر خاطئة."),
         "invalidResetCode":
@@ -147,11 +159,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationSaved": MessageLookupByLibrary.simpleMessage("تم حفظ الموقع"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginFirst":
-            MessageLookupByLibrary.simpleMessage("يجب تسجيل الدخول أولا"),
+            MessageLookupByLibrary.simpleMessage("يجب عليك تسجيل الدخول أولا"),
         "loginSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم تسجيل الدخول إلى الحساب بنجاح"),
         "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
+        "males": MessageLookupByLibrary.simpleMessage("ذكور"),
         "minimumBooking":
             MessageLookupByLibrary.simpleMessage("حجز الحد الادنى"),
         "minimumHours":
@@ -159,8 +172,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes": MessageLookupByLibrary.simpleMessage("دقائق"),
         "mix": MessageLookupByLibrary.simpleMessage("مختلط"),
         "more": MessageLookupByLibrary.simpleMessage("المزيد"),
-        "mustVerifyAccount": MessageLookupByLibrary.simpleMessage(
-            "يجب عليك التحقق من حسابك أولا "),
+        "mustVerifyAccount":
+            MessageLookupByLibrary.simpleMessage("يجب التحقق من حسابك أولا "),
         "myWallet": MessageLookupByLibrary.simpleMessage("محفظتي"),
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
@@ -190,13 +203,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "ownershipTypes": MessageLookupByLibrary.simpleMessage(
             "يرجى رفع ملف إثبات الملكية أو عقد إيجار"),
         "passMustContainLowerCase": MessageLookupByLibrary.simpleMessage(
-            "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل"),
+            "يجب عليك أن تحتوي كلمة المرور على حرف صغير واحد على الأقل"),
         "passMustContainNumber": MessageLookupByLibrary.simpleMessage(
-            "يجب ان تحتوي كلمة المرور على الاقل رقما واحدا"),
+            "يجب عليك ان تحتوي كلمة المرور على الاقل رقما واحدا"),
         "passMustContainSpecialChar": MessageLookupByLibrary.simpleMessage(
-            "يجب أن تحتوي كلمة المرور على حرف مثل # * على الأقل"),
+            "يجب عليك أن تحتوي كلمة المرور على حرف مثل # * على الأقل"),
         "passMustContainUpperCase": MessageLookupByLibrary.simpleMessage(
-            "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل"),
+            "يجب عليك أن تحتوي كلمة المرور على حرف كبير واحد على الأقل"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordChangedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تغيير كلمة المرور بنجاح."),
@@ -225,7 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "proofOfIdentityAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم أضافة الملف بنجاح."),
         "questions": MessageLookupByLibrary.simpleMessage(
-            "ما هو تطبيق هاوي هب؟\n\nهو تطبيق يربط أصحاب الملاعب مع المستأجرين، مما يسهل عملية حجز الملاعب بشكل فردي أو جماعي.\n\nمن يستطيع استخدام تطبيق هاوي هب؟\n\nيمكن لأي شخص تحميل التطبيق واستخدامه، لكنه يستهدف بشكل خاص الشباب في المملكة العربية السعودية.\n\nما هي الخدمات التي يقدمها التطبيق؟\n\nحجز الملاعب بشكل فردي:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nأكمل عملية الدفع.\nإنشاء حجوزات جماعية ومشاركتها مع الأصدقاء:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nحدد عدد اللاعبين.\nانشئ رابطًا للحجز وشارك أصدقائك.\nإنشاء حجوزات جماعية مفتوحة لجميع مستخدمي التطبيق:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nحدد عدد اللاعبين.\nانشئ رابطًا للحجز وشاركه مع الجميع.\nكيف يتم الدفع في تطبيق هاوي هب؟\n\nيتم الدفع من خلال بطاقة الائتمان أو بطاقة الدفع عبر الإنترنت.\n\nما هي نسبة الشركة المالكة للتطبيق من قيمة الحجز؟\n\nتختلف نسبة الشركة المالكة للتطبيق من قيمة الحجز حسب نوع الحجز.\n\nكيف يمكنني إضافة ملعب إلى التطبيق؟\n\nإذا كنت صاحب ملعب، يمكنك التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/ لمعرفة المزيد عن كيفية إضافة ملعبك إلى التطبيق.\n\nكيف يمكنني التواصل مع الشركة المالكة للتطبيق؟\n\nيمكنك التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/\n\nهل هناك أي قيود أو شروط محددة لاستخدام التطبيق؟\n\nلا يوجد أي قيود أو شروط لاستخدام التطبيق، لكن يجب عليك احترام جميع المستخدمين على التطبيق والامتناع عن أي سلوكيات مسيئة أو غير قانونية.\n\nهل هناك أي سلوكيات ممنوعة على التطبيق؟\n\nنعم، هناك بعض السلوكيات الممنوعة على التطبيق، مثل:\n\nالتنمر أو المضايقة.\nنشر خطاب الكراهية أو المحتوى المسيء.\nمشاركة المعلومات الشخصية أو الحساسة.\nاستخدام التطبيق لأغراض غير قانونية.\nماذا يحدث إذا انتهكت شروط الاستخدام؟\n\nإذا انتهكت شروط الاستخدام، فقد يتم حظر حسابك من التطبيق بشكل دائم.\n\nهل يمكنني إلغاء حسابي؟\n\nنعم، يمكنك إلغاء حسابك في أي وقت.\n\nهل يمكنني تغيير معلومات حسابي؟\n\nنعم، يمكنك تغيير معلومات حسابك في أي وقت.\n\nكيف يمكنني الحصول على مساعدة في استخدام التطبيق؟\n\nيمكنك مراجعة مركز المساعدة في التطبيق أو التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/\n\nهل تطبيق هاوي هب آمن؟\n\nنعم، تطبيق هاوي هب آمن للغاية. نستخدم أحدث تقنيات الأمان لحماية بيانات المستخدمين.\n\nهل يتم مشاركة بياناتي مع أي شخص آخر؟\n\nلا، لا يتم مشاركة بياناتك مع أي شخص آخر إلا إذا كنت قد وافقت على ذلك صراحةً.\n\nما هي سياسة الخصوصية الخاصة بتطبيق هاوي هب؟\n\nيمكنك مراجعة سياسة الخصوصية الخاصة بتطبيق هاوي هب في https://www.infohub.com/\n\nهل هناك أي شيء آخر يجب أن أعرفه؟\n\nننصحك بقراءة شروط الاستخدام وسياسة الخصوصية بعناية قبل استخدام التطبيق.\n\nشكرًا لك على استخدام تطبيق هاوي هب!\n\nملاحظة:\nقد يتم تحديث هذه الأسئلة الشائعة من وقت لآخر. يرجى مراجعة هذه الصفحة بشكل دوري للاطلاع على أحدث التغييرات."),
+            "ما هو تطبيق هاوي هب؟\n\nهو تطبيق يربط أصحاب الملاعب مع المستأجرين، مما يسهل عملية حجز الملاعب بشكل فردي أو جماعي.\n\nمن يستطيع استخدام تطبيق هاوي هب؟\n\nيمكن لأي شخص تحميل التطبيق واستخدامه، لكنه يستهدف بشكل خاص الشباب في المملكة العربية السعودية.\n\nما هي الخدمات التي يقدمها التطبيق؟\n\nحجز الملاعب بشكل فردي:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nأكمل عملية الدفع.\nإنشاء حجوزات جماعية ومشاركتها مع الأصدقاء:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nحدد عدد اللاعبين.\nانشئ رابطًا للحجز وشارك أصدقائك.\nإنشاء حجوزات جماعية مفتوحة لجميع مستخدمي التطبيق:\nحدد الملعب الذي تريده.\nاختر التاريخ والوقت المناسبين.\nحدد عدد اللاعبين.\nانشئ رابطًا للحجز وشاركه مع الجميع.\nكيف يتم الدفع في تطبيق هاوي هب؟\n\nيتم الدفع من خلال بطاقة الائتمان أو بطاقة الدفع عبر الإنترنت.\n\nما هي نسبة الشركة المالكة للتطبيق من قيمة الحجز؟\n\nتختلف نسبة الشركة المالكة للتطبيق من قيمة الحجز حسب نوع الحجز.\n\nكيف يمكنني إضافة ملعب إلى التطبيق؟\n\nإذا كنت صاحب ملعب، يمكنك التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/ لمعرفة المزيد عن كيفية إضافة ملعبك إلى التطبيق.\n\nكيف يمكنني التواصل مع الشركة المالكة للتطبيق؟\n\nيمكنك التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/\n\nهل هناك أي قيود أو شروط محددة لاستخدام التطبيق؟\n\nلا يوجد أي قيود أو شروط لاستخدام التطبيق، لكن يجب عليك عليك احترام جميع المستخدمين على التطبيق والامتناع عن أي سلوكيات مسيئة أو غير قانونية.\n\nهل هناك أي سلوكيات ممنوعة على التطبيق؟\n\nنعم، هناك بعض السلوكيات الممنوعة على التطبيق، مثل:\n\nالتنمر أو المضايقة.\nنشر خطاب الكراهية أو المحتوى المسيء.\nمشاركة المعلومات الشخصية أو الحساسة.\nاستخدام التطبيق لأغراض غير قانونية.\nماذا يحدث إذا انتهكت شروط الاستخدام؟\n\nإذا انتهكت شروط الاستخدام، فقد يتم حظر حسابك من التطبيق بشكل دائم.\n\nهل يمكنني إلغاء حسابي؟\n\nنعم، يمكنك إلغاء حسابك في أي وقت.\n\nهل يمكنني تغيير معلومات حسابي؟\n\nنعم، يمكنك تغيير معلومات حسابك في أي وقت.\n\nكيف يمكنني الحصول على مساعدة في استخدام التطبيق؟\n\nيمكنك مراجعة مركز المساعدة في التطبيق أو التواصل مع الشركة المالكة للتطبيق من خلال https://www.infohub.com/\n\nهل تطبيق هاوي هب آمن؟\n\nنعم، تطبيق هاوي هب آمن للغاية. نستخدم أحدث تقنيات الأمان لحماية بيانات المستخدمين.\n\nهل يتم مشاركة بياناتي مع أي شخص آخر؟\n\nلا، لا يتم مشاركة بياناتك مع أي شخص آخر إلا إذا كنت قد وافقت على ذلك صراحةً.\n\nما هي سياسة الخصوصية الخاصة بتطبيق هاوي هب؟\n\nيمكنك مراجعة سياسة الخصوصية الخاصة بتطبيق هاوي هب في https://www.infohub.com/\n\nهل هناك أي شيء آخر يجب عليك أن أعرفه؟\n\nننصحك بقراءة شروط الاستخدام وسياسة الخصوصية بعناية قبل استخدام التطبيق.\n\nشكرًا لك على استخدام تطبيق هاوي هب!\n\nملاحظة:\nقد يتم تحديث هذه الأسئلة الشائعة من وقت لآخر. يرجى مراجعة هذه الصفحة بشكل دوري للاطلاع على أحدث التغييرات."),
         "rate": MessageLookupByLibrary.simpleMessage("التقييم"),
         "rates": MessageLookupByLibrary.simpleMessage("التقييمات"),
         "reSendCode": MessageLookupByLibrary.simpleMessage("اعادة ارسال الرمز"),
@@ -257,10 +270,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "shortPassword": MessageLookupByLibrary.simpleMessage(
             "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل."),
         "shouldActivate":
-            MessageLookupByLibrary.simpleMessage("يجب تفعيل الحساب أولا"),
+            MessageLookupByLibrary.simpleMessage("يجب عليك تفعيل الحساب أولا"),
         "shouldAgreeTerns": MessageLookupByLibrary.simpleMessage(
-            "يجب عليك الموافقة على شروط الخدمة وسياسة الخصوصية"),
+            "يجب عليك عليك الموافقة على شروط الخدمة وسياسة الخصوصية"),
         "showInMap": MessageLookupByLibrary.simpleMessage("اظهار في الخريطة"),
+        "showMore": MessageLookupByLibrary.simpleMessage("عرض المزيد"),
         "signUp": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "somethingWentWrong":
             MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
@@ -271,7 +285,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "startTime": MessageLookupByLibrary.simpleMessage("وقت البدء"),
         "technicalSupport": MessageLookupByLibrary.simpleMessage("الدعم الفني"),
         "termsAndConditions": MessageLookupByLibrary.simpleMessage(
-            "شروط وأحكام تطبيق هاوي هب\nمقدمة:\n\nمرحبًا بك في تطبيق هاوي هب! يهدف هذا التطبيق إلى ربط أصحاب الملاعب مع المستأجرين، مما يسهل عملية حجز الملاعب بشكل فردي أو جماعي. قبل استخدام التطبيق، يرجى قراءة هذه الشروط والأحكام بعناية.\n\n1. معلومات عامة:\n\nاسم التطبيق: هاوي هب\nنوع التطبيق: تطبيق رياضي\nجمهور التطبيق المستهدف: فئة الشباب في المملكة العربية السعودية\nالخدمات التي يقدمها التطبيق:\nحجز الملاعب بشكل فردي\nإنشاء حجوزات جماعية ومشاركتها مع الأصدقاء\nإنشاء حجوزات جماعية مفتوحة لجميع مستخدمي التطبيق\nنموذج عمل التطبيق:\nيدفع المستخدم قيمة الحجز كاملة.\nتحصل الشركة المالكة للتطبيق على نسبة ...... % من قيمة الحجز بعد خصم العمولات البنكية الخاصة بمقدمي خدمة الدفع الالكتروني وهي ......... %.\nيحصل صاحب الملعب على باقي قيمة الحجز.\n2. معلومات قانونية:\n\nبلد مقر الشركة المالكة للتطبيق: المملكة العربية السعودية\n\n3. سياسة الخصوصية:\n\nجمع البيانات:\nالمستخدم العادي:\nالاسم\nالعمر\nالبريد الإلكتروني\nصاحب الملعب:\nيتم طلب بعض المستندات الخاصة بتوثيق حساب صاحب الملعب و مستندات لاثبات ملكيته للأماكن قبل الموافقة على عرضها في التطبيق وجميع المستندات المطلوبة موضحة في شاشة المتطلبات القانونية \nاستخدام البيانات:\nتحتفظ بهذه البيانات و المستندات ولا يتم مشاركة البيانات إلا مع الجهات القانونية المختصة فقط عند الحاجة وطبقًا للقوانين السعودية.\nحماية البيانات:\nيتم اتخاذ كافة سبل الحماية القانونية لحماية بيانات المستخدمين.\n4. شروط الاستخدام:\nقبول الشروط: استخدام التطبيق يعني قبول هذه الشروط والأحكام.\nالحسابات:\nإنشاء حساب مجاني للمستخدمين.\nالتحقق من هوية أصحاب الملاعب.\nالحجوزات:\nيمكن للمستخدمين حجز الملاعب بشكل فردي أو جماعي.\nيمكن لصاحب الملعب قبول أو رفض الحجوزات.\nيتم دفع قيمة الحجز من قبل المستخدم.\nتحصل الشركة المالكة للتطبيق على نسبة من قيمة الحجز.\nيحصل صاحب الملعب على باقي قيمة الحجز.\nالسلوكيات:\nيجب احترام جميع المستخدمين على التطبيق و الامتناع عن أي سلوكيات مسيئة أو غير قانونية.\nالمسؤولية:\nيتحمل المستخدم مسؤولية جميع تصرفاته على التطبيق.\nلا تتحمل الشركة أي مسؤولية عن أي أضرار ناتجة عن استخدام التطبيق.\nالتغييرات:\nتحتفظ الشركة بحق تعديل هذه الشروط والأحكام في أي وقت دون إشعار مسبق.\nالقانون المنظم:\nتخضع هذه الشروط والأحكام لقوانين المملكة العربية السعودية.\n5. حل النزاعات:\nفي حال نشوء أي نزاع بين المستخدم والتطبيق، سيتم بذل قصارى الجهد لحلّه وديًا.\nإذا فشل الحل الودي، يتم اللجوء إلى التحكيم في مركز التحكيم التجاري للمملكة العربية السعودية.\n6. الاتصال:\n\nيمكن التواصل مع الشركة المالكة للتطبيق من خلال ............\nملاحظة:\nقد يتم تحديث هذه الشروط والأحكام من وقت لآخر. يرجى مراجعة هذه الصفحة بشكل دوري للاطلاع على أحدث التغييرات.\nشكرًا لك على استخدام تطبيق هاوي هب!"),
+            "شروط وأحكام تطبيق هاوي هب\nمقدمة:\n\nمرحبًا بك في تطبيق هاوي هب! يهدف هذا التطبيق إلى ربط أصحاب الملاعب مع المستأجرين، مما يسهل عملية حجز الملاعب بشكل فردي أو جماعي. قبل استخدام التطبيق، يرجى قراءة هذه الشروط والأحكام بعناية.\n\n1. معلومات عامة:\n\nاسم التطبيق: هاوي هب\nنوع التطبيق: تطبيق رياضي\nجمهور التطبيق المستهدف: فئة الشباب في المملكة العربية السعودية\nالخدمات التي يقدمها التطبيق:\nحجز الملاعب بشكل فردي\nإنشاء حجوزات جماعية ومشاركتها مع الأصدقاء\nإنشاء حجوزات جماعية مفتوحة لجميع مستخدمي التطبيق\nنموذج عمل التطبيق:\nيدفع المستخدم قيمة الحجز كاملة.\nتحصل الشركة المالكة للتطبيق على نسبة ...... % من قيمة الحجز بعد خصم العمولات البنكية الخاصة بمقدمي خدمة الدفع الالكتروني وهي ......... %.\nيحصل صاحب الملعب على باقي قيمة الحجز.\n2. معلومات قانونية:\n\nبلد مقر الشركة المالكة للتطبيق: المملكة العربية السعودية\n\n3. سياسة الخصوصية:\n\nجمع البيانات:\nالمستخدم العادي:\nالاسم\nالعمر\nالبريد الإلكتروني\nصاحب الملعب:\nيتم طلب بعض المستندات الخاصة بتوثيق حساب صاحب الملعب و مستندات لاثبات ملكيته للأماكن قبل الموافقة على عرضها في التطبيق وجميع المستندات المطلوبة موضحة في شاشة المتطلبات القانونية \nاستخدام البيانات:\nتحتفظ بهذه البيانات و المستندات ولا يتم مشاركة البيانات إلا مع الجهات القانونية المختصة فقط عند الحاجة وطبقًا للقوانين السعودية.\nحماية البيانات:\nيتم اتخاذ كافة سبل الحماية القانونية لحماية بيانات المستخدمين.\n4. شروط الاستخدام:\nقبول الشروط: استخدام التطبيق يعني قبول هذه الشروط والأحكام.\nالحسابات:\nإنشاء حساب مجاني للمستخدمين.\nالتحقق من هوية أصحاب الملاعب.\nالحجوزات:\nيمكن للمستخدمين حجز الملاعب بشكل فردي أو جماعي.\nيمكن لصاحب الملعب قبول أو رفض الحجوزات.\nيتم دفع قيمة الحجز من قبل المستخدم.\nتحصل الشركة المالكة للتطبيق على نسبة من قيمة الحجز.\nيحصل صاحب الملعب على باقي قيمة الحجز.\nالسلوكيات:\nيجب عليك احترام جميع المستخدمين على التطبيق و الامتناع عن أي سلوكيات مسيئة أو غير قانونية.\nالمسؤولية:\nيتحمل المستخدم مسؤولية جميع تصرفاته على التطبيق.\nلا تتحمل الشركة أي مسؤولية عن أي أضرار ناتجة عن استخدام التطبيق.\nالتغييرات:\nتحتفظ الشركة بحق تعديل هذه الشروط والأحكام في أي وقت دون إشعار مسبق.\nالقانون المنظم:\nتخضع هذه الشروط والأحكام لقوانين المملكة العربية السعودية.\n5. حل النزاعات:\nفي حال نشوء أي نزاع بين المستخدم والتطبيق، سيتم بذل قصارى الجهد لحلّه وديًا.\nإذا فشل الحل الودي، يتم اللجوء إلى التحكيم في مركز التحكيم التجاري للمملكة العربية السعودية.\n6. الاتصال:\n\nيمكن التواصل مع الشركة المالكة للتطبيق من خلال ............\nملاحظة:\nقد يتم تحديث هذه الشروط والأحكام من وقت لآخر. يرجى مراجعة هذه الصفحة بشكل دوري للاطلاع على أحدث التغييرات.\nشكرًا لك على استخدام تطبيق هاوي هب!"),
         "to": MessageLookupByLibrary.simpleMessage("إلى"),
         "totalGames": MessageLookupByLibrary.simpleMessage("إجمالي الحجوزات"),
         "underReview": MessageLookupByLibrary.simpleMessage("تحت المراجعة"),

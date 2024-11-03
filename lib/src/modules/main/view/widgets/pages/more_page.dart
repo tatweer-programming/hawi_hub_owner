@@ -14,6 +14,7 @@ import 'package:hawi_hub_owner/src/modules/chat/view/screens/chat_screen.dart';
 import 'package:hawi_hub_owner/src/modules/chat/view/screens/chats_screen.dart';
 import 'package:hawi_hub_owner/src/modules/main/cubit/main_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/main/view/widgets/components.dart';
+import 'package:hawi_hub_owner/src/modules/payment/bloc/payment_cubit.dart';
 import 'package:hawi_hub_owner/src/modules/payment/presentation/screens/my_wallet.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
@@ -29,6 +30,8 @@ class MorePage extends StatelessWidget {
     AuthBloc bloc = context.read<AuthBloc>();
     ChatBloc chatBloc = context.read<ChatBloc>();
     MainCubit mainCubit = MainCubit.get();
+    PaymentCubit paymentCubit = PaymentCubit.get();
+    paymentCubit.getAccountBalance("1");
     List<Chat> chats = [];
     chatBloc.add(const GetAllChatsEvent(withPlayer: false));
     return BlocListener<ChatBloc, ChatState>(
@@ -61,7 +64,7 @@ class MorePage extends StatelessWidget {
                     },
                     child: userInfoDisplay(
                         value:
-                            "${(ConstantsManager.appUser == null ? 0 : ConstantsManager.appUser!.myWallet)} ${S.of(context).sar}",
+                            "${(ConstantsManager.appUser!.myWallet)} ${S.of(context).sar}",
                         key: S.of(context).myWallet,
                         trailing: const Icon(
                           Icons.arrow_forward_ios,

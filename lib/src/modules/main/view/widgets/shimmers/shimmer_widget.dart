@@ -7,8 +7,13 @@ class ShimmerWidget extends StatelessWidget {
   final Widget placeholder;
   final double height;
   final double width;
-  const ShimmerWidget(
-      {super.key, required this.placeholder, required this.height, required this.width});
+
+  const ShimmerWidget({
+    super.key,
+    required this.placeholder,
+    required this.height,
+    required this.width,
+  });
 
   @override
   Widget build(BuildContext context) {

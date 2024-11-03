@@ -11,7 +11,7 @@ class Owner {
   final String email;
   final String? supplierCode;
   final String? profilePictureUrl;
-  final double myWallet;
+  double myWallet;
   final bool emailConfirmed;
   final List<AppFeedBack> feedbacks;
   final List<int> playerReservation;
